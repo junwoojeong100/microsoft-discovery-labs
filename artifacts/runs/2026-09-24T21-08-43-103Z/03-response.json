@@ -1,0 +1,78 @@
+{
+  "sequence": 3,
+  "label": "Discovery 기능 승인 상태 조회",
+  "timestamp": "2026-09-24T21:08:51.454Z",
+  "method": "GET",
+  "path": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Features/providers/Microsoft.Discovery/features?api-version=2021-07-01",
+  "status": 200,
+  "requestId": "koreacentral:8caeef1c-6df8-4a3f-a4d4-33f3622ea987",
+  "correlationRequestId": "2dad1928-95bc-400d-9967-a80a9bc4d5cb",
+  "response": {
+    "value": [
+      {
+        "properties": {
+          "state": "NotRegistered"
+        },
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Features/providers/Microsoft.Discovery/features/DefaultFeature",
+        "type": "Microsoft.Features/providers/features",
+        "name": "Microsoft.Discovery/DefaultFeature"
+      },
+      {
+        "properties": {
+          "state": "NotRegistered"
+        },
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Features/providers/Microsoft.Discovery/features/SupercomputerUpgrades",
+        "type": "Microsoft.Features/providers/features",
+        "name": "Microsoft.Discovery/SupercomputerUpgrades"
+      },
+      {
+        "properties": {
+          "state": "NotRegistered"
+        },
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Features/providers/Microsoft.Discovery/features/InDevelopment",
+        "type": "Microsoft.Features/providers/features",
+        "name": "Microsoft.Discovery/InDevelopment"
+      },
+      {
+        "properties": {
+          "state": "NotRegistered"
+        },
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Features/providers/Microsoft.Discovery/features/SupercomputerErrorDetection",
+        "type": "Microsoft.Features/providers/features",
+        "name": "Microsoft.Discovery/SupercomputerErrorDetection"
+      },
+      {
+        "properties": {
+          "state": "NotRegistered"
+        },
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Features/providers/Microsoft.Discovery/features/SupercomputerAuthorizedIPPreview",
+        "type": "Microsoft.Features/providers/features",
+        "name": "Microsoft.Discovery/SupercomputerAuthorizedIPPreview"
+      },
+      {
+        "properties": {
+          "state": "NotRegistered"
+        },
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Features/providers/Microsoft.Discovery/features/DiscoveryExperminetalDev",
+        "type": "Microsoft.Features/providers/features",
+        "name": "Microsoft.Discovery/DiscoveryExperminetalDev"
+      },
+      {
+        "properties": {
+          "state": "NotRegistered"
+        },
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Features/providers/Microsoft.Discovery/features/EnableSupercomputerPrivateCluster",
+        "type": "Microsoft.Features/providers/features",
+        "name": "Microsoft.Discovery/EnableSupercomputerPrivateCluster"
+      },
+      {
+        "properties": {
+          "state": "NotRegistered"
+        },
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Features/providers/Microsoft.Discovery/features/DataAssetMountAuth",
+        "type": "Microsoft.Features/providers/features",
+        "name": "Microsoft.Discovery/DataAssetMountAuth"
+      }
+    ]
+  }
+}

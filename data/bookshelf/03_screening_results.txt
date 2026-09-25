@@ -1,0 +1,21 @@
+Document ID: TEST-001
+Title: Fictional corrosion screening and evidence gaps
+Version: 1
+Date: 2026-09-22
+Classification: ORIGINAL SYNTHETIC TRAINING DATA. NO PHYSICAL TEST WAS RUN.
+
+ID | Corrosion screening status
+ALPHA   | pass
+BETA    | pass
+GAMMA   | pass
+DELTA   | pass
+EPSILON | pass
+ZETA    | unknown
+ETA     | pass
+THETA   | pass
+
+ZETA has no recorded corrosion result. Treat it as requiring additional
+evidence, not as either a confirmed pass or a measured failure.
+The pass labels are fictional training labels, not certifications.
+No manufacturing, thermal cycling, reliability, or lifetime data exists.
+The next action is a human desk review of the evidence, not physical testing.

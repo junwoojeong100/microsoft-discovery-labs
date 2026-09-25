@@ -1,0 +1,9 @@
+candidate_id,conductivity_w_mk,density_g_cm3,cost_usd_kg,recycled_pct,corrosion_status,source_ids
+ALPHA,210,2.70,3.20,75,pass,CAT-001;TEST-001
+BETA,390,8.96,9.50,35,pass,CAT-001;TEST-001
+GAMMA,175,2.50,4.10,60,pass,CAT-001;TEST-001;REV-001
+DELTA,195,2.65,2.90,85,pass,CAT-001;TEST-001
+EPSILON,225,2.80,5.60,50,pass,CAT-001;TEST-001
+ZETA,205,2.60,4.60,65,unknown,CAT-001;TEST-001
+ETA,185,2.72,4.80,45,pass,CAT-001;TEST-001
+THETA,235,2.75,4.70,60,pass,CAT-001;TEST-001

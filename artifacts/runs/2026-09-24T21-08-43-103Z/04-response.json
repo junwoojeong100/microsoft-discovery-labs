@@ -1,0 +1,18 @@
+{
+  "sequence": 4,
+  "label": "Discovery DefaultFeature 사용 승인 요청",
+  "timestamp": "2026-09-24T21:08:53.814Z",
+  "method": "POST",
+  "path": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Features/providers/Microsoft.Discovery/features/DefaultFeature/register?api-version=2021-07-01",
+  "status": 200,
+  "requestId": "koreacentral:fb3253ef-df0d-49dd-a5de-81043d996017",
+  "correlationRequestId": "8d12cda6-64b0-43c6-91c3-3ea0483982ae",
+  "response": {
+    "properties": {
+      "state": "Pending"
+    },
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Features/providers/Microsoft.Discovery/features/DefaultFeature",
+    "type": "Microsoft.Features/providers/features",
+    "name": "Microsoft.Discovery/DefaultFeature"
+  }
+}

@@ -1,0 +1,19 @@
+Document ID: CAT-001
+Title: Fictional supplier catalog, initial snapshot
+Version: 1
+Date: 2026-09-20
+Classification: ORIGINAL SYNTHETIC TRAINING DATA. NOT REAL SUPPLIER DATA.
+
+ID | Conductivity W/(m K) | Density g/cm3 | Cost USD/kg | Recycled percent
+ALPHA   | 210 | 2.70 | 3.20 | 75
+BETA    | 390 | 8.96 | 9.50 | 35
+GAMMA   | 245 | 2.50 | 4.10 | 60
+DELTA   | 195 | 2.65 | 2.90 | 85
+EPSILON | 225 | 2.80 | 5.60 | 50
+ZETA    | 205 | 2.60 | 4.60 | 65
+ETA     | 185 | 2.72 | 4.80 | 45
+THETA   | 235 | 2.75 | 4.70 | 60
+
+All names and measurements are invented for a software lab.
+The GAMMA catalog conductivity is an older claim. Consult REV-001 before
+using it in an eligibility decision. Do not average conflicting values.

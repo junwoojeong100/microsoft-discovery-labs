@@ -1,0 +1,20 @@
+<!doctype html><html lang="ko"><meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1"><title>Microsoft Discovery 실습 요약</title>
+  <style>body{max-width:1120px;margin:35px auto;padding:0 22px;font:17px/1.7 -apple-system,"Apple SD Gothic Neo",sans-serif;color:#18344e;background:#f1f5fa}
+  video{width:100%;border-radius:12px;background:#071627}button{display:block;width:100%;padding:13px 17px;text-align:left;border:1px solid #ccdae8;background:white;font:inherit;cursor:pointer}
+  .notice{padding:17px 23px;background:#fff0cf;border-radius:10px}a{color:#1264ab}</style>
+  <h1>Microsoft Discovery 실습 가이드 · 실제 Azure 접근 점검</h1>
+  <p class="notice"><b>핵심 클라우드 실습은 Microsoft 측 승인 대기로 미완료입니다.</b><br>이 영상은 가이드 설명과 실제 ARM 요청 기록이며, Discovery Studio 완료 시연이 아닙니다.</p>
+  <video id="video" controls preload="metadata" poster="summary-frames/01.png">
+  <source src="microsoft-discovery-summary.ko.mp4" type="video/mp4">
+  <track kind="subtitles" src="microsoft-discovery-summary.ko.vtt" srclang="ko" label="한국어"></video>
+  <p><a href="../MICROSOFT-DISCOVERY-LAB.ko.html">실습 가이드</a> · <a href="../EXECUTION-REPORT.ko.html">실행 보고서</a> · <a href="microsoft-discovery-summary.ko.mp4" download>MP4 저장</a></p>
+  <h2>구간 바로가기</h2><button data-start="0.000">00:00:00 · 가이드는 완성 · 클라우드 실습은 승인 대기</button>
+<button data-start="17.288">00:00:17 · Discovery의 핵심은 근거 기반 연구의 반복</button>
+<button data-start="38.320">00:00:38 · 시나리오: 가상의 방열판 소재 8개 비교</button>
+<button data-start="64.954">00:01:04 · Bookshelf → 전문 에이전트 → 실제 계산 도구</button>
+<button data-start="90.132">00:01:30 · Discovery Engine: 의존관계와 검증 기준</button>
+<button data-start="115.900">00:01:55 · 실제 Azure 실행 원본</button>
+<button data-start="143.480">00:02:23 · 중단 사유는 비용이 아니라 서비스 측 승인</button>
+<button data-start="168.605">00:02:48 · 재개 순서와 전달 파일</button>
+  <script>document.querySelectorAll('button').forEach(button=>button.addEventListener('click',()=>{const video=document.getElementById('video');video.currentTime=Number(button.dataset.start);video.scrollIntoView({behavior:'smooth',block:'center'});video.play();}));</script></html>

@@ -1,0 +1,25 @@
+{
+  "name": "microsoft-discovery-hands-on-lab",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Aligned Korean and English Microsoft Discovery hands-on guides with reference data",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build:guide": "node scripts/build-guide.mjs",
+    "check:guides": "npm run build:guide && node scripts/check-guides.mjs",
+    "build:architecture": "node scripts/build-architecture.mjs",
+    "test": "node --test tests/*.test.mjs && python3 -m unittest discover -s tests -p 'test_*.py'",
+    "preflight": "node scripts/azure-preflight.mjs",
+    "video": "node scripts/record-summary.mjs"
+  },
+  "dependencies": {
+    "marked": "18.0.13",
+    "playwright": "1.63.0"
+  },
+  "devDependencies": {
+    "mermaid": "12.0.0"
+  }
+}

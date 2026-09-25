@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="570" viewBox="0 0 1280 570" role="img" aria-labelledby="title desc">
+  <title id="title">Microsoft Discovery hands-on architecture</title>
+  <desc id="desc">A researcher uses Discovery Studio. A workspace contains a project with specialized agents and the Discovery Engine. Agents use Bookshelf and a supercomputer. Evidence and results are persisted to Azure Storage.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10Z" fill="#55718f"/></marker>
+    <style>
+      text{font-family:Arial,sans-serif;fill:#18344e}
+      .label{font-size:22px;font-weight:700}
+      .sub{font-size:17px;fill:#4c667e}
+      .line{stroke:#55718f;stroke-width:3;fill:none;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect width="1280" height="570" rx="24" fill="#f0f5fb"/>
+  <text x="42" y="48" class="label">Microsoft Discovery | Evidence-driven scientific workflow</text>
+  <rect x="30" y="92" width="215" height="117" rx="18" fill="#fff" stroke="#a9bed4"/>
+  <text x="52" y="130" class="label">Researcher</text><text x="52" y="162" class="sub">Discovery Studio</text><text x="52" y="189" class="sub">Human review</text>
+  <rect x="284" y="83" width="662" height="275" rx="22" fill="#e1edff" stroke="#77a0d0" stroke-width="2"/>
+  <text x="309" y="116" class="label">Workspace / Project / Shared session</text>
+  <rect x="307" y="142" width="615" height="85" rx="14" fill="#143f73"/>
+  <text x="335" y="178" style="fill:#fff;font-size:23px;font-weight:700">Discovery Engine</text>
+  <text x="335" y="207" style="fill:#dbeafe;font-size:17px">Tasks + dependencies + validation + feedback</text>
+  <rect x="307" y="249" width="190" height="81" rx="12" fill="#fff"/>
+  <rect x="519" y="249" width="190" height="81" rx="12" fill="#fff"/>
+  <rect x="731" y="249" width="190" height="81" rx="12" fill="#fff"/>
+  <text x="322" y="282" class="sub">EvidenceAnalyst</text><text x="322" y="310" class="sub">Grounded findings</text>
+  <text x="534" y="282" class="sub">ComputeAnalyst</text><text x="534" y="310" class="sub">Tool execution</text>
+  <text x="745" y="282" class="sub">ResearchReviewer</text><text x="745" y="310" class="sub">Quality gates</text>
+  <rect x="991" y="103" width="258" height="140" rx="18" fill="#fff" stroke="#a9bed4"/>
+  <text x="1013" y="140" class="label">Foundry models</text><text x="1013" y="176" class="sub">Workspace deployments</text><text x="1013" y="207" class="sub">Task validation model</text>
+  <rect x="30" y="405" width="340" height="120" rx="18" fill="#e0f3ef" stroke="#81b6a8"/>
+  <text x="53" y="445" class="label">Bookshelf / Knowledgebase</text><text x="53" y="477" class="sub">Private documents + LazyGraphRAG</text><text x="53" y="503" class="sub">Citations and evidence conflicts</text>
+  <rect x="415" y="405" width="366" height="120" rx="18" fill="#eae5fc" stroke="#aa9ed5"/>
+  <text x="439" y="445" class="label">Supercomputer + CPU tool</text><text x="439" y="477" class="sub">Deterministic ranking, logs, run ID</text><text x="439" y="503" class="sub">No GPU required for this exercise</text>
+  <rect x="827" y="405" width="423" height="120" rx="18" fill="#fff0d9" stroke="#cdb589"/>
+  <text x="852" y="445" class="label">Azure Storage / Governance</text><text x="852" y="477" class="sub">Inputs, outputs, provenance, managed identity</text><text x="852" y="503" class="sub">RBAC + network isolation + cost review</text>
+  <path d="M245 150H283" class="line"/><path d="M945 180H990" class="line"/>
+  <path d="M402 331V375H200V403" class="line"/>
+  <path d="M614 331V404" class="line"/>
+  <path d="M827 331V375H1037V403" class="line"/>
+</svg>

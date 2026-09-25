@@ -1,0 +1,98 @@
+{
+  "sequence": 7,
+  "label": "등록 후 실제 상태 조회",
+  "timestamp": "2026-09-24T21:03:55.228Z",
+  "method": "GET",
+  "path": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Discovery?api-version=2021-04-01",
+  "status": 200,
+  "requestId": "523dfe7b-49cd-43fb-bc1b-96eb6ed2642e",
+  "correlationRequestId": "523dfe7b-49cd-43fb-bc1b-96eb6ed2642e",
+  "response": {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Discovery",
+    "namespace": "Microsoft.Discovery",
+    "authorizations": [
+      {
+        "applicationId": "bc51a560-ae79-4282-99f5-9346aecfc860",
+        "roleDefinitionId": "cd32a83a-f393-48c1-8f48-ac1fbe520d8f"
+      },
+      {
+        "applicationId": "92c174ac-8e41-4815-a1b7-d81b19ab03ce",
+        "roleDefinitionId": "c02a3656-1d89-4a65-b73c-a51317dfa7ca"
+      },
+      {
+        "applicationId": "f77c2a8f-8a0a-4776-8e0a-bcb2549610ca",
+        "roleDefinitionId": "2605e888-6e8c-45b6-b79e-72be040d311f",
+        "managedByRoleDefinitionId": "1e86f807-6ec0-40b3-8b5f-686b7e43a0a2",
+        "managedByAuthorization": {
+          "additionalAuthorizations": [
+            {
+              "applicationId": "92c174ac-8e41-4815-a1b7-d81b19ab03ce",
+              "roleDefinitionId": "1e86f807-6ec0-40b3-8b5f-686b7e43a0a2"
+            },
+            {
+              "applicationId": "bc51a560-ae79-4282-99f5-9346aecfc860",
+              "roleDefinitionId": "1e86f807-6ec0-40b3-8b5f-686b7e43a0a2"
+            }
+          ]
+        }
+      }
+    ],
+    "resourceTypes": [
+      {
+        "resourceType": "locations",
+        "locations": [],
+        "apiVersions": [
+          "2026-06-01",
+          "2026-02-01-preview",
+          "2025-12-01-preview",
+          "2025-07-01-preview"
+        ],
+        "defaultApiVersion": "2025-07-01-preview",
+        "capabilities": "None"
+      },
+      {
+        "resourceType": "locations/operationStatuses",
+        "locations": [
+          "UK South",
+          "East US 2",
+          "Sweden Central",
+          "East US"
+        ],
+        "apiVersions": [
+          "2026-06-01",
+          "2026-02-01-preview",
+          "2025-12-01-preview",
+          "2025-07-01-preview"
+        ],
+        "defaultApiVersion": "2025-07-01-preview",
+        "capabilities": "None"
+      },
+      {
+        "resourceType": "operations",
+        "locations": [],
+        "apiVersions": [
+          "2026-06-01",
+          "2026-02-01-preview",
+          "2025-12-01-preview",
+          "2025-07-01-preview"
+        ],
+        "defaultApiVersion": "2025-07-01-preview",
+        "capabilities": "None"
+      },
+      {
+        "resourceType": "checkNameAvailability",
+        "locations": [],
+        "apiVersions": [
+          "2026-06-01",
+          "2026-02-01-preview",
+          "2025-12-01-preview",
+          "2025-07-01-preview"
+        ],
+        "defaultApiVersion": "2025-07-01-preview",
+        "capabilities": "None"
+      }
+    ],
+    "registrationState": "Registering",
+    "registrationPolicy": "RegistrationRequired"
+  }
+}

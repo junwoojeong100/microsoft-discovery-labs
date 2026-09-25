@@ -1,0 +1,58 @@
+{
+  "output": "artifacts/microsoft-discovery-summary.ko.mp4",
+  "status": "Guide and authentic Azure access-check summary; core Discovery labs blocked",
+  "sourceRunId": "2026-09-24T21-08-43-103Z",
+  "sourceRecording": "artifacts/runs/2026-09-24T21-08-43-103Z/azure-preflight.webm",
+  "narration": {
+    "method": "Local macOS text-to-speech",
+    "voice": "Yuna",
+    "language": "ko-KR"
+  },
+  "subtitles": "Korean on-screen captions plus sidecar SRT/VTT; sentence timing estimated from narration length",
+  "chapters": [
+    {
+      "title": "가이드는 완성 · 클라우드 실습은 승인 대기",
+      "start": 0,
+      "duration": 17.288435
+    },
+    {
+      "title": "Discovery의 핵심은 근거 기반 연구의 반복",
+      "start": 17.288435,
+      "duration": 21.031746
+    },
+    {
+      "title": "시나리오: 가상의 방열판 소재 8개 비교",
+      "start": 38.320181,
+      "duration": 26.63424
+    },
+    {
+      "title": "Bookshelf → 전문 에이전트 → 실제 계산 도구",
+      "start": 64.954421,
+      "duration": 25.177506
+    },
+    {
+      "title": "Discovery Engine: 의존관계와 검증 기준",
+      "start": 90.13192699999999,
+      "duration": 25.76839
+    },
+    {
+      "title": "실제 Azure 실행 원본",
+      "start": 115.90031699999999,
+      "duration": 27.58
+    },
+    {
+      "title": "중단 사유는 비용이 아니라 서비스 측 승인",
+      "start": 143.48031699999999,
+      "duration": 25.125079
+    },
+    {
+      "title": "재개 순서와 전달 파일",
+      "start": 168.60539599999998,
+      "duration": 20.920408
+    }
+  ],
+  "media": {
+    "duration": "189.526000",
+    "size": "8583617"
+  }
+}

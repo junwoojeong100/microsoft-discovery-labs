@@ -1,0 +1,16 @@
+{
+  "sequence": 7,
+  "label": "실제 Discovery Workspace API 접근 확인",
+  "timestamp": "2026-09-24T21:09:00.272Z",
+  "method": "GET",
+  "path": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Discovery/workspaces?api-version=2026-06-01",
+  "status": 404,
+  "requestId": "5ad11587-a8aa-47ea-bf20-3d81b8da4dfb",
+  "correlationRequestId": "5ad11587-a8aa-47ea-bf20-3d81b8da4dfb",
+  "response": {
+    "error": {
+      "code": "InvalidResourceType",
+      "message": "The resource type could not be found in the namespace 'Microsoft.Discovery' for api version '2026-06-01'."
+    }
+  }
+}

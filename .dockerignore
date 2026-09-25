@@ -1,0 +1,9 @@
+**
+!.dockerignore
+!scripts/
+!scripts/score_materials.py
+!data/
+!data/materials.csv
+!tools/
+!tools/thermal-ranking/
+!tools/thermal-ranking/Dockerfile

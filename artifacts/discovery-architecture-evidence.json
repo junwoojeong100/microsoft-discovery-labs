@@ -1,0 +1,43 @@
+{
+  "asOf": "2026-09-25",
+  "scope": "Documentation-based architecture; not an Azure deployment inventory",
+  "azureOperationsPerformed": false,
+  "publicTemplate": {
+    "url": "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.discovery/discovery-infra-deployment/main.bicep",
+    "sha256": "7092563897d47b4870797236d90d84dc65635f2bb87c398591f16174e48b29aa",
+    "commitPinned": false,
+    "modelVersionExplicitlySet": false,
+    "resourceApiVersions": [
+      "Microsoft.Authorization/roleAssignments@2022-04-01",
+      "Microsoft.Discovery/storageContainers@2026-06-01",
+      "Microsoft.Discovery/supercomputers/nodePools@2026-06-01",
+      "Microsoft.Discovery/supercomputers@2026-06-01",
+      "Microsoft.Discovery/workspaces/chatModelDeployments@2026-06-01",
+      "Microsoft.Discovery/workspaces/projects@2026-06-01",
+      "Microsoft.Discovery/workspaces@2026-06-01",
+      "Microsoft.ManagedIdentity/userAssignedIdentities@2024-11-30",
+      "Microsoft.Network/virtualNetworks@2024-05-01",
+      "Microsoft.Storage/storageAccounts/blobServices/containers@2023-05-01",
+      "Microsoft.Storage/storageAccounts/blobServices@2023-05-01",
+      "Microsoft.Storage/storageAccounts@2023-05-01"
+    ],
+    "observedDefaults": {
+      "storageAccountSku": "Standard_GRS",
+      "storageKind": "StorageV2",
+      "storageMinimumTlsVersion": "TLS1_2",
+      "storageAllowBlobPublicAccess": false,
+      "storageAllowSharedKeyAccess": false,
+      "storageNetworkDefaultAction": "Allow",
+      "networkIsolation": true,
+      "enableGhcpAiFeatures": true,
+      "enableExtensions": true
+    }
+  },
+  "unobservedRuntimeValues": [
+    "Effective Foundry model revisions and upgrade policies",
+    "AKS currentKubernetesVersion and pool currentOrchestratorVersion",
+    "Actual nodeImageVersion, OS, drivers and tool image digests",
+    "Internal SQL, Cosmos DB, AI Search, Container Apps and Discovery service builds",
+    "Actual CMK key versions and binding IDs"
+  ]
+}

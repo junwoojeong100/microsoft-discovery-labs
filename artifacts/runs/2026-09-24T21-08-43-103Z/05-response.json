@@ -1,0 +1,18 @@
+{
+  "sequence": 5,
+  "label": "서비스 측 사용 승인 상태 확인",
+  "timestamp": "2026-09-24T21:08:56.535Z",
+  "method": "GET",
+  "path": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Features/providers/Microsoft.Discovery/features/DefaultFeature?api-version=2021-07-01",
+  "status": 200,
+  "requestId": "koreacentral:43f9c7e6-9b14-417b-b7ed-825aa6b35586",
+  "correlationRequestId": "c124962c-9e26-4835-9154-a33d112afb56",
+  "response": {
+    "properties": {
+      "state": "Pending"
+    },
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Features/providers/Microsoft.Discovery/features/DefaultFeature",
+    "type": "Microsoft.Features/providers/features",
+    "name": "Microsoft.Discovery/DefaultFeature"
+  }
+}

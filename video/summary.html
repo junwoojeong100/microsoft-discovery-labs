@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Microsoft Discovery 실습 가이드 및 실제 접근 점검 요약</title>
+  <style>
+    *{box-sizing:border-box}body{margin:0;width:1600px;height:900px;overflow:hidden;background:#09192c;color:#f1f6ff;font-family:-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif}
+    header{height:93px;padding:24px 56px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #294463}
+    .brand{font-size:24px;font-weight:750;letter-spacing:-.3px}.pill{color:#a6e4ef;border:1px solid #477c90;border-radius:25px;padding:8px 18px;font-size:18px}
+    main{padding:35px 56px;height:650px}h1{font-size:47px;line-height:1.25;margin:0 0 17px;letter-spacing:-1.3px}
+    .subtitle{color:#b4cbdf;font-size:25px;margin:0 0 28px;line-height:1.5}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+    .card{padding:25px 27px;background:#132f4b;border:1px solid #345879;border-radius:19px;min-height:190px}
+    .card h2{font-size:25px;margin:0 0 17px;color:#cae5ff}.card p{font-size:23px;line-height:1.65;margin:10px 0}
+    .card .big{font-size:44px;font-weight:750;line-height:1.2;letter-spacing:-1px}.green{color:#9becce}.amber{color:#ffd991}.muted{color:#aec2d7}
+    .wide{margin-top:24px;padding:22px 28px;border-radius:17px;background:#142b43;font-size:26px;line-height:1.7}
+    .wide.warn{background:#3b3020;color:#ffe2a5;border:1px solid #8c7248}.architecture{width:1280px;height:410px;object-fit:contain;display:block;margin:12px auto 0;border-radius:20px}
+    table{border-collapse:collapse;width:100%;font-size:24px;margin-top:20px}th,td{text-align:left;padding:16px 23px;border-bottom:1px solid #335471}th{color:#a9d0f6}
+    .flow{display:flex;gap:14px;align-items:stretch;margin-top:30px}.flow .card{flex:1}.arrow{font-size:36px;align-self:center;color:#74b6ec}
+    footer{position:absolute;inset:auto 0 0;height:147px;background:#061222;padding:21px 56px 14px;border-top:1px solid #31485f}
+    #caption{font-size:25px;line-height:1.6;min-height:76px;max-width:1460px;margin:0;word-break:keep-all}
+    .footnote{display:flex;justify-content:space-between;color:#94acc4;font-size:15px;margin-top:9px}
+    #live{display:none;position:absolute;inset:0;width:1600px;height:900px;object-fit:contain;background:#09192c}
+    body.evidence #live{display:block}body.evidence header,body.evidence main{visibility:hidden}
+    body.evidence footer{background:rgba(3,12,23,.94);height:126px;padding-top:13px}
+    body.evidence #caption{font-size:22px;min-height:66px;max-width:1450px}
+    #replay{display:none;position:absolute;top:15px;right:25px;background:#603e17;border:1px solid #ffd28a;border-radius:7px;color:#ffe3b1;padding:7px 14px;font-size:15px}
+    body.evidence #replay{display:block}
+    .small{font-size:20px;line-height:1.7}.bar{height:9px;background:#244765;border-radius:9px;margin-top:15px;overflow:hidden}.bar span{display:block;height:100%;background:#89d7ef}
+  </style>
+</head>
+<body>
+  <header><div class="brand">Microsoft Discovery · 한국어 실습 가이드</div><div class="pill" id="label"></div></header>
+  <main><h1 id="title"></h1><p class="subtitle" id="subtitle"></p><div id="content"></div></main>
+  <video id="live" src="/live.webm" muted playsinline preload="auto"></video>
+  <div id="replay">실제 Azure ARM 실행 원본 재생 · Portal/Studio 화면 아님</div>
+  <footer><p id="caption"></p><div class="footnote"><span id="source"></span><span id="counter"></span></div></footer>
+  <script>
+    let timers = [];
+    window.present = async (scene) => {
+      timers.forEach(clearTimeout);
+      timers = [];
+      document.body.className = scene.type === 'evidence' ? 'evidence' : '';
+      document.querySelector('#title').textContent = scene.title;
+      document.querySelector('#subtitle').textContent = scene.subtitle;
+      document.querySelector('#label').textContent = scene.label;
+      document.querySelector('#content').innerHTML = scene.html;
+      document.querySelector('#source').textContent = scene.source;
+      document.querySelector('#counter').textContent = `${scene.index + 1} / ${scene.total} · 2026-09-25`;
+      document.querySelector('#caption').textContent = scene.captions[0].text;
+      for (const caption of scene.captions.slice(1)) {
+        timers.push(setTimeout(() => {
+          document.querySelector('#caption').textContent = caption.text;
+        }, caption.start * 1000));
+      }
+      await Promise.all([...document.querySelectorAll('#content img')].map((image) => image.decode()));
+      const live = document.querySelector('#live');
+      if (scene.type === 'evidence') {
+        live.currentTime = 0;
+        await live.play();
+      } else {
+        live.pause();
+      }
+    };
+  </script>
+</body>
+</html>

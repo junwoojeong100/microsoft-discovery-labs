@@ -1,0 +1,16 @@
+{
+  "sequence": 8,
+  "label": "공식 이전 API 버전으로 원인 교차 확인",
+  "timestamp": "2026-09-24T21:09:02.347Z",
+  "method": "GET",
+  "path": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Discovery/workspaces?api-version=2026-02-01-preview",
+  "status": 404,
+  "requestId": "a8a29b35-49ad-4c83-ac24-ac592dbd4673",
+  "correlationRequestId": "a8a29b35-49ad-4c83-ac24-ac592dbd4673",
+  "response": {
+    "error": {
+      "code": "InvalidResourceType",
+      "message": "The resource type could not be found in the namespace 'Microsoft.Discovery' for api version '2026-02-01-preview'."
+    }
+  }
+}

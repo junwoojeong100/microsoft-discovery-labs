@@ -1,0 +1,23 @@
+Document ID: REV-001
+Title: Authoritative correction to the fictional candidate catalog
+Version: 2
+Date: 2026-09-24
+Classification: ORIGINAL SYNTHETIC TRAINING DATA. NOT EXPERIMENTAL EVIDENCE.
+
+Correction:
+The current verified training value for GAMMA thermal conductivity is
+175 W/(m K) at 25 C. This supersedes the 245 W/(m K) catalog claim in CAT-001.
+The lower value fails the REQ-001 minimum of 180 W/(m K).
+Use 175; do not average the two values and do not silently keep 245.
+
+All other numeric catalog values are unchanged in this training scenario.
+The accompanying materials.csv is the resolved input table and already
+contains GAMMA = 175. It must not be treated as a second independent source.
+
+Human review exercise:
+After the first report, lower only the hard cost ceiling to 3.00 USD/kg.
+Retain all other constraints and the original ranking formula.
+Evaluate the candidates again, and explain why the eligible set changes.
+
+Every downstream report must distinguish synthetic input values, calculated
+scores, agent interpretation, and any work that has not actually been run.

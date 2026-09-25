@@ -1,0 +1,33 @@
+Document ID: REQ-001
+Title: Synthetic heat-sink material screening requirements
+Version: 1
+Date: 2026-09-20
+Classification: ORIGINAL SYNTHETIC TRAINING DATA. NOT REAL ENGINEERING EVIDENCE.
+
+Research question:
+Which two fictional materials merit a follow-up desk review for a lightweight
+industrial electronics heat sink?
+
+All hard constraints must hold:
+- Thermal conductivity at 25 C: at least 180 W/(m K).
+- Density: no more than 3.00 g/cm3.
+- Indicative material cost: no more than 5.00 USD/kg.
+- Recycled content: at least 50 percent.
+- Corrosion screening status: pass. Unknown is NOT a pass.
+
+Prefer the latest verified value in REV-001 over an older catalog claim.
+Unknown values require review; do not infer or invent a measurement.
+
+Only candidates satisfying every hard constraint receive a ranking score:
+score = 50 * min(conductivity / 250, 1)
+      + 30 * max(0, 1 - cost / 5)
+      + 20 * min(recycled_content / 100, 1).
+Round the final score to one decimal place. Higher is better.
+Keep the cost normalization denominator at 5 even when a later review changes
+the hard cost ceiling. Sort score ties by candidate ID in ascending order.
+
+Required report:
+All eight candidates, individual constraint decisions, missing evidence,
+the top two eligible candidates, document IDs, a method, and limitations.
+This is a training-only desk exercise. No procurement, physical testing,
+chemical synthesis, or safety certification is authorized or implied.

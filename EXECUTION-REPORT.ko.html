@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Microsoft Discovery 이전 실행 보고서</title>
+  <style>
+    :root{font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;color:#15314a;background:#f3f6fa;font-size:16px;line-height:1.8}
+    *{box-sizing:border-box}body{margin:0}aside{position:fixed;inset:0 auto 0 0;width:282px;background:#102c47;padding:28px 20px;overflow:auto;color:#fff}
+    aside b{display:block;font-size:21px;margin-bottom:12px}aside a{display:block;color:#dbe9f8;text-decoration:none;padding:6px 0;font-size:13px;line-height:1.5}
+    aside .label{font-size:14px;color:#bbd1e8}summary{cursor:pointer;font-weight:700;margin:16px 0 9px}.languages{display:flex;gap:12px;margin:15px 0}
+    .languages a{border:1px solid #7894ae;border-radius:6px;padding:5px 10px;font-size:14px}.languages a[aria-current]{background:#e8f1fc;color:#102c47;font-weight:700}
+    button{font:inherit;color:#e4effa;background:none;border:1px solid #7894ae;border-radius:6px;padding:6px 10px;cursor:pointer}
+    main{max-width:1240px;margin-left:282px;padding:38px 52px 90px;background:white;min-height:100vh}
+    h1{font-size:37px;line-height:1.35;letter-spacing:-1px;text-wrap:balance}h2{font-size:27px;border-top:1px solid #dfe7ef;padding-top:24px;margin-top:40px}
+    h3{font-size:21px;margin-top:30px}h4{font-size:18px}a{color:#1264ab}a[id]{display:block;scroll-margin-top:15px}img{max-width:100%;height:auto}
+    p,li{overflow-wrap:anywhere}:lang(ko) p,:lang(ko) li{word-break:keep-all}.citation{font-size:.75em;white-space:nowrap;margin-left:.16em}.table-scroll{max-width:100%;overflow-x:auto;margin:18px 0}
+    table{border-collapse:collapse;width:100%;font-size:14px}th,td{border:1px solid #dbe5ef;text-align:left;padding:10px 12px;vertical-align:top;overflow-wrap:anywhere}th{background:#edf4fc}
+    code{background:#eef3f8;border-radius:4px;padding:2px 4px;font-family:ui-monospace,Menlo,monospace;font-size:.88em;overflow-wrap:anywhere}
+    pre{background:#102c47;color:#e9f2ff;border-radius:10px;padding:19px;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.6}
+    pre code{background:none;color:inherit;padding:0}blockquote{border-left:4px solid #d09321;background:#fff7e5;margin:20px 0;padding:7px 20px}
+    .banner{background:#e9f1fc;border:1px solid #cdddf0;border-radius:10px;padding:12px 16px;font-size:14px}.skip{position:absolute;left:-10000px}.skip:focus{left:300px;top:8px;background:white;z-index:2}
+    @media(max-width:1000px){aside{position:static;width:auto;padding:20px}main{margin:0;padding:24px 20px}h1{font-size:30px}h2{font-size:24px}aside .languages{margin:12px 0}}
+    @media print{
+      :root{font-size:10pt;line-height:1.6;background:white}aside,.banner,.skip,.edition-links{display:none}main{margin:0;padding:0;max-width:none;min-height:0}
+      h1{font-size:25pt}h2{font-size:18pt;margin-top:23pt;padding-top:12pt}h3{font-size:13pt}h1,h2,h3,h4{break-after:avoid-page}
+      .table-scroll{overflow:visible}table{font-size:8.3pt}thead{display:table-header-group}tr{break-inside:avoid}th,td{padding:6pt}
+      pre,blockquote,img{break-inside:avoid}pre{font-size:8pt}a{color:#15314a}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">본문으로 이동</a>
+  <aside><b>Microsoft Discovery</b><span class="label">이전 Azure 접근 점검 기록</span>
+    <nav class="languages" aria-label="Language">
+      <a href="MICROSOFT-DISCOVERY-LAB.ko.html" data-language="ko">한국어</a>
+      <a href="MICROSOFT-DISCOVERY-LAB.en.html" data-language="en">English</a>
+    </nav>
+    <button id="print" type="button">인쇄 / PDF</button>
+    <details id="toc" open><summary>목차</summary><nav aria-label="목차"><a href="#section-2">1. 실제로 확인된 결과</a>
+<a href="#section-4">2. 증거 파일</a>
+<a href="#section-5">3. 제공한 실습 자료</a>
+<a href="#section-6">4. 비용·할당량 사전 확인</a>
+<a href="#section-7">5. 승인 요청에 사용할 정보</a>
+<a href="#section-8">6. 재개 순서</a></nav></details>
+  </aside>
+  <main id="main"><div class="banner">과거 접근 점검 기록입니다. 현재 개정 가이드의 Azure 종단간 검증 결과가 아닙니다.</div><h1 id="section-1">Microsoft Discovery 실제 실행 보고서</h1><p><strong>가이드는 완성했지만, Azure 핵심 기능 실습은 Microsoft 측 사용 승인 대기로 미완료다.</strong></p>
+<p>실행일: 2026-09-25 KST. 지정 계정과 구독으로 실제 Azure에 접근했다. 사용자의 “사용 승인, 비용 좀 나와도 돼”라는 추가 허용을 반영해 Provider 등록과 정상적인 feature 사용 승인 신청까지 수행했다. <strong>비용 허용과 Microsoft 서비스 팀의 구독 승인은 다른 조건</strong>이다.</p>
+<h2 id="section-2">1. 실제로 확인된 결과</h2><div class="table-scroll"><table>
+<thead>
+<tr>
+<th>항목</th>
+<th>결과</th>
+<th>근거</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>지정 계정·테넌트·구독</td>
+<td>일치, 구독 Enabled</td>
+<td>Azure CLI 계정 확인 및 실제 ARM 구독 GET 200</td>
+</tr>
+<tr>
+<td>Microsoft.Discovery Provider</td>
+<td><strong>Registered</strong></td>
+<td>Provider POST 200 후 재조회</td>
+</tr>
+<tr>
+<td>Microsoft.Discovery/DefaultFeature</td>
+<td><strong>Pending</strong></td>
+<td>사용 승인 POST 200 후 실제 GET 응답</td>
+</tr>
+<tr>
+<td>Workspace API <code>2026-06-01</code></td>
+<td><strong>404 / InvalidResourceType</strong></td>
+<td>실제 ARM 응답</td>
+</tr>
+<tr>
+<td>공식 이전 API <code>2026-02-01-preview</code></td>
+<td><strong>404 / InvalidResourceType</strong></td>
+<td>대체 버전으로 읽기 전용 교차 확인</td>
+</tr>
+<tr>
+<td>필수 Discovery 리소스 유형</td>
+<td>workspaces / supercomputers / bookshelves 안 보임</td>
+<td>Provider resourceTypes 실제 목록</td>
+</tr>
+<tr>
+<td>Portal UI 로그인</td>
+<td>보안 키·지문·PIN 인증 필요 단계</td>
+<td>Playwright headless의 Microsoft 로그인 화면</td>
+</tr>
+<tr>
+<td>새 실습 RG·Workspace·Bookshelf·Supercomputer</td>
+<td><strong>생성하지 않음</strong></td>
+<td>접근 gate 실패로 생성 단계에 진입하지 않음</td>
+</tr>
+<tr>
+<td>Bookshelf 색인·에이전트·도구·Engine 실행</td>
+<td><strong>미실행</strong></td>
+<td>Discovery 데이터 평면 환경을 만들 수 없음</td>
+</tr>
+</tbody></table>
+</div><p><code>DefaultFeature</code>의 <code>Pending</code>은 제품 팀 승인 필요 상태다. 사용자가 비용을 허용해도 이를 <code>Registered</code>로 임의 변경할 수 없다. 다른 개발용·실험용 feature를 켜거나 인증을 우회하지 않았다.</p>
+<h3 id="section-3">현재 구독에 남은 변경</h3><ul>
+<li><code>Microsoft.Discovery</code> Provider 등록</li>
+<li><code>Microsoft.Discovery/DefaultFeature</code> 사용 승인 요청: <code>Pending</code></li>
+</ul>
+<p>유료 실습 인프라, 모델 배포, 커스텀 역할, 역할 할당은 만들지 않았다. 승인 요청은 취소하지 않았으며, 전용 실습 RG도 생성 전이다. <strong>구독 전체의 기존 청구가 0원이라는 뜻은 아니다.</strong> 이번 작업이 시작한 유료 리소스 배포가 없다는 의미다.</p>
+<h2 id="section-4">2. 증거 파일</h2><div class="table-scroll"><table>
+<thead>
+<tr>
+<th>파일</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>artifacts/azure-preflight.json</code></td>
+<td>최신 실행의 계정 범위, 시각, 실제 HTTP 응답, gate 판정</td>
+</tr>
+<tr>
+<td><code>artifacts/runs/2026-09-24T21-03-20-762Z/</code></td>
+<td>최초 Provider 등록 실험과 실제 응답</td>
+</tr>
+<tr>
+<td><code>artifacts/runs/2026-09-24T21-08-43-103Z/</code></td>
+<td>추가 사용 승인 신청, Pending, 두 API 버전의 오류</td>
+</tr>
+<tr>
+<td><code>artifacts/runs/2026-09-24T21-08-43-103Z/04-response.json</code></td>
+<td>사용 승인 등록 요청 응답</td>
+</tr>
+<tr>
+<td><code>artifacts/runs/2026-09-24T21-08-43-103Z/05-response.json</code></td>
+<td>Pending 재확인 응답</td>
+</tr>
+<tr>
+<td><code>artifacts/runs/2026-09-24T21-08-43-103Z/07-response.json</code></td>
+<td>GA API 버전의 Workspace 접근 오류</td>
+</tr>
+<tr>
+<td><code>artifacts/runs/2026-09-24T21-08-43-103Z/08-response.json</code></td>
+<td>이전 공식 API 버전의 동일 오류</td>
+</tr>
+<tr>
+<td><code>artifacts/runs/2026-09-24T21-08-43-103Z/azure-preflight.webm</code></td>
+<td>실제 API 실행 중 headless 화면 원본, 약 27초</td>
+</tr>
+<tr>
+<td><code>artifacts/reference-ranking.json</code></td>
+<td><strong>로컬</strong> 기준 계산; Azure 실행 결과가 아님</td>
+</tr>
+<tr>
+<td><code>artifacts/reference-ranking-cost3.json</code></td>
+<td><strong>로컬</strong> 비용 조건 변경 기준 계산</td>
+</tr>
+</tbody></table>
+</div><p>API 호출은 Playwright의 <code>APIRequestContext</code>로 실제 <code>management.azure.com</code>에 전송했다. 인증은 지정 계정의 기존 Azure CLI 세션을 사용했으며, 토큰은 메모리에만 보관했다. 녹화 화면은 <strong>로컬 증거 뷰어</strong>다. Azure Portal이나 Discovery Studio를 모방한 화면이 아니며, UI 실습 성공을 주장하지 않는다.</p>
+<p>요약 영상은 가이드의 핵심 내용과 실제 Azure 접근 점검을 묶은 영상이다. Bookshelf나 Engine을 성공 실행한 시연 영상이 아니다. 인증 화면·비밀번호·토큰·쿠키는 영상에서 제외했다.</p>
+<p><strong>영상:</strong> <a href="artifacts/watch-summary.html">챕터형 재생 페이지</a> · <a href="artifacts/microsoft-discovery-summary.ko.mp4">MP4</a> · <a href="artifacts/microsoft-discovery-summary.ko.srt">한국어 SRT</a>. 길이 약 <strong>3분 10초</strong>, 1600×900, 한국어 음성과 화면 자막 포함. SRT/VTT 문장 타이밍은 음성 길이를 기준으로 추정했으며, 음성은 로컬 macOS Yuna TTS로 생성했다. 원본 Azure 실행 영상은 별도 WebM으로 보존했다.</p>
+<h2 id="section-5">3. 제공한 실습 자료</h2><p>15개 절의 한국어 가이드, 브라우저용 HTML, 아키텍처 다이어그램, 자체 작성한 합성 TXT 4개와 CSV, 결정적 Python 계산기, CPU 도구 Dockerfile과 정의 템플릿, 계정 범위 검증·증거 기록·녹화 자동화를 제공한다.</p>
+<p>로컬 기준 계산 결과는 다음과 같다.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>조건</th>
+<th>적격 후보와 점수</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>원가 상한 5 USD/kg</td>
+<td>DELTA 68.6, ALPHA 67.8, THETA 60.8</td>
+</tr>
+<tr>
+<td>원가 상한 3 USD/kg</td>
+<td>DELTA 68.6만 적격</td>
+</tr>
+</tbody></table>
+</div><p>GAMMA는 최신 정정값 175로 탈락하고 ZETA는 근거 미확보 상태다. <strong>이 표는 실습 정답 기준이며, 실제 Discovery에서 얻은 결과가 아니다.</strong> 도구 이미지를 ACR에 빌드·업로드하거나 Discovery에 등록한 상태도 아니다.</p>
+<h2 id="section-6">4. 비용·할당량 사전 확인</h2><p>사용자의 비용 허용을 반영해 최소 CPU 구성의 일부 단가와 할당량을 조사했다. 비용이 현재의 중단 사유는 아니다.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>항목</th>
+<th>Sweden Central 조회 결과</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Linux D4s_v6, 일반 종량제 VM</td>
+<td>0.214 USD/시간/VM</td>
+</tr>
+<tr>
+<td>Linux E20s_v6, 일반 종량제 VM</td>
+<td>1.407 USD/시간/VM</td>
+</tr>
+<tr>
+<td>지역 총 vCPU</td>
+<td>한도 100, 사용 0</td>
+</tr>
+<tr>
+<td>StandardDsv6Family</td>
+<td>한도 100, 사용 0</td>
+</tr>
+<tr>
+<td>StandardEsv6Family</td>
+<td>한도 100, 사용 0</td>
+</tr>
+</tbody></table>
+</div><p>출처: 2026-09-25 Azure MCP Retail Pricing과 해당 구독 <code>az quota list</code> / <code>az quota usage list</code> 실제 조회. Spot·Windows 단가는 제외했다.</p>
+<p><strong>위 두 VM 가격은 전체 Discovery 견적이 아니다.</strong> SQL Hyperscale, Search, ACA, Cosmos DB, 스토리지, 관리 인프라, 모델 토큰 등이 별도다. 논리적 quota가 남아 있다고 특정 SKU의 물리적 가용성이 보장되는 것도 아니다. 모델 quota와 전체 인프라 비용은 승인 후 확정해야 한다.</p>
+<h2 id="section-7">5. 승인 요청에 사용할 정보</h2><p>Microsoft 담당자 또는 Azure 지원에 다음 내용을 전달하면 된다. 이 패키지는 메시지나 지원 티켓을 대신 발송하지 않았다.</p>
+<pre><code class="language-text">요청: Microsoft Discovery GA 실습용 구독 활성화 / allow-list 검토
+
+Subscription: 51531604-2337-4c05-bc05-3c3d4ff154e5
+Tenant: 46e9cdaa-fed3-4131-aa28-c1fc8a8a043a
+Account: junwoojeong@MngEnvMCAP757124.onmicrosoft.com
+Target region: Sweden Central
+
+Microsoft.Discovery provider: Registered
+Microsoft.Discovery/DefaultFeature: Pending
+Requested feature at: 2026-09-24T21:08Z (2026-09-25 06:08 KST)
+Workspace list:
+  API 2026-06-01 -&gt; 404 InvalidResourceType
+  API 2026-02-01-preview -&gt; 404 InvalidResourceType
+Provider exposes only generic locations/operations/checkNameAvailability types.
+
+Feature-state correlation ID:
+c124962c-9e26-4835-9154-a33d112afb56
+
+Purpose: Original synthetic training documents, one workspace/project,
+Bookshelf indexing, bounded CPU tool, and Discovery Engine walkthrough.
+No real customer research data and no GPU workload required.
+</code></pre>
+<h2 id="section-8">6. 재개 순서</h2><ol>
+<li>Microsoft 측 <code>DefaultFeature</code> 승인과 구독 활성화를 확인한다. <code>Pending</code>을 통과로 간주하지 않는다.</li>
+<li>Provider를 다시 등록해 변경을 전파하고, 실제 필수 리소스 유형과 Workspace API 성공을 확인한다.</li>
+<li>사용자가 올바른 테넌트에서 정상 MFA·보안 키 로그인을 완료한다.</li>
+<li>모델 quota, IAM·NSP 관리자 작업, 네트워크, 전체 비용을 검토한다.</li>
+<li>가이드 Lab 0~6을 실제 실행하고 각 단계의 클라우드 증거를 추가한다.</li>
+<li>핵심 기능의 <strong>실제 실행 영상</strong>을 새로 녹화한다. 현재의 접근 점검 영상을 완료 시연으로 이름만 바꾸지 않는다.</li>
+</ol>
+<p>읽기 전용 재확인:</p>
+<pre><code class="language-bash">npm run preflight
+</code></pre>
+<p>승인 반영 후에는 다음 명시적 실행으로 Provider를 다시 등록해 변경을 전파하고, 접근 gate를 통과한 경우에만 전용 RG를 생성한다.</p>
+<pre><code class="language-bash">npm run preflight -- --register --create-resource-group
+</code></pre>
+<p>관련 공식 문서: <a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/quickstart-infrastructure">Discovery 접근 선행조건</a>, <a href="https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/preview-features">Azure feature Pending과 승인</a>.</p>
+</main>
+  <script>
+    document.getElementById('print').addEventListener('click', () => window.print());
+    const media = matchMedia('(max-width: 1000px)');
+    const adjustToc = () => { document.getElementById('toc').open = !media.matches; };
+    adjustToc();
+    media.addEventListener('change', adjustToc);
+    document.querySelectorAll('[data-language]').forEach(link => link.addEventListener('click', () => {
+      const hash = /^#[slea][0-9]{2}$/.test(location.hash) ? location.hash : '';
+      link.href = 'MICROSOFT-DISCOVERY-LAB.' + link.dataset.language + '.html' + hash;
+    }));
+  </script>
+</body>
+</html>

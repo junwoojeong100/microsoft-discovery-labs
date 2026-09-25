@@ -1,0 +1,85 @@
+{
+  "checkedAt": "2026-09-25T00:37:59.640Z",
+  "scope": "Local Mermaid parsing and rendering; no Azure resource inventory or mutation",
+  "renderer": {
+    "package": "mermaid",
+    "version": "12.0.0",
+    "productDependency": false
+  },
+  "azureOperationsPerformed": false,
+  "externalNetworkRequests": 0,
+  "diagrams": [
+    {
+      "language": "ko",
+      "asset": "assets/discovery-platform.ko.svg",
+      "width": 1316.691650390625,
+      "height": 1073.800048828125,
+      "nodes": 10,
+      "textLabels": 23,
+      "croppedLabels": 0,
+      "foreignObjects": 0,
+      "embeddedWidth": 1317,
+      "embeddedHeight": 1074
+    },
+    {
+      "language": "ko",
+      "asset": "assets/discovery-bookshelf.ko.svg",
+      "width": 1556.9375,
+      "height": 602.2000122070312,
+      "nodes": 9,
+      "textLabels": 19,
+      "croppedLabels": 0,
+      "foreignObjects": 0,
+      "embeddedWidth": 1557,
+      "embeddedHeight": 603
+    },
+    {
+      "language": "ko",
+      "asset": "assets/discovery-security.ko.svg",
+      "width": 1439.59375,
+      "height": 603.199951171875,
+      "nodes": 10,
+      "textLabels": 20,
+      "croppedLabels": 0,
+      "foreignObjects": 0,
+      "embeddedWidth": 1440,
+      "embeddedHeight": 604
+    },
+    {
+      "language": "en",
+      "asset": "assets/discovery-platform.en.svg",
+      "width": 1501.814208984375,
+      "height": 1113.4000244140625,
+      "nodes": 10,
+      "textLabels": 23,
+      "croppedLabels": 0,
+      "foreignObjects": 0,
+      "embeddedWidth": 1502,
+      "embeddedHeight": 1114
+    },
+    {
+      "language": "en",
+      "asset": "assets/discovery-bookshelf.en.svg",
+      "width": 1761.046875,
+      "height": 602.2000122070312,
+      "nodes": 9,
+      "textLabels": 19,
+      "croppedLabels": 0,
+      "foreignObjects": 0,
+      "embeddedWidth": 1762,
+      "embeddedHeight": 603
+    },
+    {
+      "language": "en",
+      "asset": "assets/discovery-security.en.svg",
+      "width": 1527.875,
+      "height": 662.5999755859375,
+      "nodes": 10,
+      "textLabels": 20,
+      "croppedLabels": 0,
+      "foreignObjects": 0,
+      "embeddedWidth": 1528,
+      "embeddedHeight": 663
+    }
+  ]
+}
