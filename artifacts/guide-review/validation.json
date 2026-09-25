@@ -1,24 +1,11 @@
 {
-  "checkedAt": "2026-09-24T23:23:29.726Z",
+  "checkedAt": "2026-09-25T01:10:36.235Z",
   "scope": "Local bilingual guide, link, layout, language-switch, and PDF verification only",
   "azureOperationsPerformed": false,
   "azureEndToEndValidated": false,
   "languageSwitchPreservesLab": true,
   "externalNetworkRequests": 0,
   "editions": [
-    {
-      "language": "ko",
-      "sections": 18,
-      "officialSources": 33,
-      "localLinksChecked": 21,
-      "desktopOverflow": false,
-      "mobileOverflow": false,
-      "printOverflow": false,
-      "pdfPages": 19,
-      "pdfBytes": 1556966,
-      "pdfBookmarks": true,
-      "pdfLocalFileLinks": 0
-    },
     {
       "language": "en",
       "sections": 18,
@@ -29,6 +16,19 @@
       "printOverflow": false,
       "pdfPages": 21,
       "pdfBytes": 1000375,
+      "pdfBookmarks": true,
+      "pdfLocalFileLinks": 0
+    },
+    {
+      "language": "ko",
+      "sections": 18,
+      "officialSources": 33,
+      "localLinksChecked": 21,
+      "desktopOverflow": false,
+      "mobileOverflow": false,
+      "printOverflow": false,
+      "pdfPages": 19,
+      "pdfBytes": 1556966,
       "pdfBookmarks": true,
       "pdfLocalFileLinks": 0
     }

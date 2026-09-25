@@ -6,15 +6,6 @@ import { marked } from 'marked';
 const root = fileURLToPath(new URL('..', import.meta.url));
 const documents = [
   {
-    filename: 'MICROSOFT-DISCOVERY-LAB.ko.md',
-    language: 'ko',
-    title: 'Microsoft Discovery 핵심 기능 실습 가이드',
-    label: '핵심 10개 Lab + 확장 2개',
-    banner: '공식 문서 기반 · 국문/영문 동일 실습 기준 · Azure 종단간 실행은 미검증',
-    tocLabel: '목차',
-    printLabel: '인쇄 / PDF',
-  },
-  {
     filename: 'MICROSOFT-DISCOVERY-LAB.en.md',
     language: 'en',
     title: 'Microsoft Discovery Core Capabilities Hands-on Guide',
@@ -22,6 +13,15 @@ const documents = [
     banner: 'Official-source guidance · Matching Korean/English criteria · Azure end-to-end execution not verified',
     tocLabel: 'Contents',
     printLabel: 'Print / PDF',
+  },
+  {
+    filename: 'MICROSOFT-DISCOVERY-LAB.ko.md',
+    language: 'ko',
+    title: 'Microsoft Discovery 핵심 기능 실습 가이드',
+    label: '핵심 10개 Lab + 확장 2개',
+    banner: '공식 문서 기반 · 국문/영문 동일 실습 기준 · Azure 종단간 실행은 미검증',
+    tocLabel: '목차',
+    printLabel: '인쇄 / PDF',
   },
   {
     filename: 'EXECUTION-REPORT.ko.md',
@@ -142,9 +142,9 @@ async function buildDocument(document) {
 <body>
   <a class="skip" href="#main">${language === 'ko' ? '본문으로 이동' : 'Skip to content'}</a>
   <aside><b>Microsoft Discovery</b><span class="label">${label}</span>
-    <nav class="languages" aria-label="Language">
-      <a href="MICROSOFT-DISCOVERY-LAB.ko.html" data-language="ko"${filename.includes('LAB.ko') ? ' aria-current="page"' : ''}>한국어</a>
+    <nav class="languages" aria-label="${language === 'ko' ? '언어 선택' : 'Language'}">
       <a href="MICROSOFT-DISCOVERY-LAB.en.html" data-language="en"${filename.includes('LAB.en') ? ' aria-current="page"' : ''}>English</a>
+      <a href="MICROSOFT-DISCOVERY-LAB.ko.html" data-language="ko"${filename.includes('LAB.ko') ? ' aria-current="page"' : ''}>한국어</a>
     </nav>
     <button id="print" type="button">${printLabel}</button>
     <details id="toc" open><summary>${tocLabel}</summary><nav aria-label="${tocLabel}">${toc}</nav></details>

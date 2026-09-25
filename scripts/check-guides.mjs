@@ -25,6 +25,8 @@ async function inspect(page) {
       .map((anchor) => anchor.getAttribute('href'));
     const brokenImages = [...document.images].filter((image) => !image.complete || image.naturalWidth === 0)
       .map((image) => image.getAttribute('src'));
+    const body = document.querySelector('main').cloneNode(true);
+    body.querySelectorAll('.edition-links').forEach((element) => element.remove());
     return {
       language: document.documentElement.lang,
       sections: document.querySelectorAll('h2').length,
@@ -36,6 +38,8 @@ async function inspect(page) {
         .filter((url) => url.startsWith('file:')),
       tocOpen: document.getElementById('toc').open,
       deletedTextNodes: document.querySelectorAll('del,s').length,
+      languageOrder: [...document.querySelectorAll('[data-language]')].map((element) => element.dataset.language),
+      bodyHasHangul: /\p{Script=Hangul}/u.test(body.textContent),
     };
   });
 }
@@ -44,7 +48,7 @@ try {
   const page = await context.newPage();
   const errors = [];
   page.on('pageerror', (error) => errors.push(error.message));
-  for (const language of ['ko', 'en']) {
+  for (const language of ['en', 'ko']) {
     const filename = `MICROSOFT-DISCOVERY-LAB.${language}`;
     await page.setViewportSize({ width: 1600, height: 1000 });
     await page.emulateMedia({ media: 'screen' });
@@ -59,6 +63,8 @@ try {
     assert.equal(desktop.pageOverflow, false);
     assert.equal(desktop.tocOpen, true);
     assert.equal(desktop.deletedTextNodes, 0, 'Procedure contains unintended strikethrough');
+    assert.deepEqual(desktop.languageOrder, ['en', 'ko']);
+    if (language === 'en') assert.equal(desktop.bodyHasHangul, false, 'English guide contains Korean body text');
     for (const url of new Set(desktop.localLinks)) {
       const target = new URL(url);
       target.hash = '';
@@ -111,13 +117,13 @@ try {
 
   await page.emulateMedia({ media: 'screen' });
   await page.setViewportSize({ width: 1600, height: 1000 });
-  await page.goto(`${pathToFileURL(resolve(root, 'MICROSOFT-DISCOVERY-LAB.ko.html')).href}#l04`);
-  await page.locator('[data-language="en"]').click();
-  await page.waitForURL('**/MICROSOFT-DISCOVERY-LAB.en.html#l04');
-  assert.equal(await page.locator('html').getAttribute('lang'), 'en');
+  await page.goto(`${pathToFileURL(resolve(root, 'MICROSOFT-DISCOVERY-LAB.en.html')).href}#l04`);
   await page.locator('[data-language="ko"]').click();
   await page.waitForURL('**/MICROSOFT-DISCOVERY-LAB.ko.html#l04');
   assert.equal(await page.locator('html').getAttribute('lang'), 'ko');
+  await page.locator('[data-language="en"]').click();
+  await page.waitForURL('**/MICROSOFT-DISCOVERY-LAB.en.html#l04');
+  assert.equal(await page.locator('html').getAttribute('lang'), 'en');
   assert.deepEqual(errors, []);
   assert.deepEqual(networkRequests, []);
 } finally {
