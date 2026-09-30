@@ -1,0 +1,55 @@
+{
+  "startedAt": "2026-09-30T08:02:26.394Z",
+  "completedAt": "2026-09-30T08:02:27.513Z",
+  "scope": {
+    "subscriptionId": "51531604-2337-4c05-bc05-3c3d4ff154e5",
+    "tenantId": "46e9cdaa-fed3-4131-aa28-c1fc8a8a043a",
+    "resourceGroup": "rg-discovery-hol-20260930",
+    "location": "swedencentral"
+  },
+  "authentication": "Existing Azure CLI delegated session; verified tenant/subscription; token retained in memory only",
+  "request": {
+    "method": "PUT",
+    "url": "https://management.azure.com/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/workspaces/discoveryholjunwoosc?api-version=2026-06-01",
+    "body": {
+      "location": "swedencentral",
+      "tags": {
+        "environment": "lab",
+        "project": "microsoft-discovery-core-hol",
+        "NetworkIsolation": "true"
+      },
+      "properties": {
+        "workspaceIdentity": {
+          "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-discovery-hol"
+        },
+        "workspaceSubnetId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/workspaceSubnet",
+        "privateEndpointSubnetId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/privateEndpointSubnet",
+        "agentSubnetId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/agentSubnet",
+        "customerManagedKeys": "Disabled",
+        "publicNetworkAccess": "Disabled",
+        "supercomputerIds": []
+      }
+    }
+  },
+  "response": {
+    "status": 404,
+    "requestId": "b14ff013-b783-4194-8f49-e9e64de0221b",
+    "correlationRequestId": "b14ff013-b783-4194-8f49-e9e64de0221b",
+    "asyncOperation": null,
+    "location": null,
+    "body": {
+      "error": {
+        "code": "InvalidResourceType",
+        "message": "The resource type could not be found in the namespace 'Microsoft.Discovery' for api version '2026-06-01'."
+      }
+    }
+  },
+  "creationAccepted": false,
+  "provisioningSucceeded": false,
+  "discoveryEnvironmentReady": false,
+  "limitations": [
+    "This is an actual resource creation attempt, not a completed Discovery deployment.",
+    "No supercomputer is attached; the full guide requires four additional dedicated subnets.",
+    "No RBAC assignments, NSP control-plane roles, private endpoints, VPN, model quota or compute prerequisites were provisioned by this attempt."
+  ]
+}

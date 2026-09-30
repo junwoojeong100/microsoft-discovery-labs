@@ -1,0 +1,19 @@
+{
+  "location": "swedencentral",
+  "tags": {
+    "environment": "lab",
+    "project": "microsoft-discovery-core-hol",
+    "NetworkIsolation": "true"
+  },
+  "properties": {
+    "workspaceIdentity": {
+      "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-discovery-hol"
+    },
+    "workspaceSubnetId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/workspaceSubnet",
+    "privateEndpointSubnetId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/privateEndpointSubnet",
+    "agentSubnetId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/agentSubnet",
+    "customerManagedKeys": "Disabled",
+    "publicNetworkAccess": "Disabled",
+    "supercomputerIds": []
+  }
+}

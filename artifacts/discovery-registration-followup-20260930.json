@@ -1,0 +1,151 @@
+{
+  "date": "2026-09-30",
+  "scope": {
+    "subscriptionId": "51531604-2337-4c05-bc05-3c3d4ff154e5",
+    "subscriptionName": "ME-MngEnvMCAP757124-junwoojeong-1",
+    "tenantId": "46e9cdaa-fed3-4131-aa28-c1fc8a8a043a",
+    "resourceGroup": "rg-discovery-hol-20260930",
+    "location": "swedencentral"
+  },
+  "references": [
+    "https://learn.microsoft.com/ko-kr/azure/microsoft-discovery/concept-resource-provider-registration",
+    "https://learn.microsoft.com/ko-kr/azure/microsoft-discovery/quickstart-infrastructure?tabs=portal",
+    "MICROSOFT-DISCOVERY-LAB.ko.md#l00",
+    "MICROSOFT-DISCOVERY-LAB.ko.md#l01"
+  ],
+  "providerRegistration": {
+    "verifiedAt": "2026-09-30T08:39:02.327249+00:00",
+    "requiredCount": 25,
+    "registeredCount": 25,
+    "notReturned": [],
+    "newlyRegistered": [
+      "Microsoft.AlertsManagement",
+      "Microsoft.ContainerService",
+      "Microsoft.DocumentDB",
+      "Microsoft.NetApp",
+      "Microsoft.Sql",
+      "Microsoft.Bing"
+    ],
+    "providers": {
+      "Microsoft.Discovery": "Registered",
+      "Microsoft.Network": "Registered",
+      "Microsoft.Compute": "Registered",
+      "Microsoft.Storage": "Registered",
+      "Microsoft.ManagedIdentity": "Registered",
+      "Microsoft.AlertsManagement": "Registered",
+      "Microsoft.Authorization": "Registered",
+      "Microsoft.CognitiveServices": "Registered",
+      "Microsoft.ContainerInstance": "Registered",
+      "Microsoft.ContainerRegistry": "Registered",
+      "Microsoft.ContainerService": "Registered",
+      "Microsoft.DocumentDB": "Registered",
+      "Microsoft.Features": "Registered",
+      "Microsoft.KeyVault": "Registered",
+      "Microsoft.MachineLearningServices": "Registered",
+      "Microsoft.NetApp": "Registered",
+      "Microsoft.OperationalInsights": "Registered",
+      "Microsoft.ResourceGraph": "Registered",
+      "Microsoft.Search": "Registered",
+      "Microsoft.Web": "Registered",
+      "Microsoft.Insights": "Registered",
+      "Microsoft.Resources": "Registered",
+      "Microsoft.Sql": "Registered",
+      "Microsoft.App": "Registered",
+      "Microsoft.Bing": "Registered"
+    }
+  },
+  "accessAfterRegistration": {
+    "feature": {
+      "name": "Microsoft.Discovery/DefaultFeature",
+      "state": "Pending"
+    },
+    "provider": {
+      "registrationState": "Registered",
+      "resourceTypes": [
+        "locations",
+        "locations/operationStatuses",
+        "operations",
+        "checkNameAvailability"
+      ]
+    }
+  },
+  "workspaceApiProbes": [
+    {
+      "checkedAtUtc": "2026-09-30T08:47:57.527Z",
+      "method": "GET",
+      "url": "https://management.azure.com/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Discovery/workspaces?api-version=2026-06-01",
+      "status": 404,
+      "requestId": "77b2dd3e-e58e-4591-b13b-6bce23c452b6",
+      "correlationRequestId": "77b2dd3e-e58e-4591-b13b-6bce23c452b6",
+      "body": {
+        "error": {
+          "code": "InvalidResourceType",
+          "message": "The resource type could not be found in the namespace 'Microsoft.Discovery' for api version '2026-06-01'."
+        }
+      }
+    },
+    {
+      "checkedAtUtc": "2026-09-30T08:47:57.382Z",
+      "method": "GET",
+      "url": "https://management.azure.com/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Discovery/workspaces?api-version=2026-02-01-preview",
+      "status": 404,
+      "requestId": "c97b2ed0-d1cd-437a-8d5b-4df05eead574",
+      "correlationRequestId": "c97b2ed0-d1cd-437a-8d5b-4df05eead574",
+      "body": {
+        "error": {
+          "code": "InvalidResourceType",
+          "message": "The resource type could not be found in the namespace 'Microsoft.Discovery' for api version '2026-02-01-preview'."
+        }
+      }
+    }
+  ],
+  "existingFoundation": {
+    "resources": [
+      {
+        "name": "vnet-discovery-hol",
+        "type": "Microsoft.Network/virtualNetworks",
+        "provisioningState": "Succeeded",
+        "addressSpace": ["10.80.0.0/16"],
+        "subnets": [
+          {
+            "name": "workspaceSubnet",
+            "addressPrefix": "10.80.3.0/24",
+            "provisioningState": "Succeeded"
+          },
+          {
+            "name": "privateEndpointSubnet",
+            "addressPrefix": "10.80.4.0/24",
+            "provisioningState": "Succeeded"
+          },
+          {
+            "name": "agentSubnet",
+            "addressPrefix": "10.80.5.0/24",
+            "provisioningState": "Succeeded"
+          }
+        ]
+      },
+      {
+        "name": "id-discovery-hol",
+        "type": "Microsoft.ManagedIdentity/userAssignedIdentities"
+      }
+    ],
+    "changedByThisFollowUp": false
+  },
+  "outcome": "blocked",
+  "resourceCreationAttemptedAfterRegistration": false,
+  "createdResources": [],
+  "roleAssignmentsPerformed": false,
+  "featureRegistrationChanged": false,
+  "discoveryEnvironmentReady": false,
+  "blockers": [
+    "The subscription still lacks the required Discovery workload resource types; DefaultFeature is Pending.",
+    "Both the GA and earlier preview Workspace listing APIs return HTTP 404 InvalidResourceType after all 25 required providers were registered."
+  ],
+  "nextAction": "Ask the Microsoft account representative or Discovery service team to enable this subscription for Discovery. After service access is enabled, verify resource types, RBAC/NSP roles, quotas and connectivity before deploying the full guide.",
+  "limitations": [
+    "The post-registration probes are read-only GET requests, not new resource creation attempts.",
+    "The earlier Workspace PUT failure remains separately recorded in artifacts/discovery-workspace-create-20260930.json.",
+    "The official quickstart and repository guide require service enablement before deployment; no additional workload resources or roles were created while that prerequisite was blocked.",
+    "Authentication tokens and authorization headers are not included."
+  ]
+}

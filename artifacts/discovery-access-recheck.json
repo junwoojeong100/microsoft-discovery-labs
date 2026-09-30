@@ -1,0 +1,51 @@
+{
+  "checkedAt": "2026-09-25T01:52:30.770Z",
+  "account": "junwoojeong@MngEnvMCAP757124.onmicrosoft.com",
+  "tenantId": "46e9cdaa-fed3-4131-aa28-c1fc8a8a043a",
+  "subscriptionId": "51531604-2337-4c05-bc05-3c3d4ff154e5",
+  "identityVerified": true,
+  "azureMutations": 0,
+  "featureExecutionRecorded": false,
+  "checks": [
+    {
+      "label": "feature",
+      "status": 200,
+      "requestId": "koreacentral:83fe0acc-3281-4f9e-81e5-1af56d033a6a",
+      "state": "Pending"
+    },
+    {
+      "label": "workspace-inventory",
+      "status": 200,
+      "requestId": "036a302f-69d1-4a84-8e0a-93d198c22615",
+      "count": 0,
+      "resources": []
+    },
+    {
+      "label": "workspace-api-stable",
+      "status": 404,
+      "requestId": "4a04714e-41d1-4f65-b613-641cab1b5a16",
+      "error": {
+        "code": "InvalidResourceType",
+        "message": "The resource type could not be found in the namespace 'Microsoft.Discovery' for api version '2026-06-01'."
+      }
+    },
+    {
+      "label": "workspace-api-preview",
+      "status": 404,
+      "requestId": "83904343-f10b-4151-993f-5fd177c4eb9e",
+      "error": {
+        "code": "InvalidResourceType",
+        "message": "The resource type could not be found in the namespace 'Microsoft.Discovery' for api version '2026-02-01-preview'."
+      }
+    },
+    {
+      "label": "workspace-api-earlier",
+      "status": 404,
+      "requestId": "164cc135-11d8-4646-b184-23fcbc0fbb3f",
+      "error": {
+        "code": "InvalidResourceType",
+        "message": "The resource type could not be found in the namespace 'Microsoft.Discovery' for api version '2025-07-01-preview'."
+      }
+    }
+  ]
+}

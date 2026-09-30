@@ -1,0 +1,29 @@
+{
+  "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Resources/deployments/discovery-network-20260930",
+  "location": "swedencentral",
+  "name": "discovery-network-20260930",
+  "properties": {
+    "duration": "PT38.981865S",
+    "error": null,
+    "outputs": {
+      "resourceGroupId": {
+        "type": "String",
+        "value": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930"
+      },
+      "subnetIds": {
+        "type": "Object",
+        "value": {
+          "agentSubnet": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/agentSubnet",
+          "privateEndpointSubnet": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/privateEndpointSubnet",
+          "workspaceSubnet": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/workspaceSubnet"
+        }
+      },
+      "virtualNetworkId": {
+        "type": "String",
+        "value": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol"
+      }
+    },
+    "provisioningState": "Succeeded",
+    "timestamp": "2026-09-30T07:54:25.356876+00:00"
+  }
+}

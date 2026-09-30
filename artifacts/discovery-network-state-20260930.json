@@ -1,0 +1,110 @@
+{
+  "addressSpace": {
+    "addressPrefixes": [
+      "10.80.0.0/16"
+    ]
+  },
+  "enableDdosProtection": false,
+  "etag": "W/\"955d7de5-30ac-4c2b-bd4e-83028dacdde9\"",
+  "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol",
+  "location": "swedencentral",
+  "name": "vnet-discovery-hol",
+  "privateEndpointVNetPolicies": "Disabled",
+  "provisioningState": "Succeeded",
+  "resourceGroup": "rg-discovery-hol-20260930",
+  "resourceGuid": "0c6a013d-927e-4d86-8eb5-000391789ea7",
+  "subnets": [
+    {
+      "addressPrefix": "10.80.3.0/24",
+      "defaultOutboundAccess": false,
+      "delegations": [
+        {
+          "actions": [
+            "Microsoft.Network/virtualNetworks/subnets/join/action"
+          ],
+          "etag": "W/\"955d7de5-30ac-4c2b-bd4e-83028dacdde9\"",
+          "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/workspaceSubnet/delegations/containerApps",
+          "name": "containerApps",
+          "provisioningState": "Succeeded",
+          "resourceGroup": "rg-discovery-hol-20260930",
+          "serviceName": "Microsoft.App/environments",
+          "type": "Microsoft.Network/virtualNetworks/subnets/delegations"
+        }
+      ],
+      "etag": "W/\"955d7de5-30ac-4c2b-bd4e-83028dacdde9\"",
+      "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/workspaceSubnet",
+      "name": "workspaceSubnet",
+      "privateEndpointNetworkPolicies": "Disabled",
+      "privateLinkServiceNetworkPolicies": "Enabled",
+      "provisioningState": "Succeeded",
+      "resourceGroup": "rg-discovery-hol-20260930",
+      "serviceEndpoints": [
+        {
+          "locations": [
+            "swedencentral",
+            "swedensouth"
+          ],
+          "provisioningState": "Succeeded",
+          "service": "Microsoft.Storage"
+        }
+      ],
+      "type": "Microsoft.Network/virtualNetworks/subnets"
+    },
+    {
+      "addressPrefix": "10.80.4.0/24",
+      "defaultOutboundAccess": false,
+      "delegations": [],
+      "etag": "W/\"955d7de5-30ac-4c2b-bd4e-83028dacdde9\"",
+      "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/privateEndpointSubnet",
+      "name": "privateEndpointSubnet",
+      "privateEndpointNetworkPolicies": "Enabled",
+      "privateLinkServiceNetworkPolicies": "Enabled",
+      "provisioningState": "Succeeded",
+      "resourceGroup": "rg-discovery-hol-20260930",
+      "type": "Microsoft.Network/virtualNetworks/subnets"
+    },
+    {
+      "addressPrefix": "10.80.5.0/24",
+      "defaultOutboundAccess": false,
+      "delegations": [
+        {
+          "actions": [
+            "Microsoft.Network/virtualNetworks/subnets/join/action"
+          ],
+          "etag": "W/\"955d7de5-30ac-4c2b-bd4e-83028dacdde9\"",
+          "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/agentSubnet/delegations/containerApps",
+          "name": "containerApps",
+          "provisioningState": "Succeeded",
+          "resourceGroup": "rg-discovery-hol-20260930",
+          "serviceName": "Microsoft.App/environments",
+          "type": "Microsoft.Network/virtualNetworks/subnets/delegations"
+        }
+      ],
+      "etag": "W/\"955d7de5-30ac-4c2b-bd4e-83028dacdde9\"",
+      "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/agentSubnet",
+      "name": "agentSubnet",
+      "privateEndpointNetworkPolicies": "Disabled",
+      "privateLinkServiceNetworkPolicies": "Enabled",
+      "provisioningState": "Succeeded",
+      "resourceGroup": "rg-discovery-hol-20260930",
+      "serviceEndpoints": [
+        {
+          "locations": [
+            "swedencentral",
+            "swedensouth"
+          ],
+          "provisioningState": "Succeeded",
+          "service": "Microsoft.Storage"
+        }
+      ],
+      "type": "Microsoft.Network/virtualNetworks/subnets"
+    }
+  ],
+  "tags": {
+    "deploymentScope": "network-foundation",
+    "environment": "lab",
+    "project": "microsoft-discovery-core-hol"
+  },
+  "type": "Microsoft.Network/virtualNetworks",
+  "virtualNetworkPeerings": []
+}

@@ -1,0 +1,19 @@
+{
+  "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Resources/deployments/discovery-identity-20260930",
+  "name": "discovery-identity-20260930",
+  "properties": {
+    "error": null,
+    "outputs": {
+      "identityId": {
+        "type": "String",
+        "value": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-discovery-hol"
+      },
+      "principalId": {
+        "type": "String",
+        "value": "d3e217ab-24b0-4f5b-bea7-7048dab36e55"
+      }
+    },
+    "provisioningState": "Succeeded",
+    "timestamp": "2026-09-30T08:01:58.350915+00:00"
+  }
+}
