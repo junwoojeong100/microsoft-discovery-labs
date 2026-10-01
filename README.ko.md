@@ -20,9 +20,9 @@ GitHub에서는 Markdown 또는 PDF를 선택하세요. HTML은 저장소를 다
 
 ## 실행 상태
 
-**서비스 사용 활성화는 확인됐지만 전체 실습은 미완료입니다.** 이전 `InvalidResourceType` 문제는 해소됐습니다. 네트워크·Storage·Registry·사설 Blob 연결·Discovery 데이터 참조·digest 고정 CPU Tool을 생성했습니다. Supercomputer는 Sweden Central의 **`AKSCapacityHeavyUsage`**로 실패했습니다. 별도로 검증한 Workspace-only 시도도 내부 Container Apps가 같은 지역 AKS 용량에 의존해 실패했습니다.
+**2026-10-01 15:52 KST 기준, 전체 실습은 미완료입니다.** 서비스 활성화와 `AllowBringYourOwnPublicIpAddress` 등록·Provider 전파는 해결됐습니다. 기존 코어를 한 번 재시도했지만 **15:46:52에 새 하위 AKS 요청도 `AKSCapacityHeavyUsage`로 실패**했습니다. 상위 배포는 `Running`, Supercomputer는 `Accepted`, 기존 Workspace는 `Failed`이므로 최종 성공/실패를 혼동하지 않습니다.
 
-Bookshelf는 gpt-5-mini·임베딩 quota 증액이 필요합니다. **사설 Blob은 후속 작업에서 원격 VM 경로를 마련해 입력 5개 업로드·읽기 해시 일치까지 확인**했습니다. 이 경로가 로컬 브라우저에 VPN을 제공하는 것은 아닙니다. 에이전트·색인·실제 계산·Discovery Engine의 **종단간 실행은 미검증**입니다. [초기 워크로드 상태](artifacts/discovery-execution-20261001.json), [사설 입력 검증](artifacts/discovery-private-blob-sync.json), [날짜별 실행 보고서](EXECUTION-REPORT.ko.md)를 구분해 확인하세요.
+Bookshelf의 운영 준비 기준에는 gpt-5-mini·임베딩 quota가 부족합니다. 15:53 잔여량은 **990,000 / 780,000 TPM**이며, 각 총 3,000,000 TPM 신청은 접수됐지만 아직 반영되지 않았습니다. 중앙 Log Analytics 대상 누락으로 실패한 공통 진단 정책도 별도 조치가 필요합니다. 사설 VM의 과거 입력 5개 업로드·읽기 검증은 완료했지만 노트북의 직접 Blob 경로와 **종단간 연구 실행은 미검증**입니다. [현재 상태 스냅샷](artifacts/discovery-resume-snapshot-20261001-1552.json)과 [블로커·조치·증거를 모은 실행 보고서](EXECUTION-REPORT.ko.md)를 확인하세요.
 
 ## 현재 실습 환경 (2026-10-01)
 
@@ -37,6 +37,8 @@ Bookshelf는 gpt-5-mini·임베딩 quota 증액이 필요합니다. **사설 Blo
 | Registry/Tool | Basic `acrdiscoveryholjunwoosc`, ACR task `dt1` 및 Tool `thermal-ranking` v1.0.0 성공 |
 | 데이터 참조·파일 | `thermaldata`, `evidencepack`, `candidatecsv`; 후속 작업에서 TXT 4개·CSV 1개 업로드와 SHA-256 읽기 검증 완료 |
 | 사설 데이터 클라이언트 | `vm-discovery-blob-client`, 공개 IP/SSH 인바운드 없음, 검증 후 할당 해제 |
+| 네트워크 feature | `AllowBringYourOwnPublicIpAddress` 및 `Microsoft.Network` 모두 Registered |
+| Supercomputer / 배포 | `sc-discovery-hol` Accepted / 오후 코어 배포 Running; 하위 AKS 용량 실패 관측 |
 | Workspace | `discoveryholjunwoosc`는 `Failed`; 관리 리소스 격리 유지, 연결 컴퓨트·사용 가능한 Project 없음 |
 
 사용자에게 필요한 데이터 역할, UAMI에는 실습 RG·Storage·Registry·VNet·자기 ID 범위의 역할을 부여했습니다. 공식 first-party control-plane의 Reader/NSP Joiner만 문서에 따라 구독 scope입니다. 조직 정책을 해제하지 않았습니다. 실패한 배포에도 유료 리소스가 남을 수 있으므로 정리 전에 L09를 확인하세요.

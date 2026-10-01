@@ -2,22 +2,39 @@
 
 Status: Blocked
 
-Private Blob client phase completed and verified. Discovery workload capacity
-and Bookshelf quota remain blocked; no failed workload was retried in this phase.
+Status checked on 2026-10-01 at 15:52 KST. The previously validated single
+retry is already running; this is not permission to start another deployment.
 
-Blocked by external Sweden Central AKS/Container Apps capacity and Bookshelf
-model quota. Private-client data connectivity is now verified. All attempted deployments have
-reached terminal states; do not retry without revalidating the external gates.
+2026-10-01 15:30 KST follow-up: the user requested resource creation from the
+hands-on guide and a complete record of restrictions. Reuse the same lab
+subscription, RG, region, names, identity, and private-network configuration.
+Do not delete failed resources or duplicate the paid stack in another region.
 
-Validated stages: network expansion, control-plane access, storage/registry
-foundation, and core ARM provisioning. Data-plane use remains a separate gate.
+The existing Workspace is Failed. The Supercomputer is now Accepted after a
+single retry, and the parent deployment is Running. Its backing AKS returned a
+new AKSCapacityHeavyUsage error at 15:46:52 KST. No terminal result is claimed.
+Revalidation of the compiled core template and incremental what-if passed;
+those results did not prove regional service capacity.
+The documented LoadBalancer prerequisite
+Microsoft.Network/AllowBringYourOwnPublicIpAddress was registered successfully;
+Microsoft.Network re-registration also completed. Both were independently
+read back as Registered. The one authorized bounded core retry has been
+submitted as discovery-core-resume-20261001-1530. Do not add overlapping PUTs
+or treat it as Bookshelf or end-to-end success. A terminal-state conflict was
+not observed on this Supercomputer retry; deletion still requires approval.
+
+Bookshelf model quota remains insufficient. Its two existing increase requests
+were submitted at 13:41 KST, but approval has not appeared in the quota values.
+Do not submit duplicates or create Bookshelf infrastructure yet. The private
+Blob client remains deallocated. Data-plane use is a separate completion gate.
 
 ## 1. Scope and authorization
 
-The user requested unblocking the remaining prerequisites and autonomous
-implementation on 2026-10-01 at 11:14 KST. The user is handling the quota form
-manually; do not submit a duplicate request. Establish an approved VNet-internal
-Blob client without weakening public-network policy or requiring a laptop VPN.
+The earlier user request authorized prerequisite remediation at 11:14 KST.
+The private Blob client phase has completed. Quota forms were subsequently
+submitted with the user's explicit approval; do not submit duplicate requests.
+The 15:30 KST request authorizes resuming the existing lab's creation while
+preserving its resources and recording any remaining restrictions.
 
 Execute the existing Microsoft Discovery hands-on guide and improve it using
 observed deployment results, as requested on 2026-10-01. Reuse existing lab
@@ -86,6 +103,56 @@ Validate prerequisites, provision incrementally, verify real resource state,
 and update both language editions and directly related generated outputs.
 
 ## 7. Validation proof
+
+2026-10-01 15:52 KST execution follow-up:
+
+- The actual core retry began at 15:43:48 KST. Parent deployment Running,
+  Supercomputer Accepted, Workspace Failed, cpulab/indexlab/gpt-5-4/thermalhol
+  HTTP 404, and Bookshelf listing empty.
+- A new managed-cluster write failed at 15:46:52 KST with
+  AKSCapacityHeavyUsage, correlation cf91439f-960e-430a-96af-798274d51c89.
+  Feature registration did not resolve Azure regional capacity.
+- The 15:53 quota refresh still fails Bookshelf operational readiness.
+  Shared diagnostics policy failure remains a separate governance issue.
+- Evidence: `artifacts/discovery-resume-snapshot-20261001-1552.json`,
+  `artifacts/discovery-resume-readiness-20261001-1553.json`,
+  `artifacts/discovery-resume-current-deployment-20261001.json`, and
+  `artifacts/discovery-resume-activity-failures-20261001.json`.
+- A read-only terminal-state waiter tracks the one existing deployment.
+  It does not submit additional retries, cancel, delete, or change regions.
+
+2026-10-01 afternoon core-resume preflight:
+
+- `npm run readiness` returns 2 for the full lab: core access/model quota
+  passes, while Bookshelf remains blocked. GPT-5.4 has 2,750,000 TPM
+  unallocated; gpt-5-mini and embedding have 990,000 and 780,000 TPM.
+- `az bicep build --file infra/discovery-core.bicep` succeeded. The compiled
+  payload still contains the intended workload identity; what-if omits
+  empty identity-map values and service-populated properties.
+- `az deployment group validate` succeeded for all eight Discovery resources
+  using the exact compiled template, `deployCompute=true`, and Incremental
+  mode. Evidence: `artifacts/discovery-resume-validation-20261001.json`.
+- The incremental what-if has three creates, two modifications, three
+  unchanged Discovery resources, and no resource deletions. All other
+  resources are Ignore. The three creates are cpulab, gpt-5-4, and thermalhol;
+  the modifications are the existing failed Supercomputer and Workspace.
+  Evidence: `artifacts/discovery-resume-whatif-20261001.json`.
+- Live role checks confirm the deployer has inherited Owner and RG-scoped
+  Discovery Platform Administrator. Required UAMI and control-plane roles
+  remain present; no new role assignments are needed.
+- Regional vCPU allocation is 2/100; Dsv6 and Esv6 are each 0/100. Managed
+  Environment Count is 1/50. These limits do not measure Azure's available
+  regional service capacity.
+- Standard_D4s_v6 is restricted in zone 2 for this subscription; the existing
+  template does not select a zone. The existing managed Container Apps
+  environment still records ManagedEnvironmentCapacityHeavyUsageError.
+- The documented AllowBringYourOwnPublicIpAddress network feature initially
+  returned NotRegistered. Its registration immediately returned Registered,
+  Microsoft.Network re-registration completed, and a separate read confirmed
+  both Registered. No third-party approval was required for this feature in
+  this subscription. Evidence:
+  `artifacts/discovery-resume-network-feature-registration-20261001.json` and
+  `artifacts/discovery-resume-network-provider-20261001.json`.
 
 2026-10-01 private-client follow-up validation:
 

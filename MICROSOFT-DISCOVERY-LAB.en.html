@@ -361,6 +361,20 @@
 <li>Choose a supported production region: <strong>East US / Sweden Central / UK South</strong>. This guide uses <code>swedencentral</code>. Check model/VM quota and always-on costs in A01.</li>
 <li>Complete normal MFA/security-key sign-in. For private access, prepare VPN/ExpressRoute and Blob connectivity. Verify Portal sign-in, Studio access, and opening Blob outputs separately.</li>
 </ol>
+<p><strong>Separate LoadBalancer network prerequisite:</strong> Check <code>Microsoft.Network/AllowBringYourOwnPublicIpAddress</code> using the <a href="https://learn.microsoft.com/azure/microsoft-discovery/troubleshoot-microsoft-discovery#supercomputer-deployment-stalls-because-a-required-public-ip-feature-isnt-registered">official troubleshooting guidance</a>. Discovery enablement and <code>Microsoft.Network=Registered</code> do not substitute for this feature registration.</p>
+<pre><code class="language-bash">az feature show --namespace Microsoft.Network \
+  --name AllowBringYourOwnPublicIpAddress \
+  --subscription 51531604-2337-4c05-bc05-3c3d4ff154e5 \
+  --query &quot;{name:name,state:properties.state}&quot;
+</code></pre>
+<p>Only when it is <code>NotRegistered</code>, an administrator with subscription feature-registration permissions runs these <strong>mutation commands</strong>. Verify the feature is <code>Registered</code> before re-registering the provider. Do not treat <code>Pending</code> as approval.</p>
+<pre><code class="language-bash">az feature register --namespace Microsoft.Network \
+  --name AllowBringYourOwnPublicIpAddress \
+  --subscription 51531604-2337-4c05-bc05-3c3d4ff154e5
+az provider register --namespace Microsoft.Network \
+  --subscription 51531604-2337-4c05-bc05-3c3d4ff154e5 --wait
+</code></pre>
+<p>During the afternoon follow-up on 2026-10-01, the current account&#39;s inherited Owner role allowed immediate registration. Provider re-registration and independent read-back also completed; this subscription required no separate Microsoft approval wait. User consent alone does not grant RBAC permissions or guarantee approval in another subscription. This feature is separate from AKS regional capacity and model quota increases.</p>
 <p>Run the following read-only checks without a browser. They verify the account, tenant, and subscription in <code>config/lab.json</code> without saving tokens. Exit <code>0</code> means the selected access/model-quota checks passed, <code>2</code> means a prerequisite is blocked, and <code>1</code> means a lookup/authentication error.</p>
 <pre><code class="language-bash">npm run readiness
 npm run readiness -- --require core
@@ -525,6 +539,7 @@ az deployment operation group list --name discovery-core-20261001 \
   --template-file infra/discovery-core.bicep --parameters deployCompute=false
 </code></pre>
 <p>Outputs explicitly say <code>computeIncluded=false</code> and compute IDs are <code>null</code>. Use this <strong>only for a new Workspace or one without linked Supercomputers</strong>; applying it to a linked environment could clear its links. It does not pass all of L01, L03 indexing, or L05 computation. Once capacity is resolved, confirm actual Supercomputer/node-pool success and attach them through the default path. An alternate region requires planning VNet, Storage, and Workspace together, not indiscriminately mixing the existing stack across regions.</p>
+<p><strong>Terminal-failure recovery limit:</strong> Successful <code>validate</code>/<code>what-if</code> results do not prove that the create/update API accepts a resource in terminal <code>Failed</code> state. Stop repeated PUTs on <code>Conflict</code> or an equivalent state error. The <a href="https://learn.microsoft.com/azure/microsoft-discovery/troubleshoot-microsoft-discovery#a-discovery-resource-is-stuck-in-a-terminal-failed-state">official recovery procedure</a> is to resolve the cause, obtain deletion approval, and delete <strong>only the failed Discovery resource</strong> before recreating it with a new name. Preserve the healthy RG, Storage, and data; do not directly repair the managed AKS/Container Apps resources.</p>
 <p><strong>Pass criteria:</strong> Workspace, Supercomputer, CPU pool, Storage Container, and Project are ready; the required model exists. You can open the project in Studio, and both the user and managed identity have their respective required Blob access.</p>
 <p><a id="l02"></a></p>
 <h2 id="heading-l02">L02 — Register data and move files through the workflow</h2><p><strong>Goal:</strong> Register Blob files and Discovery references, preparing the inputs that agents will use later.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-files-storage-assets">S15</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-storage-containers-assets">S16</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/how-to-manage-storage-containers">S17</a>]</sup></p>

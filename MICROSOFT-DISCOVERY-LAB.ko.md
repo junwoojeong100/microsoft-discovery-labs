@@ -134,6 +134,27 @@ az provider show --namespace Microsoft.Discovery \
 7. 지원 생산 리전 **East US / Sweden Central / UK South** 중 하나를 선택한다. 이 실습은 `swedencentral`을 사용한다. A01의 모델·VM quota와 상시 인프라 비용을 확인한다.
 8. 정상 MFA·보안 키 로그인을 완료한다. 사설 접근 경로라면 VPN/ExpressRoute와 Blob 접근 경로를 준비한다. Portal 로그인, Studio 접근, Blob 파일 열기는 각각 확인한다.
 
+**LoadBalancer의 별도 네트워크 선행조건:** [공식 문제 해결 문서](https://learn.microsoft.com/azure/microsoft-discovery/troubleshoot-microsoft-discovery#supercomputer-deployment-stalls-because-a-required-public-ip-feature-isnt-registered)에 따라 `Microsoft.Network/AllowBringYourOwnPublicIpAddress`를 확인한다. Discovery 사용 활성화나 `Microsoft.Network=Registered`만으로 이 feature 등록을 대신할 수 없다.
+
+```bash
+az feature show --namespace Microsoft.Network \
+  --name AllowBringYourOwnPublicIpAddress \
+  --subscription 51531604-2337-4c05-bc05-3c3d4ff154e5 \
+  --query "{name:name,state:properties.state}"
+```
+
+`NotRegistered`일 때만 구독의 feature 등록 권한을 가진 관리자가 다음 **변경 명령**을 실행한다. Feature가 `Registered`인 것을 확인한 뒤 Provider를 다시 등록한다. `Pending`이면 승인 완료로 간주하지 않는다.
+
+```bash
+az feature register --namespace Microsoft.Network \
+  --name AllowBringYourOwnPublicIpAddress \
+  --subscription 51531604-2337-4c05-bc05-3c3d4ff154e5
+az provider register --namespace Microsoft.Network \
+  --subscription 51531604-2337-4c05-bc05-3c3d4ff154e5 --wait
+```
+
+2026-10-01 오후에는 현재 계정의 상속 Owner 권한으로 즉시 `Registered` 응답을 받았으며 Provider 재등록과 독립 재조회도 완료했다. 이 구독에서는 별도 Microsoft 승인 대기가 없었다. 사용자 동의만으로 RBAC 권한이 생기거나 다른 구독의 승인이 보장되는 것은 아니다. 이 feature 등록은 AKS 지역 용량이나 모델 quota 증액과도 별개다.
+
 브라우저 없이 다음 읽기 전용 점검을 실행한다. `config/lab.json`의 계정·테넌트·구독을 검증하며 토큰은 저장하지 않는다. 반환 코드 `0`은 선택한 접근·모델 quota 검사 통과, `2`는 선행조건 차단, `1`은 조회/인증 오류다.
 
 ```bash
@@ -258,6 +279,8 @@ az deployment group what-if --name discovery-workspace-20261001 \
 ```
 
 이 경로의 출력은 `computeIncluded=false`, 컴퓨트 ID는 `null`이다. **새 Workspace 또는 연결된 Supercomputer가 없는 경우에만** 사용한다. 이미 연결된 환경에 적용하면 연결 목록을 비울 수 있다. 이 모드는 L01 전체, L03 색인, L05 실제 계산을 통과시키지 않는다. 용량 문제 해결 후 실제 Supercomputer/노드 풀의 성공을 확인하고 기본 경로로 연결한다. 다른 리전을 선택할 때는 VNet·Storage·Workspace를 함께 계획하며 기존 환경과 무작정 혼합하지 않는다.
+
+**종료된 실패 상태의 재개 제한:** `validate`/`what-if`가 성공해도 실제 생성·갱신 API가 terminal `Failed` 상태를 거부할 수 있다. `Conflict` 또는 같은 의미의 상태 오류가 나오면 반복 PUT을 중단한다. [공식 복구 절차](https://learn.microsoft.com/azure/microsoft-discovery/troubleshoot-microsoft-discovery#a-discovery-resource-is-stuck-in-a-terminal-failed-state)는 원인을 해결한 뒤 **삭제 승인을 받은 실패 Discovery 리소스만** 삭제하고 새 이름으로 다시 만드는 것이다. 정상 RG·Storage·데이터를 함께 삭제하거나 관리 AKS/Container Apps를 직접 고치지 않는다.
 
 **완료 기준:** Workspace·Supercomputer·CPU 풀·Storage Container·Project가 준비되고 필수 모델이 존재한다. Studio에서 프로젝트를 열고, 사용자와 관리 ID가 각각 필요한 Blob 경로에 접근할 수 있다.
 

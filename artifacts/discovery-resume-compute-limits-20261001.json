@@ -1,0 +1,17 @@
+[
+  {
+    "label": "Total Regional vCPUs",
+    "limit": 100,
+    "name": "cores"
+  },
+  {
+    "label": "Standard Dsv6 Family vCPUs",
+    "limit": 100,
+    "name": "StandardDsv6Family"
+  },
+  {
+    "label": "Standard Esv6 Family vCPUs",
+    "limit": 100,
+    "name": "StandardEsv6Family"
+  }
+]

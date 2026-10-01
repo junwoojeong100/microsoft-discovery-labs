@@ -18,6 +18,26 @@ Workspace가 `Failed`인 상태에서 설정값만 보고 모든 관리 자원�
 
 사설 Blob 클라이언트에 공개 IP가 없다는 사실을 전체 Supercomputer에도 공개 IP가 없다는 뜻으로 확대하지 않는다. 기본 `LoadBalancer` egress가 조직 정책에 막히면 지원되는 별도 라우팅/egress 설계를 검토한다. 임의 정책 해제나 검증되지 않은 네트워크 속성 변경으로 우회하지 않는다.
 
+## LoadBalancer feature 등록 — 오후 후속 작업에서 해결
+
+`Microsoft.Network/AllowBringYourOwnPublicIpAddress`는 Discovery 활성화 및 Provider 등록과 별개다. 2026-10-01 오후 조회에서는 `NotRegistered`였고, 현재 계정의 상속 Owner 권한으로 등록 요청을 보내 즉시 **`Registered`**를 받았다. 이어 `Microsoft.Network`를 재등록하고 두 상태를 독립적으로 다시 확인했다.
+
+이 구독에서는 별도 Microsoft 승인 대기가 필요하지 않았다. 다만 **사용자의 동의와 Azure RBAC 권한은 별개**이며 다른 구독에서도 즉시 승인된다는 보장은 없다. 이 등록이 공개 접근을 금지하는 조직 정책, AKS 지역 용량, 모델 quota 제한을 해제하지는 않는다.
+
+다음은 읽기 전용 확인이다. 이미 등록돼 있다면 다시 요청하지 않는다.
+
+```bash
+az feature show --namespace Microsoft.Network \
+  --name AllowBringYourOwnPublicIpAddress \
+  --subscription 51531604-2337-4c05-bc05-3c3d4ff154e5 \
+  --query "{name:name,state:properties.state}"
+az provider show --namespace Microsoft.Network \
+  --subscription 51531604-2337-4c05-bc05-3c3d4ff154e5 \
+  --query "{namespace:namespace,state:registrationState}"
+```
+
+근거: [공식 문제 해결 절차](https://learn.microsoft.com/azure/microsoft-discovery/troubleshoot-microsoft-discovery#supercomputer-deployment-stalls-because-a-required-public-ip-feature-isnt-registered), [실제 등록 응답](../../artifacts/discovery-resume-network-feature-registration-20261001.json), [Provider 재등록 후 상태](../../artifacts/discovery-resume-network-provider-20261001.json). 이 기능의 최초 미등록을 과거 `AKSCapacityHeavyUsage`의 입증된 원인으로 바꾸어 해석하지 않는다.
+
 ## Storage 403의 실제 원인
 
 처음에는 선택 IP를 허용한 Storage를 요청했지만, 관리 그룹 정책 **`StorageAccount_PublicNetwork_Modify`**가 생성 중 공개 접근을 Disabled로 바꿨다. RG 수준 정책 목록이 비어 있어도 상위 정책이 없다는 뜻은 아니다.

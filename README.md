@@ -20,9 +20,9 @@ Use the Markdown or PDF links on GitHub. To view the HTML edition locally, downl
 
 ## Execution status
 
-**Service enablement is confirmed; the full lab is not complete.** The previous `InvalidResourceType` blocker is resolved. Network, storage, registry, private Blob access, Discovery data references, and the digest-pinned CPU tool were created. Supercomputer provisioning failed with **`AKSCapacityHeavyUsage`** in Sweden Central. The separately validated Workspace-only attempt also failed: its managed Container Apps environment depends on the same regional AKS capacity.
+**As of 2026-10-01 15:52 KST, the full lab is not complete.** Service enablement, `AllowBringYourOwnPublicIpAddress` registration, and provider propagation are resolved. The existing core was retried once, but **a new backing AKS request failed with `AKSCapacityHeavyUsage` at 15:46:52 KST**. The parent deployment is `Running`, the Supercomputer is `Accepted`, and the existing Workspace is `Failed`; these are not interchangeable completion states.
 
-Bookshelf still needs `gpt-5-mini` and embedding quota increases. **A follow-up established a remote private VM client and verified upload/read-back hashes for all five inputs.** This does not give a laptop browser a VPN connection. Agents, indexing, tool execution, and the Discovery Engine have **not** been verified end to end. Distinguish the [initial workload snapshot](artifacts/discovery-execution-20261001.json), [private input verification](artifacts/discovery-private-blob-sync.json), and [dated execution report](EXECUTION-REPORT.ko.md).
+Bookshelf's operational readiness target still exceeds available `gpt-5-mini` and embedding quota: **990,000 / 780,000 TPM** at 15:53 KST. Requests for 3,000,000 TPM total per model were submitted but have not appeared in the limits. The shared diagnostics policy's missing central Log Analytics target also needs separate remediation. Prior private-VM upload/read-back checks covered all five inputs, but laptop Blob connectivity and **end-to-end research execution remain unverified**. See the [current resource snapshot](artifacts/discovery-resume-snapshot-20261001-1552.json) and [dated blocker/action/evidence report](EXECUTION-REPORT.ko.md).
 
 ## Current lab (2026-10-01)
 
@@ -37,6 +37,8 @@ The [lab resource group](https://portal.azure.com/#@46e9cdaa-fed3-4131-aa28-c1fc
 | Registry/tool | Basic `acrdiscoveryholjunwoosc`; ACR task `dt1` and Tool `thermal-ranking` v1.0.0 succeeded |
 | Data references/files | `thermaldata`, `evidencepack`, `candidatecsv`; follow-up uploaded four TXT files/one CSV and verified SHA-256 read-back |
 | Private data client | `vm-discovery-blob-client`, no public IP/inbound SSH; deallocated after verification |
+| Network feature | `AllowBringYourOwnPublicIpAddress` and `Microsoft.Network` both Registered |
+| Supercomputer / deployment | `sc-discovery-hol` Accepted / afternoon core deployment Running; backing AKS capacity failure observed |
 | Workspace | `discoveryholjunwoosc` is `Failed`; managed-resource isolation retained, no linked compute or usable Project |
 
 The user has scoped data-plane roles; UAMI roles are scoped to the lab RG, Storage, Registry, VNet, and identity. Only the documented first-party control-plane Reader/NSP Joiner assignments are subscription-wide. No organizational policy was disabled. Failed deployments can leave billable resources; see L09 before cleanup.

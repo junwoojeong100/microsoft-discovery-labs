@@ -1,0 +1,8 @@
+{
+  "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Features/providers/Microsoft.Network/features/AllowBringYourOwnPublicIpAddress",
+  "name": "Microsoft.Network/AllowBringYourOwnPublicIpAddress",
+  "properties": {
+    "state": "Registered"
+  },
+  "type": "Microsoft.Features/providers/features"
+}

@@ -134,6 +134,27 @@ az provider show --namespace Microsoft.Discovery \
 7. Choose a supported production region: **East US / Sweden Central / UK South**. This guide uses `swedencentral`. Check model/VM quota and always-on costs in A01.
 8. Complete normal MFA/security-key sign-in. For private access, prepare VPN/ExpressRoute and Blob connectivity. Verify Portal sign-in, Studio access, and opening Blob outputs separately.
 
+**Separate LoadBalancer network prerequisite:** Check `Microsoft.Network/AllowBringYourOwnPublicIpAddress` using the [official troubleshooting guidance](https://learn.microsoft.com/azure/microsoft-discovery/troubleshoot-microsoft-discovery#supercomputer-deployment-stalls-because-a-required-public-ip-feature-isnt-registered). Discovery enablement and `Microsoft.Network=Registered` do not substitute for this feature registration.
+
+```bash
+az feature show --namespace Microsoft.Network \
+  --name AllowBringYourOwnPublicIpAddress \
+  --subscription 51531604-2337-4c05-bc05-3c3d4ff154e5 \
+  --query "{name:name,state:properties.state}"
+```
+
+Only when it is `NotRegistered`, an administrator with subscription feature-registration permissions runs these **mutation commands**. Verify the feature is `Registered` before re-registering the provider. Do not treat `Pending` as approval.
+
+```bash
+az feature register --namespace Microsoft.Network \
+  --name AllowBringYourOwnPublicIpAddress \
+  --subscription 51531604-2337-4c05-bc05-3c3d4ff154e5
+az provider register --namespace Microsoft.Network \
+  --subscription 51531604-2337-4c05-bc05-3c3d4ff154e5 --wait
+```
+
+During the afternoon follow-up on 2026-10-01, the current account's inherited Owner role allowed immediate registration. Provider re-registration and independent read-back also completed; this subscription required no separate Microsoft approval wait. User consent alone does not grant RBAC permissions or guarantee approval in another subscription. This feature is separate from AKS regional capacity and model quota increases.
+
 Run the following read-only checks without a browser. They verify the account, tenant, and subscription in `config/lab.json` without saving tokens. Exit `0` means the selected access/model-quota checks passed, `2` means a prerequisite is blocked, and `1` means a lookup/authentication error.
 
 ```bash
@@ -258,6 +279,8 @@ az deployment group what-if --name discovery-workspace-20261001 \
 ```
 
 Outputs explicitly say `computeIncluded=false` and compute IDs are `null`. Use this **only for a new Workspace or one without linked Supercomputers**; applying it to a linked environment could clear its links. It does not pass all of L01, L03 indexing, or L05 computation. Once capacity is resolved, confirm actual Supercomputer/node-pool success and attach them through the default path. An alternate region requires planning VNet, Storage, and Workspace together, not indiscriminately mixing the existing stack across regions.
+
+**Terminal-failure recovery limit:** Successful `validate`/`what-if` results do not prove that the create/update API accepts a resource in terminal `Failed` state. Stop repeated PUTs on `Conflict` or an equivalent state error. The [official recovery procedure](https://learn.microsoft.com/azure/microsoft-discovery/troubleshoot-microsoft-discovery#a-discovery-resource-is-stuck-in-a-terminal-failed-state) is to resolve the cause, obtain deletion approval, and delete **only the failed Discovery resource** before recreating it with a new name. Preserve the healthy RG, Storage, and data; do not directly repair the managed AKS/Container Apps resources.
 
 **Pass criteria:** Workspace, Supercomputer, CPU pool, Storage Container, and Project are ready; the required model exists. You can open the project in Studio, and both the user and managed identity have their respective required Blob access.
 

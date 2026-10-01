@@ -8,9 +8,17 @@
 
 지원 리전, 서비스 사용 승인, quota, SKU/zone 허용, 실제 할당 용량은 서로 다른 조건이다. 현재 가용 용량이 회복됐는지는 과거 오류만으로 알 수 없으므로 재개 시 다시 확인한다.
 
+## 오후 재시도에서 확인한 현재 용량 블로커
+
+`AllowBringYourOwnPublicIpAddress` 등록과 `Microsoft.Network` 전파를 확인한 뒤 기존 코어를 한 번 재시도했다. **15:46:52 KST의 새 하위 AKS 요청도 `AKSCapacityHeavyUsage`로 실패**했다. 이는 오전 오류의 단순 재인용이 아니다. 새 correlation ID는 **`cf91439f-960e-430a-96af-798274d51c89`**다.
+
+15:52에는 상위 `discovery-core-resume-20261001-1530`이 **Running**, Supercomputer가 **Accepted**였다. 최종 성공/실패는 아직 확정하지 않는다. 네트워크 feature 미등록은 해결됐으나 지역 용량 문제는 남아 있으며, 이번 요청이 진행 중일 때 추가 배포를 중첩하지 않는다.
+
+오후 재확인에서도 지역 vCPU 2/100, Dsv6 0/100, Esv6 0/100, Container Apps 환경 수 1/50였다. [새 실제 오류](../../artifacts/discovery-resume-activity-failures-20261001.json), [리소스 상태](../../artifacts/discovery-resume-snapshot-20261001-1552.json), [한도](../../artifacts/discovery-resume-compute-limits-20261001.json), [사용량](../../artifacts/discovery-resume-compute-usage-20261001.json)을 구분해 본다.
+
 ## 독립 검토의 조회값
 
-Sweden Central, 2026-10-01 약 14:10 KST 검토 기준. 지정한 실습 구독/테넌트의 Azure CLI 및 공식 quota/usage API로 확인한 값이며, 이 문서는 새 실시간 조회를 수행한 결과가 아니다.
+아래 표는 Sweden Central, 2026-10-01 약 14:10 KST의 이전 독립 검토다. 지정한 실습 구독/테넌트의 Azure CLI 및 공식 quota/usage API로 확인했다. 오후에 다시 확인한 항목과 모든 과거 행이 동시에 재조회된 것으로 혼동하지 않는다.
 
 | 항목 | 사용량 | 한도 | 여유 |
 |---|---:|---:|---:|
@@ -81,6 +89,14 @@ Resource group: rg-discovery-hol-20260930
 
 Microsoft Discovery Supercomputer creation failed with AKSCapacityHeavyUsage.
 Correlation: 75d88d20-5dd2-4963-b2b1-00dc4b1039e4
+
+After registering AllowBringYourOwnPublicIpAddress and re-registering
+Microsoft.Network, one core retry was accepted at 2026-10-01 06:43:48 UTC.
+Its backing AKS write failed again at 06:46:52 UTC with AKSCapacityHeavyUsage.
+Latest correlation: cf91439f-960e-430a-96af-798274d51c89
+Deployment: discovery-core-resume-20261001-1530
+At 06:52 UTC, the parent was Running and the Supercomputer was Accepted;
+the final outcome was not yet known.
 
 Workspace-only creation also failed at its Container Apps managed environment
 with ManagedEnvironmentCapacityHeavyUsageError / AKSCapacityHeavyUsage.

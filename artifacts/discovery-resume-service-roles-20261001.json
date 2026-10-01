@@ -1,0 +1,104 @@
+[
+  {
+    "condition": null,
+    "principalId": "ab0c1c51-8ec2-4121-948e-5deaf0b9b262",
+    "role": "Reader",
+    "scope": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5"
+  },
+  {
+    "condition": null,
+    "principalId": "ab0c1c51-8ec2-4121-948e-5deaf0b9b262",
+    "role": "Discovery NSP Perimeter Joiner",
+    "scope": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5"
+  },
+  {
+    "condition": null,
+    "principalId": "d3e217ab-24b0-4f5b-bea7-7048dab36e55",
+    "role": "Managed Identity Operator",
+    "scope": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/rg-discovery-hol-20260930/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-discovery-hol"
+  },
+  {
+    "condition": null,
+    "principalId": "d3e217ab-24b0-4f5b-bea7-7048dab36e55",
+    "role": "Microsoft Discovery Platform Contributor",
+    "scope": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/rg-discovery-hol-20260930"
+  },
+  {
+    "condition": null,
+    "principalId": "d3e217ab-24b0-4f5b-bea7-7048dab36e55",
+    "role": "Network Contributor",
+    "scope": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol"
+  },
+  {
+    "condition": null,
+    "principalId": "d3e217ab-24b0-4f5b-bea7-7048dab36e55",
+    "role": "AcrPull",
+    "scope": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/rg-discovery-hol-20260930/providers/Microsoft.ContainerRegistry/registries/acrdiscoveryholjunwoosc"
+  },
+  {
+    "condition": null,
+    "principalId": "d3e217ab-24b0-4f5b-bea7-7048dab36e55",
+    "role": "Storage Blob Data Contributor",
+    "scope": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/rg-discovery-hol-20260930/providers/Microsoft.Storage/storageAccounts/stdiscoveryholjunwoosc"
+  },
+  {
+    "condition": null,
+    "principalId": "d3e217ab-24b0-4f5b-bea7-7048dab36e55",
+    "role": "Network Contributor",
+    "scope": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/aksSubnet"
+  },
+  {
+    "condition": null,
+    "principalId": "ab0c1c51-8ec2-4121-948e-5deaf0b9b262",
+    "role": "Log Analytics Reader",
+    "scope": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/mrg-dscmp-sc-discovery-hol-b6wiwf"
+  },
+  {
+    "condition": null,
+    "principalId": "ab0c1c51-8ec2-4121-948e-5deaf0b9b262",
+    "role": "Network Contributor",
+    "scope": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/aksSubnet"
+  },
+  {
+    "condition": null,
+    "principalId": "ab0c1c51-8ec2-4121-948e-5deaf0b9b262",
+    "role": "Azure Kubernetes Service RBAC Cluster Admin",
+    "scope": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dscmp-sc-discovery-hol-b6wiwf"
+  },
+  {
+    "condition": null,
+    "principalId": "ab0c1c51-8ec2-4121-948e-5deaf0b9b262",
+    "role": "Managed Identity Operator",
+    "scope": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-discovery-hol"
+  },
+  {
+    "condition": null,
+    "principalId": "ab0c1c51-8ec2-4121-948e-5deaf0b9b262",
+    "role": "Network Contributor",
+    "scope": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/workspaceSubnet"
+  },
+  {
+    "condition": null,
+    "principalId": "ab0c1c51-8ec2-4121-948e-5deaf0b9b262",
+    "role": "Storage Blob Data Contributor",
+    "scope": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwoosc-ym5ffv"
+  },
+  {
+    "condition": null,
+    "principalId": "ab0c1c51-8ec2-4121-948e-5deaf0b9b262",
+    "role": "Cognitive Services OpenAI User",
+    "scope": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwoosc-ym5ffv"
+  },
+  {
+    "condition": null,
+    "principalId": "ab0c1c51-8ec2-4121-948e-5deaf0b9b262",
+    "role": "Network Contributor",
+    "scope": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol"
+  },
+  {
+    "condition": null,
+    "principalId": "ab0c1c51-8ec2-4121-948e-5deaf0b9b262",
+    "role": "Foundry User",
+    "scope": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwoosc-ym5ffv"
+  }
+]

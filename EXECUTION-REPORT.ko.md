@@ -4,6 +4,71 @@
 
 구독 `51531604-2337-4c05-bc05-3c3d4ff154e5`, 테넌트 `46e9cdaa-fed3-4131-aa28-c1fc8a8a043a`, RG `rg-discovery-hol-20260930`, 리전 Sweden Central을 사용했다. 기존 네트워크와 UAMI를 재사용했으며 다른 프로젝트의 자원·정책·모델 배포를 삭제하지 않았다.
 
+## 2026-10-01 15:52 KST — 현재 블로커와 재시도 상태
+
+**네트워크 feature 등록은 해결됐지만, Discovery 환경 생성은 아직 완료되지 않았다.** 아래 리소스 상태는 **15:52**, 모델 quota는 **15:53 KST**의 실제 조회다. 오전의 최종 실패와 오후의 진행 중인 재시도를 구분한다.
+
+### 해결한 항목과 실제 변경
+
+`Microsoft.Network/AllowBringYourOwnPublicIpAddress`가 `NotRegistered`인 것을 발견해 등록했다. 현재 계정에는 상속 Owner와 실습 RG의 Discovery Platform Administrator가 있으며, feature 등록은 즉시 **`Registered`**를 반환했다. 이어 `Microsoft.Network` 재등록·전파가 끝났고 독립 재조회에서도 **둘 다 Registered**였다. 이 구독에서는 별도 Microsoft 승인 대기가 없었다. 사용자 동의와 RBAC 권한은 별개이며, 다른 구독의 즉시 승인을 보장하는 것은 아니다.
+
+Bicep 컴파일·ARM 검증·Incremental `what-if`와 기존 역할을 확인한 뒤 **15:43:48 KST에 기존 코어를 한 번만 재시도**했다. 배포 이름은 `discovery-core-resume-20261001-1530`이다. 새 역할 부여, 리소스 삭제, 다른 리전의 유료 스택 복제, 모델 quota 중복 신청은 하지 않았다. Storage 참조와 두 Asset은 재사용됐으며 실제 Blob 파일을 덮어쓴 작업이 아니다.
+
+### 현재 차단 항목
+
+| 구분 | 실제 근거와 영향 | 필요한 조치 |
+|---|---|---|
+| **핵심 블로커: 지역 AKS 용량** | **15:46:52 KST**, 새 재시도의 하위 AKS가 `AKSCapacityHeavyUsage`로 다시 실패. Feature 등록 이후의 새 오류이므로 과거 실패를 재인용한 것만이 아님 | Azure/Discovery 지원팀이 Sweden Central의 실제 할당 용량·구독 배치 제한을 확인해야 함. 일반 vCPU quota 증액으로 해결된다고 가정하지 않음 |
+| **Bookshelf 운영 quota 부족** | `gpt-5-mini` 잔여 **990,000 TPM**, `text-embedding-3-small` 잔여 **780,000 TPM**. 실습 운영 계획값은 각각 **2,000,000 TPM** | 13:41에 제출한 각 총 **3,000,000 TPM** 요청을 추적하고 실제 반영 확인. Bookshelf와 색인 풀 생성은 보류 |
+| **별도 거버넌스 실패** | Workspace MRG의 공통 진단 정책 배포가 중앙 Log Analytics `mcapsgovernance/mcaps4c05bc053c3d4ff154e5-la` 누락 오류로 여전히 `Failed` | 조직 관리자가 중앙 진단 대상·정책을 수정. AKS 용량 오류의 직접 원인으로 혼동하지 않음 |
+| **후속 실습 완료 조건 미충족** | Workspace `Failed`, Project/검증 모델/CPU 풀이 404. 정상 Studio 프로젝트 접근, 색인·에이전트·계산·Engine 실행은 미검증 | 기반 성공 후 각 완료 기준을 별도로 확인. 로그인 실패가 현재 AKS 생성 실패의 원인이라는 뜻은 아님 |
+
+Bookshelf의 2,000,000 TPM는 **이 실습의 운영 준비 기준**이다. 일부 how-to의 단순 생성 최소치 200,000 TPM와 다르며, Bookshelf 생성 API가 이번에 quota 오류를 반환한 것은 아니다. 미충족 운영 조건과 고정비를 고려해 생성하지 않은 것이다. 두 모델의 총한도는 여전히 각 1,000,000 TPM이며, 신청 접수와 승인·반영을 구분한다.
+
+### 진행 중과 실패를 구분한 리소스 상태
+
+| 대상 | 15:52 KST 조회 | 의미 |
+|---|---|---|
+| 오후 코어 ARM 배포 | **`Running`** | 상위 최종 결과는 아직 확정되지 않음. `error=null`도 하위 오류가 없다는 뜻은 아님 |
+| `sc-discovery-hol` | **`Accepted`** | 오전 `Failed`에서 재요청을 수락한 상태. 성공한 Supercomputer가 아님 |
+| `discoveryholjunwoosc` | **`Failed`** | 오전 Workspace 실패 상태 유지. 현재 배포의 Workspace 단계 성공을 확인한 것이 아님 |
+| `cpulab`, `indexlab`, `gpt-5-4`, `thermalhol` | **HTTP 404** | 미생성 |
+| Bookshelf 목록 | **HTTP 200, 빈 목록** | 미생성 |
+| Storage/ACR/VNet/Blob PE/DNS link | **`Succeeded`** | 기존 기반 유지, VNet 서브넷 9개 |
+| `thermaldata`, `evidencepack`, `candidatecsv`, `thermal-ranking` | **`Succeeded`** | 데이터 참조·도구 등록 성공. 파일 읽기나 실제 계산 실행을 대신하지 않음 |
+| 사설 Blob 클라이언트 VM | **`PowerState/deallocated`** | 추가로 시작하지 않음. OS 디스크는 남음 |
+
+새 재시도의 correlation ID는 **`cf91439f-960e-430a-96af-798274d51c89`**다. 실패 대상은 `mrg-dscmp-sc-discovery-hol-b6wiwf/aks-dscmp-b6wiwf`의 `Microsoft.ContainerService/managedClusters/write`다. 같은 리소스에 겹치는 새 배포를 추가하지 않았다. 기존 한 번의 요청은 종료 상태를 기다리며, 이 시점에 최종 실패·취소·성공을 임의로 확정하지 않는다.
+
+### 블로커가 아닌 항목과 남은 제약
+
+| 항목 | 현재 판정 |
+|---|---|
+| 서비스 사용 활성화 | 필수 Discovery 유형과 목록 GET 정상. `DefaultFeature=Pending`만으로 접근을 차단하지 않음 |
+| Feature 등록·권한 | `AllowBringYourOwnPublicIpAddress`와 `Microsoft.Network` Registered. 배포자·UAMI·공식 control-plane 역할 확인. 추가 권한 확대 불필요 |
+| VM/환경 수 quota | 지역 vCPU **2/100**, Dsv6 **0/100**, Esv6 **0/100**, Container Apps 환경 **1/50**. 실제 지역 가용 용량과 다른 지표 |
+| 코어 모델 quota | GPT-5.4 미할당 **2,750,000 TPM**로 코어 사전 점검 통과. Bookshelf용 GPT-5.2도 **2,990,000 TPM**로 해당 점검 통과 |
+| SKU/zone 제한 | `Standard_D4s_v6`는 Sweden Central **zone 2에 `NotAvailableForSubscription`**. 현재 템플릿은 zone을 지정하지 않으며, 이것이 AKS 오류의 원인이라는 증거는 없음 |
+| Storage 네트워크 | 조직 정책에 따라 공개 접근 Disabled 유지. 사설 VM의 과거 파일 5개 업로드·읽기 검증은 완료했지만, 이번에는 파일을 다시 읽지 않았고 노트북의 직접 Blob 경로도 미검증 |
+| Azure 도구 인증 | Azure MCP의 목록은 다른 테넌트를 가리켜 변경에 사용하지 않음. 가이드의 계정·테넌트·구독이 일치하는 CLI로만 작업 |
+| terminal `Failed` 복구 | 일부 자원은 갱신 시 `Conflict`가 날 수 있으나 **이번 Supercomputer 재요청에서는 이 충돌을 관측하지 않음**. 발생 시 반복 PUT을 중단하고 실패 자원 삭제·재생성은 별도 승인 필요 |
+| 비용·검증 범위 | 실패/진행 중 배포에도 MRG·Storage·ACR·PE·로그·디스크 비용이 남을 수 있음. 실제 누적 비용은 미조회. 전체 연구 실습 성공을 주장하지 않음 |
+
+### 오후 실행 증거
+
+| 기록 | 파일 |
+|---|---|
+| 15:52 리소스·하위 자원·Bookshelf 목록 | [시각 고정 스냅샷](artifacts/discovery-resume-snapshot-20261001-1552.json) |
+| 15:53 접근·모델 quota | [시각 고정 readiness](artifacts/discovery-resume-readiness-20261001-1553.json) |
+| Network feature / Provider | [등록 응답](artifacts/discovery-resume-network-feature-registration-20261001.json) · [전파 완료](artifacts/discovery-resume-network-provider-20261001.json) |
+| 배포 전 검증 / 차이 | [ARM validate](artifacts/discovery-resume-validation-20261001.json) · [what-if](artifacts/discovery-resume-whatif-20261001.json) |
+| 현재 상위 배포 / 자원별 진행 | [Running 조회](artifacts/discovery-resume-current-deployment-20261001.json) · [진행 내역](artifacts/discovery-resume-progress-20261001.json) |
+| 새 AKS 실패 | [실제 Activity Log](artifacts/discovery-resume-activity-failures-20261001.json) |
+| 기존 Workspace의 하위 오류 / 진단 정책 | [Managed Environment](artifacts/discovery-resume-environment-20261001.json) · [공통 진단 실패](artifacts/discovery-resume-governance-20261001.json) |
+| 역할 / VM quota / 클라이언트 | [배포자](artifacts/discovery-resume-deployer-roles-20261001.json) · [서비스 역할](artifacts/discovery-resume-service-roles-20261001.json) · [한도](artifacts/discovery-resume-compute-limits-20261001.json) · [사용량](artifacts/discovery-resume-compute-usage-20261001.json) · [VM 상태](artifacts/discovery-resume-blob-client-20261001.json) |
+
+다음으로 필요한 외부 조치는 **지역 용량 지원 확인**, **기존 모델 quota 요청 반영**, **조직 공통 진단 대상 복구**다. 지역 용량 지원요청은 아직 제출하지 않았으며 [지원요청 초안](docs/deployment-reference/03-compute-capacity.ko.md)에 새 correlation ID를 추가했다. 대체 리전 성공을 보장하거나 삭제·리전 이동을 이미 승인받았다고 해석하지 않는다.
+
 ## 2026-10-01 — 실제 배포와 차단 원인
 
 다음 표는 **11:04 KST의 1차 배포 결과**다. 이후의 사설 데이터 클라이언트·파일 업로드 결과는 바로 아래 후속 절에 별도로 기록한다.
@@ -24,7 +89,7 @@
 
 **Workspace 링크:** <https://studio.discovery.microsoft.com/workspaces/discoveryholjunwoosc>. ARM에 URL이 반환됐지만 Workspace는 실패 상태이며, 사용 가능한 프로젝트를 확인한 링크가 아니다.
 
-최신 리소스별 HTTP 상태·프로비저닝 상태·시각은 [실제 상태 스냅샷](artifacts/discovery-execution-20261001.json)에 있다. **11:04 KST** 조회에서는 Workspace와 Supercomputer 모두 `Failed`, 별도 Chat Model Deployment/Project/CPU pool은 404였다. 새 배포 요청이나 자동 재시도 작업을 추가로 남기지 않았다.
+당시 리소스별 HTTP 상태·프로비저닝 상태·시각은 [오전 상태 스냅샷](artifacts/discovery-execution-20261001.json)에 있다. **11:04 KST** 조회에서는 Workspace와 Supercomputer 모두 `Failed`, 별도 Chat Model Deployment/Project/CPU pool은 404였다. 오전 작업 종료 시에는 새 배포 요청이나 자동 재시도 작업을 추가로 남기지 않았다. 오후의 한 차례 재시도는 위 절과 구분한다.
 
 **실제 Tool 이미지 digest:**
 
@@ -65,7 +130,7 @@ Foundry ARM 조회에서 **`Discovery Default Project`**(`discoverydefaultprojec
 
 ### 용량·네트워크 차단 상태
 
-**Bookshelf (배포 전 Global Standard 스냅샷):** gpt-5-mini 잔여 **990,000 TPM**, text-embedding-3-small 잔여 **780,000 TPM**, 필요량은 **각 2,000,000 TPM**다. 기존 할당을 유지하려면 총한도는 각각 최소 **2,010,000 / 2,220,000 TPM**가 필요하다. GPT-5.4 잔여 3,000,000 TPM는 코어 준비 기준 500,000 TPM를 충족했다. 이 수치는 현재 잔여량 보장이 아니며 재조회해야 한다. quota 증가 신청을 완료했다고 주장하지 않는다.
+**Bookshelf (오전 배포 전 Global Standard 스냅샷):** gpt-5-mini 잔여 **990,000 TPM**, text-embedding-3-small 잔여 **780,000 TPM**, 실습 운영 계획값은 **각 2,000,000 TPM**다. 기존 할당을 유지하려면 총한도는 각각 최소 **2,010,000 / 2,220,000 TPM**가 필요하다. 당시 GPT-5.4 잔여 3,000,000 TPM는 코어 준비 기준 500,000 TPM를 충족했다. 이 수치는 현재 잔여량 보장이 아니다. **13:41에는 두 증액 신청 접수를 완료했으며, 15:53 조회에서는 아직 한도에 반영되지 않았다.**
 
 **AKS:** 관리 리소스 `mrg-dscmp-sc-discovery-hol-b6wiwf/aks-dscmp-b6wiwf`가 Sweden Central 용량 부족으로 반복 실패했다. correlation ID는 `75d88d20-5dd2-4963-b2b1-00dc4b1039e4`. 지역 총/Dsv6/Esv6 quota는 각각 100 vCPU, 당시 사용량 0이었다. [공식 오류 설명](https://learn.microsoft.com/troubleshoot/azure/azure-kubernetes/error-codes/akscapacityheavyusage-error)에 따라 지역 용량 문제로 분류했다. 관리 AKS를 직접 수정하거나 보안을 약화하지 않았다.
 

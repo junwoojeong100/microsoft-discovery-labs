@@ -1,0 +1,17 @@
+{
+  "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Compute/virtualMachines/vm-discovery-blob-client",
+  "state": "Succeeded",
+  "statuses": [
+    {
+      "code": "ProvisioningState/succeeded",
+      "displayStatus": "Provisioning succeeded",
+      "level": "Info",
+      "time": "2026-10-01T02:47:20.3403006+00:00"
+    },
+    {
+      "code": "PowerState/deallocated",
+      "displayStatus": "VM deallocated",
+      "level": "Info"
+    }
+  ]
+}

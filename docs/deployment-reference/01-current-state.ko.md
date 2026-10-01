@@ -1,6 +1,6 @@
 # 01 — 현재 상태와 블로커
 
-[목차](README.ko.md) · **기준일: 2026-10-01. 현재 상태를 보장하는 실시간 조회 결과가 아니다.**
+[목차](README.ko.md) · **리소스는 2026-10-01 15:52, 모델 quota는 15:53 KST의 실제 조회. 이후 상태를 보장하지 않는다.**
 
 ## 활성 배포 범위
 
@@ -28,7 +28,9 @@
 | 원본 파일 | 합성 TXT 4개·CSV 1개 업로드/읽기 SHA-256 일치. 재실행은 동일 파일 재사용 |
 | Discovery 데이터 참조 | `thermaldata`, `evidencepack`, `candidatecsv`: `Succeeded` |
 | ACR / 도구 | `acrdiscoveryholjunwoosc`, build `dt1` 성공, `thermal-ranking` version `1.0.0` 등록 성공 |
-| Supercomputer | `sc-discovery-hol`: `Failed` |
+| Network feature | `AllowBringYourOwnPublicIpAddress`와 `Microsoft.Network`: `Registered`, 오후 등록·전파 완료 |
+| 오후 코어 배포 | `discovery-core-resume-20261001-1530`: `Running`, 한 번의 요청이며 최종 결과 미확정 |
+| Supercomputer | `sc-discovery-hol`: 재요청 수락 후 `Accepted`; 오전의 `Failed`와 구분 |
 | Workspace | `discoveryholjunwoosc`: `Failed` |
 | Discovery 하위 자원 | `cpulab`, `gpt-5-4`, `thermalhol`: 마지막 조회에서 미생성 |
 | Bookshelf / 색인 풀 | Bookshelf와 `indexlab` 미생성 |
@@ -58,20 +60,23 @@ Foundry의 기본 프로젝트가 있다고 Discovery의 연구 실습이 준비
 
 | 항목 | 확인한 원인 / 다음 조치 |
 |---|---|
-| AKS/Container Apps 배포 | `AKSCapacityHeavyUsage`, `ManagedEnvironmentCapacityHeavyUsageError`. [컴퓨트 용량 검토](03-compute-capacity.ko.md)에 따라 지원 확인 후 재개 |
-| Bookshelf 모델 용량 | 두 모델의 증액 **신청 접수만 확인**. [요청 기록과 실제 한도 반영](02-model-quota.ko.md)을 재확인 |
-| Studio 사용 | headless에서는 정상 로그인 화면까지 확인. 사용자 브라우저의 로그인·프로젝트 열기 성공은 별도 |
+| AKS/Container Apps 배포 | Feature 등록 이후인 **15:46:52**에도 새 하위 AKS가 `AKSCapacityHeavyUsage` 반환. 기존 Workspace의 `ManagedEnvironmentCapacityHeavyUsageError`도 남음. [지원 확인](03-compute-capacity.ko.md) 필요 |
+| Bookshelf 운영 모델 용량 | **신청 접수 후에도 실제 한도 미반영**. gpt-5-mini/embedding 잔여 990,000/780,000 TPM로 실습 운영 목표 각 2,000,000 TPM 미달. [요청 추적](02-model-quota.ko.md) |
+| 후속 Studio·연구 실행 | Project/검증 모델/CPU 풀 미생성. 정상 로그인·프로젝트 열기·색인·계산·Engine 미검증. 현재 AKS 생성 오류의 원인으로 판정한 것은 아님 |
 | 공통 진단 정책 | `mcapsgovernance/mcaps4c05bc053c3d4ff154e5-la` 대상 누락. 조직 관리자 확인 대상이며, 확인된 지역 용량 실패의 직접 원인과 구분 |
 
 확인된 주요 실패 식별자:
 
 | 대상 | 식별자 |
 |---|---|
+| 오후 재시도, 15:46:52 하위 AKS 실패 | correlation `cf91439f-960e-430a-96af-798274d51c89` |
 | Supercomputer 생성 | correlation `75d88d20-5dd2-4963-b2b1-00dc4b1039e4` |
 | Workspace 생성 | correlation `e08e90c5-299f-4552-a354-697e0da7df45` |
 | Workspace 내부 AKS 용량 오류 | request `0ea9a155-9803-4e6c-85fd-b8ed67a02502` |
 
 원래 `discovery-core-20261001` 배포는 중복 쓰기를 막기 위해 취소했다. 별도 `discovery-workspace-20261001` 배포는 약 55분 뒤 실패했다. **배포 취소는 생성된 자원 삭제가 아니며, 이미 시작된 하위 작업을 즉시 중단한다고 보장하지 않는다.**
+
+오후의 `discovery-core-resume-20261001-1530`은 별도 한 번의 재시도다. 15:52에는 상위가 `Running`, Supercomputer가 `Accepted`였으므로 이미 최종 실패하거나 성공했다고 표시하지 않는다. 이 요청이 진행 중인 동안 겹치는 PUT을 추가하지 않는다. 이번에는 terminal `Failed` 갱신의 `Conflict`를 관측하지 않았으며, 향후 해당 오류가 발생할 때만 승인된 삭제·재생성 경로를 검토한다.
 
 ## 남아 있는 비용
 
@@ -81,6 +86,8 @@ Foundry의 기본 프로젝트가 있다고 Discovery의 연구 실습이 준비
 
 ## 증거와 시간 차이
 
+- [15:52 시각 고정 상태](../../artifacts/discovery-resume-snapshot-20261001-1552.json), [15:53 quota](../../artifacts/discovery-resume-readiness-20261001-1553.json), [새 AKS 실패](../../artifacts/discovery-resume-activity-failures-20261001.json).
+- [Network feature 등록](../../artifacts/discovery-resume-network-feature-registration-20261001.json), [Provider 전파](../../artifacts/discovery-resume-network-provider-20261001.json), [오후 상위 배포 상태](../../artifacts/discovery-resume-current-deployment-20261001.json).
 - [초기 워크로드 스냅샷](../../artifacts/discovery-execution-20261001.json): 사설 클라이언트 추가 전 기록이므로 당시 서브넷은 8개.
 - [최초 사설 업로드](../../artifacts/discovery-private-blob-upload-20261001.json), [재실행 읽기 검증](../../artifacts/discovery-private-blob-sync.json), [VM 할당 해제](../../artifacts/discovery-blob-client-state-20261001.json): 후속 9번째 서브넷/클라이언트 단계.
 - [Foundry 기본 프로젝트](../../artifacts/discovery-foundry-default-project-20261001.json)

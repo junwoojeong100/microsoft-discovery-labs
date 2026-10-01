@@ -1,0 +1,7 @@
+{
+  "correlationId": "cf91439f-960e-430a-96af-798274d51c89",
+  "error": null,
+  "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Resources/deployments/discovery-core-resume-20261001-1530",
+  "state": "Running",
+  "timestamp": "2026-10-01T06:43:48.901016+00:00"
+}

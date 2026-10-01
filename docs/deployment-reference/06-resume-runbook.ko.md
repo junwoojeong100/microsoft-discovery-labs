@@ -1,6 +1,8 @@
 # 06 — 리소스 생성·재개 절차
 
-[목차](README.ko.md) · **기준일: 2026-10-01. 아래는 실행 참고용이며 이번 문서 작성에서 실행하지 않았다.**
+[목차](README.ko.md) · **기준일: 2026-10-01 15:52 KST. 아래는 재개용 예시이며 실제 실행 결과는 날짜별 보고서와 구분한다.**
+
+**현재 중첩 배포 금지:** `discovery-core-resume-20261001-1530` 한 건이 Running이고 Supercomputer는 Accepted다. 하위 AKS의 새 용량 오류를 확인했으므로 종료 상태와 원인을 확인하기 전 다른 `create`를 추가하지 않는다. Feature 등록은 이미 완료됐고, Bookshelf quota 요청도 이미 접수됐다.
 
 ## 실행 전 중단 조건
 
@@ -38,6 +40,7 @@ az resource list --resource-group "$RESOURCE_GROUP" \
 | 검사 | 통과 기준 |
 |---|---|
 | 서비스 활성화 | 필수 Discovery resource type과 Workspace 목록 GET 확인. `DefaultFeature=Pending` 하나로 실패 처리하지 않음 |
+| LoadBalancer feature | `AllowBringYourOwnPublicIpAddress`와 `Microsoft.Network` 모두 Registered. [오후 등록 결과](05-network-identity-data.ko.md) 확인 |
 | 모델 quota | [02의 기존 신청](02-model-quota.ko.md)을 추적하고 실제 한도·남은 할당량 확인 |
 | 컴퓨트 | [03의 VM/AKS/ACA 수량·SKU·용량](03-compute-capacity.ko.md)을 각각 확인 |
 | 정책·역할 | 조직 정책 유지, 실제 identity/object ID와 역할 scope, 전파 상태 확인 |
@@ -108,10 +111,10 @@ az deployment group what-if \
 ## 5. 부분 실패를 조사하고 성공을 재조회
 
 ```bash
-az deployment group show --name discovery-workspace-20261001 \
+az deployment group show --name discovery-core-resume-20261001-1530 \
   --subscription "$SUBSCRIPTION_ID" --resource-group "$RESOURCE_GROUP" \
   --query "{state:properties.provisioningState,error:properties.error}"
-az deployment operation group list --name discovery-workspace-20261001 \
+az deployment operation group list --name discovery-core-resume-20261001-1530 \
   --subscription "$SUBSCRIPTION_ID" --resource-group "$RESOURCE_GROUP" \
   --query "[?properties.provisioningState=='Failed'].properties"
 ```
@@ -121,6 +124,7 @@ az deployment operation group list --name discovery-workspace-20261001 \
 | 증상 | 필요한 대응 |
 |---|---|
 | `AKSCapacityHeavyUsage` / `ManagedEnvironmentCapacityHeavyUsageError` | 지역 용량 지원 확인. 같은 요청 반복·vCPU quota 증액을 자동 해결책으로 삼지 않음 |
+| terminal `Failed`의 `Conflict` 또는 상태 오류 | 반복 PUT 중단. 원인 해결 후 삭제 승인을 받은 실패 Discovery 리소스만 새 이름으로 재생성. 정상 RG·Storage·데이터는 보존 |
 | `IncompatibleDelegations` | 기존 위임 서브넷을 전체 VNet PUT으로 재작성하지 않음 |
 | Storage 403 | 실제 public access, 정책, DNS, 데이터 역할을 구분해 확인 |
 | GA Tool 요청의 버전 필드 오류 | `2026-06-01`에서는 `properties.version`; 정의는 `properties.definitionContent` |

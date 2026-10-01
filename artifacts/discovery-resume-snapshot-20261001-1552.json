@@ -1,0 +1,377 @@
+{
+  "checkedAt": "2026-10-01T06:51:58.883Z",
+  "scope": {
+    "account": "junwoojeong@MngEnvMCAP757124.onmicrosoft.com",
+    "tenantId": "46e9cdaa-fed3-4131-aa28-c1fc8a8a043a",
+    "subscriptionId": "51531604-2337-4c05-bc05-3c3d4ff154e5",
+    "subscriptionName": "ME-MngEnvMCAP757124-junwoojeong-1",
+    "location": "swedencentral",
+    "resourceGroup": "rg-discovery-hol-20260930",
+    "labTag": "microsoft-discovery-core-hol"
+  },
+  "operations": "Read-only ARM GET; no resource, role, or data changes",
+  "resources": {
+    "workspace": {
+      "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/workspaces/discoveryholjunwoosc",
+      "checkedAt": "2026-10-01T06:52:03.735Z",
+      "httpStatus": 200,
+      "requestId": "6a206eba-e13b-4979-b0a5-4bcac2347eff",
+      "state": "Failed",
+      "location": "swedencentral",
+      "tags": {
+        "environment": "lab",
+        "project": "microsoft-discovery-core-hol",
+        "NetworkIsolation": "true"
+      },
+      "details": {
+        "workspaceApiUri": "https://discoveryholjunwoosc.workspace.discovery.azure.com",
+        "workspaceUiUri": "https://studio.discovery.microsoft.com/workspaces/discoveryholjunwoosc",
+        "managedResourceGroup": "mrg-dwsp-discoveryholjunwoosc-ym5ffv",
+        "supercomputerIds": [],
+        "publicNetworkAccess": "Enabled"
+      }
+    },
+    "project": {
+      "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/workspaces/discoveryholjunwoosc/projects/thermalhol",
+      "checkedAt": "2026-10-01T06:52:04.962Z",
+      "httpStatus": 404,
+      "requestId": "b0befecf-15a4-4ed1-91aa-4e45ca9454c5",
+      "error": {
+        "code": "ResourceNotFound",
+        "message": "The Resource 'Microsoft.Discovery/workspaces/discoveryholjunwoosc/projects/thermalhol' under resource group 'rg-discovery-hol-20260930' was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix"
+      },
+      "details": {}
+    },
+    "chatModel": {
+      "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/workspaces/discoveryholjunwoosc/chatModelDeployments/gpt-5-4",
+      "checkedAt": "2026-10-01T06:52:05.273Z",
+      "httpStatus": 404,
+      "requestId": "408161cd-65bf-44e2-96ee-ae80e81009dd",
+      "error": {
+        "code": "ResourceNotFound",
+        "message": "The Resource 'Microsoft.Discovery/workspaces/discoveryholjunwoosc/chatmodeldeployments/gpt-5-4' under resource group 'rg-discovery-hol-20260930' was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix"
+      },
+      "details": {}
+    },
+    "supercomputer": {
+      "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/supercomputers/sc-discovery-hol",
+      "checkedAt": "2026-10-01T06:52:05.670Z",
+      "httpStatus": 200,
+      "requestId": "38ff582b-e1d0-4544-bdf1-b7a694f5a3cd",
+      "state": "Accepted",
+      "location": "swedencentral",
+      "tags": {
+        "environment": "lab",
+        "project": "microsoft-discovery-core-hol",
+        "NetworkIsolation": "true"
+      },
+      "details": {
+        "systemSku": "Standard_D4s_v6",
+        "outboundType": "LoadBalancer"
+      }
+    },
+    "cpuPool": {
+      "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/supercomputers/sc-discovery-hol/nodePools/cpulab",
+      "checkedAt": "2026-10-01T06:52:06.078Z",
+      "httpStatus": 404,
+      "requestId": "88fed385-30c5-4530-a814-f8fa4a52b7d2",
+      "error": {
+        "code": "ResourceNotFound",
+        "message": "The Resource 'Microsoft.Discovery/supercomputers/sc-discovery-hol/nodepools/cpulab' under resource group 'rg-discovery-hol-20260930' was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix"
+      },
+      "details": {}
+    },
+    "indexPool": {
+      "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/supercomputers/sc-discovery-hol/nodePools/indexlab",
+      "checkedAt": "2026-10-01T06:52:06.591Z",
+      "httpStatus": 404,
+      "requestId": "f346e4ab-3244-4738-a3a7-944767ff5d24",
+      "error": {
+        "code": "ResourceNotFound",
+        "message": "The Resource 'Microsoft.Discovery/supercomputers/sc-discovery-hol/nodepools/indexlab' under resource group 'rg-discovery-hol-20260930' was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix"
+      },
+      "details": {}
+    },
+    "storageContainer": {
+      "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/storageContainers/thermaldata",
+      "checkedAt": "2026-10-01T06:52:06.916Z",
+      "httpStatus": 200,
+      "requestId": "8fc6939e-4d9f-402c-a488-e0c593622ee5",
+      "state": "Succeeded",
+      "location": "swedencentral",
+      "details": {
+        "storageStore": {
+          "storageAccountId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Storage/storageAccounts/stdiscoveryholjunwoosc",
+          "mountProtocol": "BlobfuseCaching",
+          "kind": "AzureStorageBlob"
+        }
+      }
+    },
+    "evidenceAsset": {
+      "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/storageContainers/thermaldata/storageAssets/evidencepack",
+      "checkedAt": "2026-10-01T06:52:08.538Z",
+      "httpStatus": 200,
+      "requestId": "f218bd9b-6c25-4aee-81d1-b34c5133227d",
+      "state": "Succeeded",
+      "location": "swedencentral",
+      "details": {
+        "path": "discoveryinputs/bookshelf/"
+      }
+    },
+    "candidateAsset": {
+      "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/storageContainers/thermaldata/storageAssets/candidatecsv",
+      "checkedAt": "2026-10-01T06:52:08.877Z",
+      "httpStatus": 200,
+      "requestId": "1b19a302-b238-400f-8a41-09fcf14cda37",
+      "state": "Succeeded",
+      "location": "swedencentral",
+      "details": {
+        "path": "discoveryinputs/compute/materials.csv"
+      }
+    },
+    "tool": {
+      "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/tools/thermal-ranking",
+      "checkedAt": "2026-10-01T06:52:09.564Z",
+      "httpStatus": 200,
+      "requestId": "2855aef8-3b17-4d08-9475-9fda4e2d56c7",
+      "state": "Succeeded",
+      "location": "swedencentral",
+      "tags": {
+        "environment": "lab",
+        "project": "microsoft-discovery-core-hol"
+      },
+      "details": {
+        "version": "1.0.0"
+      }
+    },
+    "storageAccount": {
+      "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Storage/storageAccounts/stdiscoveryholjunwoosc",
+      "checkedAt": "2026-10-01T06:52:10.178Z",
+      "httpStatus": 200,
+      "requestId": "6694c1f7-d9ad-4bcc-b388-4bae46234ec7",
+      "state": "Succeeded",
+      "location": "swedencentral",
+      "sku": {
+        "name": "Standard_LRS",
+        "tier": "Standard"
+      },
+      "tags": {
+        "environment": "lab",
+        "project": "microsoft-discovery-core-hol"
+      },
+      "details": {
+        "publicNetworkAccess": "Disabled",
+        "allowSharedKeyAccess": false,
+        "allowBlobPublicAccess": false
+      }
+    },
+    "inputContainer": {
+      "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Storage/storageAccounts/stdiscoveryholjunwoosc/blobServices/default/containers/discoveryinputs",
+      "checkedAt": "2026-10-01T06:52:10.670Z",
+      "httpStatus": 200,
+      "requestId": "415d2a80-7f6e-4dcb-a9cc-82cfde482119",
+      "details": {
+        "publicAccess": "None"
+      }
+    },
+    "outputContainer": {
+      "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Storage/storageAccounts/stdiscoveryholjunwoosc/blobServices/default/containers/discoveryoutputs",
+      "checkedAt": "2026-10-01T06:52:11.058Z",
+      "httpStatus": 200,
+      "requestId": "ba768095-00e2-4242-b83d-ad0ac08b7287",
+      "details": {
+        "publicAccess": "None"
+      }
+    },
+    "registry": {
+      "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.ContainerRegistry/registries/acrdiscoveryholjunwoosc",
+      "checkedAt": "2026-10-01T06:52:11.419Z",
+      "httpStatus": 200,
+      "requestId": "7cffdea1-fac2-412d-b33e-b70736b7255f",
+      "state": "Succeeded",
+      "location": "swedencentral",
+      "sku": {
+        "name": "Basic",
+        "tier": "Basic"
+      },
+      "tags": {
+        "environment": "lab",
+        "project": "microsoft-discovery-core-hol"
+      },
+      "details": {
+        "publicNetworkAccess": "Enabled",
+        "adminUserEnabled": false,
+        "anonymousPullEnabled": false
+      }
+    },
+    "virtualNetwork": {
+      "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol",
+      "checkedAt": "2026-10-01T06:52:12.126Z",
+      "httpStatus": 200,
+      "requestId": "4a3bea85-894d-4e63-bf64-1c274234922d",
+      "state": "Succeeded",
+      "location": "swedencentral",
+      "tags": {
+        "environment": "lab",
+        "project": "microsoft-discovery-core-hol",
+        "deploymentScope": "network-foundation"
+      },
+      "details": {},
+      "subnets": [
+        {
+          "name": "workspaceSubnet",
+          "state": "Succeeded",
+          "prefix": "10.80.3.0/24",
+          "delegations": [
+            "Microsoft.App/environments"
+          ],
+          "defaultOutboundAccess": false
+        },
+        {
+          "name": "privateEndpointSubnet",
+          "state": "Succeeded",
+          "prefix": "10.80.4.0/24",
+          "delegations": [],
+          "defaultOutboundAccess": false
+        },
+        {
+          "name": "agentSubnet",
+          "state": "Succeeded",
+          "prefix": "10.80.5.0/24",
+          "delegations": [
+            "Microsoft.App/environments"
+          ],
+          "defaultOutboundAccess": false
+        },
+        {
+          "name": "supercomputerNodepoolSubnet",
+          "state": "Succeeded",
+          "prefix": "10.80.1.0/24",
+          "delegations": [],
+          "defaultOutboundAccess": false
+        },
+        {
+          "name": "aksSubnet",
+          "state": "Succeeded",
+          "prefix": "10.80.2.0/24",
+          "delegations": [],
+          "defaultOutboundAccess": false
+        },
+        {
+          "name": "searchSubnet",
+          "state": "Succeeded",
+          "prefix": "10.80.6.0/24",
+          "delegations": [
+            "Microsoft.App/environments"
+          ],
+          "defaultOutboundAccess": false
+        },
+        {
+          "name": "bookshelfPeSubnet",
+          "state": "Succeeded",
+          "prefix": "10.80.7.0/24",
+          "delegations": [],
+          "defaultOutboundAccess": false
+        },
+        {
+          "name": "storagePeSubnet",
+          "state": "Succeeded",
+          "prefix": "10.80.8.0/24",
+          "delegations": [],
+          "defaultOutboundAccess": false
+        },
+        {
+          "name": "blobClientSubnet",
+          "state": "Succeeded",
+          "prefix": "10.80.9.0/24",
+          "delegations": [],
+          "defaultOutboundAccess": false
+        }
+      ]
+    },
+    "privateEndpoint": {
+      "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/privateEndpoints/pe-discovery-blob",
+      "checkedAt": "2026-10-01T06:52:12.695Z",
+      "httpStatus": 200,
+      "requestId": "11c6e629-355b-4c2f-9ff5-916dc5c845e8",
+      "state": "Succeeded",
+      "location": "swedencentral",
+      "tags": {
+        "environment": "lab",
+        "project": "microsoft-discovery-core-hol"
+      },
+      "details": {
+        "privateLinkServiceConnections": [
+          {
+            "name": "discovery-blob",
+            "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/privateEndpoints/pe-discovery-blob/privateLinkServiceConnections/discovery-blob",
+            "etag": "W/\"a8ad7419-7d82-49aa-b9a0-8245a0f67948\"",
+            "properties": {
+              "provisioningState": "Succeeded",
+              "privateLinkServiceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Storage/storageAccounts/stdiscoveryholjunwoosc",
+              "groupIds": [
+                "blob"
+              ],
+              "privateLinkServiceConnectionState": {
+                "status": "Approved",
+                "description": "Auto-Approved",
+                "actionsRequired": "None"
+              }
+            },
+            "type": "Microsoft.Network/privateEndpoints/privateLinkServiceConnections"
+          }
+        ],
+        "customDnsConfigs": []
+      }
+    },
+    "privateDnsLink": {
+      "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/privateDnsZones/privatelink.blob.core.windows.net/virtualNetworkLinks/discovery-lab",
+      "checkedAt": "2026-10-01T06:52:13.054Z",
+      "httpStatus": 200,
+      "requestId": "c6b3a1a3-59e4-44d9-a9b4-4169f94d9297",
+      "state": "Succeeded",
+      "location": "global",
+      "details": {
+        "virtualNetworkLinkState": "Completed"
+      }
+    }
+  },
+  "collections": {
+    "bookshelves": {
+      "checkedAt": "2026-10-01T06:52:13.358Z",
+      "httpStatus": 200,
+      "requestId": "c9d2f1ca-2134-43cb-a9a3-018ce0644f89",
+      "value": []
+    },
+    "foundryModelDeployments": {
+      "checkedAt": "2026-10-01T06:52:13.733Z",
+      "httpStatus": 200,
+      "requestId": "12e681c3-e9d8-45b9-ad48-6f08f343226d",
+      "value": [
+        {
+          "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwoosc-ym5ffv/providers/Microsoft.CognitiveServices/accounts/aif-dwsp-foundry-ym5ffvaa/deployments/gpt-5.4",
+          "name": "gpt-5.4",
+          "state": "Succeeded",
+          "sku": {
+            "name": "GlobalStandard",
+            "capacity": 250
+          },
+          "model": {
+            "format": "OpenAI",
+            "name": "gpt-5.4",
+            "version": "2026-03-05"
+          }
+        }
+      ]
+    }
+  },
+  "outcome": "core_resources_blocked",
+  "notVerified": [
+    "Studio user login and project access",
+    "Fresh Blob file read-back; prior private-client evidence remains separate",
+    "Bookshelf indexing, agents, tool execution, Discovery Engine, and collaboration",
+    "Current Azure regional capacity beyond the saved operation results",
+    "Exact accumulated cost"
+  ],
+  "completedAt": "2026-10-01T06:52:13.734Z"
+}

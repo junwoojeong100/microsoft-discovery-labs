@@ -1,0 +1,6 @@
+{
+  "deploymentErrors": "ErrorCode: ManagedEnvironmentCapacityHeavyUsageError, Message: Creating a new managed environment is unavailable at this time due to high demand in current region. To create a new managed environment, we recommend using an alternate region. For a list of all the Azure regions, visit https://aka.ms/acaregions. For more details, visit https://aka.ms/akscapacityheavyusage",
+  "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwoosc-ym5ffv/providers/Microsoft.App/managedEnvironments/mrg-dwsp-discoveryholjunwoosc-ym5ffv",
+  "location": "Sweden Central",
+  "state": "Failed"
+}

@@ -1,0 +1,11 @@
+[
+  {
+    "correlationId": "cf91439f-960e-430a-96af-798274d51c89",
+    "error": "{\"code\":\"AKSCapacityHeavyUsage\",\"details\":null,\"message\":\"AKS is experiencing heavy usage in region swedencentral. We are working on adding new capacity. In the meantime, please consider creating new AKS clusters in a different region. For a list of all the Azure regions, visit https://aka.ms/aks/regions. For more details on this error, visit https://aka.ms/akscapacityheavyusage.\",\"subcode\":\"\"}",
+    "operation": "Microsoft.ContainerService/managedClusters/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dscmp-sc-discovery-hol-b6wiwf/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-b6wiwf",
+    "status": "Failed",
+    "subStatus": "BadRequest",
+    "time": "2026-10-01T06:46:52.1965991Z"
+  }
+]

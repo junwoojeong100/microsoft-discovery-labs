@@ -1,0 +1,34 @@
+[
+  {
+    "operationId": "0C461D55B17A197D",
+    "state": "Succeeded",
+    "statusCode": "OK",
+    "statusMessage": null,
+    "target": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/storageContainers/thermaldata/storageAssets/evidencepack",
+    "timestamp": "2026-10-01T06:45:14.901226+00:00"
+  },
+  {
+    "operationId": "8513B4A5BB971723",
+    "state": "Succeeded",
+    "statusCode": "OK",
+    "statusMessage": null,
+    "target": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/storageContainers/thermaldata/storageAssets/candidatecsv",
+    "timestamp": "2026-10-01T06:45:14.901226+00:00"
+  },
+  {
+    "operationId": "BAA2B9A2C2D83D9F",
+    "state": "Running",
+    "statusCode": "Created",
+    "statusMessage": null,
+    "target": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/supercomputers/sc-discovery-hol",
+    "timestamp": "2026-10-01T06:43:49.992731+00:00"
+  },
+  {
+    "operationId": "4F2C318FC8FB47CD",
+    "state": "Succeeded",
+    "statusCode": "OK",
+    "statusMessage": null,
+    "target": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/storageContainers/thermaldata",
+    "timestamp": "2026-10-01T06:43:49.992731+00:00"
+  }
+]
