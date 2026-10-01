@@ -12,7 +12,9 @@
 
 `AllowBringYourOwnPublicIpAddress` 등록과 `Microsoft.Network` 전파를 확인한 뒤 기존 코어를 한 번 재시도했다. **15:46:52 KST의 새 하위 AKS 요청도 `AKSCapacityHeavyUsage`로 실패**했다. 이는 오전 오류의 단순 재인용이 아니다. 새 correlation ID는 **`cf91439f-960e-430a-96af-798274d51c89`**다.
 
-15:52에는 상위 `discovery-core-resume-20261001-1530`이 **Running**, Supercomputer가 **Accepted**였다. 최종 성공/실패는 아직 확정하지 않는다. 네트워크 feature 미등록은 해결됐으나 지역 용량 문제는 남아 있으며, 이번 요청이 진행 중일 때 추가 배포를 중첩하지 않는다.
+15:52에는 상위 `discovery-core-resume-20261001-1530`이 **Running**, Supercomputer가 **Accepted**였고 당시에는 최종 결과가 미확정이었다. 네트워크 feature 미등록은 해결됐으나 지역 용량 문제는 남아 있었으며, 진행 중인 요청에 추가 배포를 중첩하지 않았다.
+
+**최종 갱신:** 같은 요청은 **16:14:43 KST에 Failed**로 종료됐고 [16:21 GET](../../artifacts/discovery-resume-snapshot-20261001-1621.json)에서도 Workspace와 Supercomputer가 모두 Failed였다. [최종 배포·오류](../../artifacts/discovery-resume-deployment-20261001.json)를 보존했다. 이후 중앙 진단 저장소 복구가 성공했어도 AKS 용량은 별개이며, 추가 코어 재시도는 하지 않았다.
 
 오후 재확인에서도 지역 vCPU 2/100, Dsv6 0/100, Esv6 0/100, Container Apps 환경 수 1/50였다. [새 실제 오류](../../artifacts/discovery-resume-activity-failures-20261001.json), [리소스 상태](../../artifacts/discovery-resume-snapshot-20261001-1552.json), [한도](../../artifacts/discovery-resume-compute-limits-20261001.json), [사용량](../../artifacts/discovery-resume-compute-usage-20261001.json)을 구분해 본다.
 
@@ -95,8 +97,11 @@ Microsoft.Network, one core retry was accepted at 2026-10-01 06:43:48 UTC.
 Its backing AKS write failed again at 06:46:52 UTC with AKSCapacityHeavyUsage.
 Latest correlation: cf91439f-960e-430a-96af-798274d51c89
 Deployment: discovery-core-resume-20261001-1530
-At 06:52 UTC, the parent was Running and the Supercomputer was Accepted;
-the final outcome was not yet known.
+At 06:52 UTC, the parent was Running and the Supercomputer was Accepted.
+The retry reached terminal Failed at 07:14:43 UTC, targeting the Supercomputer.
+At 07:21 UTC, both Workspace and Supercomputer were still Failed.
+The missing central diagnostic destination was repaired separately; that
+configuration repair does not resolve the regional AKS capacity failure.
 
 Workspace-only creation also failed at its Container Apps managed environment
 with ManagedEnvironmentCapacityHeavyUsageError / AKSCapacityHeavyUsage.

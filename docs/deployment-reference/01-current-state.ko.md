@@ -1,6 +1,6 @@
 # 01 — 현재 상태와 블로커
 
-[목차](README.ko.md) · **리소스는 2026-10-01 15:52, 모델 quota는 15:53 KST의 실제 조회. 이후 상태를 보장하지 않는다.**
+[목차](README.ko.md) · **2026-10-01 코어 16:21 조회, 중앙 진단 16:28 검증과 후속 quota 조회를 반영. 이후 상태를 보장하지 않는다.**
 
 ## 활성 배포 범위
 
@@ -29,12 +29,13 @@
 | Discovery 데이터 참조 | `thermaldata`, `evidencepack`, `candidatecsv`: `Succeeded` |
 | ACR / 도구 | `acrdiscoveryholjunwoosc`, build `dt1` 성공, `thermal-ranking` version `1.0.0` 등록 성공 |
 | Network feature | `AllowBringYourOwnPublicIpAddress`와 `Microsoft.Network`: `Registered`, 오후 등록·전파 완료 |
-| 오후 코어 배포 | `discovery-core-resume-20261001-1530`: `Running`, 한 번의 요청이며 최종 결과 미확정 |
-| Supercomputer | `sc-discovery-hol`: 재요청 수락 후 `Accepted`; 오전의 `Failed`와 구분 |
+| 오후 코어 배포 | `discovery-core-resume-20261001-1530`: **16:14:43 KST 최종 Failed** |
+| Supercomputer | `sc-discovery-hol`: `Failed`, 16:21 GET으로 재확인 |
 | Workspace | `discoveryholjunwoosc`: `Failed` |
 | Discovery 하위 자원 | `cpulab`, `gpt-5-4`, `thermalhol`: 마지막 조회에서 미생성 |
 | Bookshelf / 색인 풀 | Bookshelf와 `indexlab` 미생성 |
 | 연구 실행 | 색인, 연구 에이전트, 실제 Supercomputer 도구 실행, Engine, 다중 사용자 권한 실습 미실행 |
+| 중앙 진단 | `McapsGovernance/mcaps4c05bc053c3d4ff154e5-la` 생성 및 `setByPolicy-MCAPSGovernance` 연결 완료; 정책 복구 3건 Succeeded |
 
 도구 이미지의 관측 digest:
 
@@ -63,7 +64,8 @@ Foundry의 기본 프로젝트가 있다고 Discovery의 연구 실습이 준비
 | AKS/Container Apps 배포 | Feature 등록 이후인 **15:46:52**에도 새 하위 AKS가 `AKSCapacityHeavyUsage` 반환. 기존 Workspace의 `ManagedEnvironmentCapacityHeavyUsageError`도 남음. [지원 확인](03-compute-capacity.ko.md) 필요 |
 | Bookshelf 운영 모델 용량 | **신청 접수 후에도 실제 한도 미반영**. gpt-5-mini/embedding 잔여 990,000/780,000 TPM로 실습 운영 목표 각 2,000,000 TPM 미달. [요청 추적](02-model-quota.ko.md) |
 | 후속 Studio·연구 실행 | Project/검증 모델/CPU 풀 미생성. 정상 로그인·프로젝트 열기·색인·계산·Engine 미검증. 현재 AKS 생성 오류의 원인으로 판정한 것은 아님 |
-| 공통 진단 정책 | `mcapsgovernance/mcaps4c05bc053c3d4ff154e5-la` 대상 누락. 조직 관리자 확인 대상이며, 확인된 지역 용량 실패의 직접 원인과 구분 |
+
+**중앙 진단 대상 누락은 해결됐다.** 기존 조직 정책과 기존 관리 ID를 사용해 중앙 RG·workspace·Discovery 계정의 진단 설정만 복구했다. 정책 정의·권한은 변경하지 않았다. [실제 복구 증거](../../artifacts/discovery-governance-recovery-20261001.json)와 [로그·메트릭·목적지](../../artifacts/discovery-governance-diagnostic-setting-20261001.json)를 확인한다. 후속 [16:30:10 KST 평가](../../artifacts/discovery-governance-compliance-20261001.json)에서 **해당 계정의 진단 정책은 Compliant**였다. 전체 구독의 모든 정책이나 실제 로그 유입을 검증한 것은 아니다.
 
 확인된 주요 실패 식별자:
 
@@ -76,7 +78,7 @@ Foundry의 기본 프로젝트가 있다고 Discovery의 연구 실습이 준비
 
 원래 `discovery-core-20261001` 배포는 중복 쓰기를 막기 위해 취소했다. 별도 `discovery-workspace-20261001` 배포는 약 55분 뒤 실패했다. **배포 취소는 생성된 자원 삭제가 아니며, 이미 시작된 하위 작업을 즉시 중단한다고 보장하지 않는다.**
 
-오후의 `discovery-core-resume-20261001-1530`은 별도 한 번의 재시도다. 15:52에는 상위가 `Running`, Supercomputer가 `Accepted`였으므로 이미 최종 실패하거나 성공했다고 표시하지 않는다. 이 요청이 진행 중인 동안 겹치는 PUT을 추가하지 않는다. 이번에는 terminal `Failed` 갱신의 `Conflict`를 관측하지 않았으며, 향후 해당 오류가 발생할 때만 승인된 삭제·재생성 경로를 검토한다.
+오후의 `discovery-core-resume-20261001-1530`은 별도 한 번의 재시도다. 15:52의 Running/Accepted를 거쳐 **16:14:43에 최종 Failed**로 종료됐다. 원인은 하위 AKS 용량 오류이며 추가 재시도는 하지 않았다. 이번에는 terminal `Failed` 갱신의 `Conflict`를 관측하지 않았으며, 향후 해당 오류가 발생할 때만 승인된 삭제·재생성 경로를 검토한다.
 
 ## 남아 있는 비용
 
@@ -84,8 +86,11 @@ Foundry의 기본 프로젝트가 있다고 Discovery의 연구 실습이 준비
 
 사설 클라이언트 VM은 할당 해제로 컴퓨트 과금을 줄였지만 OS 디스크는 유지된다. 할당 해제된 VM의 vCPU가 quota 사용량에 포함될 수도 있으므로 과금과 quota 반환을 구분한다. 임의로 MRG나 공유 구독 역할을 삭제하지 않는다.
 
+중앙 Log Analytics는 기존 조직 정책대로 **West US 2 / PerGB2018 / 보존 30일**, 별도 일일 cap 없이 생성됐다. 로그 수집·보관 비용을 별도로 확인하며 공유 `McapsGovernance` RG를 실습 종료와 함께 삭제하지 않는다.
+
 ## 증거와 시간 차이
 
+- [16:14 코어 최종 실패](../../artifacts/discovery-resume-deployment-20261001.json), [16:21 상태](../../artifacts/discovery-resume-snapshot-20261001-1621.json), [중앙 진단 복구](../../artifacts/discovery-governance-recovery-20261001.json), [복구 후 quota](../../artifacts/discovery-governance-readiness-20261001.json).
 - [15:52 시각 고정 상태](../../artifacts/discovery-resume-snapshot-20261001-1552.json), [15:53 quota](../../artifacts/discovery-resume-readiness-20261001-1553.json), [새 AKS 실패](../../artifacts/discovery-resume-activity-failures-20261001.json).
 - [Network feature 등록](../../artifacts/discovery-resume-network-feature-registration-20261001.json), [Provider 전파](../../artifacts/discovery-resume-network-provider-20261001.json), [오후 상위 배포 상태](../../artifacts/discovery-resume-current-deployment-20261001.json).
 - [초기 워크로드 스냅샷](../../artifacts/discovery-execution-20261001.json): 사설 클라이언트 추가 전 기록이므로 당시 서브넷은 8개.

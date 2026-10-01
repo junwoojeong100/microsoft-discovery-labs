@@ -1,0 +1,34 @@
+{
+  "createdDate": "2026-10-01T07:22:45.0873714Z",
+  "customerId": "f23213b3-2683-496e-a290-95eff01c8b61",
+  "etag": "\"27010012-0000-0800-0000-6abe0a520000\"",
+  "features": {
+    "enableLogAccessUsingOnlyResourcePermissions": true,
+    "legacy": 0,
+    "searchVersion": 1
+  },
+  "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/McapsGovernance/providers/Microsoft.OperationalInsights/workspaces/mcaps4c05bc053c3d4ff154e5-la",
+  "location": "WestUS2",
+  "modifiedDate": "2026-10-01T07:22:58.4003194Z",
+  "name": "mcaps4c05bc053c3d4ff154e5-la",
+  "provisioningState": "Succeeded",
+  "publicNetworkAccessForIngestion": "Enabled",
+  "publicNetworkAccessForQuery": "Enabled",
+  "resourceGroup": "McapsGovernance",
+  "retentionInDays": 30,
+  "sku": {
+    "lastSkuUpdate": "2026-10-01T07:22:45.0873714Z",
+    "name": "PerGB2018"
+  },
+  "tags": {
+    "Action": "Do Not Delete",
+    "Contact": "https://aka.ms/mcapsazuresupport",
+    "CreatedByPolicy": "MCAPS Governance Team"
+  },
+  "type": "Microsoft.OperationalInsights/workspaces",
+  "workspaceCapping": {
+    "dailyQuotaGb": -1.0,
+    "dataIngestionStatus": "RespectQuota",
+    "quotaNextResetTime": "2026-10-01T10:00:00Z"
+  }
+}

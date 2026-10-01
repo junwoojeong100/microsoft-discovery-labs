@@ -4,9 +4,55 @@
 
 구독 `51531604-2337-4c05-bc05-3c3d4ff154e5`, 테넌트 `46e9cdaa-fed3-4131-aa28-c1fc8a8a043a`, RG `rg-discovery-hol-20260930`, 리전 Sweden Central을 사용했다. 기존 네트워크와 UAMI를 재사용했으며 다른 프로젝트의 자원·정책·모델 배포를 삭제하지 않았다.
 
+## 2026-10-01 16:28 KST — 중앙 진단 설정 복구 완료
+
+**중앙 Log Analytics 대상 누락에 따른 진단 설정 오류는 해결했다.** 남은 핵심 블로커는 **Sweden Central의 AKS/Container Apps 용량과 Bookshelf 운영 모델 quota**다. 앞서 진행 중이던 코어 재시도는 **16:14:43 KST에 최종 Failed**로 끝났다. 아래 15:52의 Running/Accepted는 당시 기록이며 현재 상태가 아니다.
+
+### 원인과 최소 복구 범위
+
+사용자의 16:10 후속 요청에 따라 조사한 결과, 중앙 워크스페이스뿐 아니라 **`McapsGovernance` 리소스 그룹 자체가 없었다**. 같은 이름의 복구 가능한 soft-deleted 워크스페이스도 없었다. 기존 Discovery MRG의 두 Log Analytics는 정상 존재하지만, 조직 정책이 정확한 중앙 workspace ID를 요구하므로 임의 대체하지 않았다.
+
+관리 그룹의 기존 `MCAPSGovDeployPolicies`에는 누락된 RG와 워크스페이스를 생성하는 두 `deployIfNotExists` 규칙이 이미 있었고, 해당 구독은 두 규칙에 NonCompliant였다. 기존 정책 관리 ID의 상속 Owner 권한도 확인했다. **정책 정의·할당·예외·RBAC를 변경하지 않고** 다음 세 규칙만 순서대로 복구했다.
+
+| 단계 | 적용 범위 | 실제 결과 / 완료 시각 KST |
+|---|---|---|
+| `NewResourceGroupDeploy` | 해당 구독의 누락된 중앙 RG | `McapsGovernance` 생성, **Succeeded · 16:21:45** |
+| `NewLogAnalyticsWorkspaceDeploy` | 해당 구독의 지정 중앙 workspace | `mcaps4c05bc053c3d4ff154e5-la` 생성, **Succeeded · 16:23:41** |
+| `EnableCognitiveServicesDiagnostics` | **`aif-dwsp-foundry-ym5ffvaa` 리소스 하나만** | `setByPolicy-MCAPSGovernance` 생성, **Succeeded · 16:26:08** |
+
+세 remediation은 각각 **실제 배포 1개 / 성공 1개 / 실패 0개**다. 단순 Accepted나 배포 수 0의 Succeeded를 완료 증거로 삼지 않았다. 전체 관리 그룹·전체 initiative·다른 Cognitive Services 계정에 일괄 복구를 실행하지 않았다.
+
+### 실제 저장소와 진단 설정 확인
+
+| 항목 | GET으로 확인한 값 |
+|---|---|
+| 중앙 RG / workspace | `McapsGovernance` / `mcaps4c05bc053c3d4ff154e5-la`, 생성 Succeeded |
+| 리전·과금·보존 | 기존 조직 정책 기본값 **West US 2 / PerGB2018 / 30일** |
+| 수집 대상 | Discovery 관리 Foundry 계정 `aif-dwsp-foundry-ym5ffvaa` |
+| 진단 프로필 | `setByPolicy-MCAPSGovernance` |
+| 목적지 | 새 중앙 workspace의 **정확한 ARM ID**와 일치 |
+| 로그·메트릭 | **`allLogs=true`, `AllMetrics=true`** |
+| 비용 경계 | 정책 기본값 `dailyQuotaGb=-1` 유지. 수집·보관 종량제 비용 가능, 실제 누적 비용 미조회 |
+
+이 중앙 저장소는 **조직의 공통 진단 대상**이며 Discovery 작업 스택을 West US 2로 옮긴 것이 아니다. 원본·입출력 Blob은 Sweden Central에 남는다. 다만 진단 로그는 정책에 따라 West US 2로 전송하도록 구성됐으므로 모든 데이터가 Sweden Central에만 머문다고 표현하지 않는다. 공유 RG의 `Do Not Delete` 태그를 유지했으며 실습 RG 정리와 함께 자동 삭제하지 않는다.
+
+**완료 경계:** 리소스 생성, 진단 목적지, 로그/메트릭 활성화를 실제 확인했다. 실습 MRG 범위의 후속 재평가도 완료돼 **해당 Foundry 계정의 `EnableCognitiveServicesDiagnostics` 정책은 Compliant**로 확인됐다. [실제 평가 시각은 16:30:10 KST](artifacts/discovery-governance-compliance-20261001.json)다. 전체 구독의 모든 정책 준수, 실제 로그 유입, 과거 누락 로그의 소급 복구까지 확인한 것은 아니다. 과거 `PolicyDeployment_4802795780941947574`의 Failed 이력도 삭제하거나 성공으로 바꾸지 않았다.
+
+### 남은 작업과 증거
+
+코어 재시도 `discovery-core-resume-20261001-1530`은 Supercomputer 대상 `ResourceDeploymentFailure`로 종료됐다. 16:21의 재조회에서도 **Workspace와 Supercomputer 모두 Failed**, `cpulab`/`indexlab`/`gpt-5-4`/`thermalhol`은 404, Bookshelf 목록은 비어 있었다. 지역 용량은 중앙 로그 복구와 별개다. 복구 후 모델 quota 재조회에서도 gpt-5-mini/embedding의 잔여량은 **990,000 / 780,000 TPM**로 그대로였다.
+
+| 증거 | 파일 |
+|---|---|
+| 복구 결과·정확한 범위·검증 경계 | [복구 요약](artifacts/discovery-governance-recovery-20261001.json) |
+| 세 remediation 최종 결과 | [RG](artifacts/discovery-governance-rg-remediation-20261001.json) · [workspace](artifacts/discovery-governance-workspace-remediation-20261001.json) · [진단 설정](artifacts/discovery-governance-diagnostics-remediation-20261001.json) |
+| 실제 생성·설정 GET | [RG](artifacts/discovery-governance-resource-group-20261001.json) · [workspace](artifacts/discovery-governance-workspace-20261001.json) · [로그·메트릭·목적지](artifacts/discovery-governance-diagnostic-setting-20261001.json) |
+| 코어 최종 실패·하위 작업 | [최종 배포](artifacts/discovery-resume-deployment-20261001.json) · [operations](artifacts/discovery-resume-operations-20261001.json) |
+| 16:21 코어 상태 / 복구 후 quota | [시각 고정 스냅샷](artifacts/discovery-resume-snapshot-20261001-1621.json) · [readiness](artifacts/discovery-governance-readiness-20261001.json) |
+
 ## 2026-10-01 15:52 KST — 현재 블로커와 재시도 상태
 
-**네트워크 feature 등록은 해결됐지만, Discovery 환경 생성은 아직 완료되지 않았다.** 아래 리소스 상태는 **15:52**, 모델 quota는 **15:53 KST**의 실제 조회다. 오전의 최종 실패와 오후의 진행 중인 재시도를 구분한다.
+**다음은 15:52/15:53 KST 당시 기록이다.** 이후의 코어 최종 실패와 중앙 진단 복구는 위 절에서 확인한다. 이 시점에는 네트워크 feature 등록만 해결됐고 Discovery 환경 생성은 완료되지 않았다.
 
 ### 해결한 항목과 실제 변경
 
@@ -71,7 +117,7 @@ Bookshelf의 2,000,000 TPM는 **이 실습의 운영 준비 기준**이다. 일�
 
 ## 2026-10-01 — 실제 배포와 차단 원인
 
-다음 표는 **11:04 KST의 1차 배포 결과**다. 이후의 사설 데이터 클라이언트·파일 업로드 결과는 바로 아래 후속 절에 별도로 기록한다.
+이 절은 **오전부터 13:41까지의 과거 실행**을 보존한다. 다음 표는 **11:04 KST의 1차 배포 결과**이며 사설 데이터 클라이언트·파일 업로드 결과는 아래 후속 절에 별도로 기록한다. 중앙 진단과 코어 재시도의 최신 상태는 문서 상단과 구분한다.
 
 | 단계 | 확인된 결과 | 완료 경계 |
 |---|---|---|

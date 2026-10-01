@@ -1,0 +1,31 @@
+{
+  "correlationId": "1f9254b8-cab9-4190-a000-8dfb2c96df6d",
+  "createdOn": "2026-10-01T07:24:46.308347+00:00",
+  "deploymentStatus": {
+    "failedDeployments": 0,
+    "successfulDeployments": 1,
+    "totalDeployments": 1
+  },
+  "failureThreshold": null,
+  "filters": null,
+  "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/mrg-dwsp-discoveryholjunwoosc-ym5ffv/providers/microsoft.cognitiveservices/accounts/aif-dwsp-foundry-ym5ffvaa/providers/microsoft.policyinsights/remediations/discovery-governance-diagnostics-20261001",
+  "lastUpdatedOn": "2026-10-01T07:26:08.430938+00:00",
+  "name": "discovery-governance-diagnostics-20261001",
+  "parallelDeployments": null,
+  "policyAssignmentId": "/providers/microsoft.management/managementgroups/46e9cdaa-fed3-4131-aa28-c1fc8a8a043a/providers/microsoft.authorization/policyassignments/mcapsgovdeploypolicies",
+  "policyDefinitionReferenceId": "enablecognitiveservicesdiagnostics",
+  "provisioningState": "Succeeded",
+  "resourceCount": null,
+  "resourceDiscoveryMode": "ExistingNonCompliant",
+  "resourceGroup": "mrg-dwsp-discoveryholjunwoosc-ym5ffv",
+  "statusMessage": null,
+  "systemData": {
+    "createdAt": "2026-10-01T07:24:45.988461+00:00",
+    "createdBy": "junwoojeong@MngEnvMCAP757124.onmicrosoft.com",
+    "createdByType": "User",
+    "lastModifiedAt": "2026-10-01T07:24:45.988461+00:00",
+    "lastModifiedBy": "junwoojeong@MngEnvMCAP757124.onmicrosoft.com",
+    "lastModifiedByType": "User"
+  },
+  "type": "Microsoft.PolicyInsights/remediations"
+}

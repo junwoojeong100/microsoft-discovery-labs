@@ -38,6 +38,38 @@ az provider show --namespace Microsoft.Network \
 
 근거: [공식 문제 해결 절차](https://learn.microsoft.com/azure/microsoft-discovery/troubleshoot-microsoft-discovery#supercomputer-deployment-stalls-because-a-required-public-ip-feature-isnt-registered), [실제 등록 응답](../../artifacts/discovery-resume-network-feature-registration-20261001.json), [Provider 재등록 후 상태](../../artifacts/discovery-resume-network-provider-20261001.json). 이 기능의 최초 미등록을 과거 `AKSCapacityHeavyUsage`의 입증된 원인으로 바꾸어 해석하지 않는다.
 
+## 중앙 진단 저장소 누락 — 기존 정책으로 복구 완료
+
+16:10 후속 조사에서 지정 중앙 workspace뿐 아니라 `McapsGovernance` RG 자체가 없었고, 같은 이름의 soft-delete 복구 대상도 없었다. Discovery MRG의 자체 Log Analytics 두 개는 정상 존재하지만, 조직 정책의 중앙 목적지로 임의 대체하면 같은 준수 조건을 충족하지 않는다.
+
+기존 `MCAPSGovDeployPolicies`의 다음 규칙만 순차 실행했다. 정책의 기존 관리 ID에 필요한 상속 Owner가 있어 새 권한 부여나 정책 변경은 없었다.
+
+| 규칙 | 범위 | 결과 |
+|---|---|---|
+| `NewResourceGroupDeploy` | 현재 구독의 누락된 `McapsGovernance` | 16:21:45 Succeeded |
+| `NewLogAnalyticsWorkspaceDeploy` | 현재 구독의 지정 중앙 workspace | 16:23:41 Succeeded |
+| `EnableCognitiveServicesDiagnostics` | `aif-dwsp-foundry-ym5ffvaa` 리소스 하나 | 16:26:08 Succeeded |
+
+각 작업은 **실제 배포 1 / 성공 1 / 실패 0**이었다. 중앙 workspace의 실제 값은 **West US 2, PerGB2018, 보존 30일, 일일 cap 없음**이며 기존 정책 기본값을 유지했다. 진단 프로필 `setByPolicy-MCAPSGovernance`의 workspace ID 일치와 **allLogs / AllMetrics 활성화**도 GET으로 확인했다. 전체 관리 그룹이나 다른 계정에 일괄 remediation을 실행하지 않았다.
+
+아래는 읽기 전용 확인이다. 이미 복구된 자원을 다시 생성하거나 정책을 비활성화하지 않는다.
+
+```bash
+az monitor log-analytics workspace show \
+  --subscription 51531604-2337-4c05-bc05-3c3d4ff154e5 \
+  --resource-group McapsGovernance \
+  --workspace-name mcaps4c05bc053c3d4ff154e5-la \
+  --query "{id:id,state:provisioningState,location:location,sku:sku.name,retentionInDays:retentionInDays}"
+az monitor diagnostic-settings show \
+  --subscription 51531604-2337-4c05-bc05-3c3d4ff154e5 \
+  --resource /subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwoosc-ym5ffv/providers/Microsoft.CognitiveServices/accounts/aif-dwsp-foundry-ym5ffvaa \
+  --name setByPolicy-MCAPSGovernance
+```
+
+후속 [16:30:10 KST 재평가](../../artifacts/discovery-governance-compliance-20261001.json)에서 **이 Foundry 계정의 진단 정책은 Compliant**로 확인됐다. 이전 Failed 배포 이력은 과거 기록으로 남는다. 전체 구독의 모든 정책 준수, 실제 로그 유입, 과거 누락 로그의 소급 복구까지 확인한 것은 아니다. 중앙 workspace는 공유 자원이며 종량제 비용이 발생할 수 있다. `Do Not Delete` 태그를 유지하고 실습 종료와 함께 삭제하지 않는다.
+
+근거: [기존 정책 remediation 절차](https://learn.microsoft.com/azure/governance/policy/how-to/remediate-resources), [실제 복구 요약](../../artifacts/discovery-governance-recovery-20261001.json), [진단 설정 GET](../../artifacts/discovery-governance-diagnostic-setting-20261001.json).
+
 ## Storage 403의 실제 원인
 
 처음에는 선택 IP를 허용한 Storage를 요청했지만, 관리 그룹 정책 **`StorageAccount_PublicNetwork_Modify`**가 생성 중 공개 접근을 Disabled로 바꿨다. RG 수준 정책 목록이 비어 있어도 상위 정책이 없다는 뜻은 아니다.

@@ -2,17 +2,16 @@
 
 Status: Blocked
 
-Status checked on 2026-10-01 at 15:52 KST. The previously validated single
-retry is already running; this is not permission to start another deployment.
+The core retry reached terminal Failed at 2026-10-01 16:14:43 KST.
+Do not start another Discovery core deployment without resolving capacity.
 
 2026-10-01 15:30 KST follow-up: the user requested resource creation from the
 hands-on guide and a complete record of restrictions. Reuse the same lab
 subscription, RG, region, names, identity, and private-network configuration.
 Do not delete failed resources or duplicate the paid stack in another region.
 
-The existing Workspace is Failed. The Supercomputer is now Accepted after a
-single retry, and the parent deployment is Running. Its backing AKS returned a
-new AKSCapacityHeavyUsage error at 15:46:52 KST. No terminal result is claimed.
+The Workspace and the retried Supercomputer are Failed. The parent deployment
+also reached Failed after a new AKSCapacityHeavyUsage error in its backing AKS.
 Revalidation of the compiled core template and incremental what-if passed;
 those results did not prove regional service capacity.
 The documented LoadBalancer prerequisite
@@ -27,6 +26,56 @@ Bookshelf model quota remains insufficient. Its two existing increase requests
 were submitted at 13:41 KST, but approval has not appeared in the quota values.
 Do not submit duplicates or create Bookshelf infrastructure yet. The private
 Blob client remains deallocated. Data-plane use is a separate completion gate.
+
+## Independent governance recovery — configuration repaired
+
+All three targeted remediations reached Succeeded with one successful
+deployment each and zero failed deployments: RG at 16:21:45, workspace at
+16:23:41, and the single Discovery account's diagnostics at 16:26:08 KST.
+Actual GETs confirm the exact central workspace ID, WestUS2, PerGB2018,
+30-day retention, allLogs enabled, and AllMetrics enabled. Evidence:
+`artifacts/discovery-governance-recovery-20261001.json`.
+
+The lab Workspace MRG's re-evaluation completed. The single Discovery-managed
+Foundry account's EnableCognitiveServicesDiagnostics policy is Compliant,
+evaluated at 2026-10-01 16:30:10 KST. This is not a claim that every policy in
+the subscription is compliant. Log arrival and historical-log recovery have
+not been verified. The core remains blocked.
+
+The 16:10 KST follow-up asks whether the missing central diagnostic destination
+can be fixed directly. Live reads confirm the entire McapsGovernance RG is
+absent, the exact central workspace is absent, and no matching soft-deleted
+workspace is available for recovery.
+
+The existing enforced MCAPSGovDeployPolicies initiative already includes
+NewResourceGroupDeploy and NewLogAnalyticsWorkspaceDeploy. Both are
+NonCompliant on this subscription. Their unchanged defaults specify
+McapsGovernance, WestUS2, the subscription-derived workspace name
+mcaps4c05bc053c3d4ff154e5-la, PerGB2018, and 30-day retention. This is the
+organization's central log destination, not a second Discovery workload stack.
+Ingestion/storage charges can apply after logging starts.
+
+The assignment's existing system-assigned identity has unconditional inherited
+Owner. No new roles, policy assignments, exclusions, or policy edits are needed.
+No active remediation of these references was found. The source Foundry
+account currently has no diagnostic settings. The two Discovery-managed
+workspaces are not policy-equivalent replacements for the central destination.
+
+Apply only these three sequential remediation references:
+
+1. NewResourceGroupDeploy at the selected subscription scope. Its policy
+   targets only the subscription resource and creates one governance RG.
+2. NewLogAnalyticsWorkspaceDeploy at the selected subscription scope, after
+   the RG succeeds. Verify actual workspace name, region, SKU, and retention.
+3. EnableCognitiveServicesDiagnostics at the single
+   aif-dwsp-foundry-ym5ffvaa resource scope. Preserve the existing policy's
+   allLogs/AllMetrics and exact central destination; do not remediate the
+   entire management group or unrelated subscription resources.
+
+Verify a successful remediation is backed by actual resource/settings GETs,
+not merely a zero-deployment or Accepted remediation status. Policy
+compliance refresh and actual log arrival are separate verification gates.
+The old failed policy deployment remains historical evidence.
 
 ## 1. Scope and authorization
 
@@ -104,6 +153,17 @@ and update both language editions and directly related generated outputs.
 
 ## 7. Validation proof
 
+2026-10-01 16:14:43 KST core retry terminal result:
+
+- discovery-core-resume-20261001-1530 reached Failed, with
+  ResourceDeploymentFailure targeting sc-discovery-hol.
+- Correlation remains cf91439f-960e-430a-96af-798274d51c89.
+- The CLI wait exited nonzero on failure, so the final deployment and operation
+  results were explicitly retrieved and saved rather than treating the wait
+  result as success.
+- Evidence: `artifacts/discovery-resume-deployment-20261001.json` and
+  `artifacts/discovery-resume-operations-20261001.json`.
+
 2026-10-01 15:52 KST execution follow-up:
 
 - The actual core retry began at 15:43:48 KST. Parent deployment Running,
@@ -119,7 +179,8 @@ and update both language editions and directly related generated outputs.
   `artifacts/discovery-resume-current-deployment-20261001.json`, and
   `artifacts/discovery-resume-activity-failures-20261001.json`.
 - A read-only terminal-state waiter tracks the one existing deployment.
-  It does not submit additional retries, cancel, delete, or change regions.
+  It did not submit additional retries, cancel, delete, or change regions;
+  it has since exited on the terminal failure recorded above.
 
 2026-10-01 afternoon core-resume preflight:
 

@@ -605,6 +605,8 @@ python3 scripts/verify_ranking.py \
 
 **부분 실패 후에도 확인할 항목:** 배포가 실패해도 이미 성공한 Storage·ACR·Private Endpoint·관리 RG의 Log Analytics/NSP는 남을 수 있다. RG를 지웠다는 이유로 구독 scope의 NSP Joiner/Reader 역할과 커스텀 역할까지 삭제됐다고 가정하지 않는다. 다른 Discovery 환경이 이 서비스 역할을 공유할 수 있으므로 구독 역할은 관리자 확인 없이 제거하지 않는다. 이 가이드는 자동 삭제 명령을 실행하지 않는다.
 
+**이 구독의 중앙 진단 저장소:** 후속 복구에서 기존 조직 정책대로 `McapsGovernance/mcaps4c05bc053c3d4ff154e5-la`를 West US 2에 생성하고 Discovery 진단을 연결했다. 종량제·보존 30일의 공유 자원이며 `Do Not Delete` 태그를 유지한다. 실습 RG 삭제 범위에서 제외하고 로그 수집·보관 비용을 별도로 확인한다. Blob 작업 데이터를 옮긴 것은 아니지만 진단 로그까지 Sweden Central에만 머문다고 보장하지 않는다.
+
 **완료 기준:** 근거→실행→출력 연결이 보존되고, 실행 중인 작업과 잔여 자원·비용의 상태가 명확하다. L08을 수행하지 않았다면 협업 검증까지 완료했다고 표시하지 않는다.
 
 <a id="e01"></a>

@@ -1,0 +1,30 @@
+{
+  "correlationId": "e55321a0-b8f8-4f7a-8ba0-44b0312d522d",
+  "createdOn": "2026-10-01T07:20:26.477361+00:00",
+  "deploymentStatus": {
+    "failedDeployments": 0,
+    "successfulDeployments": 1,
+    "totalDeployments": 1
+  },
+  "failureThreshold": null,
+  "filters": null,
+  "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/microsoft.policyinsights/remediations/discovery-governance-rg-20261001",
+  "lastUpdatedOn": "2026-10-01T07:21:45.129112+00:00",
+  "name": "discovery-governance-rg-20261001",
+  "parallelDeployments": null,
+  "policyAssignmentId": "/providers/microsoft.management/managementgroups/46e9cdaa-fed3-4131-aa28-c1fc8a8a043a/providers/microsoft.authorization/policyassignments/mcapsgovdeploypolicies",
+  "policyDefinitionReferenceId": "newresourcegroupdeploy",
+  "provisioningState": "Succeeded",
+  "resourceCount": null,
+  "resourceDiscoveryMode": "ExistingNonCompliant",
+  "statusMessage": null,
+  "systemData": {
+    "createdAt": "2026-10-01T07:20:24.328074+00:00",
+    "createdBy": "junwoojeong@MngEnvMCAP757124.onmicrosoft.com",
+    "createdByType": "User",
+    "lastModifiedAt": "2026-10-01T07:20:24.328074+00:00",
+    "lastModifiedBy": "junwoojeong@MngEnvMCAP757124.onmicrosoft.com",
+    "lastModifiedByType": "User"
+  },
+  "type": "Microsoft.PolicyInsights/remediations"
+}

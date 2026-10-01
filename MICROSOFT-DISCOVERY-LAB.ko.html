@@ -894,6 +894,7 @@ thermal-ranking의 rank_cost_revision을 실제 실행하고 별도 결과를 �
 <li>검토된 지식을 다른 세션에서 재사용하려면 Asset을 명시적으로 연결하거나 지원되는 KB 생성·갱신 절차를 따른다. Task 성공이 곧 기존 Bookshelf의 자동 재색인을 의미한다고 가정하지 않는다.</li>
 </ol>
 <p><strong>부분 실패 후에도 확인할 항목:</strong> 배포가 실패해도 이미 성공한 Storage·ACR·Private Endpoint·관리 RG의 Log Analytics/NSP는 남을 수 있다. RG를 지웠다는 이유로 구독 scope의 NSP Joiner/Reader 역할과 커스텀 역할까지 삭제됐다고 가정하지 않는다. 다른 Discovery 환경이 이 서비스 역할을 공유할 수 있으므로 구독 역할은 관리자 확인 없이 제거하지 않는다. 이 가이드는 자동 삭제 명령을 실행하지 않는다.</p>
+<p><strong>이 구독의 중앙 진단 저장소:</strong> 후속 복구에서 기존 조직 정책대로 <code>McapsGovernance/mcaps4c05bc053c3d4ff154e5-la</code>를 West US 2에 생성하고 Discovery 진단을 연결했다. 종량제·보존 30일의 공유 자원이며 <code>Do Not Delete</code> 태그를 유지한다. 실습 RG 삭제 범위에서 제외하고 로그 수집·보관 비용을 별도로 확인한다. Blob 작업 데이터를 옮긴 것은 아니지만 진단 로그까지 Sweden Central에만 머문다고 보장하지 않는다.</p>
 <p><strong>완료 기준:</strong> 근거→실행→출력 연결이 보존되고, 실행 중인 작업과 잔여 자원·비용의 상태가 명확하다. L08을 수행하지 않았다면 협업 검증까지 완료했다고 표시하지 않는다.</p>
 <p><a id="e01"></a></p>
 <h2 id="heading-e01">E01 — Code-environment와 Hybrid Tool</h2><p><strong>목표:</strong> 고정 Action과 에이전트 생성 코드가 같은 계산 환경에서 어떻게 다른지 확인한다. 기본 경로 이후 선택하는 개발자 확장이다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/how-to-create-tool-definition">S21</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-tools-model-integration">S22</a>]</sup></p>

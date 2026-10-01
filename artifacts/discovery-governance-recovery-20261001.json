@@ -1,0 +1,84 @@
+{
+  "verifiedAt": "2026-10-01T07:44:16.975Z",
+  "outcome": "diagnostic_configuration_repaired",
+  "sourceResourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwoosc-ym5ffv/providers/Microsoft.CognitiveServices/accounts/aif-dwsp-foundry-ym5ffvaa",
+  "workspaceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/McapsGovernance/providers/Microsoft.OperationalInsights/workspaces/mcaps4c05bc053c3d4ff154e5-la",
+  "workspace": {
+    "state": "Succeeded",
+    "location": "WestUS2",
+    "sku": "PerGB2018",
+    "retentionInDays": 30,
+    "dailyQuotaGb": -1
+  },
+  "diagnosticSetting": {
+    "name": "setByPolicy-MCAPSGovernance",
+    "workspaceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/McapsGovernance/providers/Microsoft.OperationalInsights/workspaces/mcaps4c05bc053c3d4ff154e5-la",
+    "allLogsEnabled": true,
+    "allMetricsEnabled": true
+  },
+  "remediations": [
+    {
+      "stage": "rg",
+      "name": "discovery-governance-rg-20261001",
+      "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/microsoft.policyinsights/remediations/discovery-governance-rg-20261001",
+      "reference": "newresourcegroupdeploy",
+      "state": "Succeeded",
+      "deployments": {
+        "failedDeployments": 0,
+        "successfulDeployments": 1,
+        "totalDeployments": 1
+      },
+      "completedAt": "2026-10-01T07:21:45.129112+00:00",
+      "correlationId": "e55321a0-b8f8-4f7a-8ba0-44b0312d522d"
+    },
+    {
+      "stage": "workspace",
+      "name": "discovery-governance-workspace-20261001",
+      "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/microsoft.policyinsights/remediations/discovery-governance-workspace-20261001",
+      "reference": "newloganalyticsworkspacedeploy",
+      "state": "Succeeded",
+      "deployments": {
+        "failedDeployments": 0,
+        "successfulDeployments": 1,
+        "totalDeployments": 1
+      },
+      "completedAt": "2026-10-01T07:23:41.208311+00:00",
+      "correlationId": "adb0be81-cdce-4250-a066-f2b10e21b976"
+    },
+    {
+      "stage": "diagnostics",
+      "name": "discovery-governance-diagnostics-20261001",
+      "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/mrg-dwsp-discoveryholjunwoosc-ym5ffv/providers/microsoft.cognitiveservices/accounts/aif-dwsp-foundry-ym5ffvaa/providers/microsoft.policyinsights/remediations/discovery-governance-diagnostics-20261001",
+      "reference": "enablecognitiveservicesdiagnostics",
+      "state": "Succeeded",
+      "deployments": {
+        "failedDeployments": 0,
+        "successfulDeployments": 1,
+        "totalDeployments": 1
+      },
+      "completedAt": "2026-10-01T07:26:08.430938+00:00",
+      "correlationId": "1f9254b8-cab9-4190-a000-8dfb2c96df6d"
+    }
+  ],
+  "policyDefinitionsChanged": false,
+  "roleAssignmentsAdded": false,
+  "unrelatedResourceRemediationsStarted": false,
+  "actualLogArrivalVerified": false,
+  "historicalLogsRecovered": false,
+  "accumulatedCostQueried": false,
+  "complianceEvidence": "artifacts/discovery-governance-compliance-20261001.json",
+  "remainingWorkloadGates": [
+    "AKS/Container Apps regional capacity",
+    "Bookshelf model operational quota",
+    "Studio and end-to-end research execution"
+  ],
+  "configurationVerifiedAt": "2026-10-01T07:28:55.712Z",
+  "policyCompliance": {
+    "state": "Compliant",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/mrg-dwsp-discoveryholjunwoosc-ym5ffv/providers/microsoft.cognitiveservices/accounts/aif-dwsp-foundry-ym5ffvaa",
+    "reference": "enablecognitiveservicesdiagnostics",
+    "assignmentId": "/providers/microsoft.management/managementgroups/46e9cdaa-fed3-4131-aa28-c1fc8a8a043a/providers/microsoft.authorization/policyassignments/mcapsgovdeploypolicies",
+    "evaluatedAt": "2026-10-01T07:30:10.928111+00:00",
+    "scope": "Only the specified Discovery-managed Foundry account and diagnostic policy"
+  }
+}

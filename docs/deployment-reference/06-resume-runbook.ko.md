@@ -1,8 +1,8 @@
 # 06 — 리소스 생성·재개 절차
 
-[목차](README.ko.md) · **기준일: 2026-10-01 15:52 KST. 아래는 재개용 예시이며 실제 실행 결과는 날짜별 보고서와 구분한다.**
+[목차](README.ko.md) · **기준일: 2026-10-01 오후 최종 코어 실패와 중앙 진단 복구. 아래 예시는 실제 실행 결과와 구분한다.**
 
-**현재 중첩 배포 금지:** `discovery-core-resume-20261001-1530` 한 건이 Running이고 Supercomputer는 Accepted다. 하위 AKS의 새 용량 오류를 확인했으므로 종료 상태와 원인을 확인하기 전 다른 `create`를 추가하지 않는다. Feature 등록은 이미 완료됐고, Bookshelf quota 요청도 이미 접수됐다.
+**현재 상태:** `discovery-core-resume-20261001-1530`은 16:14:43에 최종 Failed로 끝났다. 지역 용량을 해결하기 전 같은 `create`를 반복하지 않는다. Feature 등록과 중앙 진단 복구는 완료됐고, Bookshelf quota 요청은 접수됐지만 실제 한도 미반영 상태다.
 
 ## 실행 전 중단 조건
 
@@ -128,10 +128,12 @@ az deployment operation group list --name discovery-core-resume-20261001-1530 \
 | `IncompatibleDelegations` | 기존 위임 서브넷을 전체 VNet PUT으로 재작성하지 않음 |
 | Storage 403 | 실제 public access, 정책, DNS, 데이터 역할을 구분해 확인 |
 | GA Tool 요청의 버전 필드 오류 | `2026-06-01`에서는 `properties.version`; 정의는 `properties.definitionContent` |
-| MRG `PolicyDeployment_*` 실패 | 중앙 진단 대상/조직 정책을 확인. 본체의 직접 실패 원인과 구분 |
+| MRG `PolicyDeployment_*` 실패 | 과거 실패 이력과 현재 설정을 구분. 중앙 진단은 기존 정책 3개로 복구 완료했으므로 실제 workspace/진단 GET과 새 remediation 결과를 확인 |
 | CLI 명령 미지원·MSAL 오류 | 문서화된 다른 읽기 경로 또는 정상 재로그인. 실패 응답을 0/무제한/성공으로 바꾸지 않음 |
 
 코어가 성공하면 `gpt-5-4`, `thermalhol`, `cpulab`과 실제 연결을 확인한다. 그 다음 Bookshelf/색인 풀/KB를 준비한다. [가이드 L00–L09](../../MICROSOFT-DISCOVERY-LAB.ko.md#l00)의 단계별 완료 기준을 적용한다.
+
+**중앙 진단 재복구 원칙:** [05의 실제 범위](05-network-identity-data.ko.md)를 따른다. 기존 조직 정책에 RG/workspace 생성 규칙이 있으면 해당 구독의 필요한 reference만 순서대로 복구하고, 진단 설정은 대상 리소스 하나로 제한한다. 관리 그룹 전체 initiative를 재적용하거나 다른 workspace로 목적지를 바꾸거나 새로운 Owner 역할을 부여하지 않는다. West US 2 중앙 로그 목적지는 조직 정책의 값이며 Discovery 작업 리전 변경이 아니다.
 
 ## 6. 종료와 증거
 
@@ -141,6 +143,7 @@ az deployment operation group list --name discovery-core-resume-20261001-1530 \
 - 입력 동기화 이후 사설 VM을 할당 해제하고 power state를 확인한다. Engine Stop이나 min=0만으로 모든 비용이 사라지지 않는다.
 - 실패한 Workspace/Supercomputer의 MRG 비용, Storage/ACR/Private Endpoint/로그를 점검한다.
 - 보존할 데이터를 확인하고 **삭제 승인을 받은 정확한 자원만** 정리한다. 이 참고 자료에는 자동 RG 삭제 명령을 제공하지 않는다.
+- 공유 `McapsGovernance` RG/중앙 Log Analytics는 실습 RG 정리에서 제외한다. 로그 수집·보관 비용과 `Do Not Delete` 태그를 별도로 확인한다.
 - 구독 scope의 first-party 역할/custom role은 RG 삭제로 사라지지 않으며 다른 환경이 사용할 수 있다.
 
 상세 정리 기준: [L09](../../MICROSOFT-DISCOVERY-LAB.ko.md#l09). 새 실행 결과에는 시각, scope, 성공/실패/미실행 구분과 실제 응답을 남기되 토큰·비밀·개인 연락처는 저장하지 않는다.

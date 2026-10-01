@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-10-01T06:49:41.860Z",
+  "checkedAt": "2026-10-01T07:37:09.036Z",
   "scope": "Local bilingual guide, link, layout, language-switch, and PDF verification only",
   "azureOperationsPerformed": false,
   "azureEndToEndValidated": false,
@@ -15,7 +15,7 @@
       "mobileOverflow": false,
       "printOverflow": false,
       "pdfPages": 28,
-      "pdfBytes": 1215156,
+      "pdfBytes": 1219090,
       "pdfBookmarks": true,
       "pdfLocalFileLinks": 0
     },
@@ -28,7 +28,7 @@
       "mobileOverflow": false,
       "printOverflow": false,
       "pdfPages": 25,
-      "pdfBytes": 1822132,
+      "pdfBytes": 1825940,
       "pdfBookmarks": true,
       "pdfLocalFileLinks": 0
     }

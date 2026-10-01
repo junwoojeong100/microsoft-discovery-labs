@@ -38,22 +38,118 @@
       <a href="MICROSOFT-DISCOVERY-LAB.ko.html" data-language="ko">한국어</a>
     </nav>
     <button id="print" type="button">인쇄 / PDF</button>
-    <details id="toc" open><summary>목차</summary><nav aria-label="목차"><a href="#section-2">2026-10-01 15:52 KST — 현재 블로커와 재시도 상태</a>
-<a href="#section-8">2026-10-01 — 실제 배포와 차단 원인</a>
-<a href="#section-15">2026-09-25 — 과거 접근 점검</a>
-<a href="#section-16">1. 실제로 확인된 결과</a>
-<a href="#section-18">2. 증거 파일</a>
-<a href="#section-19">3. 제공한 실습 자료</a>
-<a href="#section-20">4. 비용·할당량 사전 확인</a>
-<a href="#section-21">5. 승인 요청에 사용할 정보</a>
-<a href="#section-22">6. 과거 재개 안내 — 현재 실행에는 위 2026-10-01 절차 사용</a></nav></details>
+    <details id="toc" open><summary>목차</summary><nav aria-label="목차"><a href="#section-2">2026-10-01 16:28 KST — 중앙 진단 설정 복구 완료</a>
+<a href="#section-6">2026-10-01 15:52 KST — 현재 블로커와 재시도 상태</a>
+<a href="#section-12">2026-10-01 — 실제 배포와 차단 원인</a>
+<a href="#section-19">2026-09-25 — 과거 접근 점검</a>
+<a href="#section-20">1. 실제로 확인된 결과</a>
+<a href="#section-22">2. 증거 파일</a>
+<a href="#section-23">3. 제공한 실습 자료</a>
+<a href="#section-24">4. 비용·할당량 사전 확인</a>
+<a href="#section-25">5. 승인 요청에 사용할 정보</a>
+<a href="#section-26">6. 과거 재개 안내 — 현재 실행에는 위 2026-10-01 절차 사용</a></nav></details>
   </aside>
   <main id="main"><div class="banner">리소스 생성·실행 성공·차단 상태를 분리해 기록합니다. 과거 기록은 날짜를 구분해 읽으세요.</div><h1 id="section-1">Microsoft Discovery 실제 실행 보고서</h1><p><strong>2026-10-01: Discovery 사용 활성화 후 실제 리소스 생성을 진행하고 실습 가이드를 수정했다. 전체 연구 실습은 아직 완료되지 않았다.</strong></p>
 <p>구독 <code>51531604-2337-4c05-bc05-3c3d4ff154e5</code>, 테넌트 <code>46e9cdaa-fed3-4131-aa28-c1fc8a8a043a</code>, RG <code>rg-discovery-hol-20260930</code>, 리전 Sweden Central을 사용했다. 기존 네트워크와 UAMI를 재사용했으며 다른 프로젝트의 자원·정책·모델 배포를 삭제하지 않았다.</p>
-<h2 id="section-2">2026-10-01 15:52 KST — 현재 블로커와 재시도 상태</h2><p><strong>네트워크 feature 등록은 해결됐지만, Discovery 환경 생성은 아직 완료되지 않았다.</strong> 아래 리소스 상태는 <strong>15:52</strong>, 모델 quota는 <strong>15:53 KST</strong>의 실제 조회다. 오전의 최종 실패와 오후의 진행 중인 재시도를 구분한다.</p>
-<h3 id="section-3">해결한 항목과 실제 변경</h3><p><code>Microsoft.Network/AllowBringYourOwnPublicIpAddress</code>가 <code>NotRegistered</code>인 것을 발견해 등록했다. 현재 계정에는 상속 Owner와 실습 RG의 Discovery Platform Administrator가 있으며, feature 등록은 즉시 **<code>Registered</code>**를 반환했다. 이어 <code>Microsoft.Network</code> 재등록·전파가 끝났고 독립 재조회에서도 <strong>둘 다 Registered</strong>였다. 이 구독에서는 별도 Microsoft 승인 대기가 없었다. 사용자 동의와 RBAC 권한은 별개이며, 다른 구독의 즉시 승인을 보장하는 것은 아니다.</p>
+<h2 id="section-2">2026-10-01 16:28 KST — 중앙 진단 설정 복구 완료</h2><p><strong>중앙 Log Analytics 대상 누락에 따른 진단 설정 오류는 해결했다.</strong> 남은 핵심 블로커는 <strong>Sweden Central의 AKS/Container Apps 용량과 Bookshelf 운영 모델 quota</strong>다. 앞서 진행 중이던 코어 재시도는 <strong>16:14:43 KST에 최종 Failed</strong>로 끝났다. 아래 15:52의 Running/Accepted는 당시 기록이며 현재 상태가 아니다.</p>
+<h3 id="section-3">원인과 최소 복구 범위</h3><p>사용자의 16:10 후속 요청에 따라 조사한 결과, 중앙 워크스페이스뿐 아니라 <strong><code>McapsGovernance</code> 리소스 그룹 자체가 없었다</strong>. 같은 이름의 복구 가능한 soft-deleted 워크스페이스도 없었다. 기존 Discovery MRG의 두 Log Analytics는 정상 존재하지만, 조직 정책이 정확한 중앙 workspace ID를 요구하므로 임의 대체하지 않았다.</p>
+<p>관리 그룹의 기존 <code>MCAPSGovDeployPolicies</code>에는 누락된 RG와 워크스페이스를 생성하는 두 <code>deployIfNotExists</code> 규칙이 이미 있었고, 해당 구독은 두 규칙에 NonCompliant였다. 기존 정책 관리 ID의 상속 Owner 권한도 확인했다. <strong>정책 정의·할당·예외·RBAC를 변경하지 않고</strong> 다음 세 규칙만 순서대로 복구했다.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>단계</th>
+<th>적용 범위</th>
+<th>실제 결과 / 완료 시각 KST</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>NewResourceGroupDeploy</code></td>
+<td>해당 구독의 누락된 중앙 RG</td>
+<td><code>McapsGovernance</code> 생성, <strong>Succeeded · 16:21:45</strong></td>
+</tr>
+<tr>
+<td><code>NewLogAnalyticsWorkspaceDeploy</code></td>
+<td>해당 구독의 지정 중앙 workspace</td>
+<td><code>mcaps4c05bc053c3d4ff154e5-la</code> 생성, <strong>Succeeded · 16:23:41</strong></td>
+</tr>
+<tr>
+<td><code>EnableCognitiveServicesDiagnostics</code></td>
+<td><strong><code>aif-dwsp-foundry-ym5ffvaa</code> 리소스 하나만</strong></td>
+<td><code>setByPolicy-MCAPSGovernance</code> 생성, <strong>Succeeded · 16:26:08</strong></td>
+</tr>
+</tbody></table>
+</div><p>세 remediation은 각각 <strong>실제 배포 1개 / 성공 1개 / 실패 0개</strong>다. 단순 Accepted나 배포 수 0의 Succeeded를 완료 증거로 삼지 않았다. 전체 관리 그룹·전체 initiative·다른 Cognitive Services 계정에 일괄 복구를 실행하지 않았다.</p>
+<h3 id="section-4">실제 저장소와 진단 설정 확인</h3><div class="table-scroll"><table>
+<thead>
+<tr>
+<th>항목</th>
+<th>GET으로 확인한 값</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>중앙 RG / workspace</td>
+<td><code>McapsGovernance</code> / <code>mcaps4c05bc053c3d4ff154e5-la</code>, 생성 Succeeded</td>
+</tr>
+<tr>
+<td>리전·과금·보존</td>
+<td>기존 조직 정책 기본값 <strong>West US 2 / PerGB2018 / 30일</strong></td>
+</tr>
+<tr>
+<td>수집 대상</td>
+<td>Discovery 관리 Foundry 계정 <code>aif-dwsp-foundry-ym5ffvaa</code></td>
+</tr>
+<tr>
+<td>진단 프로필</td>
+<td><code>setByPolicy-MCAPSGovernance</code></td>
+</tr>
+<tr>
+<td>목적지</td>
+<td>새 중앙 workspace의 <strong>정확한 ARM ID</strong>와 일치</td>
+</tr>
+<tr>
+<td>로그·메트릭</td>
+<td><strong><code>allLogs=true</code>, <code>AllMetrics=true</code></strong></td>
+</tr>
+<tr>
+<td>비용 경계</td>
+<td>정책 기본값 <code>dailyQuotaGb=-1</code> 유지. 수집·보관 종량제 비용 가능, 실제 누적 비용 미조회</td>
+</tr>
+</tbody></table>
+</div><p>이 중앙 저장소는 <strong>조직의 공통 진단 대상</strong>이며 Discovery 작업 스택을 West US 2로 옮긴 것이 아니다. 원본·입출력 Blob은 Sweden Central에 남는다. 다만 진단 로그는 정책에 따라 West US 2로 전송하도록 구성됐으므로 모든 데이터가 Sweden Central에만 머문다고 표현하지 않는다. 공유 RG의 <code>Do Not Delete</code> 태그를 유지했으며 실습 RG 정리와 함께 자동 삭제하지 않는다.</p>
+<p><strong>완료 경계:</strong> 리소스 생성, 진단 목적지, 로그/메트릭 활성화를 실제 확인했다. 실습 MRG 범위의 후속 재평가도 완료돼 <strong>해당 Foundry 계정의 <code>EnableCognitiveServicesDiagnostics</code> 정책은 Compliant</strong>로 확인됐다. <a href="artifacts/discovery-governance-compliance-20261001.json">실제 평가 시각은 16:30:10 KST</a>다. 전체 구독의 모든 정책 준수, 실제 로그 유입, 과거 누락 로그의 소급 복구까지 확인한 것은 아니다. 과거 <code>PolicyDeployment_4802795780941947574</code>의 Failed 이력도 삭제하거나 성공으로 바꾸지 않았다.</p>
+<h3 id="section-5">남은 작업과 증거</h3><p>코어 재시도 <code>discovery-core-resume-20261001-1530</code>은 Supercomputer 대상 <code>ResourceDeploymentFailure</code>로 종료됐다. 16:21의 재조회에서도 <strong>Workspace와 Supercomputer 모두 Failed</strong>, <code>cpulab</code>/<code>indexlab</code>/<code>gpt-5-4</code>/<code>thermalhol</code>은 404, Bookshelf 목록은 비어 있었다. 지역 용량은 중앙 로그 복구와 별개다. 복구 후 모델 quota 재조회에서도 gpt-5-mini/embedding의 잔여량은 <strong>990,000 / 780,000 TPM</strong>로 그대로였다.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>증거</th>
+<th>파일</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>복구 결과·정확한 범위·검증 경계</td>
+<td><a href="artifacts/discovery-governance-recovery-20261001.json">복구 요약</a></td>
+</tr>
+<tr>
+<td>세 remediation 최종 결과</td>
+<td><a href="artifacts/discovery-governance-rg-remediation-20261001.json">RG</a> · <a href="artifacts/discovery-governance-workspace-remediation-20261001.json">workspace</a> · <a href="artifacts/discovery-governance-diagnostics-remediation-20261001.json">진단 설정</a></td>
+</tr>
+<tr>
+<td>실제 생성·설정 GET</td>
+<td><a href="artifacts/discovery-governance-resource-group-20261001.json">RG</a> · <a href="artifacts/discovery-governance-workspace-20261001.json">workspace</a> · <a href="artifacts/discovery-governance-diagnostic-setting-20261001.json">로그·메트릭·목적지</a></td>
+</tr>
+<tr>
+<td>코어 최종 실패·하위 작업</td>
+<td><a href="artifacts/discovery-resume-deployment-20261001.json">최종 배포</a> · <a href="artifacts/discovery-resume-operations-20261001.json">operations</a></td>
+</tr>
+<tr>
+<td>16:21 코어 상태 / 복구 후 quota</td>
+<td><a href="artifacts/discovery-resume-snapshot-20261001-1621.json">시각 고정 스냅샷</a> · <a href="artifacts/discovery-governance-readiness-20261001.json">readiness</a></td>
+</tr>
+</tbody></table>
+</div><h2 id="section-6">2026-10-01 15:52 KST — 현재 블로커와 재시도 상태</h2><p><strong>다음은 15:52/15:53 KST 당시 기록이다.</strong> 이후의 코어 최종 실패와 중앙 진단 복구는 위 절에서 확인한다. 이 시점에는 네트워크 feature 등록만 해결됐고 Discovery 환경 생성은 완료되지 않았다.</p>
+<h3 id="section-7">해결한 항목과 실제 변경</h3><p><code>Microsoft.Network/AllowBringYourOwnPublicIpAddress</code>가 <code>NotRegistered</code>인 것을 발견해 등록했다. 현재 계정에는 상속 Owner와 실습 RG의 Discovery Platform Administrator가 있으며, feature 등록은 즉시 **<code>Registered</code>**를 반환했다. 이어 <code>Microsoft.Network</code> 재등록·전파가 끝났고 독립 재조회에서도 <strong>둘 다 Registered</strong>였다. 이 구독에서는 별도 Microsoft 승인 대기가 없었다. 사용자 동의와 RBAC 권한은 별개이며, 다른 구독의 즉시 승인을 보장하는 것은 아니다.</p>
 <p>Bicep 컴파일·ARM 검증·Incremental <code>what-if</code>와 기존 역할을 확인한 뒤 <strong>15:43:48 KST에 기존 코어를 한 번만 재시도</strong>했다. 배포 이름은 <code>discovery-core-resume-20261001-1530</code>이다. 새 역할 부여, 리소스 삭제, 다른 리전의 유료 스택 복제, 모델 quota 중복 신청은 하지 않았다. Storage 참조와 두 Asset은 재사용됐으며 실제 Blob 파일을 덮어쓴 작업이 아니다.</p>
-<h3 id="section-4">현재 차단 항목</h3><div class="table-scroll"><table>
+<h3 id="section-8">현재 차단 항목</h3><div class="table-scroll"><table>
 <thead>
 <tr>
 <th>구분</th>
@@ -83,7 +179,7 @@
 </tr>
 </tbody></table>
 </div><p>Bookshelf의 2,000,000 TPM는 <strong>이 실습의 운영 준비 기준</strong>이다. 일부 how-to의 단순 생성 최소치 200,000 TPM와 다르며, Bookshelf 생성 API가 이번에 quota 오류를 반환한 것은 아니다. 미충족 운영 조건과 고정비를 고려해 생성하지 않은 것이다. 두 모델의 총한도는 여전히 각 1,000,000 TPM이며, 신청 접수와 승인·반영을 구분한다.</p>
-<h3 id="section-5">진행 중과 실패를 구분한 리소스 상태</h3><div class="table-scroll"><table>
+<h3 id="section-9">진행 중과 실패를 구분한 리소스 상태</h3><div class="table-scroll"><table>
 <thead>
 <tr>
 <th>대상</th>
@@ -133,7 +229,7 @@
 </tr>
 </tbody></table>
 </div><p>새 재시도의 correlation ID는 **<code>cf91439f-960e-430a-96af-798274d51c89</code>**다. 실패 대상은 <code>mrg-dscmp-sc-discovery-hol-b6wiwf/aks-dscmp-b6wiwf</code>의 <code>Microsoft.ContainerService/managedClusters/write</code>다. 같은 리소스에 겹치는 새 배포를 추가하지 않았다. 기존 한 번의 요청은 종료 상태를 기다리며, 이 시점에 최종 실패·취소·성공을 임의로 확정하지 않는다.</p>
-<h3 id="section-6">블로커가 아닌 항목과 남은 제약</h3><div class="table-scroll"><table>
+<h3 id="section-10">블로커가 아닌 항목과 남은 제약</h3><div class="table-scroll"><table>
 <thead>
 <tr>
 <th>항목</th>
@@ -177,7 +273,7 @@
 <td>실패/진행 중 배포에도 MRG·Storage·ACR·PE·로그·디스크 비용이 남을 수 있음. 실제 누적 비용은 미조회. 전체 연구 실습 성공을 주장하지 않음</td>
 </tr>
 </tbody></table>
-</div><h3 id="section-7">오후 실행 증거</h3><div class="table-scroll"><table>
+</div><h3 id="section-11">오후 실행 증거</h3><div class="table-scroll"><table>
 <thead>
 <tr>
 <th>기록</th>
@@ -218,7 +314,7 @@
 </tr>
 </tbody></table>
 </div><p>다음으로 필요한 외부 조치는 <strong>지역 용량 지원 확인</strong>, <strong>기존 모델 quota 요청 반영</strong>, <strong>조직 공통 진단 대상 복구</strong>다. 지역 용량 지원요청은 아직 제출하지 않았으며 <a href="docs/deployment-reference/03-compute-capacity.ko.md">지원요청 초안</a>에 새 correlation ID를 추가했다. 대체 리전 성공을 보장하거나 삭제·리전 이동을 이미 승인받았다고 해석하지 않는다.</p>
-<h2 id="section-8">2026-10-01 — 실제 배포와 차단 원인</h2><p>다음 표는 <strong>11:04 KST의 1차 배포 결과</strong>다. 이후의 사설 데이터 클라이언트·파일 업로드 결과는 바로 아래 후속 절에 별도로 기록한다.</p>
+<h2 id="section-12">2026-10-01 — 실제 배포와 차단 원인</h2><p>이 절은 <strong>오전부터 13:41까지의 과거 실행</strong>을 보존한다. 다음 표는 <strong>11:04 KST의 1차 배포 결과</strong>이며 사설 데이터 클라이언트·파일 업로드 결과는 아래 후속 절에 별도로 기록한다. 중앙 진단과 코어 재시도의 최신 상태는 문서 상단과 구분한다.</p>
 <div class="table-scroll"><table>
 <thead>
 <tr>
@@ -288,7 +384,7 @@
 <p><strong>실제 Tool 이미지 digest:</strong></p>
 <pre><code class="language-text">acrdiscoveryholjunwoosc.azurecr.io/thermal-ranking@sha256:0051d5db6c367812c22073d807da54b469ecbcc58edb7cfaf0dbce5e78514ad1
 </code></pre>
-<h3 id="section-9">후속 — 사설 입력 경로 해결과 quota 화면 안내</h3><p>사용자가 다음 단계를 진행할 수 있도록 요청한 뒤, <code>vm-discovery-blob-client</code>를 실제 배포했다. <code>Standard_B2als_v2</code>(2 vCPU/4 GB), Ubuntu 24.04이며 공개 IP·SSH 인바운드·NAT/Bastion 없이 <code>blobClientSubnet</code>(<code>10.80.9.0/24</code>)에 배치했다. 따라서 <strong>현재 VNet의 서브넷은 9개</strong>다. VM 자체 관리 ID에는 실습 Storage 계정의 Blob Data Contributor만 부여했다.</p>
+<h3 id="section-13">후속 — 사설 입력 경로 해결과 quota 화면 안내</h3><p>사용자가 다음 단계를 진행할 수 있도록 요청한 뒤, <code>vm-discovery-blob-client</code>를 실제 배포했다. <code>Standard_B2als_v2</code>(2 vCPU/4 GB), Ubuntu 24.04이며 공개 IP·SSH 인바운드·NAT/Bastion 없이 <code>blobClientSubnet</code>(<code>10.80.9.0/24</code>)에 배치했다. 따라서 <strong>현재 VNet의 서브넷은 9개</strong>다. VM 자체 관리 ID에는 실습 Storage 계정의 Blob Data Contributor만 부여했다.</p>
 <p><strong>11:36:54 KST</strong>에 VM Run Command를 통해 TXT 4개와 CSV 1개를 업로드하고, <code>10.80.8.4</code>로 해석된 사설 Blob 주소에서 다시 읽어 원본 SHA-256과 일치함을 확인했다. <strong>11:44:04 KST</strong> 재실행에서는 5개 모두 같은 파일로 판정해 덮어쓰지 않고 재사용했다. <a href="artifacts/discovery-private-blob-upload-20261001.json">첫 업로드 증거</a>와 <a href="artifacts/discovery-private-blob-sync.json">최신 읽기 검증</a>에 각 파일의 바이트 수·해시·Azure request ID가 있다. 키/SAS/토큰은 저장하지 않았다.</p>
 <p><strong>11:47:20 KST</strong>에 VM <code>PowerState/deallocated</code>를 확인했다. <a href="artifacts/discovery-blob-client-state-20261001.json">VM 상태</a>를 보존했으며 OS 디스크는 남는다. 명시된 VM 종량제 단가는 USD 0.0389/시간이고 디스크 등은 별도다. 다시 파일을 준비하려면 가이드 L02의 <code>az vm start → npm run blob:sync → az vm deallocate</code>를 사용한다. 이는 <strong>원격 VM의 사설 접근</strong>이며 노트북 브라우저의 직접 Blob 접속이나 Studio 로그인을 대신하지 않는다.</p>
 <p>Foundry ARM 조회에서 <strong><code>Discovery Default Project</code></strong>(<code>discoverydefaultprojectym5ffvaa</code>)가 기존 <code>aif-dwsp-foundry-ym5ffvaa</code> 아래 <code>Succeeded</code>인 것을 확인했다. <a href="artifacts/discovery-foundry-default-project-20261001.json">프로젝트 증거</a>는 아직 생성되지 못한 Discovery 실습 Project <code>thermalhol</code>과 구분한다. 불필요한 Foundry 프로젝트를 새로 만들지 않고 해당 리소스 페이지를 사용자 브라우저에 열었다.</p>
@@ -296,7 +392,7 @@
 <p><strong>13:41 KST 후속:</strong> Playwright headless로 공식 Microsoft 양식에 <code>gpt-5-mini</code>, <code>text-embedding-3-small</code>을 <strong>각각 한 번씩 제출</strong>했다. 두 요청 모두 Global Standard <strong>총 3,000,000 TPM</strong>이며 입력값은 <code>3000 kTPM</code>이다. 선택한 모델에는 별도 리전란이 없어 사용 리전 Sweden Central을 사유에 명시했다. 각 제출 후 **“Thanks! You&#39;ve completed the request!” / “Your response was submitted.”**를 확인했다. <a href="artifacts/discovery-model-quota-requests-20261001.json">개인 연락처를 제외한 접수 기록</a>을 보존했다.</p>
 <p><strong>접수와 quota 승인은 다르다.</strong> 화면에 접수번호는 표시되지 않았으며, 실제 한도 반영은 아직 검증하지 않았다. 완료 화면은 통상 다음 영업일, 경우에 따라 2영업일의 처리를 안내하지만 승인을 보장하지 않는다. AKS vCPU나 Container Apps 환경 수 한도 증액을 지역 서비스 용량 문제의 해결책으로 신청한 것은 아니다.</p>
 <p>정상 Azure CLI 세션을 통해 Discovery API의 <code>access_as_user</code> 토큰 발급도 확인했다. 이는 토큰을 브라우저에 주입하거나 Studio의 사용자 인증을 우회했다는 뜻이 아니다. <strong>Bookshelf quota 승인, AKS/Container Apps 지역 용량, 정상 Studio 로그인이 남아 있어 색인·에이전트·Engine은 여전히 미실행</strong>이다.</p>
-<h3 id="section-10">발견한 문제와 반영한 개선</h3><div class="table-scroll"><table>
+<h3 id="section-14">발견한 문제와 반영한 개선</h3><div class="table-scroll"><table>
 <thead>
 <tr>
 <th>실제 관측</th>
@@ -336,7 +432,7 @@
 <td>HTML 링크는 유지하고 PDF에서 로컬 파일 링크만 비활성화; 공식 URL·책갈피는 유지</td>
 </tr>
 </tbody></table>
-</div><h3 id="section-11">용량·네트워크 차단 상태</h3><p><strong>Bookshelf (오전 배포 전 Global Standard 스냅샷):</strong> gpt-5-mini 잔여 <strong>990,000 TPM</strong>, text-embedding-3-small 잔여 <strong>780,000 TPM</strong>, 실습 운영 계획값은 <strong>각 2,000,000 TPM</strong>다. 기존 할당을 유지하려면 총한도는 각각 최소 <strong>2,010,000 / 2,220,000 TPM</strong>가 필요하다. 당시 GPT-5.4 잔여 3,000,000 TPM는 코어 준비 기준 500,000 TPM를 충족했다. 이 수치는 현재 잔여량 보장이 아니다. <strong>13:41에는 두 증액 신청 접수를 완료했으며, 15:53 조회에서는 아직 한도에 반영되지 않았다.</strong></p>
+</div><h3 id="section-15">용량·네트워크 차단 상태</h3><p><strong>Bookshelf (오전 배포 전 Global Standard 스냅샷):</strong> gpt-5-mini 잔여 <strong>990,000 TPM</strong>, text-embedding-3-small 잔여 <strong>780,000 TPM</strong>, 실습 운영 계획값은 <strong>각 2,000,000 TPM</strong>다. 기존 할당을 유지하려면 총한도는 각각 최소 <strong>2,010,000 / 2,220,000 TPM</strong>가 필요하다. 당시 GPT-5.4 잔여 3,000,000 TPM는 코어 준비 기준 500,000 TPM를 충족했다. 이 수치는 현재 잔여량 보장이 아니다. <strong>13:41에는 두 증액 신청 접수를 완료했으며, 15:53 조회에서는 아직 한도에 반영되지 않았다.</strong></p>
 <p><strong>AKS:</strong> 관리 리소스 <code>mrg-dscmp-sc-discovery-hol-b6wiwf/aks-dscmp-b6wiwf</code>가 Sweden Central 용량 부족으로 반복 실패했다. correlation ID는 <code>75d88d20-5dd2-4963-b2b1-00dc4b1039e4</code>. 지역 총/Dsv6/Esv6 quota는 각각 100 vCPU, 당시 사용량 0이었다. <a href="https://learn.microsoft.com/troubleshoot/azure/azure-kubernetes/error-codes/akscapacityheavyusage-error">공식 오류 설명</a>에 따라 지역 용량 문제로 분류했다. 관리 AKS를 직접 수정하거나 보안을 약화하지 않았다.</p>
 <p>원래 <code>discovery-core-20261001</code> ARM 배포는 중복 Workspace 쓰기를 방지하기 위해 정상 취소했다. <strong>취소는 리소스 삭제가 아니며 RP의 이미 시작된 작업까지 중단됐음을 보장하지 않는다.</strong> GA에서 선택 사항인 <code>supercomputerIds</code>를 비우는 <code>deployCompute=false</code> 경로를 검증한 뒤 별도 Workspace 배포를 시작했다. 이는 컴퓨트 실습을 완료시키는 대체 구현이 아니다.</p>
 <p><strong>Workspace 최종 실패:</strong> 약 55분 뒤 <code>containerAppsEnvironment</code> 단계가 실패했다. MRG Managed Environment의 실제 오류는 <code>ManagedEnvironmentCapacityHeavyUsageError</code>이며 내부 원인은 같은 <code>AKSCapacityHeavyUsage</code>다. Workspace correlation ID는 <code>e08e90c5-299f-4552-a354-697e0da7df45</code>, 하위 AKS request ID는 <code>0ea9a155-9803-4e6c-85fd-b8ed67a02502</code>다. Supercomputer를 제외한 대체 경로도 같은 지역 용량에 막힌 것을 확인했으므로 무작정 다시 배포하거나 유료 스택을 다른 리전에 복제하지 않았다.</p>
@@ -345,17 +441,17 @@
 <p><strong>모델 구분:</strong> Workspace MRG에서 자동 cognition 모델 <code>gpt-5.4</code>, revision <code>2026-03-05</code>, GlobalStandard capacity <code>250</code>(250,000 TPM)의 <code>Succeeded</code>를 확인했다. 이는 별도 Discovery Chat Model Deployment **<code>gpt-5-4</code>**와 Project가 준비됐다는 뜻이 아니다.</p>
 <p><strong>사용자 데이터 권한:</strong> MRG에서 서비스가 부여한 Foundry Owner가 이미 확인돼 Foundry User를 중복 추가하지 않았다. 일반 Owner와 Foundry 데이터 권한을 구분해 확인했다.</p>
 <p><strong>Headless UI 확인:</strong> 요청에 따라 Playwright headless로 실제 Workspace Studio URL에 접근했다. 정상 Microsoft 로그인 화면으로 이동했으며, 인증 정보 입력·쿠키/토큰 추출·로그인 우회는 하지 않았다. <a href="artifacts/discovery-studio-headless-20261001.json">관측 기록</a>은 Studio에서 프로젝트를 열어 실습했다는 증거가 아니다. Computer Use는 사용하지 않았다.</p>
-<h3 id="section-12">비용과 남은 자원</h3><p>새 Storage, Basic ACR, ACR Tasks, Private Endpoint/DNS와 관리 RG의 Log Analytics/NSP가 남는다. 후속 사설 클라이언트 VM은 할당 해제했지만 OS 디스크가 남는다. 실패·취소된 배포에도 이미 생성한 리소스는 남을 수 있다. <strong>정확한 누적 청구액을 조회한 것은 아니며, 비용이 0이라고 주장하지 않는다.</strong> Bookshelf, GPU, 공개 점프 서버, VPN Gateway는 생성하지 않았다.</p>
+<h3 id="section-16">비용과 남은 자원</h3><p>새 Storage, Basic ACR, ACR Tasks, Private Endpoint/DNS와 관리 RG의 Log Analytics/NSP가 남는다. 후속 사설 클라이언트 VM은 할당 해제했지만 OS 디스크가 남는다. 실패·취소된 배포에도 이미 생성한 리소스는 남을 수 있다. <strong>정확한 누적 청구액을 조회한 것은 아니며, 비용이 0이라고 주장하지 않는다.</strong> Bookshelf, GPU, 공개 점프 서버, VPN Gateway는 생성하지 않았다.</p>
 <p>Workspace가 준비되는 동안에도 MRG에 Search, Cosmos DB, Foundry, Storage와 Private Endpoint가 생성됐다. Bookshelf를 보류했다고 Workspace 관리 인프라의 상시 비용까지 없다는 뜻은 아니다.</p>
 <p><code>cpulab</code>의 목표는 min 0/max 1이지만 시스템 풀·상시 관리 서비스 비용까지 0으로 만드는 설정이 아니다. 연구 종료 시 가이드 L09를 따르고, 공유 가능성이 있는 구독 scope의 서비스 역할을 RG 삭제와 함께 무조건 제거하지 않는다.</p>
-<h3 id="section-13">재개 절차</h3><ol>
+<h3 id="section-17">재개 절차</h3><ol>
 <li><code>npm run readiness</code>와 현재 배포/하위 리소스 상태를 확인한다. <code>--require core</code> 통과는 전체 실습 통과가 아니다.</li>
 <li>지역 AKS/Container Apps 용량을 서비스 팀과 해결하거나, 전체 동일 리전 스택을 다른 지원 리전에 계획한다. 기존 리소스를 삭제하거나 다른 리전 자원을 무작정 연결하지 않는다. 중앙 진단 대상 누락도 조직 관리자에게 전달한다.</li>
 <li>재검증 후 배포를 재개하고 Workspace의 실제 <code>Succeeded</code>, <code>gpt-5-4</code>, Project <code>thermalhol</code>을 확인한 다음 정상 로그인으로 Studio 접근을 점검한다.</li>
 <li>Bookshelf 모델 quota를 확보하고 준비된 사설 클라이언트에서 입력 5개를 재검증한다. 실제 Asset 연결·Bookshelf 색인 상태를 확인한다.</li>
 <li>L04–L07/L09를 실제 실행하며 계산 원본, operation ID, 풀, 로그, 인용, 검증 이력을 수집한다. L08은 별도 테스트 사용자가 있을 때만 수행한다.</li>
 </ol>
-<h3 id="section-14">2026-10-01 증거</h3><div class="table-scroll"><table>
+<h3 id="section-18">2026-10-01 증거</h3><div class="table-scroll"><table>
 <thead>
 <tr>
 <th>기록</th>
@@ -452,8 +548,8 @@
 </tr>
 </tbody></table>
 </div><p>아래는 <strong>2026-09-25의 과거 접근 기록</strong>이다. 당시의 Pending/404와 “생성하지 않음”은 현재 상태가 아니다. 원본 응답·영상의 증거 경계를 보존하기 위해 남긴다.</p>
-<h2 id="section-15">2026-09-25 — 과거 접근 점검</h2><p>당시에는 서비스 승인 대기로 핵심 기능 실습을 실행하지 못했다. 비용 허용과 Microsoft 서비스 팀의 구독 승인은 서로 다른 조건이었다.</p>
-<h2 id="section-16">1. 실제로 확인된 결과</h2><div class="table-scroll"><table>
+<h2 id="section-19">2026-09-25 — 과거 접근 점검</h2><p>당시에는 서비스 승인 대기로 핵심 기능 실습을 실행하지 못했다. 비용 허용과 Microsoft 서비스 팀의 구독 승인은 서로 다른 조건이었다.</p>
+<h2 id="section-20">1. 실제로 확인된 결과</h2><div class="table-scroll"><table>
 <thead>
 <tr>
 <th>항목</th>
@@ -508,12 +604,12 @@
 </tr>
 </tbody></table>
 </div><p><code>DefaultFeature</code>의 <code>Pending</code>은 제품 팀 승인 필요 상태다. 사용자가 비용을 허용해도 이를 <code>Registered</code>로 임의 변경할 수 없다. 다른 개발용·실험용 feature를 켜거나 인증을 우회하지 않았다.</p>
-<h3 id="section-17">2026-09-25 작업 직후 남은 변경</h3><ul>
+<h3 id="section-21">2026-09-25 작업 직후 남은 변경</h3><ul>
 <li><code>Microsoft.Discovery</code> Provider 등록</li>
 <li><code>Microsoft.Discovery/DefaultFeature</code> 사용 승인 요청: <code>Pending</code></li>
 </ul>
 <p>유료 실습 인프라, 모델 배포, 커스텀 역할, 역할 할당은 만들지 않았다. 승인 요청은 취소하지 않았으며, 전용 실습 RG도 생성 전이다. <strong>구독 전체의 기존 청구가 0원이라는 뜻은 아니다.</strong> 이번 작업이 시작한 유료 리소스 배포가 없다는 의미다.</p>
-<h2 id="section-18">2. 증거 파일</h2><div class="table-scroll"><table>
+<h2 id="section-22">2. 증거 파일</h2><div class="table-scroll"><table>
 <thead>
 <tr>
 <th>파일</th>
@@ -564,7 +660,7 @@
 </div><p>API 호출은 Playwright의 <code>APIRequestContext</code>로 실제 <code>management.azure.com</code>에 전송했다. 인증은 지정 계정의 기존 Azure CLI 세션을 사용했으며, 토큰은 메모리에만 보관했다. 녹화 화면은 <strong>로컬 증거 뷰어</strong>다. Azure Portal이나 Discovery Studio를 모방한 화면이 아니며, UI 실습 성공을 주장하지 않는다.</p>
 <p>요약 영상은 가이드의 핵심 내용과 실제 Azure 접근 점검을 묶은 영상이다. Bookshelf나 Engine을 성공 실행한 시연 영상이 아니다. 인증 화면·비밀번호·토큰·쿠키는 영상에서 제외했다.</p>
 <p><strong>영상:</strong> <a href="artifacts/watch-summary.html">챕터형 재생 페이지</a> · <a href="artifacts/microsoft-discovery-summary.ko.mp4">MP4</a> · <a href="artifacts/microsoft-discovery-summary.ko.srt">한국어 SRT</a>. 길이 약 <strong>3분 10초</strong>, 1600×900, 한국어 음성과 화면 자막 포함. SRT/VTT 문장 타이밍은 음성 길이를 기준으로 추정했으며, 음성은 로컬 macOS Yuna TTS로 생성했다. 원본 Azure 실행 영상은 별도 WebM으로 보존했다.</p>
-<h2 id="section-19">3. 제공한 실습 자료</h2><p>15개 절의 한국어 가이드, 브라우저용 HTML, 아키텍처 다이어그램, 자체 작성한 합성 TXT 4개와 CSV, 결정적 Python 계산기, CPU 도구 Dockerfile과 정의 템플릿, 계정 범위 검증·증거 기록·녹화 자동화를 제공한다.</p>
+<h2 id="section-23">3. 제공한 실습 자료</h2><p>15개 절의 한국어 가이드, 브라우저용 HTML, 아키텍처 다이어그램, 자체 작성한 합성 TXT 4개와 CSV, 결정적 Python 계산기, CPU 도구 Dockerfile과 정의 템플릿, 계정 범위 검증·증거 기록·녹화 자동화를 제공한다.</p>
 <p>로컬 기준 계산 결과는 다음과 같다.</p>
 <div class="table-scroll"><table>
 <thead>
@@ -583,7 +679,7 @@
 </tr>
 </tbody></table>
 </div><p>GAMMA는 최신 정정값 175로 탈락하고 ZETA는 근거 미확보 상태다. <strong>이 표는 실습 정답 기준이며, 실제 Discovery에서 얻은 결과가 아니다.</strong> 도구 이미지를 ACR에 빌드·업로드하거나 Discovery에 등록한 상태도 아니다.</p>
-<h2 id="section-20">4. 비용·할당량 사전 확인</h2><p>사용자의 비용 허용을 반영해 최소 CPU 구성의 일부 단가와 할당량을 조사했다. 비용이 현재의 중단 사유는 아니다.</p>
+<h2 id="section-24">4. 비용·할당량 사전 확인</h2><p>사용자의 비용 허용을 반영해 최소 CPU 구성의 일부 단가와 할당량을 조사했다. 비용이 현재의 중단 사유는 아니다.</p>
 <div class="table-scroll"><table>
 <thead>
 <tr>
@@ -614,7 +710,7 @@
 </tbody></table>
 </div><p>출처: 2026-09-25 Azure MCP Retail Pricing과 해당 구독 <code>az quota list</code> / <code>az quota usage list</code> 실제 조회. Spot·Windows 단가는 제외했다.</p>
 <p><strong>위 두 VM 가격은 전체 Discovery 견적이 아니다.</strong> SQL Hyperscale, Search, ACA, Cosmos DB, 스토리지, 관리 인프라, 모델 토큰 등이 별도다. 논리적 quota가 남아 있다고 특정 SKU의 물리적 가용성이 보장되는 것도 아니다. 모델 quota와 전체 인프라 비용은 승인 후 확정해야 한다.</p>
-<h2 id="section-21">5. 승인 요청에 사용할 정보</h2><p>Microsoft 담당자 또는 Azure 지원에 다음 내용을 전달하면 된다. 이 패키지는 메시지나 지원 티켓을 대신 발송하지 않았다.</p>
+<h2 id="section-25">5. 승인 요청에 사용할 정보</h2><p>Microsoft 담당자 또는 Azure 지원에 다음 내용을 전달하면 된다. 이 패키지는 메시지나 지원 티켓을 대신 발송하지 않았다.</p>
 <pre><code class="language-text">요청: Microsoft Discovery GA 실습용 구독 활성화 / allow-list 검토
 
 Subscription: 51531604-2337-4c05-bc05-3c3d4ff154e5
@@ -637,7 +733,7 @@ Purpose: Original synthetic training documents, one workspace/project,
 Bookshelf indexing, bounded CPU tool, and Discovery Engine walkthrough.
 No real customer research data and no GPU workload required.
 </code></pre>
-<h2 id="section-22">6. 과거 재개 안내 — 현재 실행에는 위 2026-10-01 절차 사용</h2><ol>
+<h2 id="section-26">6. 과거 재개 안내 — 현재 실행에는 위 2026-10-01 절차 사용</h2><ol>
 <li>Microsoft 측 구독 활성화를 확인한다. <strong>정정:</strong> DefaultFeature Pending만으로 현재 서비스 접근을 차단하면 안 된다. 실제 필수 리소스 유형과 Workspace API 성공을 함께 확인한다.</li>
 <li>Provider 변경 전파가 필요한 경우에만 관리자가 등록 절차를 수행한다. 등록만으로 사용 가능/배포 성공을 주장하지 않는다.</li>
 <li>사용자가 올바른 테넌트에서 정상 MFA·보안 키 로그인을 완료한다.</li>

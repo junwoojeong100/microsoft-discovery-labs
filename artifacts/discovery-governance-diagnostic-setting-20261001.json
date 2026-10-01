@@ -1,0 +1,35 @@
+{
+  "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/mrg-dwsp-discoveryholjunwoosc-ym5ffv/providers/microsoft.cognitiveservices/accounts/aif-dwsp-foundry-ym5ffvaa/providers/microsoft.insights/diagnosticSettings/setByPolicy-MCAPSGovernance",
+  "logs": [
+    {
+      "categoryGroup": "allLogs",
+      "enabled": true,
+      "retentionPolicy": {
+        "days": 0,
+        "enabled": false
+      }
+    },
+    {
+      "categoryGroup": "Audit",
+      "enabled": false,
+      "retentionPolicy": {
+        "days": 0,
+        "enabled": false
+      }
+    }
+  ],
+  "metrics": [
+    {
+      "category": "AllMetrics",
+      "enabled": true,
+      "retentionPolicy": {
+        "days": 0,
+        "enabled": false
+      }
+    }
+  ],
+  "name": "setByPolicy-MCAPSGovernance",
+  "resourceGroup": "mrg-dwsp-discoveryholjunwoosc-ym5ffv",
+  "type": "Microsoft.Insights/diagnosticSettings",
+  "workspaceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/McapsGovernance/providers/Microsoft.OperationalInsights/workspaces/mcaps4c05bc053c3d4ff154e5-la"
+}

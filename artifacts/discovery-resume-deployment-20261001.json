@@ -1,7 +1,22 @@
 {
   "correlationId": "cf91439f-960e-430a-96af-798274d51c89",
-  "error": null,
+  "error": {
+    "additionalInfo": null,
+    "code": "DeploymentFailed",
+    "details": [
+      {
+        "additionalInfo": null,
+        "code": "ResourceDeploymentFailure",
+        "details": null,
+        "message": "The resource write operation failed to complete successfully, because it reached terminal provisioning state 'Failed'.",
+        "target": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/supercomputers/sc-discovery-hol"
+      }
+    ],
+    "message": "At least one resource deployment operation failed. Please list deployment operations for details. Please see https://aka.ms/arm-deployment-operations for usage details.",
+    "target": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Resources/deployments/discovery-core-resume-20261001-1530"
+  },
   "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Resources/deployments/discovery-core-resume-20261001-1530",
-  "state": "Running",
-  "timestamp": "2026-10-01T06:43:48.901016+00:00"
+  "outputs": null,
+  "state": "Failed",
+  "timestamp": "2026-10-01T07:14:43.287141+00:00"
 }

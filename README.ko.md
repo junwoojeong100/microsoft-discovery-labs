@@ -20,9 +20,9 @@ GitHub에서는 Markdown 또는 PDF를 선택하세요. HTML은 저장소를 다
 
 ## 실행 상태
 
-**2026-10-01 15:52 KST 기준, 전체 실습은 미완료입니다.** 서비스 활성화와 `AllowBringYourOwnPublicIpAddress` 등록·Provider 전파는 해결됐습니다. 기존 코어를 한 번 재시도했지만 **15:46:52에 새 하위 AKS 요청도 `AKSCapacityHeavyUsage`로 실패**했습니다. 상위 배포는 `Running`, Supercomputer는 `Accepted`, 기존 Workspace는 `Failed`이므로 최종 성공/실패를 혼동하지 않습니다.
+**2026-10-01 오후, 중앙 진단 설정 오류는 해결했지만 전체 실습은 미완료입니다.** 서비스 활성화와 네트워크 feature 등록 후 진행한 코어 재시도는 **16:14:43에 최종 Failed**로 끝났습니다. 16:21 조회에서도 Workspace·Supercomputer가 모두 Failed였으며, 새 하위 AKS의 `AKSCapacityHeavyUsage`가 확인됐습니다.
 
-Bookshelf의 운영 준비 기준에는 gpt-5-mini·임베딩 quota가 부족합니다. 15:53 잔여량은 **990,000 / 780,000 TPM**이며, 각 총 3,000,000 TPM 신청은 접수됐지만 아직 반영되지 않았습니다. 중앙 Log Analytics 대상 누락으로 실패한 공통 진단 정책도 별도 조치가 필요합니다. 사설 VM의 과거 입력 5개 업로드·읽기 검증은 완료했지만 노트북의 직접 Blob 경로와 **종단간 연구 실행은 미검증**입니다. [현재 상태 스냅샷](artifacts/discovery-resume-snapshot-20261001-1552.json)과 [블로커·조치·증거를 모은 실행 보고서](EXECUTION-REPORT.ko.md)를 확인하세요.
+**남은 핵심 블로커는 지역 서비스 용량과 Bookshelf 운영 quota입니다.** 중앙 로그 복구 후에도 gpt-5-mini·임베딩 잔여량은 **990,000 / 780,000 TPM**이며, 각 총 3,000,000 TPM 신청은 아직 한도에 반영되지 않았습니다. 기존 조직 정책을 범위 제한해 실행한 중앙 RG·Log Analytics·Discovery 진단 설정 복구 3건은 모두 성공했습니다. 실제 로그 유입, 노트북의 직접 Blob 경로, **종단간 연구 실행은 미검증**입니다. [코어 최종 상태](artifacts/discovery-resume-snapshot-20261001-1621.json), [중앙 진단 복구 증거](artifacts/discovery-governance-recovery-20261001.json), [실행 보고서](EXECUTION-REPORT.ko.md)를 확인하세요.
 
 ## 현재 실습 환경 (2026-10-01)
 
@@ -38,8 +38,9 @@ Bookshelf의 운영 준비 기준에는 gpt-5-mini·임베딩 quota가 부족합
 | 데이터 참조·파일 | `thermaldata`, `evidencepack`, `candidatecsv`; 후속 작업에서 TXT 4개·CSV 1개 업로드와 SHA-256 읽기 검증 완료 |
 | 사설 데이터 클라이언트 | `vm-discovery-blob-client`, 공개 IP/SSH 인바운드 없음, 검증 후 할당 해제 |
 | 네트워크 feature | `AllowBringYourOwnPublicIpAddress` 및 `Microsoft.Network` 모두 Registered |
-| Supercomputer / 배포 | `sc-discovery-hol` Accepted / 오후 코어 배포 Running; 하위 AKS 용량 실패 관측 |
+| Supercomputer / 배포 | `sc-discovery-hol` Failed / 오후 코어 배포 최종 Failed; 하위 AKS 용량 실패 |
 | Workspace | `discoveryholjunwoosc`는 `Failed`; 관리 리소스 격리 유지, 연결 컴퓨트·사용 가능한 Project 없음 |
+| 중앙 진단 | `McapsGovernance/mcaps4c05bc053c3d4ff154e5-la` 연결 완료, 해당 계정의 진단 정책 Compliant. 정책 기본 West US 2, 종량제, 보존 30일 |
 
 사용자에게 필요한 데이터 역할, UAMI에는 실습 RG·Storage·Registry·VNet·자기 ID 범위의 역할을 부여했습니다. 공식 first-party control-plane의 Reader/NSP Joiner만 문서에 따라 구독 scope입니다. 조직 정책을 해제하지 않았습니다. 실패한 배포에도 유료 리소스가 남을 수 있으므로 정리 전에 L09를 확인하세요.
 

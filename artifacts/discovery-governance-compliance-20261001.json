@@ -1,0 +1,9 @@
+[
+  {
+    "assignment": "/providers/microsoft.management/managementgroups/46e9cdaa-fed3-4131-aa28-c1fc8a8a043a/providers/microsoft.authorization/policyassignments/mcapsgovdeploypolicies",
+    "reference": "enablecognitiveservicesdiagnostics",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/mrg-dwsp-discoveryholjunwoosc-ym5ffv/providers/microsoft.cognitiveservices/accounts/aif-dwsp-foundry-ym5ffvaa",
+    "state": "Compliant",
+    "timestamp": "2026-10-01T07:30:10.928111+00:00"
+  }
+]

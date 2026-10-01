@@ -607,6 +607,8 @@ python3 scripts/verify_ranking.py \
 
 **After partial failure:** Successfully created Storage, ACR, Private Endpoints, and MRG Log Analytics/NSP resources can remain even when deployment fails. Deleting an RG does not remove subscription-scoped NSP Joiner/Reader assignments or the custom role. Other Discovery environments may share those service roles; do not remove them without administrator review. This guide does not execute automatic deletion commands.
 
+**This subscription's central diagnostics:** A follow-up applied the existing organizational policy to create `McapsGovernance/mcaps4c05bc053c3d4ff154e5-la` in West US 2 and connect Discovery diagnostics. It is a shared pay-as-you-go resource with 30-day retention and a `Do Not Delete` tag. Exclude it from lab-RG cleanup and review log ingestion/retention costs separately. This did not move the working Blob data, but diagnostics are not guaranteed to remain exclusively in Sweden Central.
+
 **Pass criteria:** The evidence→execution→output chain is retained and remaining work, resources, and cost exposure are clear. Do not claim collaboration verification if L08 was not performed.
 
 <a id="e01"></a>

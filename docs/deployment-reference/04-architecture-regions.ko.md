@@ -67,7 +67,9 @@ Azure의 **한국 중부(Korea Central, `koreacentral`)는 서울**, **한국 �
 | 한국 Blob을 해외 Discovery의 작업 저장소로 직접 연결 | 이번에 지원·동작을 검증한 조합이 아님. 공식 Storage 안내는 Workspace와 동일 리전 선택 |
 | 원본은 한국에 두고 허용된 부분만 해외 작업 저장소로 복사 | 설계 검토 가능하나 국외 데이터 복사·처리가 발생 |
 
-**현재 실습 데이터는 Sweden Central에 있다. 한국에 새 저장소를 만들거나 데이터를 옮긴 것은 아니다.**
+**현재 원본·입출력 Blob 저장소는 Sweden Central에 있다. 한국에 새 저장소를 만들거나 Blob 데이터를 옮긴 것은 아니다.**
+
+**중앙 진단의 별도 위치:** 16시대 복구에서 기존 조직 정책이 지정한 **West US 2**에 `McapsGovernance/mcaps4c05bc053c3d4ff154e5-la`를 생성하고 Discovery 관리 Foundry 계정의 진단 로그·메트릭을 보내도록 구성했다. 이는 Discovery 작업 스택의 리전 변경이나 West US 2의 Discovery 제품 지원을 뜻하지 않는다. 하지만 진단 데이터까지 모두 Sweden Central에만 머문다는 보장도 할 수 없다. 실제 로그 유입 확인과 과거 누락분 복구는 별도이며, [검증한 구성](../../artifacts/discovery-governance-recovery-20261001.json)을 참고한다.
 
 공식 표준 구성을 사용하면 선택한 지원 리전에 운영·작업용 데이터가 생성되는 것을 전제로 한다. 모든 원본을 영구 이전해야 한다는 뜻은 아니지만, 그래프·벡터·문서 조각·작업 상태·결과까지 한국에만 머문다고 보장할 수 없다.
 

@@ -1,0 +1,119 @@
+[
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Resources/deployments/discovery-core-resume-20261001-1530/operations/0C461D55B17A197D",
+    "operationId": "0C461D55B17A197D",
+    "properties": {
+      "duration": "PT1M26.8760482S",
+      "provisioningOperation": "Create",
+      "provisioningState": "Succeeded",
+      "request": null,
+      "response": null,
+      "serviceRequestId": null,
+      "statusCode": "OK",
+      "statusMessage": null,
+      "targetResource": {
+        "apiVersion": null,
+        "extension": null,
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/storageContainers/thermaldata/storageAssets/evidencepack",
+        "identifiers": null,
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceName": "thermaldata/evidencepack",
+        "resourceType": "Microsoft.Discovery/storageContainers/storageAssets",
+        "symbolicName": null
+      },
+      "timestamp": "2026-10-01T06:45:14.901226+00:00",
+      "trackingId": "79136da5-da1b-44d7-841e-82848a874698"
+    },
+    "resourceGroup": "rg-discovery-hol-20260930"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Resources/deployments/discovery-core-resume-20261001-1530/operations/8513B4A5BB971723",
+    "operationId": "8513B4A5BB971723",
+    "properties": {
+      "duration": "PT1M26.3465836S",
+      "provisioningOperation": "Create",
+      "provisioningState": "Succeeded",
+      "request": null,
+      "response": null,
+      "serviceRequestId": null,
+      "statusCode": "OK",
+      "statusMessage": null,
+      "targetResource": {
+        "apiVersion": null,
+        "extension": null,
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/storageContainers/thermaldata/storageAssets/candidatecsv",
+        "identifiers": null,
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceName": "thermaldata/candidatecsv",
+        "resourceType": "Microsoft.Discovery/storageContainers/storageAssets",
+        "symbolicName": null
+      },
+      "timestamp": "2026-10-01T06:45:14.901226+00:00",
+      "trackingId": "cdca00c8-9ab0-4f66-bb49-2fe638f0a461"
+    },
+    "resourceGroup": "rg-discovery-hol-20260930"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Resources/deployments/discovery-core-resume-20261001-1530/operations/BAA2B9A2C2D83D9F",
+    "operationId": "BAA2B9A2C2D83D9F",
+    "properties": {
+      "duration": "PT30M52.7006673S",
+      "provisioningOperation": "Create",
+      "provisioningState": "Failed",
+      "request": null,
+      "response": null,
+      "serviceRequestId": null,
+      "statusCode": "Conflict",
+      "statusMessage": {
+        "error": {
+          "additionalInfo": null,
+          "code": "InternalServerError",
+          "details": null,
+          "message": "The AKS cluster could not be created. Please retry the operation. If the issue persists, contact support.",
+          "target": "managedCluster"
+        },
+        "status": "Failed"
+      },
+      "targetResource": {
+        "apiVersion": null,
+        "extension": null,
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/supercomputers/sc-discovery-hol",
+        "identifiers": null,
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceName": "sc-discovery-hol",
+        "resourceType": "Microsoft.Discovery/supercomputers",
+        "symbolicName": null
+      },
+      "timestamp": "2026-10-01T06:43:49.992731+00:00",
+      "trackingId": "36ccedc8-697b-4418-bb18-de507907298a"
+    },
+    "resourceGroup": "rg-discovery-hol-20260930"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Resources/deployments/discovery-core-resume-20261001-1530/operations/4F2C318FC8FB47CD",
+    "operationId": "4F2C318FC8FB47CD",
+    "properties": {
+      "duration": "PT1M24.7595421S",
+      "provisioningOperation": "Create",
+      "provisioningState": "Succeeded",
+      "request": null,
+      "response": null,
+      "serviceRequestId": null,
+      "statusCode": "OK",
+      "statusMessage": null,
+      "targetResource": {
+        "apiVersion": null,
+        "extension": null,
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/storageContainers/thermaldata",
+        "identifiers": null,
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceName": "thermaldata",
+        "resourceType": "Microsoft.Discovery/storageContainers",
+        "symbolicName": null
+      },
+      "timestamp": "2026-10-01T06:43:49.992731+00:00",
+      "trackingId": "f8c0bf7a-aba7-4b08-944a-a6d4d5917839"
+    },
+    "resourceGroup": "rg-discovery-hol-20260930"
+  }
+]
