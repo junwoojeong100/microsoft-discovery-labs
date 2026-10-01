@@ -1,0 +1,149 @@
+{
+  "startedAt": "2026-10-01T14:20:52.813Z",
+  "phase": "sync-and-rank",
+  "runId": "lab-korea-20261001",
+  "endpoint": "https://discoveryholjunwookc.workspace.discovery.azure.com",
+  "projectId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/workspaces/discoveryholjunwookc/projects/thermalhol",
+  "nodePoolId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/supercomputers/sc-discovery-hol-kc/nodePools/cpulab",
+  "apiVersion": "2026-06-01",
+  "payload": {
+    "toolId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/tools/thermal-ranking-kc",
+    "command": "python /tmp/discovery-mounted-run.py --manifest /tmp/discovery-manifest.json",
+    "nodePoolIds": [
+      "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/supercomputers/sc-discovery-hol-kc/nodePools/cpulab"
+    ],
+    "infraOverrides": {
+      "cpu": "1",
+      "ram": "2Gi",
+      "gpu": "0",
+      "maxCpu": "2",
+      "maxRam": "4Gi",
+      "maxGpu": "0",
+      "replicaCount": 1
+    },
+    "inlineFiles": [
+      {
+        "mountPath": "/tmp/discovery-mounted-run.py",
+        "encodedFile": "H4sIAAAAAAAAE5VWWW/bOBB+96+YnSepleWiR4AVoId2mwIFCqToBex6DYGWRjE3EqmSVGo3m/++4CXLTZt2/ZJwLs7xfUMh4gs5ioYa0AdhdmR4DQ0zzB7rnZKCf2WGSwFMNKCYuOLiErjQvCFg8JLrWl6TOoCRsssRcbHg/SCVAaYuB6Y0xfOWaTp7Gk87pncd38bjP1qKRatkDwMzVgFB8ZaZXTRSUyw9bgcla9J6khz0YrFoqIWGX5I2ia0hLRYAAIrMqES8Mtc79vjZmTfId7QPDmnwH0hprk1iE8mglsKQMCGSleUDUyRM3l81XCX+oMsPaqQMaM+1qeSVO6bOxaiD97W/L9zsfBA5kEhwv8UUmAZtFLH+aGd/XpZ/UdxQEtNwFrSvaTDwind0bi/U50pJdfQemNbuwGozsg5Kf6Ui1lTbgyGd+Di8jRa/lbHQYxTFuCb4xLqRXPykxXfUjtrO30iwU3e5QcPblmwXfPlWb3tbwI299hbT+RBu0GWABXQkEn99mgH6oWARxxc0t2EoahRJzwRvSZsMuBhGUykpTQZyNMfDNSneHiopukP5inWaMtC1VKRKXLFhWLlD1TNDirNO58MBw2Rb3pGGEuIla3QS3Exzt9o1N9Sv0R5xA61UYAXAhfffxLba2pwkta19BlI5kSYPK506+dHqnq7j+Z7VpjtAy68JRsE/jzSjqmtFyJ4pAkWfR66oCV13ape5z+1OyrObqWPG3lHCvMpJz1sQ0pIwb8eu65mpd4nCZCvlld5R1/5by34YDaWr9fPlX2z59dHy9ypfbh5iNsVOTyF+t9iPgvYD1YaaUJlLIp28AkqhDOsk3549baiWDSU+6WDwwmlxk8E163jDDM0oGaoJSIvUshPxMQIWNz9L9rXLMCLG7RfouXatmeVsS7BNnUALq6kh83xm4D29+Sc0noW4h8730Pqt33hTzz2hdQE3Mc1bPL2qIcN4Z3H1v/kcQ1CnqfhB0O+v4GOvHKhzNgwkmuTGA7WYeprBgwch1m26cF5+SXzDg5rZ/SBY7xa3UcySYj3dkqCFWMcFYQYYXr7cPlSYwXqTZjPLWmrzZGa2dILJGJfLnu2d0Bo9wei9Kb5FyWydwcol90sQOfLifowo0mNnzWxqeSdZo5M7/b1vwtH4OyOOqvtmbHdERxZq5ewRz+16v4PUtT7onPZUj4Ztu2mVZ4DLpYMAZvaRTE6IhWELrY5LvtbXmGbwwM14k925p2aDGRVVvvXhJTe0j//WO6qvopj3JEdTnj06jfMrXQ6V59o0cvym3cf5Jc6nGftBJz6Ofe8aEqZ8nAEJbVNluubcv3ApPAT8W2Cak3B78Edz/AmpAkWOrLL0wCKwJHLMswV9Yo5zPsM542D+2mvDzGjBgw67nBrLAI/jC9EdsJiDOgP05MYisDwDDJlhEXO0HwW8haqy2VQVlCVgVfWMi6rC+KGmNCkop6/Q/Lm6HHsS5q3ThC55s5w1TcWCPnFk9SvdvVz+PZ09Hz9w8mUsbRmY2U3MpShRG/vFYdRIYYUydemm4YO4PzZMJOr0mpyAx34FJ9Yqj/rUc9zCNEljzwPqTj+WnC+uOrYNrU3nstjcNHOZ5bNhhGoVt/W9fP3+j4tP5+/+rD5cXLyp3p2///jmQ4nwEL6DV00DU8xIpcsEMzvwAtM0XfwHpcyFXG0MAAA="
+      },
+      {
+        "mountPath": "/tmp/discovery-manifest.json",
+        "encodedFile": "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"
+      }
+    ],
+    "inputData": [],
+    "outputData": [
+      {
+        "mountPath": "/labinputs",
+        "storageUri": "discovery://storageassets/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/storageContainers/thermaldata-kc/storageAssets/labinputs",
+        "mountProtocol": "BlobfuseCaching"
+      },
+      {
+        "mountPath": "/laboutputs",
+        "storageUri": "discovery://storageassets/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/storageContainers/thermaldata-kc/storageAssets/runoutputs/paths/lab-korea-20261001",
+        "mountProtocol": "BlobfuseCaching"
+      }
+    ]
+  },
+  "outcome": "error",
+  "observations": [
+    {
+      "at": "2026-10-01T14:20:58.164Z",
+      "method": "POST",
+      "path": "/tools/projects/thermalhol:run",
+      "httpStatus": 202,
+      "state": "NotStarted",
+      "requestId": "f8acce83-156a-45d1-a124-c5faa78ec834"
+    },
+    {
+      "at": "2026-10-01T14:21:31.077Z",
+      "method": "GET",
+      "path": "/tools/projects/thermalhol/operations/8faa084217154c7eab9260629acf93ef",
+      "httpStatus": 200,
+      "state": "NotStarted",
+      "requestId": "66c33c9b-2538-452f-97cd-f54f48964016"
+    },
+    {
+      "at": "2026-10-01T14:22:05.184Z",
+      "method": "GET",
+      "path": "/tools/projects/thermalhol/operations/8faa084217154c7eab9260629acf93ef",
+      "httpStatus": 200,
+      "state": "NotStarted",
+      "requestId": "f0a36d60-a6e3-4433-9444-648fc31ace52"
+    },
+    {
+      "at": "2026-10-01T14:22:39.188Z",
+      "method": "GET",
+      "path": "/tools/projects/thermalhol/operations/8faa084217154c7eab9260629acf93ef",
+      "httpStatus": 200,
+      "state": "NotStarted",
+      "requestId": "520e14bd-9fd0-4fae-a3a4-19100a27b342"
+    },
+    {
+      "at": "2026-10-01T14:23:11.799Z",
+      "method": "GET",
+      "path": "/tools/projects/thermalhol/operations/8faa084217154c7eab9260629acf93ef",
+      "httpStatus": 200,
+      "state": "NotStarted",
+      "requestId": "ce376e68-d16d-4590-a35f-44314566a7e7"
+    },
+    {
+      "at": "2026-10-01T14:23:44.373Z",
+      "method": "GET",
+      "path": "/tools/projects/thermalhol/operations/8faa084217154c7eab9260629acf93ef",
+      "httpStatus": 200,
+      "state": "Failed",
+      "requestId": "4ace6c9c-1f64-4f0f-8b23-b82db9113a50"
+    }
+  ],
+  "operationId": "8faa084217154c7eab9260629acf93ef",
+  "submission": {
+    "id": "8faa084217154c7eab9260629acf93ef",
+    "status": "NotStarted",
+    "error": null,
+    "result": null
+  },
+  "lastResult": {
+    "id": "8faa084217154c7eab9260629acf93ef",
+    "status": "Failed",
+    "error": {
+      "code": "ToolRunError",
+      "message": "Tool run errored.",
+      "target": "8faa084217154c7eab9260629acf93ef",
+      "details": [
+        {
+          "code": "ToolExecutionFailed",
+          "message": "Tool failed to execute successfully. See execution logs for more information.",
+          "target": "8faa084217154c7eab9260629acf93ef",
+          "details": [
+            {
+              "code": "ContainerExitCode",
+              "message": "Pod sc-8faa084217154c7e-worker-0-0-mxnc6 container exited with code 1.",
+              "target": "8faa084217154c7eab9260629acf93ef",
+              "details": null,
+              "innerError": null
+            }
+          ],
+          "innerError": null
+        }
+      ],
+      "innerError": null
+    },
+    "result": {
+      "status": "TaskAccepted",
+      "runtimeDetails": "Tool container has errored",
+      "createdAt": "2026-10-01T14:20:57.946619Z",
+      "completedAt": "2026-10-01T14:23:37.7192786Z",
+      "createdBy": null,
+      "toolReport": {
+        "percentageComplete": 0,
+        "logs": "worker:\nSyntaxError: Non-UTF-8 code starting with '\\x8b' in file /tmp/discovery-mounted-run.py on line 1, but no encoding declared; see https://peps.python.org/pep-0263/ for details\n",
+        "statusInformation": null
+      },
+      "outputData": [],
+      "debugInfo": "{\"toolId\":\"/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/tools/thermal-ranking-kc\",\"command\":\"python /tmp/discovery-mounted-run.py --manifest /tmp/discovery-manifest.json\",\"inlineFiles\":[{\"mountPath\":\"/tmp/discovery-mounted-run.py\",\"encodedFile\":\"[REDACTED]\"},{\"mountPath\":\"/tmp/discovery-manifest.json\",\"encodedFile\":\"[REDACTED]\"}],\"inputData\":[],\"outputData\":[{\"uri\":\"discovery://storageassets/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/storageContainers/thermaldata-kc/storageAssets/labinputs\",\"mountPath\":\"/labinputs\",\"mountProtocol\":\"BlobfuseCaching\"},{\"uri\":\"discovery://storageassets/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/storageContainers/thermaldata-kc/storageAssets/runoutputs/paths/lab-korea-20261001\",\"mountPath\":\"/laboutputs\",\"mountProtocol\":\"BlobfuseCaching\"}],\"nodePoolIds\":[\"/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/supercomputers/sc-discovery-hol-kc/nodePools/cpulab\"],\"infraOverrides\":{\"ReplicaCount\":1,\"Cpu\":\"1\",\"Ram\":\"2Gi\",\"Gpu\":\"0\",\"MaxCpu\":\"2\",\"MaxRam\":\"4Gi\",\"MaxGpu\":\"0\"}}"
+    }
+  },
+  "error": "{\"id\":\"8faa084217154c7eab9260629acf93ef\",\"status\":\"Failed\",\"error\":{\"code\":\"ToolRunError\",\"message\":\"Tool run errored.\",\"target\":\"8faa084217154c7eab9260629acf93ef\",\"details\":[{\"code\":\"ToolExecutionFailed\",\"message\":\"Tool failed to execute successfully. See execution logs for more information.\",\"target\":\"8faa084217154c7eab9260629acf93ef\",\"details\":[{\"code\":\"ContainerExitCode\",\"message\":\"Pod sc-8faa084217154c7e-worker-0-0-mxnc6 container exited with code 1.\",\"target\":\"8faa084217154c7eab9260629acf93ef\",\"details\":null,\"innerError\":null}],\"innerError\":null}],\"innerError\":null},\"result\":{\"status\":\"TaskAccepted\",\"runtimeDetails\":\"Tool container has errored\",\"createdAt\":\"2026-10-01T14:20:57.946619Z\",\"completedAt\":\"2026-10-01T14:23:37.7192786Z\",\"createdBy\":null,\"toolReport\":{\"percentageComplete\":0,\"logs\":\"worker:\\nSyntaxError: Non-UTF-8 code starting with '\\\\x8b' in file /tmp/discovery-mounted-run.py on line 1, but no encoding declared; see https://peps.python.org/pep-0263/ for details\\n\",\"statusInformation\":null},\"outputData\":[],\"debugInfo\":\"{\\\"toolId\\\":\\\"/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/tools/thermal-ranking-kc\\\",\\\"command\\\":\\\"python /tmp/discovery-mounted-run.py --manifest /tmp/discovery-manifest.json\\\",\\\"inlineFiles\\\":[{\\\"mountPath\\\":\\\"/tmp/discovery-mounted-run.py\\\",\\\"encodedFile\\\":\\\"[REDACTED]\\\"},{\\\"mountPath\\\":\\\"/tmp/discovery-manifest.json\\\",\\\"encodedFile\\\":\\\"[REDACTED]\\\"}],\\\"inputData\\\":[],\\\"outputData\\\":[{\\\"uri\\\":\\\"discovery://storageassets/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/storageContainers/thermaldata-kc/storageAssets/labinputs\\\",\\\"mountPath\\\":\\\"/labinputs\\\",\\\"mountProtocol\\\":\\\"BlobfuseCaching\\\"},{\\\"uri\\\":\\\"discovery://storageassets/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/storageContainers/thermaldata-kc/storageAssets/runoutputs/paths/lab-korea-20261001\\\",\\\"mountPath\\\":\\\"/laboutputs\\\",\\\"mountProtocol\\\":\\\"BlobfuseCaching\\\"}],\\\"nodePoolIds\\\":[\\\"/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/supercomputers/sc-discovery-hol-kc/nodePools/cpulab\\\"],\\\"infraOverrides\\\":{\\\"ReplicaCount\\\":1,\\\"Cpu\\\":\\\"1\\\",\\\"Ram\\\":\\\"2Gi\\\",\\\"Gpu\\\":\\\"0\\\",\\\"MaxCpu\\\":\\\"2\\\",\\\"MaxRam\\\":\\\"4Gi\\\",\\\"MaxGpu\\\":\\\"0\\\"}}\"}}\n+ actual - expected\n\n+ 'Failed'\n- 'Succeeded'\n",
+  "completedAt": "2026-10-01T14:23:44.376Z"
+}

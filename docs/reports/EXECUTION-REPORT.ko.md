@@ -41,7 +41,7 @@
 
 공식 operation 목록에서 두 작업의 Succeeded와 실제 `sc-discovery-hol-kc/nodePools/cpulab` 배정을 재확인했다. 최종 computeUsage는 **activeJobs=0, pendingJobs=0**이다. **23:37 KST에는 cpulab이 자동으로 0대까지 축소됐고 시스템 노드 2대는 유지**된 것을 확인했다. 수동 스케일 변경은 하지 않았다. CPU 요청 1/max 2, 메모리 2Gi/max 4Gi, GPU 0, replica 1, 작업당 30분 제한을 사용했다.
 
-초기 작업 `8faa084217154c7eab9260629acf93ef`는 gzip inline 파일이 런타임에서 자동 해제되지 않아 Python `Non-UTF-8` 오류로 Failed였다. 문서 계약의 gzip+base64는 유지하고 `.gz`를 명시적으로 해제한 뒤 재실행해 해결했다. 실패 기록을 삭제하거나 성공으로 바꾸지 않았다.
+[초기 작업 `8faa084217154c7eab9260629acf93ef`](../../artifacts/discovery-tool-lab-korea-20261001-sync-and-rank.json)는 gzip inline 파일이 런타임에서 자동 해제되지 않아 Python `Non-UTF-8` 오류로 Failed였다. 문서 계약의 gzip+base64는 유지하고 `.gz`를 명시적으로 해제한 뒤 재실행해 해결했다. 실패 기록을 삭제하거나 성공으로 바꾸지 않았다.
 
 다운로드한 실제 JSON의 모든 필드는 로컬 검증기로 비교했으며 baseline 적격 3개, cost3 적격 1개가 일치했다. 그 검증기의 `execution_verified:false`는 내용 검증과 실행 출처를 분리하기 위한 정상 출력이다. **클라우드 실행 출처는 별도의 실제 operation·로그·nodepool 증거로 확인했다.**
 
@@ -67,6 +67,8 @@ GitHub 저장소를 **`junwoojeong100/microsoft-discovery-labs`**로 변경하�
 공개용 사이트 빌드는 계정·구독 식별자를 예시로 치환하고 원본 `artifacts/`, `config/`, `infra/`, PDF를 제외한다. `npm run check:site`로 HTML 링크와 모바일/데스크톱을 확인하며 `.github/workflows/pages.yml`은 `PAGES_ENABLED=true`가 설정된 경우에만 게시한다.
 
 **현재 Pages URL은 아직 게시되지 않았다.** GitHub API가 **HTTP 422, “Your current plan does not support GitHub Pages for this repository.”**로 거절했다. Private 저장소 요금제 업그레이드 또는 별도 공개 문서 저장소 승인이 필요하며, 임의 Public 전환·결제·새 공개 저장소 생성은 하지 않았다. 예정 주소를 실제 서비스 중인 링크로 표시하지 않는다.
+
+원격에 먼저 반영된 Dependabot 업데이트를 보존해 병합한 뒤 정상 push했다. [실제 GitHub Actions 실행](https://github.com/junwoojeong100/microsoft-discovery-labs/actions/runs/36878682402)은 **build=success, deploy=skipped**다. 사이트 생성 성공과 실제 Pages 게시 성공을 구분한다.
 
 ## 2026-10-01 21:32 KST — Sweden home 유지, Korea 컴퓨트 생성 성공
 
