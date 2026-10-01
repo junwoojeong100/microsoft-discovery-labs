@@ -1,0 +1,222 @@
+{
+  "observedAt": "2026-10-01T18:32:31.807Z",
+  "permissionApprovalReceived": true,
+  "approvedAt": "2026-10-01T18:27:24.453Z",
+  "validation": "Succeeded",
+  "whatIf": "Succeeded",
+  "plannedChanges": [
+    {
+      "after": {
+        "apiVersion": "2022-04-01",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Authorization/roleDefinitions/04efaf40-861c-515b-919e-26156d2bd7a9",
+        "name": "04efaf40-861c-515b-919e-26156d2bd7a9",
+        "properties": {
+          "assignableScopes": [
+            "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930"
+          ],
+          "description": "Allows the existing Defender policy identity to read and join dedicated Discovery compute subnets.",
+          "permissions": [
+            {
+              "actions": [
+                "Microsoft.Network/virtualNetworks/subnets/read",
+                "Microsoft.Network/virtualNetworks/subnets/join/action"
+              ]
+            }
+          ],
+          "roleName": "Discovery Policy Subnet Read Join - rg-discovery-hol-20260930",
+          "type": "CustomRole"
+        },
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "type": "Microsoft.Authorization/roleDefinitions"
+      },
+      "before": null,
+      "changeType": "Create",
+      "delta": null,
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Authorization/roleDefinitions/04efaf40-861c-515b-919e-26156d2bd7a9",
+      "symbolicName": null,
+      "unsupportedReason": null
+    },
+    {
+      "after": {
+        "apiVersion": "2022-04-01",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol-kc/subnets/aksSubnet/providers/Microsoft.Authorization/roleAssignments/ecd29fe1-8174-5a28-b8dd-9f32a7b7ca91",
+        "name": "ecd29fe1-8174-5a28-b8dd-9f32a7b7ca91",
+        "properties": {
+          "principalId": "02e03d89-915c-4be6-a882-ebde1beda2e4",
+          "roleDefinitionId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Authorization/roleDefinitions/04efaf40-861c-515b-919e-26156d2bd7a9"
+        },
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "type": "Microsoft.Authorization/roleAssignments"
+      },
+      "before": null,
+      "changeType": "Create",
+      "delta": null,
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol-kc/subnets/aksSubnet/providers/Microsoft.Authorization/roleAssignments/ecd29fe1-8174-5a28-b8dd-9f32a7b7ca91",
+      "symbolicName": null,
+      "unsupportedReason": null
+    },
+    {
+      "after": {
+        "apiVersion": "2022-04-01",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol-kc/subnets/supercomputerNodepoolSubnet/providers/Microsoft.Authorization/roleAssignments/694ae642-f66d-5d7d-8b3a-61eb6c24b9a1",
+        "name": "694ae642-f66d-5d7d-8b3a-61eb6c24b9a1",
+        "properties": {
+          "principalId": "02e03d89-915c-4be6-a882-ebde1beda2e4",
+          "roleDefinitionId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Authorization/roleDefinitions/04efaf40-861c-515b-919e-26156d2bd7a9"
+        },
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "type": "Microsoft.Authorization/roleAssignments"
+      },
+      "before": null,
+      "changeType": "Create",
+      "delta": null,
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol-kc/subnets/supercomputerNodepoolSubnet/providers/Microsoft.Authorization/roleAssignments/694ae642-f66d-5d7d-8b3a-61eb6c24b9a1",
+      "symbolicName": null,
+      "unsupportedReason": null
+    }
+  ],
+  "sourceHashes": {
+    "infra/policy-subnet-access.bicep": "05e358f6d2252c099c34c50acbefff1107c3f0f442a1fe152924f92d8e9061ba",
+    "infra/policy-subnet-access.koreacentral.bicepparam": "4a001c205f8d4e9b7c734c8970be3bd959bf02bb14a611398dcfc9c364284870",
+    "artifacts/discovery-policy-subnet-access-template-20261002.json": "ed8d52b05b79285ae2e39c1f74995a89bda661977a8b7af70147797335518f79",
+    "artifacts/discovery-policy-subnet-access-parameters-20261002.json": "76fd82814c61b91320b0559377ab1fd2adafbab9db1f576457a785669d6e3548"
+  },
+  "bookshelfQuotas": [
+    {
+      "model": "OpenAI.GlobalStandard.text-embedding-3-small",
+      "limitTpm": 1000000,
+      "allocatedTpm": 220000,
+      "availableTpm": 780000,
+      "operationalTargetTpm": 2000000,
+      "deficitTpm": 1220000,
+      "minimumTotalTpm": 2220000
+    },
+    {
+      "model": "OpenAI.GlobalStandard.gpt-5-mini",
+      "limitTpm": 1000000,
+      "allocatedTpm": 10000,
+      "availableTpm": 990000,
+      "operationalTargetTpm": 2000000,
+      "deficitTpm": 1010000,
+      "minimumTotalTpm": 2010000
+    },
+    {
+      "model": "OpenAI.GlobalStandard.gpt-5.2",
+      "limitTpm": 3000000,
+      "allocatedTpm": 10000,
+      "availableTpm": 2990000,
+      "operationalTargetTpm": 2000000,
+      "deficitTpm": 0,
+      "minimumTotalTpm": 2010000
+    }
+  ],
+  "clusterBefore": {
+    "addonProfiles": {
+      "extensionManager": {
+        "config": null,
+        "enabled": true,
+        "identity": null
+      },
+      "omsagent": {
+        "config": {
+          "logAnalyticsWorkspaceResourceID": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.OperationalInsights/workspaces/sc-discovery-hol-kc-loganalytics",
+          "useAADAuth": "true"
+        },
+        "enabled": true,
+        "identity": null
+      }
+    },
+    "agentPoolProfiles": [
+      {
+        "count": 2,
+        "enableAutoScaling": true,
+        "maxCount": 3,
+        "minCount": 2,
+        "name": "system",
+        "vmSize": "Standard_D4s_v6",
+        "vnetSubnetId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol-kc/subnets/aksSubnet"
+      },
+      {
+        "count": 0,
+        "enableAutoScaling": true,
+        "maxCount": 1,
+        "minCount": 0,
+        "name": "cpulab",
+        "vmSize": "Standard_D4s_v6",
+        "vnetSubnetId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol-kc/subnets/supercomputerNodepoolSubnet"
+      }
+    ],
+    "apiServerAccessProfile": null,
+    "disableLocalAccounts": true,
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-a13wxu",
+    "identity": {
+      "delegatedResources": null,
+      "principalId": null,
+      "tenantId": null,
+      "type": "UserAssigned",
+      "userAssignedIdentities": {
+        "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-discovery-hol-kc": {
+          "clientId": "61dbcdb3-bc5b-4b15-bed4-c3ea92082398",
+          "principalId": "6eea6eb1-c9fd-45b1-8544-830a17ab526a"
+        }
+      }
+    },
+    "kubernetesVersion": "1.34.0",
+    "location": "koreacentral",
+    "networkProfile": {
+      "advancedNetworking": null,
+      "dnsServiceIp": "10.30.0.10",
+      "ipFamilies": [
+        "IPv4"
+      ],
+      "kubeProxyConfig": null,
+      "loadBalancerProfile": {
+        "allocatedOutboundPorts": null,
+        "backendPoolType": "nodeIPConfiguration",
+        "clusterServiceLoadBalancerHealthProbeMode": null,
+        "effectiveOutboundIPs": [
+          {
+            "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/MC_mrg-dscmp-sc-discovery-hol-kc-a13wxu_aks-dscmp-a13wxu_koreacentral/providers/Microsoft.Network/publicIPAddresses/24aefdcf-4aa5-4469-8764-2930e1700176",
+            "resourceGroup": "MC_mrg-dscmp-sc-discovery-hol-kc-a13wxu_aks-dscmp-a13wxu_koreacentral"
+          }
+        ],
+        "enableMultipleStandardLoadBalancers": null,
+        "idleTimeoutInMinutes": null,
+        "managedOutboundIPs": {
+          "count": 1,
+          "countIPv6": null
+        },
+        "outboundIPs": null,
+        "outboundIpPrefixes": null
+      },
+      "loadBalancerSku": "standard",
+      "natGatewayProfile": null,
+      "networkDataplane": "azure",
+      "networkMode": null,
+      "networkPlugin": "azure",
+      "networkPluginMode": "overlay",
+      "networkPolicy": "azure",
+      "outboundType": "loadBalancer",
+      "podCidr": "10.244.0.0/16",
+      "podCidrs": [
+        "10.244.0.0/16"
+      ],
+      "podLinkLocalAccess": "IMDS",
+      "serviceCidr": "10.30.0.0/16",
+      "serviceCidrs": [
+        "10.30.0.0/16"
+      ],
+      "staticEgressGatewayProfile": null
+    },
+    "provisioningState": "Succeeded"
+  }
+}

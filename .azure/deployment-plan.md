@@ -1,6 +1,124 @@
 # Discovery lab deployment plan
 
-Status: Deployed — core, direct runtime and Pages; Bookshelf quota and policy access approval remain blocked
+Status: Deployed — subnet grants and Azure Policy addon succeeded; target installation policy Compliant; Bookshelf remains quota-blocked
+
+## Final addon activation — 2026-10-01T19:17:07Z
+
+The approved two-subnet grants are Succeeded and the single target AKS now
+has `azurepolicy.enabled=true` with provisioningState Succeeded. An independent
+GET at 19:22Z confirmed persistence. All other writable settings, other addons,
+network configuration and effective outbound IPs are unchanged. System nodes
+remain 2; cpulab remains 0 with maxCount 1 and its existing fallback settings.
+
+The failed legacy remediation is retained. Recovery used the validated
+2026-02-02-preview SDK request with the exact service ETag in If-Match, not a
+wildcard or an omitted concurrency condition. The SDK's automatically quoted
+ETag was first rejected with HTTP 412 and verified to have changed nothing.
+Passing the exact service value succeeded. No policy definition/exception,
+node-pool upgrade strategy, node count, or broader role grant was changed.
+
+Evidence: `artifacts/discovery-policy-addon-result-20261002.json`.
+The managed-RG compliance refresh completed and the target cluster's
+addon-installation policy is Compliant, evaluated at 19:21:33Z and verified
+at 19:32:51Z. `artifacts/discovery-policy-addon-compliance-20261002.json`
+records that exact boundary; do not claim whole-subscription compliance.
+The user reports the TPM increase application completed, but the 19:20Z
+API still shows the same Bookshelf shortfall. Do not duplicate requests.
+
+HTML guide/report links were changed to canonical github.io URLs and published
+in commit a99dca5, Pages run 36913950205. The raw evidence publication boundary
+is unchanged. The sections below preserve the approval and recovery history.
+
+## 2026-10-02 03:27 KST — approved policy resumption
+
+The user explicitly approved the previously described additional policy
+permissions and requested execution. This supersedes only the approval gate
+below, not any unrelated resource, model, network or policy restriction.
+
+Apply `infra/policy-subnet-access.bicep` with the existing Korea parameters:
+one custom role with subnet read/join only and two subnet-scoped grants to
+policy principal 02e03d89-915c-4be6-a882-ebde1beda2e4. Preserve the lab RG,
+Korea VNet, system/cpulab settings, all existing role assignments and the
+subscription's Defender policy assignment. Remediation is restricted to
+aks-dscmp-a13wxu in mrg-dscmp-sc-discovery-hol-kc-a13wxu.
+
+All validation checks must pass before applying the approved scope:
+
+- [x] Recompile the unchanged source and Korea parameters.
+- [x] Refresh ARM validation and Incremental what-if; exactly three creates,
+  no existing-resource modifications or deletions.
+- [x] Verify the live policy principal, both subnet references, caller context,
+  and no overlapping AKS/policy deployment.
+- [x] Verify the two-action/subnet-only role contract with targeted tests.
+
+### Section 7: Validation Proof — approved execution
+
+At 2026-10-01T18:31:15Z, `az bicep build` and `az bicep build-params`
+produced byte-identical approved artifacts. Fresh `az deployment group validate`
+and Incremental `az deployment group what-if` both succeeded. The only
+actionable changes are the one custom role and two specific subnet grants.
+Live checks found no overlapping managed-RG deployment or cluster-scoped
+remediation. All 12 infrastructure contract tests passed.
+
+`artifacts/discovery-policy-approved-preflight-20261002.json` records the
+authorization, source hashes, exact actionable preview, quota arithmetic
+and pre-change AKS/addon/network/nodepool configuration at 18:32:31Z.
+The Incremental `discovery-policy-subnet-approved-20261002` used the same
+compiled template and parameters. Live roles were verified before starting
+remediation on the single approved AKS resource.
+
+### Applied permissions and remediation progress
+
+`discovery-policy-subnet-approved-20261002` reached Succeeded at
+2026-10-01T18:34:11Z. Live role definition and assignments match the exact
+approved two actions and two subnet scopes; no RG/VNet/subscription-wide
+network grant was added.
+
+The first resource-scoped remediation, `discovery-korea-policy-addon-20261002`,
+remained Evaluating for more than ten minutes with zero deployments.
+After confirming the addon was still absent, the cluster was Succeeded
+and no child deployment had started, that task was cancelled with zero
+deployments. Its existing NonCompliant finding is now being used by
+`discovery-korea-policy-addon-existing-20261002` at the identical single-AKS
+scope. This changes discovery mode only, not permissions or policy scope.
+The replacement reached Failed after one target deployment. Its current
+18:47Z operation error is `InvalidParameter`: the built-in template's
+2021-07-01 API rejects both positive maxSurge and maxUnavailable. The old
+12:22Z nested deployment's subnet error is historical, not this new failure.
+
+### Validated compatibility recovery without changing pool behavior
+
+Microsoft's rolling-upgrade documentation supports positive maxSurge and
+maxUnavailable together for preview fallback. The existing cpulab settings
+are maxSurge=1, maxUnavailable=25%, drain timeout 1440 and Cordon; preserve
+them rather than "fixing" the pool by changing its upgrade strategy.
+
+The installed aks-preview SDK uses 2026-02-02-preview. A read-only GET and
+its native `as_dict(exclude_readonly=True)` serialization produced a request
+that differs only by adding `properties.addonProfiles.azurepolicy.enabled=true`.
+All existing addons, identity, networking, pool sizes/limits and upgrade
+settings are byte-for-byte preserved in the writable object.
+
+Fresh ARM validate and Incremental what-if passed for that exact request
+on the single existing AKS resource. The only intended change is the new
+addon. The preview also shows omission of the SDK-declared read-only
+effectiveOutboundIPs field and four NoEffect image/version entries; these
+are not requested network or node changes. Verify the live network afterward.
+
+The same request was applied through that installed SDK after a fresh
+equality/ETag check, with the exact ETag sent explicitly in If-Match. This
+avoided the incompatible built-in policy API without changing the policy,
+granting broader roles, upgrading nodes, or altering preview fallback.
+Do not replay the failed built-in remediation on the now-enabled addon.
+The final result records the API validation, exact change boundary and
+live preservation checks. Full resource payloads stay in the session
+workspace rather than the public repository.
+
+The refreshed Bookshelf check still reports 990,000 / 780,000 TPM available
+for gpt-5-mini / text-embedding-3-small. Their deficits against the existing
+2,000,000 TPM operational plan are 1,010,000 / 1,220,000 TPM. gpt-5.2 has
+2,990,000 TPM available and no shortfall. This request does not authorize
+duplicate quota applications or resizing other model deployments.
 
 ## 2026-10-02 follow-up
 

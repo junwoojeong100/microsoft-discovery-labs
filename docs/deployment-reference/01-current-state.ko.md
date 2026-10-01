@@ -2,7 +2,9 @@
 
 [목차](README.ko.md) · **2026-10-01 코어 16:21 조회, 중앙 진단 16:28 검증과 후속 quota 조회를 반영. 이후 상태를 보장하지 않는다.**
 
-**최신 23:32 KST:** home은 Sweden Central, runtime은 Korea Central이다. 새 Workspace·Project·검증 모델·Supercomputer·cpulab이 모두 **Succeeded**이며 두 GPT-5.4 배포는 **각 Global Standard 250,000 TPM**이다. 합성 입력 5개와 계산 결과 2개의 실제 CPU 실행·별도 작업 재조회도 성공했다. 남은 것은 Bookshelf 운영 quota, 승인되지 않은 별도 정책 애드온 권한, KB 기반 자율 연구다. [실행 보고서](../reports/EXECUTION-REPORT.ko.md), [교차 리전 절차](06-resume-runbook.ko.md)를 따른다. 아래 표는 이전 Sweden 단일 리전 실행의 시각 고정 기록이다.
+**2026-10-02 후속:** 승인된 두 서브넷의 read/join 권한을 부여했고, **04:17 KST에 Azure Policy 애드온 활성화가 Succeeded**로 완료됐다. 기존 노드 수·업그레이드 설정·네트워크·다른 애드온은 유지했다. 사용자는 Bookshelf TPM 증설 신청 완료를 확인했으나 04:20 실제 한도는 미반영이다. [정책 복구 결과](../../artifacts/discovery-policy-addon-result-20261002.json), [모델별 부족분](02-model-quota.ko.md)을 참고한다.
+
+**10-01 23:32 KST 코어 실행 기록:** home은 Sweden Central, runtime은 Korea Central이다. 새 Workspace·Project·검증 모델·Supercomputer·cpulab이 모두 **Succeeded**이며 두 GPT-5.4 배포는 **각 Global Standard 250,000 TPM**이다. 합성 입력 5개와 계산 결과 2개의 실제 CPU 실행·별도 작업 재조회도 성공했다. 당시 남은 것은 Bookshelf 운영 quota, 승인되지 않은 별도 정책 애드온 권한, KB 기반 자율 연구였다. 이후 정책 복구는 위 후속 결과를 따른다. [실행 보고서](../reports/EXECUTION-REPORT.ko.md), [교차 리전 절차](06-resume-runbook.ko.md)를 따른다. 아래 표는 이전 Sweden 단일 리전 실행의 시각 고정 기록이다.
 
 ## 활성 배포 범위
 

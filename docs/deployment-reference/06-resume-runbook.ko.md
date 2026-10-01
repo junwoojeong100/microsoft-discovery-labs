@@ -25,13 +25,13 @@
 
 **모델 별도 차단:** Korea Central quota API에서도 GPT-5.4 GlobalStandard가 3,000/3,000 단위, 미할당 0 TPM으로 관측됐다. 기존 `gpt-5.4`의 3,000,000 TPM를 임의 축소하지 않는다. DataZoneStandard 잔여 300,000 TPM만으로 자동 cognition과 별도 검증 모델의 전체 조건을 충족한다고 가정하지 않는다.
 
-**별도 정책 작업:** 새 AKS는 성공했지만 기존 Defender의 Azure Policy 애드온 자동 배포는 `LinkedAuthorizationFailed`다. 정책 관리 ID에 새 `aksSubnet`의 join 권한이 없으며 Discovery용 UAMI의 역할 누락과는 다른 문제다. 권한 범위 확인·승인 후 해당 정책 작업만 복구한다. ARM 사전 검증이 성공해도 자동 정책의 후속 배포 전체가 성공한다는 보장은 아니다. [실패 및 보존 범위](../reports/EXECUTION-REPORT.ko.md)를 참고한다.
+**10-01 당시 별도 정책 작업:** 새 AKS는 성공했지만 기존 Defender의 Azure Policy 애드온 자동 배포는 `LinkedAuthorizationFailed`였다. 정책 관리 ID에 새 `aksSubnet`의 join 권한이 없었으며 Discovery용 UAMI의 역할 누락과는 다른 문제였다. 이후 승인·복구 결과는 다음 절을 따른다. ARM 사전 검증이 성공해도 자동 정책의 후속 배포 전체가 성공한다는 보장은 아니다. [실패 및 보존 범위](../reports/EXECUTION-REPORT.ko.md)를 참고한다.
 
-### 2026-10-02 정책 애드온 최소 권한 준비 — 아직 미적용
+### 2026-10-02 정책 애드온 복구 완료 — 기존 풀 설정 유지
 
-[policy-subnet-access.bicep](../../infra/policy-subnet-access.bicep)은 기존 Defender 정책 관리 ID에 전용 `aksSubnet`과 `supercomputerNodepoolSubnet`의 **read/join 두 동작만** 부여한다. [Korea 매개변수](../../infra/policy-subnet-access.koreacentral.bicepparam)는 실제 VNet과 정책 principal을 고정한다. 구독 전체 역할 부여, 기존 정책 수정·예외, 관리 AKS 직접 재구성은 포함하지 않는다.
+[policy-subnet-access.bicep](../../infra/policy-subnet-access.bicep)은 기존 Defender 정책 관리 ID에 전용 `aksSubnet`과 `supercomputerNodepoolSubnet`의 **read/join 두 동작만** 부여한다. [Korea 매개변수](../../infra/policy-subnet-access.koreacentral.bicepparam)는 실제 VNet과 정책 principal을 고정한다. 사용자 승인 후 **03:34 KST에 적용 완료**했다. 구독/VNet 전체 역할 부여나 기존 정책 수정·예외는 추가하지 않았다.
 
-ARM validate와 Incremental what-if는 통과했으며 역할 정의 1개·서브넷 역할 할당 2개만 Create다. **추가 권한 승인은 받지 못했으므로 실제 배포는 하지 않았다.** 아래 명령은 배포가 아닌 읽기 전용 재검증이다. 증거 파일은 해당 소스와 매개변수를 컴파일한 결과이며, 소스를 수정했다면 다시 컴파일해야 한다.
+권한 적용 전 ARM validate와 Incremental what-if는 역할 정의 1개·서브넷 역할 할당 2개만 Create였다. 이미 적용된 상태에서는 이를 다시 만들지 않는다. 아래 명령은 배포가 아닌 읽기 전용 재검증이다. 증거 파일은 해당 소스와 매개변수를 컴파일한 결과이며, 소스를 수정했다면 다시 컴파일해야 한다.
 
 ```bash
 az deployment group validate \
@@ -50,9 +50,11 @@ az deployment group what-if \
   --mode Incremental
 ```
 
-승인 후에는 검증한 동일 입력만 Incremental 배포한다. 두 서브넷의 역할 할당이 모두 확인되고 전파된 뒤, 기존 **Defender for Containers provisioning Azure Policy Addon for Kub** 할당의 remediation을 **`mrg-dscmp-sc-discovery-hol-kc-a13wxu/aks-dscmp-a13wxu` 한 개의 resource scope**로 제출한다. `ReEvaluateCompliance`로 현재 상태를 재평가하며 구독 전체 remediation으로 넓히지 않는다.
+첫 `ReEvaluateCompliance` 작업은 배포 0개인 평가 대기 상태에서 취소했고, 같은 AKS 한 개에 `ExistingNonCompliant`로 재적용했다. 권한 오류는 넘었지만 기본 정책의 **`2021-07-01` API**가 기존 `maxSurge=1` / `maxUnavailable=25%` 설정을 거절했다. 두 값을 함께 사용하는 것은 [문서화된 preview fallback](https://learn.microsoft.com/azure/aks/upgrade-aks-node-pools-rolling#maxunavailable-fallback-preview)이다. 이를 해결하려고 노드풀 업그레이드 전략을 임의 변경하지 않는다.
 
-완료 기준은 remediation 성공, AKS `addonProfiles.azurepolicy.enabled=true`, 후속 정책 평가 Compliant다. 기존 AKS·nodepool·직접 Tool 실행이 성공했다는 사실만으로 정책 애드온 복구까지 완료됐다고 판단하지 않는다.
+같은 애드온 활성화만 **`2026-02-02-preview` SDK**로 별도 검증해 **04:17 KST에 Succeeded**로 완료했다. writable 요청의 유일한 변경은 `addonProfiles.azurepolicy.enabled=true`다. 최신 ETag와 설정 일치를 재확인하고 정확한 ETag 값을 `If-Match`에 넣어 동시 변경 덮어쓰기를 방지했다. `maxSurge`, `maxUnavailable`, 노드 수·한도, 다른 애드온·네트워크와 실제 아웃바운드 IP가 모두 보존됐다.
+
+최종 활성화 요청의 Succeeded, 실제 `addonProfiles.azurepolicy.enabled=true`, **해당 설치 정책의 최신 Compliant**를 모두 확인했다. 정책 평가 시각은 04:21:33 KST이며 04:32에 재조회했다. 실패한 기본 정책 remediation은 성공으로 바꾸거나 삭제하지 않는다. 이미 활성화된 클러스터에 이전 실패 요청을 반복하지 말고 [최종 결과](../../artifacts/discovery-policy-addon-result-20261002.json)를 확인한다. 전체 구독의 정책 준수나 Bookshelf 운영 완료를 의미하지 않는다.
 
 ### 실제 파일·도구 실행 재현
 

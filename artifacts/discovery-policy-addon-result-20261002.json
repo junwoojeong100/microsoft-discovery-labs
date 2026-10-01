@@ -1,0 +1,205 @@
+{
+  "observedAt": "2026-10-01T19:20:18.054Z",
+  "permissionApprovalReceived": true,
+  "approvedAt": "2026-10-01T18:27:24.453Z",
+  "rbacDeployment": {
+    "name": "discovery-policy-subnet-approved-20261002",
+    "state": "Succeeded",
+    "timestamp": "2026-10-01T18:34:11.225784+00:00"
+  },
+  "roleDefinitions": [
+    {
+      "assignableScopes": [
+        "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930"
+      ],
+      "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Authorization/roleDefinitions/04efaf40-861c-515b-919e-26156d2bd7a9",
+      "permissions": [
+        {
+          "actions": [
+            "Microsoft.Network/virtualNetworks/subnets/read",
+            "Microsoft.Network/virtualNetworks/subnets/join/action"
+          ],
+          "condition": null,
+          "conditionVersion": null,
+          "dataActions": [],
+          "notActions": [],
+          "notDataActions": []
+        }
+      ],
+      "roleName": "Discovery Policy Subnet Read Join - rg-discovery-hol-20260930"
+    }
+  ],
+  "roleAssignments": [
+    {
+      "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol-kc/subnets/aksSubnet/providers/Microsoft.Authorization/roleAssignments/ecd29fe1-8174-5a28-b8dd-9f32a7b7ca91",
+      "principalId": "02e03d89-915c-4be6-a882-ebde1beda2e4",
+      "principalType": "ServicePrincipal",
+      "roleDefinitionId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Authorization/roleDefinitions/04efaf40-861c-515b-919e-26156d2bd7a9",
+      "scope": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol-kc/subnets/aksSubnet"
+    },
+    {
+      "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol-kc/subnets/supercomputerNodepoolSubnet/providers/Microsoft.Authorization/roleAssignments/694ae642-f66d-5d7d-8b3a-61eb6c24b9a1",
+      "principalId": "02e03d89-915c-4be6-a882-ebde1beda2e4",
+      "principalType": "ServicePrincipal",
+      "roleDefinitionId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Authorization/roleDefinitions/04efaf40-861c-515b-919e-26156d2bd7a9",
+      "scope": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol-kc/subnets/supercomputerNodepoolSubnet"
+    }
+  ],
+  "cancelledReevaluation": {
+    "name": "discovery-korea-policy-addon-20261002",
+    "state": "Canceled",
+    "deployments": 0
+  },
+  "legacyRemediation": {
+    "name": "discovery-korea-policy-addon-existing-20261002",
+    "state": "Failed",
+    "apiVersion": "2021-07-01",
+    "currentFailureEvidence": [
+      {
+        "statusMessage": {
+          "error": {
+            "additionalInfo": null,
+            "code": "InvalidTemplateDeployment",
+            "details": [
+              {
+                "additionalInfo": null,
+                "code": "InvalidParameter",
+                "details": null,
+                "message": "Preflight validation check for resource(s) for container service aks-dscmp-a13wxu in resource group mrg-dscmp-sc-discovery-hol-kc-a13wxu failed. Message: The value of parameter agentPoolProfile.upgradeSettings.maxUnavailable is invalid. Error details: maxSurge and maxUnavailable cannot both be greater than 0.. Details: ",
+                "target": null
+              }
+            ],
+            "message": "The template deployment 'Policy-Update-aks-dscmp-a13wxu' is not valid according to the validation procedure. The following resource provider(s) - 'Microsoft.ContainerService/managedClusters (2021-07-01)' reported preflight validation errors. Tracking id is '2e203f36-a42c-4553-8035-ebb94b217f38'. See inner errors for details.",
+            "target": null
+          },
+          "status": "Failed"
+        },
+        "timestamp": "2026-10-01T18:47:21.194682+00:00"
+      }
+    ]
+  },
+  "compatibilityRecovery": {
+    "completedAt": "2026-10-01T19:17:07.323457+00:00",
+    "apiVersion": "2026-02-02-preview",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-a13wxu",
+    "provisioningState": "Succeeded",
+    "azurePolicyEnabled": true,
+    "etagGuardUsed": true,
+    "etagHeaderFormat": "exact service GUID",
+    "allOtherWritableSettingsUnchanged": true,
+    "effectiveOutboundIPsUnchanged": true,
+    "poolUpgradeSettings": {
+      "system": {
+        "maxSurge": "1",
+        "maxUnavailable": "0"
+      },
+      "cpulab": {
+        "maxSurge": "1",
+        "drainTimeoutInMinutes": 1440,
+        "undrainableNodeBehavior": "Cordon",
+        "maxUnavailable": "25%"
+      }
+    },
+    "validation": "Succeeded",
+    "whatIf": "Succeeded",
+    "inputChange": "properties.addonProfiles.azurepolicy.enabled"
+  },
+  "etagRetry": {
+    "firstQuotedHeaderRejected": true,
+    "configurationUnchangedAfterRejection": true,
+    "successfulRetryUsesExactServiceGuid": true,
+    "concurrencyGuardRemoved": false
+  },
+  "bookshelf": {
+    "userReportedIncreaseApplicationComplete": true,
+    "duplicateRequestSubmitted": false,
+    "created": false,
+    "quotas": [
+      {
+        "model": "OpenAI.GlobalStandard.text-embedding-3-small",
+        "limitTpm": 1000000,
+        "allocatedTpm": 220000,
+        "availableTpm": 780000,
+        "operationalTargetTpm": 2000000,
+        "deficitTpm": 1220000
+      },
+      {
+        "model": "OpenAI.GlobalStandard.gpt-5-mini",
+        "limitTpm": 1000000,
+        "allocatedTpm": 10000,
+        "availableTpm": 990000,
+        "operationalTargetTpm": 2000000,
+        "deficitTpm": 1010000
+      },
+      {
+        "model": "OpenAI.GlobalStandard.gpt-5.2",
+        "limitTpm": 3000000,
+        "allocatedTpm": 10000,
+        "availableTpm": 2990000,
+        "operationalTargetTpm": 2000000,
+        "deficitTpm": 0
+      }
+    ]
+  },
+  "complianceEvidenceFile": "discovery-policy-addon-compliance-20261002.json",
+  "independentReadback": {
+    "observedAt": "2026-10-01T19:22:13.430Z",
+    "cluster": {
+      "agentPools": [
+        {
+          "count": 2,
+          "maxCount": 3,
+          "minCount": 2,
+          "name": "system",
+          "upgradeSettings": {
+            "drainTimeoutInMinutes": null,
+            "maxBlockedNodes": null,
+            "maxSurge": "1",
+            "maxUnavailable": "0",
+            "nodeSoakDurationInMinutes": null,
+            "undrainableNodeBehavior": null
+          }
+        },
+        {
+          "count": 0,
+          "maxCount": 1,
+          "minCount": 0,
+          "name": "cpulab",
+          "upgradeSettings": {
+            "drainTimeoutInMinutes": 1440,
+            "maxBlockedNodes": null,
+            "maxSurge": "1",
+            "maxUnavailable": "25%",
+            "nodeSoakDurationInMinutes": null,
+            "undrainableNodeBehavior": "Cordon"
+          }
+        }
+      ],
+      "azurePolicy": {
+        "config": null,
+        "enabled": true,
+        "identity": {
+          "clientId": "4d98db47-2bab-482c-8048-e38aa6b9db5f",
+          "objectId": "f447985e-0159-4994-b2ab-a2122de33d44",
+          "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/MC_mrg-dscmp-sc-discovery-hol-kc-a13wxu_aks-dscmp-a13wxu_koreacentral/providers/Microsoft.ManagedIdentity/userAssignedIdentities/azurepolicy-aks-dscmp-a13wxu"
+        }
+      },
+      "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-a13wxu",
+      "location": "koreacentral",
+      "provisioningState": "Succeeded"
+    }
+  },
+  "policyCompliance": {
+    "verifiedAt": "2026-10-01T19:32:51.198Z",
+    "evaluationScope": "mrg-dscmp-sc-discovery-hol-kc-a13wxu",
+    "policyStates": [
+      {
+        "complianceState": "Compliant",
+        "policyAssignmentId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/microsoft.authorization/policyassignments/defender for containers provisioning azure policy addon for kub",
+        "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/microsoft.containerservice/managedclusters/aks-dscmp-a13wxu",
+        "timestamp": "2026-10-01T19:21:33.330194+00:00"
+      }
+    ],
+    "scopeBoundary": "Only this cluster's Azure Policy Add-on installation policy is verified, not all subscription policies."
+  }
+}

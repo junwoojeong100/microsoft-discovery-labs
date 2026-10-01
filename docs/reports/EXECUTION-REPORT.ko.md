@@ -4,6 +4,30 @@
 
 구독 `51531604-2337-4c05-bc05-3c3d4ff154e5`, 테넌트 `46e9cdaa-fed3-4131-aa28-c1fc8a8a043a`, RG `rg-discovery-hol-20260930`과 **Discovery home Sweden Central**을 유지했다. 초기 단일 리전 실행에서는 기존 네트워크·UAMI를 재사용했고, 저녁 교차 리전 실행에서는 Korea Central 전용 지원 자원을 추가했다. 다른 프로젝트의 자원·정책·모델 배포를 삭제하지 않았다.
 
+## 2026-10-02 04:17 KST — 정책 애드온 활성화 완료, HTML 링크 게시
+
+사용자가 추가 권한을 승인한 뒤 **두 전용 서브넷의 read/join 권한만** 부여했고 Azure Policy 애드온을 활성화했다. 아래 00시대의 승인 대기 기록은 당시 상태다.
+
+| 단계 | 실제 결과 |
+|---|---|
+| 최소 권한 배포 | `discovery-policy-subnet-approved-20261002` **Succeeded · 03:34:11 KST**. 사용자 지정 역할 1개, `aksSubnet` / `supercomputerNodepoolSubnet` 역할 할당 2개 |
+| 애드온 활성화 | **Succeeded · 04:17:07 KST**, 실제 `addonProfiles.azurepolicy.enabled=true` |
+| 독립 재조회 | **04:22 KST**, AKS Succeeded 및 애드온 활성화 확인. 시스템 노드 2대, cpulab 0대 / 최대 1대 유지 |
+| 설치 정책 준수 | **Compliant**. 평가 시각 **04:21:33 KST**, **04:32 KST**에 최신 결과 재조회 확인 |
+| 보존 범위 | 기존 writable 설정, 다른 애드온, 네트워크·아웃바운드 IP, 노드풀 수·한도·업그레이드 설정 모두 유지 |
+
+기본 Defender 정책의 재적용은 새 호환성 오류로 실패했다. **`2021-07-01` API**가 기존 cpulab의 `maxSurge=1`, `maxUnavailable=25%` 조합을 거절했지만, 두 값을 함께 사용하는 것은 [지원되는 preview fallback](https://learn.microsoft.com/azure/aks/upgrade-aks-node-pools-rolling#maxunavailable-fallback-preview)이다. 잘못된 설정으로 단정해 노드풀을 변경하거나 정책 정의·예외를 수정하지 않았다.
+
+설치된 preview SDK의 **`2026-02-02-preview` API**로 기존 writable 설정을 그대로 읽고 **azurepolicy 활성화 하나만** 추가했다. ARM validate와 what-if를 통과한 동일 요청에 최신 ETag 비교를 적용했다. SDK가 자동으로 따옴표를 붙인 헤더는 HTTP 412로 거절됐고 변경이 없음을 확인했다. 이후 서비스의 정확한 ETag 값을 `If-Match`로 전달해 성공했다. 보호 조건을 제거하거나 `*`로 완화하지 않았다. what-if의 읽기 전용 `effectiveOutboundIPs` 생략 표시는 실제 IP 삭제가 아니며, 완료 후 실제 IP도 동일함을 확인했다.
+
+`ReEvaluateCompliance` 평가 대기 작업은 배포 0개인 상태로 취소한 뒤 같은 AKS 한 개만 재적용했다. 실패한 기본 정책 작업은 그대로 보존하고 최종 SDK 활성화 성공과 구분한다. 활성화 후 관리 RG를 재평가해 [해당 설치 정책의 Compliant 결과](../../artifacts/discovery-policy-addon-compliance-20261002.json)를 확인했다. [최종 실행 증거](../../artifacts/discovery-policy-addon-result-20261002.json)에 연결하며, 해당 AKS의 설치 정책 결과를 전체 구독 준수로 확대하지 않는다.
+
+요청한 README·국문/영문 가이드·보고서의 HTML 링크는 실제 `github.io` 주소로 바꿨다. [한국어 HTML](https://junwoojeong100.github.io/microsoft-discovery-labs/docs/labs/MICROSOFT-DISCOVERY-LAB.ko.html) · [English HTML](https://junwoojeong100.github.io/microsoft-discovery-labs/docs/labs/MICROSOFT-DISCOVERY-LAB.en.html). 원본 영상 재생 HTML이나 Azure 증거를 새로 Pages에 노출하지 않았다.
+
+**Bookshelf:** 사용자는 TPM 증설 신청 완료를 확인했다. 하지만 **04:20 KST 실제 한도는 두 모델 모두 1,000,000 TPM**로 아직 미반영이다. 운영 목표 각 2,000,000 TPM 대비 `gpt-5-mini`는 **1,010,000 TPM**, `text-embedding-3-small`은 **1,220,000 TPM** 부족하고 `gpt-5.2`는 충분하다. 중복 신청이나 다른 모델의 축소·삭제는 하지 않았다.
+
+증거: [승인 후 사전 검증](../../artifacts/discovery-policy-approved-preflight-20261002.json) · [권한·실패 원인·최종 활성화·quota](../../artifacts/discovery-policy-addon-result-20261002.json).
+
 ## 2026-10-02 후속 — GitHub Pages 게시 완료, 외부 승인 조건 재확인
 
 사용자 요청으로 저장소를 **Public**으로 전환한 뒤 Pages source를 **GitHub Actions**, `PAGES_ENABLED=true`로 설정했다. [첫 게시 실행](https://github.com/junwoojeong100/microsoft-discovery-labs/actions/runs/36887594041)은 **build/deploy 모두 success**, 배포 완료는 **00:52:42 KST**다. [공개 사이트](https://junwoojeong100.github.io/microsoft-discovery-labs/)와 [한국어 시작 페이지](https://junwoojeong100.github.io/microsoft-discovery-labs/index.ko.html)는 HTTP 200으로 확인했다. 요금제 변경이나 결제는 하지 않았다.

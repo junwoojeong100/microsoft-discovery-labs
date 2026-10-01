@@ -1,0 +1,13 @@
+{
+  "verifiedAt": "2026-10-01T19:32:51.198Z",
+  "evaluationScope": "mrg-dscmp-sc-discovery-hol-kc-a13wxu",
+  "policyStates": [
+    {
+      "complianceState": "Compliant",
+      "policyAssignmentId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/microsoft.authorization/policyassignments/defender for containers provisioning azure policy addon for kub",
+      "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/microsoft.containerservice/managedclusters/aks-dscmp-a13wxu",
+      "timestamp": "2026-10-01T19:21:33.330194+00:00"
+    }
+  ],
+  "scopeBoundary": "Only this cluster's Azure Policy Add-on installation policy is verified, not all subscription policies."
+}
