@@ -1,0 +1,18 @@
+[
+  {
+    "capacity": 0,
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/MC_mrg-dscmp-sc-discovery-hol-kc-a13wxu_aks-dscmp-a13wxu_koreacentral/providers/Microsoft.Compute/virtualMachineScaleSets/aks-cpulab-21384680-vmss",
+    "location": "koreacentral",
+    "name": "aks-cpulab-21384680-vmss",
+    "sku": "Standard_D4s_v6",
+    "state": "Succeeded"
+  },
+  {
+    "capacity": 2,
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/MC_mrg-dscmp-sc-discovery-hol-kc-a13wxu_aks-dscmp-a13wxu_koreacentral/providers/Microsoft.Compute/virtualMachineScaleSets/aks-system-33633578-vmss",
+    "location": "koreacentral",
+    "name": "aks-system-33633578-vmss",
+    "sku": "Standard_D4s_v6",
+    "state": "Succeeded"
+  }
+]

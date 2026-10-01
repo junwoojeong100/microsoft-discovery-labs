@@ -1,0 +1,82 @@
+[
+  {
+    "error": null,
+    "name": "CosmosDBRoleAssignment",
+    "state": "Succeeded"
+  },
+  {
+    "error": null,
+    "name": "discoveryholjunwookc-cogloop-pkgdeploy-b695259a",
+    "state": "Succeeded"
+  },
+  {
+    "error": null,
+    "name": "toolcallResultsContainer-stdwspfuncqbdnxfqaa",
+    "state": "Succeeded"
+  },
+  {
+    "error": null,
+    "name": "AgentFunctionCosmosDBRoleAssignment",
+    "state": "Succeeded"
+  },
+  {
+    "error": null,
+    "name": "datacontextContainer-stdwspfuncqbdnxfqaa",
+    "state": "Succeeded"
+  },
+  {
+    "error": null,
+    "name": "discoveryholjunwookc-agentfunc-aca-73080f6b",
+    "state": "Succeeded"
+  },
+  {
+    "error": null,
+    "name": "MsiCosmosDBRoleAssignment",
+    "state": "Succeeded"
+  },
+  {
+    "error": null,
+    "name": "discoveryholjunwookc-abbdda2c",
+    "state": "Succeeded"
+  },
+  {
+    "error": null,
+    "name": "discoveryholjunwookc-04c36193",
+    "state": "Succeeded"
+  },
+  {
+    "error": null,
+    "name": "cosmos-sql-rbac-bdnxfqaa-deployment",
+    "state": "Succeeded"
+  },
+  {
+    "error": null,
+    "name": "discoverydefaultprojectbdnxfqaa-caphost-521ad1c5",
+    "state": "Succeeded"
+  },
+  {
+    "error": null,
+    "name": "ai-search-rbac-bdnxfqaa-deployment",
+    "state": "Succeeded"
+  },
+  {
+    "error": null,
+    "name": "cosmos-rbac-bdnxfqaa-deployment",
+    "state": "Succeeded"
+  },
+  {
+    "error": null,
+    "name": "storage-rbac-bdnxfqaa-deployment",
+    "state": "Succeeded"
+  },
+  {
+    "error": null,
+    "name": "discoveryholjunwookc-aiproject-99bb334f",
+    "state": "Succeeded"
+  },
+  {
+    "error": null,
+    "name": "PolicyDeployment_16415595277499462356",
+    "state": "Succeeded"
+  }
+]

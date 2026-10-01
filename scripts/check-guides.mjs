@@ -49,7 +49,7 @@ try {
   const errors = [];
   page.on('pageerror', (error) => errors.push(error.message));
   for (const language of ['en', 'ko']) {
-    const filename = `MICROSOFT-DISCOVERY-LAB.${language}`;
+    const filename = `docs/labs/MICROSOFT-DISCOVERY-LAB.${language}`;
     await page.setViewportSize({ width: 1600, height: 1000 });
     await page.emulateMedia({ media: 'screen' });
     await page.goto(pathToFileURL(resolve(root, `${filename}.html`)).href);
@@ -125,7 +125,7 @@ try {
 
   await page.emulateMedia({ media: 'screen' });
   await page.setViewportSize({ width: 1600, height: 1000 });
-  await page.goto(`${pathToFileURL(resolve(root, 'MICROSOFT-DISCOVERY-LAB.en.html')).href}#l04`);
+  await page.goto(`${pathToFileURL(resolve(root, 'docs/labs/MICROSOFT-DISCOVERY-LAB.en.html')).href}#l04`);
   await page.locator('[data-language="ko"]').click();
   await page.waitForURL('**/MICROSOFT-DISCOVERY-LAB.ko.html#l04');
   assert.equal(await page.locator('html').getAttribute('lang'), 'ko');

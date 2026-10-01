@@ -1,0 +1,27 @@
+{
+  "validatedAt": "2026-10-01T14:15:34.995Z",
+  "status": "validated_runtime_support",
+  "creates": [
+    "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/storageContainers/thermaldata-kc/storageAssets/labinputs",
+    "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/storageContainers/thermaldata-kc/storageAssets/runoutputs",
+    "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/tools/thermal-ranking-kc"
+  ],
+  "modifies": 0,
+  "deletes": 0,
+  "imageDigest": "sha256:0051d5db6c367812c22073d807da54b469ecbcc58edb7cfaf0dbce5e78514ad1",
+  "home": "swedencentral",
+  "target": "koreacentral",
+  "extraRoles": false,
+  "privateStorageUnchanged": true,
+  "sourceTests": "3 mounted-file tests passed",
+  "toolRunBounds": {
+    "cpu": 1,
+    "maxCpu": 2,
+    "memory": "2Gi",
+    "maxMemory": "4Gi",
+    "gpu": 0,
+    "replicas": 1,
+    "maxMinutes": 30
+  },
+  "data": "Five repository-authored synthetic input files only; no external research or credentials"
+}

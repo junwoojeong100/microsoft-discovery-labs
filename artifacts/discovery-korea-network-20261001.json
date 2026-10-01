@@ -1,0 +1,69 @@
+{
+  "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol-kc",
+  "location": "koreacentral",
+  "state": "Succeeded",
+  "subnets": [
+    {
+      "defaultOutboundAccess": false,
+      "delegations": [
+        "Microsoft.App/environments"
+      ],
+      "name": "workspaceSubnet",
+      "prefix": "10.80.3.0/24",
+      "state": "Succeeded"
+    },
+    {
+      "defaultOutboundAccess": false,
+      "delegations": [],
+      "name": "privateEndpointSubnet",
+      "prefix": "10.80.4.0/24",
+      "state": "Succeeded"
+    },
+    {
+      "defaultOutboundAccess": false,
+      "delegations": [
+        "Microsoft.App/environments"
+      ],
+      "name": "agentSubnet",
+      "prefix": "10.80.5.0/24",
+      "state": "Succeeded"
+    },
+    {
+      "defaultOutboundAccess": false,
+      "delegations": [],
+      "name": "supercomputerNodepoolSubnet",
+      "prefix": "10.80.1.0/24",
+      "state": "Succeeded"
+    },
+    {
+      "defaultOutboundAccess": false,
+      "delegations": [],
+      "name": "aksSubnet",
+      "prefix": "10.80.2.0/24",
+      "state": "Succeeded"
+    },
+    {
+      "defaultOutboundAccess": false,
+      "delegations": [
+        "Microsoft.App/environments"
+      ],
+      "name": "searchSubnet",
+      "prefix": "10.80.6.0/24",
+      "state": "Succeeded"
+    },
+    {
+      "defaultOutboundAccess": false,
+      "delegations": [],
+      "name": "bookshelfPeSubnet",
+      "prefix": "10.80.7.0/24",
+      "state": "Succeeded"
+    },
+    {
+      "defaultOutboundAccess": false,
+      "delegations": [],
+      "name": "storagePeSubnet",
+      "prefix": "10.80.8.0/24",
+      "state": "Succeeded"
+    }
+  ]
+}

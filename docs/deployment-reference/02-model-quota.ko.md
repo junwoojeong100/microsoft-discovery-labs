@@ -2,6 +2,32 @@
 
 [목차](README.ko.md) · **기준일: 2026-10-01. 조회값과 신청 상태는 배포 직전에 재확인한다.**
 
+## 최종 실습 할당 — 사용자 지정
+
+| 배포 | 용도 | 모델 / 버전 | 배포 유형 | 할당 TPM / capacity |
+|---|---|---|---|---:|
+| `gpt-5.4` | Workspace 자동 cognition | `gpt-5.4` / `2026-03-05` | **Global Standard** | **250,000 / 250** |
+| `gpt-5-4` | Discovery 검증 | `gpt-5.4` / `2026-03-05` | **Global Standard** | **250,000 / 250** |
+| 합계 | 새 Korea-runtime Workspace | 동일 모델의 별도 배포 2개 | Global Standard | **500,000 / 500** |
+
+사용자가 새 cognition 할당을 250,000 TPM으로 수정하고 문서에도 반영하도록 지정했다. 과거 최대 할당 2,999,000 TPM과 검토했던 DataZoneStandard 대안은 최종 목표가 아니다. **Data Zone 대안은 생성 요청하지 않았다.** 실제 저장값과 후속 생성 결과는 실행 보고서의 마지막 확인 시각을 따른다. 기존 Sweden 모델 1,000 TPM를 유지하면 이 세 배포의 구독 총할당은 501,000 TPM이며, 다른 새 할당이 없다면 총 3,000,000 중 2,499,000 TPM가 남는다.
+
+**22:58:45 KST 저장 확인:** 새 cognition은 `Succeeded`, `sku.capacity=currentCapacity=250`, 실제 token rate limit **250,000 TPM**다. 검증 모델 생성 전 총할당은 기존 Sweden 1,000 + 새 cognition 250,000 = **251,000 TPM**, 미할당은 **2,749,000 TPM**로 확인했다. [사용자가 저장한 실제 값](../../artifacts/discovery-korea-cognition-user-allocation-20261001.json)을 근거로 후속 검증 모델을 생성한다.
+
+공식 역할별 표는 cognition 250,000 + 검증 200,000 TPM를 최소로 제시하지만, 같은 문서의 중요 안내는 각 250,000씩 총 500,000 TPM 확보를 요구한다. 이 실습은 그 보수적인 기준을 사용한다. **일반 모델 생성의 1,000 TPM 최소 단위와 Discovery 운영 준비 기준은 다르다.**
+
+## 21:46 이후 — GPT-5.4 할당 반환, 새 Workspace 재개
+
+기존 `aif-dwsp-foundry-ym5ffvaa/gpt-5.4`가 **3,000,000 → 1,000 TPM**으로 저장된 것을 ARM에서 확인했다. `Succeeded`, 실제 token rate limit 1,000 TPM, 수정 시각 **21:46:15 KST**다. 이 변경을 되돌리거나 기존 Foundry 프로젝트를 삭제하지 않는다.
+
+이후 Korea Central quota 조회도 **할당 1,000 / 총한도 3,000,000 / 미할당 2,999,000 TPM**으로 바뀌었고, core readiness가 통과했다. 총쿼타가 증가한 것이 아니라 기존 모델의 할당분이 반환된 것이다. 새 Workspace의 cognition 250,000 + 검증 250,000 TPM를 확보할 수 있어 **21:48 사용자 요청으로 생성 단계를 재개**했다. 이전의 총 3,500,000 TPM 증액 안내는 기존 3,000,000 TPM 할당을 그대로 유지하는 경우에만 필요하다.
+
+[현재 Foundry quota 문서](https://learn.microsoft.com/azure/foundry/foundry-models/quotas-limits)는 전환된 모델의 Global Standard를 **구독 내 모든 리전의 같은 모델·버전이 공유하는 pool**로 설명한다. 전환되지 않은 모델은 지역별일 수 있으므로 Quota 화면의 **Scope=Global/Data Zone/리전명**을 확인한다. 이번 GPT-5.4는 실제로 Sweden 배포의 축소가 Korea 조회의 잔여량에도 반영됐다. 위치별 API 경로만 보고 독립 quota라고 단정하지 않는다.
+
+기존 Foundry 프로젝트는 계정의 모델 배포와 다른 리소스다. quota를 반환하려면 **모델 배포의 TPM 할당**을 조정한다. 프로젝트 삭제로 모델 quota가 반환된다고 가정하지 않는다. 1,000 TPM은 기존 Sweden Discovery 운영에 매우 낮으므로 그 환경을 계속 사용할 때는 별도로 계획한다.
+
+증거: [축소된 기존 모델](../../artifacts/discovery-korea-workspace-old-model-20261001.json), [재개 직전 target readiness](../../artifacts/discovery-korea-workspace-readiness-20261001.json). 아래 표와 19:48 절은 이전 시각의 기록이다. Bookshelf 두 모델의 quota 부족은 별개로 남는다.
+
 ## 단위와 범위
 
 - TPM은 분당 토큰 한도이며 모델의 입력 context 길이와 다르다.
@@ -46,7 +72,15 @@
 
 따라서 위 증액 계산은 **단순 ARM 생성만의 최소치가 아니라 실습 운영 계획값**이다. 총 3,000,000 TPM 요청도 대규모 검색의 모든 권장 성능을 보장하지 않는다. 실제 서비스 버전·배포 설정·부하에 따라 다시 산정한다.
 
-Workspace의 `gpt-5.4`도 별도다. 공식 중요 안내의 총 500,000 TPM 준비 기준을 사용했으며, 자동 cognition 모델과 `gpt-5-4` 검증 배포를 구분한다. 이미 생성된 모델을 재사용할 때는 기존 할당을 중복 계산하거나 같은 모델을 다시 만들지 않는다.
+Workspace의 `gpt-5.4`도 별도다. 공식 중요 안내의 총 500,000 TPM 준비 기준을 사용했으며, 자동 cognition 모델과 `gpt-5-4` 검증 배포를 구분한다. 위 최종 할당 표대로 두 배포에 각 250,000 TPM를 사용한다. 이미 생성된 모델을 재사용할 때는 기존 할당을 중복 계산하거나 같은 모델을 다시 만들지 않는다.
+
+## 19:48 후속 — 기존 GPT-5.4 슬라이더 최대치 적용
+
+`aif-dwsp-foundry-ym5ffvaa`의 기존 배포 `gpt-5.4`는 **250,000 → 최대 3,000,000 TPM**으로 저장됐으며 ARM의 Succeeded/currentCapacity와 실제 rateLimits를 확인했다. 모델 버전·GlobalStandard·가드레일·업그레이드 정책·사설 연결은 유지됐다. [변경 전후 증거](../../artifacts/discovery-foundry-tpm-update-20261001.json)를 참고한다.
+
+19:48 당시 GPT-5.4는 **할당 3,000,000 / 총한도 3,000,000 / 미할당 0 TPM**이었다. 아래 15:53·16시대의 2,750,000 TPM 잔여도 과거 값이다. 이후 21:46 할당 축소와 재개 상태는 문서 상단을 따른다.
+
+이 Foundry 계정에는 기존 GPT-5.4 한 개만 있었고 Bookshelf의 두 모델 배포는 없었다. 이들 모델을 임의로 새로 만들지 않았으며, [후속 quota 조회](../../artifacts/discovery-foundry-tpm-usage-20261001.json)에서도 두 모델의 총한도 1,000,000 TPM와 잔여 990,000 / 780,000 TPM는 바뀌지 않았다.
 
 ## 이미 제출한 요청 — 중복 제출 금지
 
@@ -102,4 +136,5 @@ az cognitiveservices usage list \
 - [Discovery quota 계획](https://learn.microsoft.com/azure/microsoft-discovery/concept-quota-reservation)
 - [Bookshelf 생성·색인 how-to](https://learn.microsoft.com/azure/microsoft-discovery/how-to-index-bookshelf-knowledgebase)
 - [Foundry quota 관리](https://learn.microsoft.com/azure/foundry/how-to/quota)
+- [구독 공유 quota와 Scope 확인](https://learn.microsoft.com/azure/foundry/foundry-models/quotas-limits)
 - [마지막 모델 quota 조회 기록](../../artifacts/discovery-model-quota-followup-20261001.json)

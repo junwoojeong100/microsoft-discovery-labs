@@ -1,0 +1,91 @@
+[
+  {
+    "agentPoolProfiles": [
+      {
+        "artifactStreamingProfile": null,
+        "availabilityZones": null,
+        "capacityReservationGroupId": null,
+        "count": 2,
+        "creationData": null,
+        "currentOrchestratorVersion": "1.34.0",
+        "eTag": "35aaf509-c2e9-47dd-b069-6fa0ca13b945",
+        "enableAutoScaling": true,
+        "enableEncryptionAtHost": null,
+        "enableFips": false,
+        "enableNodePublicIp": false,
+        "enableOsDiskFullCaching": null,
+        "enableUltraSsd": null,
+        "gatewayProfile": null,
+        "gpuInstanceProfile": null,
+        "gpuProfile": null,
+        "hostGroupId": null,
+        "kubeletConfig": null,
+        "kubeletDiskType": "OS",
+        "linuxOsConfig": null,
+        "localDnsProfile": null,
+        "maxCount": 3,
+        "maxPods": 250,
+        "messageOfTheDay": null,
+        "minCount": 2,
+        "mode": "System",
+        "name": "system",
+        "networkProfile": null,
+        "nodeImageVersion": "AKSAzureLinux-V3gen2-202609.15.0",
+        "nodeInitializationTaints": null,
+        "nodeLabels": null,
+        "nodePublicIpPrefixId": null,
+        "nodeTaints": null,
+        "orchestratorVersion": "1.34.0",
+        "osDiskSizeGb": 150,
+        "osDiskType": "Managed",
+        "osSku": "AzureLinux",
+        "osType": "Linux",
+        "podIpAllocationMode": null,
+        "podSubnetId": null,
+        "powerState": {
+          "code": "Running"
+        },
+        "preparedImageSpecificationProfile": null,
+        "provisioningState": "Creating",
+        "proximityPlacementGroupId": null,
+        "scaleDownMode": "Delete",
+        "scaleSetEvictionPolicy": null,
+        "scaleSetPriority": null,
+        "securityProfile": {
+          "enableSecureBoot": false,
+          "enableVtpm": false,
+          "sshAccess": "Disabled"
+        },
+        "spotMaxPrice": null,
+        "status": null,
+        "tags": null,
+        "type": "VirtualMachineScaleSets",
+        "upgradeSettings": {
+          "drainTimeoutInMinutes": null,
+          "maxBlockedNodes": null,
+          "maxSurge": "1",
+          "maxUnavailable": "0",
+          "nodeSoakDurationInMinutes": null,
+          "undrainableNodeBehavior": null
+        },
+        "upgradeSettingsBlueGreen": null,
+        "upgradeStrategy": "Rolling",
+        "virtualMachineNodesStatus": null,
+        "virtualMachinesProfile": null,
+        "vmSize": "Standard_D4s_v6",
+        "vnetSubnetId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol-kc/subnets/aksSubnet",
+        "windowsProfile": null,
+        "workloadRuntime": null
+      }
+    ],
+    "apiServerAccessProfile": null,
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-a13wxu",
+    "location": "koreacentral",
+    "name": "aks-dscmp-a13wxu",
+    "nodeResourceGroup": "MC_mrg-dscmp-sc-discovery-hol-kc-a13wxu_aks-dscmp-a13wxu_koreacentral",
+    "powerState": {
+      "code": "Running"
+    },
+    "state": "Creating"
+  }
+]

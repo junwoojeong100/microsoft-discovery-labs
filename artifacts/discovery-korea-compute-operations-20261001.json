@@ -1,0 +1,20 @@
+[
+  {
+    "error": null,
+    "state": "Succeeded",
+    "target": "sc-discovery-hol-kc/cpulab",
+    "timestamp": "2026-10-01T12:08:13.371021+00:00"
+  },
+  {
+    "error": null,
+    "state": "Succeeded",
+    "target": "sc-discovery-hol-kc",
+    "timestamp": "2026-10-01T12:08:13.371021+00:00"
+  },
+  {
+    "error": null,
+    "state": "Succeeded",
+    "target": null,
+    "timestamp": "2026-10-01T12:08:13.371021+00:00"
+  }
+]

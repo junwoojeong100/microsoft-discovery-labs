@@ -1,0 +1,43 @@
+{
+  "anonymousBlob": false,
+  "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Storage/storageAccounts/stdiscoveryholjunwookc",
+  "location": "koreacentral",
+  "networkRuleSet": {
+    "bypass": "AzureServices",
+    "defaultAction": "Deny",
+    "ipRules": [],
+    "ipv6Rules": [],
+    "resourceAccessRules": null,
+    "virtualNetworkRules": [
+      {
+        "action": "Allow",
+        "state": "Succeeded",
+        "virtualNetworkResourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol-kc/subnets/supercomputerNodepoolSubnet"
+      },
+      {
+        "action": "Allow",
+        "state": "Succeeded",
+        "virtualNetworkResourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol-kc/subnets/aksSubnet"
+      },
+      {
+        "action": "Allow",
+        "state": "Succeeded",
+        "virtualNetworkResourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol-kc/subnets/workspaceSubnet"
+      },
+      {
+        "action": "Allow",
+        "state": "Succeeded",
+        "virtualNetworkResourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol-kc/subnets/agentSubnet"
+      },
+      {
+        "action": "Allow",
+        "state": "Succeeded",
+        "virtualNetworkResourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol-kc/subnets/searchSubnet"
+      }
+    ]
+  },
+  "publicNetworkAccess": "Disabled",
+  "sharedKeys": false,
+  "sku": "Standard_LRS",
+  "state": "Succeeded"
+}

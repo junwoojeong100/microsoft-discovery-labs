@@ -18,8 +18,8 @@ const { values: flags } = parseArgs({
 });
 const config = JSON.parse(await readFile(resolve(root, 'config/lab.json'), 'utf8'));
 validateConfig(config);
-const guide = await readFile(resolve(root, 'MICROSOFT-DISCOVERY-LAB.ko.md'));
-const guideStat = await stat(resolve(root, 'MICROSOFT-DISCOVERY-LAB.ko.html'));
+const guide = await readFile(resolve(root, 'docs/labs/MICROSOFT-DISCOVERY-LAB.ko.md'));
+const guideStat = await stat(resolve(root, 'docs/labs/MICROSOFT-DISCOVERY-LAB.ko.html'));
 const runId = new Date().toISOString().replaceAll(/[:.]/g, '-');
 const runDir = resolve(root, 'artifacts/runs', runId);
 const rawDir = resolve(root, 'artifacts/raw', runId);

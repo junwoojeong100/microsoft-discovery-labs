@@ -58,6 +58,52 @@ test('core preserves network isolation, a one-node CPU cap, and independent mode
   assert.ok(text.includes('output supercomputerId string? = deployCompute ? supercomputer.id : null'));
 });
 
+test('the validation model pins the published version and a bounded non-provisioned allocation', async () => {
+  const text = await source('discovery-core.bicep');
+  const model = text.slice(text.indexOf('resource chatModel '), text.indexOf('resource data '));
+  for (const setting of [
+    "name: 'gpt-5-4'", "modelName: 'gpt-5.4'", "modelVersion: '2026-03-05'",
+    "skuName: 'GlobalStandard'", 'capacity: 250',
+  ]) assert.ok(model.includes(setting), setting);
+  assert.ok(!model.includes('ProvisionedManaged'));
+});
+
+test('cross-region configuration keeps the home in Sweden and applies the runtime override at creation', async () => {
+  const text = await source('discovery-core.bicep');
+  const params = await source('discovery-core.koreacentral.bicepparam');
+  const config = JSON.parse(await readFile(new URL('../config/lab.json', import.meta.url), 'utf8'));
+  assert.equal(config.location, 'swedencentral');
+  assert.equal(config.targetComputeLocation, 'koreacentral');
+  assert.ok(params.includes("param location = 'swedencentral'"));
+  assert.ok(params.includes("param targetComputeLocation = 'koreacentral'"));
+  assert.ok(text.includes("'discovery.overridemrgregion': targetComputeLocation"));
+  assert.ok(text.includes('param targetComputeLocation string = location'));
+  for (const name of ['supercomputer', 'workspace']) {
+    const match = text.match(new RegExp(`resource ${name} '[\\s\\S]*?\\n}\\n`));
+    assert.ok(match, `Missing ${name} resource`);
+    const resource = match[0];
+    assert.ok(resource.includes('location: location'));
+    assert.ok(resource.includes('tags: managedResourceTags'));
+    assert.ok(!resource.includes('location: targetComputeLocation'));
+  }
+  assert.ok(params.includes("param supercomputerName = 'sc-discovery-hol-kc'"));
+  assert.ok(params.includes("param workspaceName = 'discoveryholjunwookc'"));
+  assert.ok(params.includes("param storageContainerName = 'thermaldata-kc'"));
+  assert.ok(params.includes('param skipAssociateKeyVaultToNsp = true'));
+});
+
+test('cross-region support resources use the target and separate private endpoint names', async () => {
+  const text = await source('cross-region-foundation.bicep');
+  assert.equal((text.match(/location: targetComputeLocation/g) ?? []).length, 4);
+  assert.ok(!text.includes('Microsoft.Resources/resourceGroups'));
+  const params = await source('cross-region-foundation.bicepparam');
+  assert.ok(params.includes("param privateEndpointName = 'pe-discovery-blob-kc'"));
+  assert.ok(params.includes("param virtualNetworkLinkName = 'discovery-lab-kc'"));
+  const privateAccess = await source('storage-private-access.bicep');
+  assert.ok(privateAccess.includes('name: privateEndpointName'));
+  assert.ok(privateAccess.includes('name: virtualNetworkLinkName'));
+});
+
 test('GA Tool uses properties.version and reuses the bounded definition with a digest', async () => {
   const text = await source('tool.bicep');
   assert.ok(text.includes("Microsoft.Discovery/tools@2026-06-01"));

@@ -119,7 +119,7 @@ const scenes = [
     title: '재개 순서와 전달 파일',
     subtitle: '현재 상태를 숨기지 않고, 승인 후 같은 가이드에서 이어갈 수 있도록 구성했습니다.',
     label: '다음 필수 단계',
-    html: `<div class="grid">${card('1. Microsoft 승인', '<p>구독 활성화 요청<br>DefaultFeature 승인 확인<br>Provider 변경 전파</p>')}${card('2. 환경 준비', '<p>정상 MFA 로그인<br>IAM · 모델 quota 확인<br>최소 실습 인프라 구성</p>')}${card('3. 핵심 실습 재개', '<p>Lab 0~6 실행<br>클라우드 증거 수집<br>실제 기능 영상 녹화</p>')}</div><div class="wide small">가이드: MICROSOFT-DISCOVERY-LAB.ko.html<br>실행 보고서: EXECUTION-REPORT.ko.html<br>요약 영상과 실제 응답: artifacts/</div>`,
+    html: `<div class="grid">${card('1. Microsoft 승인', '<p>구독 활성화 요청<br>DefaultFeature 승인 확인<br>Provider 변경 전파</p>')}${card('2. 환경 준비', '<p>정상 MFA 로그인<br>IAM · 모델 quota 확인<br>최소 실습 인프라 구성</p>')}${card('3. 핵심 실습 재개', '<p>Lab 0~6 실행<br>클라우드 증거 수집<br>실제 기능 영상 녹화</p>')}</div><div class="wide small">가이드: docs/labs/MICROSOFT-DISCOVERY-LAB.ko.html<br>실행 보고서: docs/reports/EXECUTION-REPORT.ko.html<br>요약 영상과 실제 응답: artifacts/</div>`,
     narration: [
       '재개하려면 먼저 마이크로소프트 담당자를 통해 구독 승인을 받아야 합니다.',
       '정상 로그인과 권한, 모델 할당량을 확인한 뒤 가이드의 실습을 진행하면 됩니다.',
@@ -287,7 +287,7 @@ await writeFile(resolve(artifacts, 'watch-summary.html'), `<!doctype html><html 
   <video id="video" controls preload="metadata" poster="summary-frames/01.png">
   <source src="microsoft-discovery-summary.ko.mp4" type="video/mp4">
   <track kind="subtitles" src="microsoft-discovery-summary.ko.vtt" srclang="ko" label="한국어"></video>
-  <p><a href="../MICROSOFT-DISCOVERY-LAB.ko.html">실습 가이드</a> · <a href="../EXECUTION-REPORT.ko.html">실행 보고서</a> · <a href="microsoft-discovery-summary.ko.mp4" download>MP4 저장</a></p>
+  <p><a href="../docs/labs/MICROSOFT-DISCOVERY-LAB.ko.html">실습 가이드</a> · <a href="../docs/reports/EXECUTION-REPORT.ko.html">실행 보고서</a> · <a href="microsoft-discovery-summary.ko.mp4" download>MP4 저장</a></p>
   <h2>구간 바로가기</h2>${chapterLinks}
   <script>document.querySelectorAll('button').forEach(button=>button.addEventListener('click',()=>{const video=document.getElementById('video');video.currentTime=Number(button.dataset.start);video.scrollIntoView({behavior:'smooth',block:'center'});video.play();}));</script></html>`);
 console.log(JSON.stringify({ output: metadata.output, durationSeconds: metadata.media.duration, chapters: scenes.length }));

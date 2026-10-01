@@ -1,0 +1,54 @@
+[
+  {
+    "capacity": 250,
+    "model": "gpt-5.4",
+    "name": "gpt-5.4",
+    "rateLimits": [
+      {
+        "count": 2500.0,
+        "dynamicThrottlingEnabled": null,
+        "key": "request",
+        "matchPatterns": null,
+        "minCount": null,
+        "renewalPeriod": 60.0
+      },
+      {
+        "count": 250000.0,
+        "dynamicThrottlingEnabled": null,
+        "key": "token",
+        "matchPatterns": null,
+        "minCount": null,
+        "renewalPeriod": 60.0
+      }
+    ],
+    "sku": "GlobalStandard",
+    "state": "Succeeded",
+    "version": "2026-03-05"
+  },
+  {
+    "capacity": 250,
+    "model": "gpt-5.4",
+    "name": "gpt-5-4",
+    "rateLimits": [
+      {
+        "count": 2500.0,
+        "dynamicThrottlingEnabled": null,
+        "key": "request",
+        "matchPatterns": null,
+        "minCount": null,
+        "renewalPeriod": 60.0
+      },
+      {
+        "count": 250000.0,
+        "dynamicThrottlingEnabled": null,
+        "key": "token",
+        "matchPatterns": null,
+        "minCount": null,
+        "renewalPeriod": 60.0
+      }
+    ],
+    "sku": "GlobalStandard",
+    "state": "Succeeded",
+    "version": "2026-03-05"
+  }
+]

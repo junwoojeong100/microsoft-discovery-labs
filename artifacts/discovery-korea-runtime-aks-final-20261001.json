@@ -1,0 +1,24 @@
+{
+  "azurePolicy": null,
+  "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-a13wxu",
+  "location": "koreacentral",
+  "pools": [
+    {
+      "count": 2,
+      "max": 3,
+      "min": 2,
+      "name": "system",
+      "state": "Succeeded",
+      "vmSize": "Standard_D4s_v6"
+    },
+    {
+      "count": 1,
+      "max": 1,
+      "min": 0,
+      "name": "cpulab",
+      "state": "Succeeded",
+      "vmSize": "Standard_D4s_v6"
+    }
+  ],
+  "state": "Succeeded"
+}

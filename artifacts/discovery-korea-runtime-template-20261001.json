@@ -1,0 +1,224 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.45.15.27210",
+      "templateHash": "5792248134973104028"
+    }
+  },
+  "parameters": {
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]"
+    },
+    "storageContainerName": {
+      "type": "string"
+    },
+    "registryName": {
+      "type": "string"
+    },
+    "toolName": {
+      "type": "string"
+    },
+    "imageDigest": {
+      "type": "string"
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Discovery/storageContainers/storageAssets",
+      "apiVersion": "2026-06-01",
+      "name": "[format('{0}/{1}', parameters('storageContainerName'), 'labinputs')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "path": "discoveryinputs/",
+        "description": "Original synthetic lab inputs, synchronized through the private Discovery runtime."
+      }
+    },
+    {
+      "type": "Microsoft.Discovery/storageContainers/storageAssets",
+      "apiVersion": "2026-06-01",
+      "name": "[format('{0}/{1}', parameters('storageContainerName'), 'runoutputs')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "path": "discoveryoutputs/compute/",
+        "description": "Bounded synthetic ranking outputs from actual Discovery tool runs."
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2025-04-01",
+      "name": "discovery-korea-runtime-tool",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "registryName": {
+            "value": "[parameters('registryName')]"
+          },
+          "toolName": {
+            "value": "[parameters('toolName')]"
+          },
+          "imageDigest": {
+            "value": "[parameters('imageDigest')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.45.15.27210",
+              "templateHash": "1641561725607292432"
+            }
+          },
+          "parameters": {
+            "location": {
+              "type": "string",
+              "defaultValue": "[resourceGroup().location]"
+            },
+            "imageDigest": {
+              "type": "string",
+              "metadata": {
+                "description": "Verified ACR image digest, not a mutable tag."
+              }
+            },
+            "registryName": {
+              "type": "string",
+              "defaultValue": "acrdiscoveryholjunwoosc"
+            },
+            "toolName": {
+              "type": "string",
+              "defaultValue": "thermal-ranking"
+            }
+          },
+          "variables": {
+            "$fxv#0": {
+              "name": "thermal-ranking",
+              "description": "Deterministic ranking of eight original synthetic heat-sink candidates. Not real engineering advice. Outputs JSON with source IDs and constraint decisions.",
+              "version": "1.0.0",
+              "category": "Scientific Computing",
+              "infra": [
+                {
+                  "name": "worker",
+                  "infra_type": "container",
+                  "image": {
+                    "acr": "<acr-login-server>/thermal-ranking:1.0.0"
+                  },
+                  "compute": {
+                    "min_resources": {
+                      "cpu": 1,
+                      "ram": "2Gi",
+                      "storage": "4Gi",
+                      "gpu": 0
+                    },
+                    "max_resources": {
+                      "cpu": 2,
+                      "ram": "4Gi",
+                      "storage": "8Gi",
+                      "gpu": 0
+                    },
+                    "infiniband": false,
+                    "recommended_sku": [
+                      "Standard_D4s_v6"
+                    ],
+                    "pool_type": "static",
+                    "pool_size": 1
+                  }
+                }
+              ],
+              "actions": [
+                {
+                  "name": "rank_baseline",
+                  "description": "Evaluate all eight candidates at the original 5 USD/kg ceiling and write ranking.json.",
+                  "infra_node": "worker",
+                  "input_schema": {
+                    "type": "object",
+                    "properties": {},
+                    "required": [],
+                    "additionalProperties": false
+                  },
+                  "command": "python /app/score_materials.py --input /app/materials.csv --output /outputs/ranking.json",
+                  "output_mount_configurations": [
+                    {
+                      "mount_path": "/outputs",
+                      "auto_promote": true,
+                      "output_name": "ThermalRanking",
+                      "output_description": "Synthetic material ranking JSON from the actual tool run"
+                    }
+                  ]
+                },
+                {
+                  "name": "rank_cost_revision",
+                  "description": "Re-evaluate with a hard cost ceiling of 3 USD/kg; retain the original score normalization.",
+                  "infra_node": "worker",
+                  "input_schema": {
+                    "type": "object",
+                    "properties": {},
+                    "required": [],
+                    "additionalProperties": false
+                  },
+                  "command": "python /app/score_materials.py --input /app/materials.csv --max-cost 3 --output /outputs/ranking-cost3.json",
+                  "output_mount_configurations": [
+                    {
+                      "mount_path": "/outputs",
+                      "auto_promote": true,
+                      "output_name": "ThermalRankingCostRevision",
+                      "output_description": "Revised synthetic ranking JSON from the actual tool run"
+                    }
+                  ]
+                }
+              ]
+            },
+            "template": "[variables('$fxv#0')]",
+            "definition": "[union(variables('template'), createObject('name', parameters('toolName'), 'infra', createArray(union(variables('template').infra[0], createObject('image', createObject('acr', format('{0}.azurecr.io/thermal-ranking@{1}', parameters('registryName'), parameters('imageDigest'))))))))]"
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Discovery/tools",
+              "apiVersion": "2026-06-01",
+              "name": "[parameters('toolName')]",
+              "location": "[parameters('location')]",
+              "tags": {
+                "environment": "lab",
+                "project": "microsoft-discovery-core-hol"
+              },
+              "properties": {
+                "definitionContent": "[variables('definition')]",
+                "version": "1.0.0"
+              }
+            }
+          ],
+          "outputs": {
+            "toolId": {
+              "type": "string",
+              "value": "[resourceId('Microsoft.Discovery/tools', parameters('toolName'))]"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "outputs": {
+    "toolId": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Resources/deployments', 'discovery-korea-runtime-tool'), '2025-04-01').outputs.toolId.value]"
+    },
+    "inputAssetId": {
+      "type": "string",
+      "value": "[resourceId('Microsoft.Discovery/storageContainers/storageAssets', parameters('storageContainerName'), 'labinputs')]"
+    },
+    "outputAssetId": {
+      "type": "string",
+      "value": "[resourceId('Microsoft.Discovery/storageContainers/storageAssets', parameters('storageContainerName'), 'runoutputs')]"
+    }
+  }
+}

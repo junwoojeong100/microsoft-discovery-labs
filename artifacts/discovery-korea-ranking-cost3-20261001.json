@@ -1,0 +1,139 @@
+{
+  "schema_version": "1.0",
+  "synthetic_data": true,
+  "method": "Deterministic reference calculation; execution location is not attested",
+  "constraints": {
+    "min_conductivity_w_mk": 180,
+    "max_density_g_cm3": 3,
+    "max_cost_usd_kg": 3,
+    "min_recycled_pct": 50,
+    "required_corrosion_status": "pass"
+  },
+  "cost_score_denominator": 5,
+  "candidate_count": 8,
+  "eligible_count": 1,
+  "ranking": [
+    {
+      "candidate_id": "DELTA",
+      "status": "eligible",
+      "score": 68.6,
+      "failed_constraints": [],
+      "missing_evidence": [],
+      "source_ids": [
+        "CAT-001",
+        "TEST-001"
+      ]
+    }
+  ],
+  "decisions": [
+    {
+      "candidate_id": "ALPHA",
+      "status": "excluded",
+      "score": null,
+      "failed_constraints": [
+        "cost_above_ceiling"
+      ],
+      "missing_evidence": [],
+      "source_ids": [
+        "CAT-001",
+        "TEST-001"
+      ]
+    },
+    {
+      "candidate_id": "BETA",
+      "status": "excluded",
+      "score": null,
+      "failed_constraints": [
+        "density_above_3",
+        "cost_above_ceiling",
+        "recycled_content_below_50"
+      ],
+      "missing_evidence": [],
+      "source_ids": [
+        "CAT-001",
+        "TEST-001"
+      ]
+    },
+    {
+      "candidate_id": "GAMMA",
+      "status": "excluded",
+      "score": null,
+      "failed_constraints": [
+        "conductivity_below_180",
+        "cost_above_ceiling"
+      ],
+      "missing_evidence": [],
+      "source_ids": [
+        "CAT-001",
+        "TEST-001",
+        "REV-001"
+      ]
+    },
+    {
+      "candidate_id": "DELTA",
+      "status": "eligible",
+      "score": 68.6,
+      "failed_constraints": [],
+      "missing_evidence": [],
+      "source_ids": [
+        "CAT-001",
+        "TEST-001"
+      ]
+    },
+    {
+      "candidate_id": "EPSILON",
+      "status": "excluded",
+      "score": null,
+      "failed_constraints": [
+        "cost_above_ceiling"
+      ],
+      "missing_evidence": [],
+      "source_ids": [
+        "CAT-001",
+        "TEST-001"
+      ]
+    },
+    {
+      "candidate_id": "ZETA",
+      "status": "excluded",
+      "score": null,
+      "failed_constraints": [
+        "cost_above_ceiling"
+      ],
+      "missing_evidence": [
+        "corrosion_result"
+      ],
+      "source_ids": [
+        "CAT-001",
+        "TEST-001"
+      ]
+    },
+    {
+      "candidate_id": "ETA",
+      "status": "excluded",
+      "score": null,
+      "failed_constraints": [
+        "cost_above_ceiling",
+        "recycled_content_below_50"
+      ],
+      "missing_evidence": [],
+      "source_ids": [
+        "CAT-001",
+        "TEST-001"
+      ]
+    },
+    {
+      "candidate_id": "THETA",
+      "status": "excluded",
+      "score": null,
+      "failed_constraints": [
+        "cost_above_ceiling"
+      ],
+      "missing_evidence": [],
+      "source_ids": [
+        "CAT-001",
+        "TEST-001"
+      ]
+    }
+  ]
+}

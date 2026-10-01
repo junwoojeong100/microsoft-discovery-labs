@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { assessModelQuotas, discoveryGate, publicView, redact, safeArmUrl, selectAccount, validateConfig, validateLabResourceGroup } from '../scripts/lab-support.mjs';
+import { assessModelQuotas, discoveryGate, publicView, redact, safeArmUrl, selectAccount, targetComputeLocation, validateConfig, validateLabResourceGroup } from '../scripts/lab-support.mjs';
 
 const config = JSON.parse(await readFile(new URL('../config/lab.json', import.meta.url), 'utf8'));
 
@@ -10,6 +10,18 @@ test('configuration is scoped to a dedicated lab', () => {
   assert.throws(() => validateConfig({ ...config, location: 'eastus2' }));
   assert.throws(() => validateConfig({ ...config, resourceGroup: 'production' }));
   assert.throws(() => validateConfig({ ...config, tenantId: '' }));
+});
+
+test('cross-region quota checks use the target without moving the Discovery home', () => {
+  const crossRegion = { ...config, location: 'swedencentral', targetComputeLocation: 'koreacentral' };
+  validateConfig(crossRegion);
+  assert.equal(targetComputeLocation(crossRegion), 'koreacentral');
+  assert.equal(crossRegion.location, 'swedencentral');
+  const { targetComputeLocation: omitted, ...singleRegion } = crossRegion;
+  assert.equal(targetComputeLocation(singleRegion), 'swedencentral');
+  for (const invalid of ['', null, 1, 'Korea Central', 'koreacentral/../swedencentral']) {
+    assert.throws(() => validateConfig({ ...crossRegion, targetComputeLocation: invalid }));
+  }
 });
 
 test('account selection never falls back to the default subscription', () => {

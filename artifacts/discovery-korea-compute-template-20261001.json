@@ -1,0 +1,142 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "languageVersion": "2.0",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.45.15.27210",
+      "templateHash": "6900071727582780527"
+    }
+  },
+  "parameters": {
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]"
+    },
+    "targetComputeLocation": {
+      "type": "string",
+      "defaultValue": "[parameters('location')]",
+      "metadata": {
+        "description": "Managed runtime region. Discovery resources themselves remain in the home location. Set the override when creating new resources, not to migrate existing ones."
+      }
+    },
+    "skipAssociateKeyVaultToNsp": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Required by the cross-region guide for Microsoft-owned subscriptions only."
+      }
+    },
+    "identityName": {
+      "type": "string",
+      "defaultValue": "id-discovery-hol"
+    },
+    "virtualNetworkName": {
+      "type": "string",
+      "defaultValue": "vnet-discovery-hol"
+    },
+    "storageAccountName": {
+      "type": "string",
+      "defaultValue": "stdiscoveryholjunwoosc"
+    },
+    "supercomputerName": {
+      "type": "string",
+      "defaultValue": "sc-discovery-hol"
+    },
+    "workspaceName": {
+      "type": "string",
+      "defaultValue": "discoveryholjunwoosc"
+    },
+    "projectName": {
+      "type": "string",
+      "defaultValue": "thermalhol"
+    },
+    "storageContainerName": {
+      "type": "string",
+      "defaultValue": "thermaldata"
+    },
+    "deployCompute": {
+      "type": "bool",
+      "defaultValue": true,
+      "metadata": {
+        "description": "False separates Workspace preparation from compute. It does not bypass regional capacity limits or complete the compute labs."
+      }
+    }
+  },
+  "variables": {
+    "tags": {
+      "environment": "lab",
+      "project": "microsoft-discovery-core-hol",
+      "NetworkIsolation": "true"
+    },
+    "managedResourceTags": "[union(variables('tags'), if(equals(parameters('targetComputeLocation'), parameters('location')), createObject(), createObject('discovery.overridemrgregion', parameters('targetComputeLocation'))), if(parameters('skipAssociateKeyVaultToNsp'), createObject('SkipAssociateKeyVaultToNsp', 'true'), createObject()))]"
+  },
+  "resources": {
+    "identity": {
+      "existing": true,
+      "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+      "apiVersion": "2024-11-30",
+      "name": "[parameters('identityName')]"
+    },
+    "supercomputer": {
+      "condition": "[parameters('deployCompute')]",
+      "type": "Microsoft.Discovery/supercomputers",
+      "apiVersion": "2026-06-01",
+      "name": "[parameters('supercomputerName')]",
+      "location": "[parameters('location')]",
+      "tags": "[variables('managedResourceTags')]",
+      "properties": {
+        "subnetId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), 'aksSubnet')]",
+        "systemSku": "Standard_D4s_v6",
+        "outboundType": "LoadBalancer",
+        "customerManagedKeys": "Disabled",
+        "identities": {
+          "clusterIdentity": {
+            "id": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('identityName'))]"
+          },
+          "kubeletIdentity": {
+            "id": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('identityName'))]"
+          },
+          "workloadIdentities": {
+            "[format('{0}', resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('identityName')))]": {}
+          }
+        }
+      }
+    },
+    "cpuPool": {
+      "condition": "[parameters('deployCompute')]",
+      "type": "Microsoft.Discovery/supercomputers/nodePools",
+      "apiVersion": "2026-06-01",
+      "name": "[format('{0}/{1}', parameters('supercomputerName'), 'cpulab')]",
+      "location": "[parameters('location')]",
+      "tags": "[variables('tags')]",
+      "properties": {
+        "subnetId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), 'supercomputerNodepoolSubnet')]",
+        "vmSize": "Standard_D4s_v6",
+        "minNodeCount": 0,
+        "maxNodeCount": 1,
+        "scaleSetPriority": "Regular"
+      },
+      "dependsOn": [
+        "supercomputer"
+      ]
+    }
+  },
+  "outputs": {
+    "computeIncluded": {
+      "type": "bool",
+      "value": "[parameters('deployCompute')]"
+    },
+    "supercomputerId": {
+      "type": "string",
+      "nullable": true,
+      "value": "[if(parameters('deployCompute'), resourceId('Microsoft.Discovery/supercomputers', parameters('supercomputerName')), null())]"
+    },
+    "nodepoolId": {
+      "type": "string",
+      "nullable": true,
+      "value": "[if(parameters('deployCompute'), resourceId('Microsoft.Discovery/supercomputers/nodePools', parameters('supercomputerName'), 'cpulab'), null())]"
+    }
+  }
+}

@@ -1,0 +1,837 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.45.15.27210",
+      "templateHash": "8220195941573819398"
+    }
+  },
+  "parameters": {
+    "targetComputeLocation": {
+      "type": "string",
+      "metadata": {
+        "description": "Target runtime region; the existing resource group stays in the Discovery home region."
+      }
+    },
+    "virtualNetworkName": {
+      "type": "string"
+    },
+    "identityName": {
+      "type": "string"
+    },
+    "storageAccountName": {
+      "type": "string"
+    },
+    "registryName": {
+      "type": "string"
+    },
+    "privateEndpointName": {
+      "type": "string"
+    },
+    "virtualNetworkLinkName": {
+      "type": "string"
+    },
+    "administratorObjectId": {
+      "type": "string"
+    }
+  },
+  "variables": {
+    "tags": {
+      "environment": "lab",
+      "project": "microsoft-discovery-core-hol",
+      "deploymentScope": "cross-region-foundation"
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2025-04-01",
+      "name": "discovery-korea-network",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "location": {
+            "value": "[parameters('targetComputeLocation')]"
+          },
+          "virtualNetworkName": {
+            "value": "[parameters('virtualNetworkName')]"
+          },
+          "tags": {
+            "value": "[variables('tags')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.45.15.27210",
+              "templateHash": "1607671150631290527"
+            }
+          },
+          "parameters": {
+            "location": {
+              "type": "string",
+              "metadata": {
+                "description": "Azure region for the VNet."
+              }
+            },
+            "virtualNetworkName": {
+              "type": "string",
+              "metadata": {
+                "description": "Name of the VNet dedicated to one future Discovery workspace."
+              }
+            },
+            "tags": {
+              "type": "object",
+              "metadata": {
+                "description": "Lab identification tags; subnets do not support tags."
+              }
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Network/virtualNetworks",
+              "apiVersion": "2025-09-01",
+              "name": "[parameters('virtualNetworkName')]",
+              "location": "[parameters('location')]",
+              "tags": "[parameters('tags')]",
+              "properties": {
+                "privateEndpointVNetPolicies": "Disabled",
+                "addressSpace": {
+                  "addressPrefixes": [
+                    "10.80.0.0/16"
+                  ]
+                },
+                "subnets": [
+                  {
+                    "name": "workspaceSubnet",
+                    "properties": {
+                      "addressPrefix": "10.80.3.0/24",
+                      "defaultOutboundAccess": false,
+                      "delegations": [
+                        {
+                          "name": "containerApps",
+                          "properties": {
+                            "serviceName": "Microsoft.App/environments"
+                          }
+                        }
+                      ],
+                      "serviceEndpoints": [
+                        {
+                          "service": "Microsoft.Storage"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "name": "privateEndpointSubnet",
+                    "properties": {
+                      "addressPrefix": "10.80.4.0/24",
+                      "defaultOutboundAccess": false,
+                      "privateEndpointNetworkPolicies": "Enabled"
+                    }
+                  },
+                  {
+                    "name": "agentSubnet",
+                    "properties": {
+                      "addressPrefix": "10.80.5.0/24",
+                      "defaultOutboundAccess": false,
+                      "delegations": [
+                        {
+                          "name": "containerApps",
+                          "properties": {
+                            "serviceName": "Microsoft.App/environments"
+                          }
+                        }
+                      ],
+                      "serviceEndpoints": [
+                        {
+                          "service": "Microsoft.Storage"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "outputs": {
+            "virtualNetworkId": {
+              "type": "string",
+              "value": "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
+            },
+            "subnetIds": {
+              "type": "object",
+              "value": {
+                "workspaceSubnet": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), 'workspaceSubnet')]",
+                "privateEndpointSubnet": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), 'privateEndpointSubnet')]",
+                "agentSubnet": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), 'agentSubnet')]"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2025-04-01",
+      "name": "discovery-korea-subnets",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "virtualNetworkName": {
+            "value": "[parameters('virtualNetworkName')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.45.15.27210",
+              "templateHash": "17878012119295581954"
+            }
+          },
+          "parameters": {
+            "virtualNetworkName": {
+              "type": "string",
+              "defaultValue": "vnet-discovery-hol"
+            }
+          },
+          "resources": [
+            {
+              "copy": {
+                "name": "computeSubnets",
+                "count": "[length(createArray(createObject('name', 'supercomputerNodepoolSubnet', 'prefix', '10.80.1.0/24'), createObject('name', 'aksSubnet', 'prefix', '10.80.2.0/24')))]",
+                "mode": "serial",
+                "batchSize": 1
+              },
+              "type": "Microsoft.Network/virtualNetworks/subnets",
+              "apiVersion": "2024-05-01",
+              "name": "[format('{0}/{1}', parameters('virtualNetworkName'), createArray(createObject('name', 'supercomputerNodepoolSubnet', 'prefix', '10.80.1.0/24'), createObject('name', 'aksSubnet', 'prefix', '10.80.2.0/24'))[copyIndex()].name)]",
+              "properties": {
+                "addressPrefix": "[createArray(createObject('name', 'supercomputerNodepoolSubnet', 'prefix', '10.80.1.0/24'), createObject('name', 'aksSubnet', 'prefix', '10.80.2.0/24'))[copyIndex()].prefix]",
+                "defaultOutboundAccess": false,
+                "serviceEndpoints": [
+                  {
+                    "service": "Microsoft.Storage"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "Microsoft.Network/virtualNetworks/subnets",
+              "apiVersion": "2024-05-01",
+              "name": "[format('{0}/{1}', parameters('virtualNetworkName'), 'searchSubnet')]",
+              "properties": {
+                "addressPrefix": "10.80.6.0/24",
+                "defaultOutboundAccess": false,
+                "delegations": [
+                  {
+                    "name": "containerApps",
+                    "properties": {
+                      "serviceName": "Microsoft.App/environments"
+                    }
+                  }
+                ],
+                "serviceEndpoints": [
+                  {
+                    "service": "Microsoft.Storage"
+                  }
+                ]
+              },
+              "dependsOn": [
+                "computeSubnets"
+              ]
+            },
+            {
+              "type": "Microsoft.Network/virtualNetworks/subnets",
+              "apiVersion": "2024-05-01",
+              "name": "[format('{0}/{1}', parameters('virtualNetworkName'), 'bookshelfPeSubnet')]",
+              "properties": {
+                "addressPrefix": "10.80.7.0/24",
+                "defaultOutboundAccess": false,
+                "privateEndpointNetworkPolicies": "Enabled"
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), 'searchSubnet')]"
+              ]
+            }
+          ]
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments', 'discovery-korea-network')]"
+      ]
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2025-04-01",
+      "name": "discovery-korea-identity",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "location": {
+            "value": "[parameters('targetComputeLocation')]"
+          },
+          "identityName": {
+            "value": "[parameters('identityName')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.45.15.27210",
+              "templateHash": "8978909962037610975"
+            }
+          },
+          "parameters": {
+            "identityName": {
+              "type": "string",
+              "defaultValue": "id-discovery-hol",
+              "metadata": {
+                "description": "User-assigned managed identity required by a Discovery workspace."
+              }
+            },
+            "location": {
+              "type": "string",
+              "defaultValue": "[resourceGroup().location]",
+              "metadata": {
+                "description": "Region of the existing Discovery resource group."
+              }
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+              "apiVersion": "2024-11-30",
+              "name": "[parameters('identityName')]",
+              "location": "[parameters('location')]",
+              "tags": {
+                "environment": "lab",
+                "project": "microsoft-discovery-core-hol",
+                "deploymentScope": "workspace-prerequisite"
+              }
+            }
+          ],
+          "outputs": {
+            "identityId": {
+              "type": "string",
+              "value": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('identityName'))]"
+            },
+            "principalId": {
+              "type": "string",
+              "value": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('identityName')), '2024-11-30').principalId]"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2025-04-01",
+      "name": "discovery-korea-storage-registry",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "location": {
+            "value": "[parameters('targetComputeLocation')]"
+          },
+          "virtualNetworkName": {
+            "value": "[parameters('virtualNetworkName')]"
+          },
+          "identityName": {
+            "value": "[parameters('identityName')]"
+          },
+          "storageAccountName": {
+            "value": "[parameters('storageAccountName')]"
+          },
+          "registryName": {
+            "value": "[parameters('registryName')]"
+          },
+          "administratorObjectId": {
+            "value": "[parameters('administratorObjectId')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.45.15.27210",
+              "templateHash": "16306180406325817712"
+            }
+          },
+          "parameters": {
+            "location": {
+              "type": "string",
+              "defaultValue": "[resourceGroup().location]"
+            },
+            "identityName": {
+              "type": "string",
+              "defaultValue": "id-discovery-hol"
+            },
+            "virtualNetworkName": {
+              "type": "string",
+              "defaultValue": "vnet-discovery-hol"
+            },
+            "storageAccountName": {
+              "type": "string",
+              "defaultValue": "stdiscoveryholjunwoosc"
+            },
+            "registryName": {
+              "type": "string",
+              "defaultValue": "acrdiscoveryholjunwoosc"
+            },
+            "administratorObjectId": {
+              "type": "string",
+              "metadata": {
+                "description": "Object ID of the signed-in lab administrator. Owner alone does not grant data-plane access."
+              }
+            }
+          },
+          "variables": {
+            "tags": {
+              "environment": "lab",
+              "project": "microsoft-discovery-core-hol"
+            },
+            "blobContributorRoleId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'ba92f5b4-2d11-453d-a403-e96b0029c9fe')]",
+            "platformContributorRoleId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '01288891-85ee-45a7-b367-9db3b752fc65')]",
+            "platformAdministratorRoleId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '7a2b6e6c-472e-4b39-8878-a26eb63d75c6')]",
+            "acrPullRoleId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '7f951dda-4ed3-4680-a7ca-43fe172d538d')]",
+            "networkContributorRoleId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '4d97b98b-1d4f-4787-a291-c67834d212e7')]",
+            "identityOperatorRoleId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'f1a07417-d97a-45cb-824c-7a7467783830')]",
+            "storageSubnets": [
+              "supercomputerNodepoolSubnet",
+              "aksSubnet",
+              "workspaceSubnet",
+              "agentSubnet",
+              "searchSubnet"
+            ]
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Storage/storageAccounts",
+              "apiVersion": "2023-05-01",
+              "name": "[parameters('storageAccountName')]",
+              "location": "[parameters('location')]",
+              "tags": "[variables('tags')]",
+              "kind": "StorageV2",
+              "sku": {
+                "name": "Standard_LRS"
+              },
+              "properties": {
+                "accessTier": "Hot",
+                "allowBlobPublicAccess": false,
+                "allowSharedKeyAccess": false,
+                "minimumTlsVersion": "TLS1_2",
+                "supportsHttpsTrafficOnly": true,
+                "publicNetworkAccess": "Disabled",
+                "networkAcls": {
+                  "copy": [
+                    {
+                      "name": "virtualNetworkRules",
+                      "count": "[length(variables('storageSubnets'))]",
+                      "input": {
+                        "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), variables('storageSubnets')[copyIndex('virtualNetworkRules')])]",
+                        "action": "Allow"
+                      }
+                    }
+                  ],
+                  "defaultAction": "Deny",
+                  "bypass": "AzureServices",
+                  "ipRules": []
+                }
+              }
+            },
+            {
+              "type": "Microsoft.Storage/storageAccounts/blobServices",
+              "apiVersion": "2023-05-01",
+              "name": "[format('{0}/{1}', parameters('storageAccountName'), 'default')]",
+              "properties": {
+                "cors": {
+                  "corsRules": [
+                    {
+                      "allowedOrigins": [
+                        "https://studio.discovery.microsoft.com",
+                        "https://vscode.dev",
+                        "https://*.vscode-cdn.net"
+                      ],
+                      "allowedMethods": [
+                        "GET",
+                        "HEAD",
+                        "PUT",
+                        "DELETE",
+                        "OPTIONS"
+                      ],
+                      "allowedHeaders": [
+                        "*"
+                      ],
+                      "exposedHeaders": [
+                        "*"
+                      ],
+                      "maxAgeInSeconds": 200
+                    }
+                  ]
+                }
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
+              ]
+            },
+            {
+              "copy": {
+                "name": "containers",
+                "count": "[length(createArray('discoveryinputs', 'discoveryoutputs'))]"
+              },
+              "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
+              "apiVersion": "2023-05-01",
+              "name": "[format('{0}/{1}/{2}', parameters('storageAccountName'), 'default', createArray('discoveryinputs', 'discoveryoutputs')[copyIndex()])]",
+              "properties": {
+                "publicAccess": "None"
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts/blobServices', parameters('storageAccountName'), 'default')]"
+              ]
+            },
+            {
+              "type": "Microsoft.ContainerRegistry/registries",
+              "apiVersion": "2023-07-01",
+              "name": "[parameters('registryName')]",
+              "location": "[parameters('location')]",
+              "tags": "[variables('tags')]",
+              "sku": {
+                "name": "Basic"
+              },
+              "properties": {
+                "adminUserEnabled": false,
+                "publicNetworkAccess": "Enabled"
+              }
+            },
+            {
+              "type": "Microsoft.Authorization/roleAssignments",
+              "apiVersion": "2022-04-01",
+              "name": "[guid(resourceGroup().id, resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('identityName')), variables('platformContributorRoleId'))]",
+              "properties": {
+                "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('identityName')), '2024-11-30').principalId]",
+                "principalType": "ServicePrincipal",
+                "roleDefinitionId": "[variables('platformContributorRoleId')]"
+              }
+            },
+            {
+              "type": "Microsoft.Authorization/roleAssignments",
+              "apiVersion": "2022-04-01",
+              "name": "[guid(resourceGroup().id, parameters('administratorObjectId'), variables('platformAdministratorRoleId'))]",
+              "properties": {
+                "principalId": "[parameters('administratorObjectId')]",
+                "principalType": "User",
+                "roleDefinitionId": "[variables('platformAdministratorRoleId')]"
+              }
+            },
+            {
+              "type": "Microsoft.Authorization/roleAssignments",
+              "apiVersion": "2022-04-01",
+              "scope": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
+              "name": "[guid(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName')), resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('identityName')), variables('blobContributorRoleId'))]",
+              "properties": {
+                "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('identityName')), '2024-11-30').principalId]",
+                "principalType": "ServicePrincipal",
+                "roleDefinitionId": "[variables('blobContributorRoleId')]"
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
+              ]
+            },
+            {
+              "type": "Microsoft.Authorization/roleAssignments",
+              "apiVersion": "2022-04-01",
+              "scope": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
+              "name": "[guid(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName')), parameters('administratorObjectId'), variables('blobContributorRoleId'))]",
+              "properties": {
+                "principalId": "[parameters('administratorObjectId')]",
+                "principalType": "User",
+                "roleDefinitionId": "[variables('blobContributorRoleId')]"
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
+              ]
+            },
+            {
+              "type": "Microsoft.Authorization/roleAssignments",
+              "apiVersion": "2022-04-01",
+              "scope": "[resourceId('Microsoft.ContainerRegistry/registries', parameters('registryName'))]",
+              "name": "[guid(resourceId('Microsoft.ContainerRegistry/registries', parameters('registryName')), resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('identityName')), variables('acrPullRoleId'))]",
+              "properties": {
+                "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('identityName')), '2024-11-30').principalId]",
+                "principalType": "ServicePrincipal",
+                "roleDefinitionId": "[variables('acrPullRoleId')]"
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.ContainerRegistry/registries', parameters('registryName'))]"
+              ]
+            },
+            {
+              "type": "Microsoft.Authorization/roleAssignments",
+              "apiVersion": "2022-04-01",
+              "scope": "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
+              "name": "[guid(resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName')), resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('identityName')), variables('networkContributorRoleId'))]",
+              "properties": {
+                "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('identityName')), '2024-11-30').principalId]",
+                "principalType": "ServicePrincipal",
+                "roleDefinitionId": "[variables('networkContributorRoleId')]"
+              }
+            },
+            {
+              "type": "Microsoft.Authorization/roleAssignments",
+              "apiVersion": "2022-04-01",
+              "scope": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('identityName'))]",
+              "name": "[guid(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('identityName')), variables('identityOperatorRoleId'))]",
+              "properties": {
+                "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('identityName')), '2024-11-30').principalId]",
+                "principalType": "ServicePrincipal",
+                "roleDefinitionId": "[variables('identityOperatorRoleId')]"
+              }
+            }
+          ],
+          "outputs": {
+            "storageAccountId": {
+              "type": "string",
+              "value": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
+            },
+            "registryId": {
+              "type": "string",
+              "value": "[resourceId('Microsoft.ContainerRegistry/registries', parameters('registryName'))]"
+            },
+            "registryLoginServer": {
+              "type": "string",
+              "value": "[reference(resourceId('Microsoft.ContainerRegistry/registries', parameters('registryName')), '2023-07-01').loginServer]"
+            }
+          }
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments', 'discovery-korea-identity')]",
+        "[resourceId('Microsoft.Resources/deployments', 'discovery-korea-subnets')]"
+      ]
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2025-04-01",
+      "name": "discovery-korea-private-storage",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "location": {
+            "value": "[parameters('targetComputeLocation')]"
+          },
+          "virtualNetworkName": {
+            "value": "[parameters('virtualNetworkName')]"
+          },
+          "storageAccountName": {
+            "value": "[parameters('storageAccountName')]"
+          },
+          "privateEndpointName": {
+            "value": "[parameters('privateEndpointName')]"
+          },
+          "virtualNetworkLinkName": {
+            "value": "[parameters('virtualNetworkLinkName')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.45.15.27210",
+              "templateHash": "879515423845335598"
+            }
+          },
+          "parameters": {
+            "location": {
+              "type": "string",
+              "defaultValue": "[resourceGroup().location]"
+            },
+            "virtualNetworkName": {
+              "type": "string",
+              "defaultValue": "vnet-discovery-hol"
+            },
+            "storageAccountName": {
+              "type": "string",
+              "defaultValue": "stdiscoveryholjunwoosc"
+            },
+            "privateEndpointName": {
+              "type": "string",
+              "defaultValue": "pe-discovery-blob"
+            },
+            "virtualNetworkLinkName": {
+              "type": "string",
+              "defaultValue": "discovery-lab"
+            },
+            "existingBlobPrivateDnsZoneId": {
+              "type": "string",
+              "defaultValue": "",
+              "metadata": {
+                "description": "Reuse a Blob private DNS zone only after verifying it is already linked to this VNet. Empty creates a lab-owned zone and link."
+              }
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Network/virtualNetworks/subnets",
+              "apiVersion": "2024-05-01",
+              "name": "[format('{0}/{1}', parameters('virtualNetworkName'), 'storagePeSubnet')]",
+              "properties": {
+                "addressPrefix": "10.80.8.0/24",
+                "defaultOutboundAccess": false,
+                "privateEndpointNetworkPolicies": "Enabled"
+              }
+            },
+            {
+              "type": "Microsoft.Network/privateEndpoints",
+              "apiVersion": "2024-05-01",
+              "name": "[parameters('privateEndpointName')]",
+              "location": "[parameters('location')]",
+              "tags": {
+                "environment": "lab",
+                "project": "microsoft-discovery-core-hol"
+              },
+              "properties": {
+                "subnet": {
+                  "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), 'storagePeSubnet')]"
+                },
+                "privateLinkServiceConnections": [
+                  {
+                    "name": "discovery-blob",
+                    "properties": {
+                      "privateLinkServiceId": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
+                      "groupIds": [
+                        "blob"
+                      ]
+                    }
+                  }
+                ]
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), 'storagePeSubnet')]"
+              ]
+            },
+            {
+              "condition": "[empty(parameters('existingBlobPrivateDnsZoneId'))]",
+              "type": "Microsoft.Network/privateDnsZones",
+              "apiVersion": "2020-06-01",
+              "name": "[format('privatelink.blob.{0}', environment().suffixes.storage)]",
+              "location": "global",
+              "tags": {
+                "environment": "lab",
+                "project": "microsoft-discovery-core-hol"
+              }
+            },
+            {
+              "condition": "[empty(parameters('existingBlobPrivateDnsZoneId'))]",
+              "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
+              "apiVersion": "2020-06-01",
+              "name": "[format('{0}/{1}', format('privatelink.blob.{0}', environment().suffixes.storage), parameters('virtualNetworkLinkName'))]",
+              "location": "global",
+              "properties": {
+                "registrationEnabled": false,
+                "virtualNetwork": {
+                  "id": "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
+                }
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.Network/privateDnsZones', format('privatelink.blob.{0}', environment().suffixes.storage))]"
+              ]
+            },
+            {
+              "type": "Microsoft.Network/privateEndpoints/privateDnsZoneGroups",
+              "apiVersion": "2024-05-01",
+              "name": "[format('{0}/{1}', parameters('privateEndpointName'), 'blob')]",
+              "properties": {
+                "privateDnsZoneConfigs": [
+                  {
+                    "name": "blob",
+                    "properties": {
+                      "privateDnsZoneId": "[if(empty(parameters('existingBlobPrivateDnsZoneId')), resourceId('Microsoft.Network/privateDnsZones', format('privatelink.blob.{0}', environment().suffixes.storage)), parameters('existingBlobPrivateDnsZoneId'))]"
+                    }
+                  }
+                ]
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.Network/privateDnsZones', format('privatelink.blob.{0}', environment().suffixes.storage))]",
+                "[resourceId('Microsoft.Network/privateEndpoints', parameters('privateEndpointName'))]"
+              ]
+            }
+          ],
+          "outputs": {
+            "privateEndpointId": {
+              "type": "string",
+              "value": "[resourceId('Microsoft.Network/privateEndpoints', parameters('privateEndpointName'))]"
+            },
+            "blobHostname": {
+              "type": "string",
+              "value": "[format('{0}.blob.{1}', parameters('storageAccountName'), environment().suffixes.storage)]"
+            }
+          }
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments', 'discovery-korea-storage-registry')]"
+      ]
+    }
+  ],
+  "outputs": {
+    "homeLocation": {
+      "type": "string",
+      "value": "[resourceGroup().location]"
+    },
+    "targetLocation": {
+      "type": "string",
+      "value": "[parameters('targetComputeLocation')]"
+    },
+    "virtualNetworkId": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Resources/deployments', 'discovery-korea-network'), '2025-04-01').outputs.virtualNetworkId.value]"
+    },
+    "identityId": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Resources/deployments', 'discovery-korea-identity'), '2025-04-01').outputs.identityId.value]"
+    },
+    "storageAccountId": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Resources/deployments', 'discovery-korea-storage-registry'), '2025-04-01').outputs.storageAccountId.value]"
+    },
+    "registryId": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Resources/deployments', 'discovery-korea-storage-registry'), '2025-04-01').outputs.registryId.value]"
+    },
+    "privateEndpointId": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Resources/deployments', 'discovery-korea-private-storage'), '2025-04-01').outputs.privateEndpointId.value]"
+    }
+  }
+}

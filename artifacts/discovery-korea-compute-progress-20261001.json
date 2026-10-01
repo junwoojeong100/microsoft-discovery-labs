@@ -1,0 +1,18 @@
+[
+  {
+    "operationId": "D191BF24C72D9E95",
+    "state": "Running",
+    "statusMessage": null,
+    "target": {
+      "apiVersion": null,
+      "extension": null,
+      "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/supercomputers/sc-discovery-hol-kc",
+      "identifiers": null,
+      "resourceGroup": "rg-discovery-hol-20260930",
+      "resourceName": "sc-discovery-hol-kc",
+      "resourceType": "Microsoft.Discovery/supercomputers",
+      "symbolicName": null
+    },
+    "timestamp": "2026-10-01T12:08:13.371021+00:00"
+  }
+]

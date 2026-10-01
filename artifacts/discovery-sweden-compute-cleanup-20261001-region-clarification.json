@@ -1,0 +1,16 @@
+{
+  "recordedAt": "2026-10-01T11:57:35.654376+00:00",
+  "homeRegion": "swedencentral",
+  "newTargetComputeAndRuntimeRegion": "koreacentral",
+  "userRegionClarification": "discovery home region은 sweden central을 유지하는거지? 그래야 해",
+  "cleanupScopeUnchanged": true,
+  "targetId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/supercomputers/sc-discovery-hol",
+  "deleteOnlyBySupportedParentCascade": true,
+  "protected": "Existing Sweden lab resource group, workspace, workspace managed resource group, Foundry and GPT-5.4 deployment, customer storage/network/identity and all other resources outside exclusively owned old compute resources remain untouched.",
+  "specificDeletionConfirmationReceived": false,
+  "reason": "The follow-up confirms the Discovery home region only; it does not specifically approve the inventoried parent-resource deletion. The mandatory ask_user tool remains unavailable in this non-interactive sub-agent.",
+  "status": "BlockedAwaitingSpecificUserConfirmation",
+  "azureMutationsPerformed": false,
+  "deletedIds": [],
+  "exactKoreanApprovalQuestion": "artifacts/discovery-sweden-compute-cleanup-20261001-operation.json#confirmationRequest"
+}

@@ -4,6 +4,15 @@
   "subscriptionId": "51531604-2337-4c05-bc05-3c3d4ff154e5",
   "subscriptionName": "ME-MngEnvMCAP757124-junwoojeong-1",
   "location": "swedencentral",
+  "targetComputeLocation": "koreacentral",
+  "runtime": {
+    "workspaceName": "discoveryholjunwookc",
+    "projectName": "thermalhol",
+    "supercomputerName": "sc-discovery-hol-kc",
+    "nodePoolName": "cpulab",
+    "toolName": "thermal-ranking-kc",
+    "storageContainerName": "thermaldata-kc"
+  },
   "resourceGroup": "rg-discovery-hol-20260930",
   "labTag": "microsoft-discovery-core-hol"
 }

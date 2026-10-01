@@ -1,0 +1,57 @@
+[
+  {
+    "currentValue": 220,
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.CognitiveServices/locations/koreacentral/usages/OpenAI.GlobalStandard.text-embedding-3-small",
+    "limit": 1000,
+    "name": {
+      "localizedValue": "Tokens Per Minute (thousands) - text-embedding-3-small",
+      "value": "OpenAI.GlobalStandard.text-embedding-3-small"
+    },
+    "type": "Microsoft.CognitiveServices/locations/usages",
+    "unit": "Count"
+  },
+  {
+    "currentValue": 10,
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.CognitiveServices/locations/koreacentral/usages/OpenAI.GlobalStandard.gpt-5-mini",
+    "limit": 1000,
+    "name": {
+      "localizedValue": "One Thousand Tokens Per Minute - gpt-5-mini - GlobalStandard",
+      "value": "OpenAI.GlobalStandard.gpt-5-mini"
+    },
+    "type": "Microsoft.CognitiveServices/locations/usages",
+    "unit": "Count"
+  },
+  {
+    "currentValue": 10,
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.CognitiveServices/locations/koreacentral/usages/OpenAI.GlobalStandard.gpt-5.2",
+    "limit": 3000,
+    "name": {
+      "localizedValue": "One Thousand Tokens Per Minute - gpt-5.2 - GlobalStandard",
+      "value": "OpenAI.GlobalStandard.gpt-5.2"
+    },
+    "type": "Microsoft.CognitiveServices/locations/usages",
+    "unit": "Count"
+  },
+  {
+    "currentValue": 3000,
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.CognitiveServices/locations/koreacentral/usages/OpenAI.GlobalStandard.gpt-5.4",
+    "limit": 3000,
+    "name": {
+      "localizedValue": "One Thousand Tokens Per Minute - gpt-5.4 - GlobalStandard",
+      "value": "OpenAI.GlobalStandard.gpt-5.4"
+    },
+    "type": "Microsoft.CognitiveServices/locations/usages",
+    "unit": "Count"
+  },
+  {
+    "currentValue": 0,
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.CognitiveServices/locations/koreacentral/usages/OpenAI.DataZoneStandard.gpt-5.4",
+    "limit": 300,
+    "name": {
+      "localizedValue": "One Thousand Tokens Per Minute - gpt-5.4 - DataZoneStandard",
+      "value": "OpenAI.DataZoneStandard.gpt-5.4"
+    },
+    "type": "Microsoft.CognitiveServices/locations/usages",
+    "unit": "Count"
+  }
+]

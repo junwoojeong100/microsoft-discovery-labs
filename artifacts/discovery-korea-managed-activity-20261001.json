@@ -1,0 +1,322 @@
+[
+  {
+    "message": null,
+    "operation": "Microsoft.Resources/deployments/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.Resources/deployments/Policy-Update-aks-dscmp-a13wxu",
+    "status": "Failed",
+    "subStatus": "",
+    "timestamp": "2026-10-01T12:22:46.2004402Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.Resources/deployments/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.Resources/deployments/PolicyDeployment_6833426721961857027",
+    "status": "Accepted",
+    "subStatus": "Created",
+    "timestamp": "2026-10-01T12:22:22.1626669Z"
+  },
+  {
+    "message": "\"{\\\"provisioningState\\\":\\\"Accepted\\\"}\"",
+    "operation": "Microsoft.Resources/deployments/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.Resources/deployments/PolicyDeployment_6833426721961857027",
+    "status": "Succeeded",
+    "subStatus": "",
+    "timestamp": "2026-10-01T12:22:22.1470438Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.Resources/deployments/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.Resources/deployments/PolicyDeployment_6833426721961857027",
+    "status": "Started",
+    "subStatus": "",
+    "timestamp": "2026-10-01T12:22:20.5689126Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.Insights/dataCollectionRuleAssociations/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-a13wxu/providers/Microsoft.Insights/dataCollectionRuleAssociations/dcra-sc-discovery-hol-kc-aks",
+    "status": "Succeeded",
+    "subStatus": "OK",
+    "timestamp": "2026-10-01T12:21:32.7449956Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.Insights/dataCollectionRuleAssociations/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-a13wxu/providers/Microsoft.Insights/dataCollectionRuleAssociations/dcra-sc-discovery-hol-kc-aks",
+    "status": "Started",
+    "subStatus": "",
+    "timestamp": "2026-10-01T12:21:27.2918864Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.Insights/dataCollectionRules/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.Insights/dataCollectionRules/sc-discovery-hol-kc-aks-dcr",
+    "status": "Succeeded",
+    "subStatus": "",
+    "timestamp": "2026-10-01T12:21:16.9533909Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.Network/networkSecurityPerimeters/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.Network/networkSecurityPerimeters/nsp-sc-discovery-hol-kc-a13wxu",
+    "status": "Succeeded",
+    "subStatus": "",
+    "timestamp": "2026-10-01T12:20:17.0483995Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.KubernetesConfiguration/extensions/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-a13wxu/providers/Microsoft.KubernetesConfiguration/extensions/aks-managed-azure-monitor-logs",
+    "status": "Succeeded",
+    "subStatus": "",
+    "timestamp": "2026-10-01T12:16:48.3488166Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.ContainerService/managedClusters/listClusterUserCredential/action",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-a13wxu",
+    "status": "Succeeded",
+    "subStatus": "OK",
+    "timestamp": "2026-10-01T12:15:46.2288738Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.ContainerService/managedClusters/listClusterUserCredential/action",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-a13wxu",
+    "status": "Started",
+    "subStatus": "",
+    "timestamp": "2026-10-01T12:15:45.2601227Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.ContainerService/managedClusters/maintenanceConfigurations/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-a13wxu/maintenanceConfigurations/aksManagedNodeOSUpgradeSchedule",
+    "status": "Succeeded",
+    "subStatus": "OK",
+    "timestamp": "2026-10-01T12:15:44.7389367Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.ContainerService/managedClusters/maintenanceConfigurations/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-a13wxu/maintenanceConfigurations/aksManagedNodeOSUpgradeSchedule",
+    "status": "Started",
+    "subStatus": "",
+    "timestamp": "2026-10-01T12:15:43.4732159Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.ContainerService/managedClusters/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-a13wxu",
+    "status": "Succeeded",
+    "subStatus": "",
+    "timestamp": "2026-10-01T12:15:37.1947308Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.ContainerService/managedClusters/read",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-a13wxu",
+    "status": "Running",
+    "subStatus": "",
+    "timestamp": "2026-10-01T12:15:18.81364Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.KubernetesConfiguration/extensions/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-a13wxu/providers/Microsoft.KubernetesConfiguration/extensions/aks-managed-azure-monitor-logs",
+    "status": "Accepted",
+    "subStatus": "Created",
+    "timestamp": "2026-10-01T12:15:06.3758466Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.KubernetesConfiguration/extensions/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-a13wxu/providers/Microsoft.KubernetesConfiguration/extensions/aks-managed-azure-monitor-logs",
+    "status": "Started",
+    "subStatus": "",
+    "timestamp": "2026-10-01T12:15:04.0008102Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.ContainerService/managedClusters/read",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-a13wxu",
+    "status": "Running",
+    "subStatus": "",
+    "timestamp": "2026-10-01T12:15:01.8911327Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.ContainerService/managedClusters/read",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-a13wxu",
+    "status": "Running",
+    "subStatus": "",
+    "timestamp": "2026-10-01T12:14:45.2170016Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.ContainerService/managedClusters/read",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-a13wxu",
+    "status": "Running",
+    "subStatus": "",
+    "timestamp": "2026-10-01T12:14:28.4680341Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.ContainerService/managedClusters/read",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-a13wxu",
+    "status": "Running",
+    "subStatus": "",
+    "timestamp": "2026-10-01T12:14:12.185275Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.ContainerService/managedClusters/read",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-a13wxu",
+    "status": "Running",
+    "subStatus": "",
+    "timestamp": "2026-10-01T12:13:55.5798268Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.ContainerService/managedClusters/read",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-a13wxu",
+    "status": "Running",
+    "subStatus": "",
+    "timestamp": "2026-10-01T12:13:38.9731666Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.ContainerService/managedClusters/read",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-a13wxu",
+    "status": "Running",
+    "subStatus": "",
+    "timestamp": "2026-10-01T12:13:23.2649012Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.ContainerService/managedClusters/read",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-a13wxu",
+    "status": "Running",
+    "subStatus": "",
+    "timestamp": "2026-10-01T12:13:07.2271762Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.ContainerService/managedClusters/read",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-a13wxu",
+    "status": "Running",
+    "subStatus": "",
+    "timestamp": "2026-10-01T12:12:50.5465897Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.ContainerService/managedClusters/read",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-a13wxu",
+    "status": "Running",
+    "subStatus": "",
+    "timestamp": "2026-10-01T12:12:34.0506537Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.ContainerService/managedClusters/read",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-a13wxu",
+    "status": "Running",
+    "subStatus": "",
+    "timestamp": "2026-10-01T12:12:15.9500812Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.ContainerService/managedClusters/read",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-a13wxu",
+    "status": "Running",
+    "subStatus": "",
+    "timestamp": "2026-10-01T12:11:59.7058369Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.Network/networkSecurityPerimeters/resourceAssociations/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.Network/networkSecurityPerimeters/nsp-sc-discovery-hol-kc-a13wxu/resourceAssociations/nspa-sc-discovery-hol-kc-loganalytics-a13wxu",
+    "status": "Succeeded",
+    "subStatus": "",
+    "timestamp": "2026-10-01T12:11:44.0665344Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.ContainerService/managedClusters/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-a13wxu",
+    "status": "Accepted",
+    "subStatus": "Created",
+    "timestamp": "2026-10-01T12:11:43.0204583Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.Authorization/policies/deployIfNotExists/action",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-a13wxu",
+    "status": "Started",
+    "subStatus": "",
+    "timestamp": "2026-10-01T12:11:43.0048354Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.Authorization/policies/auditIfNotExists/action",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-a13wxu",
+    "status": "Started",
+    "subStatus": "",
+    "timestamp": "2026-10-01T12:11:43.0048354Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.OperationalInsights/workspaces/networkSecurityPerimeterAssociationProxies/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.OperationalInsights/workspaces/sc-discovery-hol-kc-loganalytics/networkSecurityPerimeterAssociationProxies/6b441b25-3962-4415-bd5f-82a9b92cb8ab.nspa-sc-discovery-hol-kc-loganalytics-a13wxu",
+    "status": "Accepted",
+    "subStatus": "Accepted",
+    "timestamp": "2026-10-01T12:11:36.4619314Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.OperationalInsights/workspaces/networkSecurityPerimeterAssociationProxies/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.OperationalInsights/workspaces/sc-discovery-hol-kc-loganalytics/networkSecurityPerimeterAssociationProxies/6b441b25-3962-4415-bd5f-82a9b92cb8ab.nspa-sc-discovery-hol-kc-loganalytics-a13wxu",
+    "status": "Started",
+    "subStatus": "",
+    "timestamp": "2026-10-01T12:11:28.133738Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.Network/networkSecurityPerimeters/resourceAssociations/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.Network/networkSecurityPerimeters/nsp-sc-discovery-hol-kc-a13wxu/resourceAssociations/nspa-sc-discovery-hol-kc-loganalytics-a13wxu",
+    "status": "Accepted",
+    "subStatus": "Accepted",
+    "timestamp": "2026-10-01T12:11:27.1910943Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.Network/networkSecurityPerimeters/resourceAssociations/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.Network/networkSecurityPerimeters/nsp-sc-discovery-hol-kc-a13wxu/resourceAssociations/nspa-sc-discovery-hol-kc-loganalytics-a13wxu",
+    "status": "Started",
+    "subStatus": "",
+    "timestamp": "2026-10-01T12:11:26.6442188Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.Authorization/policies/audit/action",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-a13wxu",
+    "status": "Succeeded",
+    "subStatus": "",
+    "timestamp": "2026-10-01T12:11:25.8174696Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.ContainerService/managedClusters/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-a13wxu",
+    "status": "Started",
+    "subStatus": "",
+    "timestamp": "2026-10-01T12:11:25.7393453Z"
+  },
+  {
+    "message": "\"{\\\"provisioningState\\\":\\\"Succeeded\\\"}\"",
+    "operation": "Microsoft.Resources/deployments/operationStatuses/read",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.Resources/deployments/sc-discovery-hol-kc-5220dde6-law",
+    "status": "Succeeded",
+    "subStatus": "",
+    "timestamp": "2026-10-01T12:11:23.3004604Z"
+  }
+]

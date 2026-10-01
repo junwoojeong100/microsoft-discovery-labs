@@ -6,9 +6,11 @@ param location string = resourceGroup().location
 param imageDigest string
 
 param registryName string = 'acrdiscoveryholjunwoosc'
+param toolName string = 'thermal-ranking'
 
 var template = loadJsonContent('../tools/thermal-ranking/tool-definition.template.json')
 var definition = union(template, {
+  name: toolName
   infra: [
     union(template.infra[0], {
       image: {
@@ -19,7 +21,7 @@ var definition = union(template, {
 })
 
 resource tool 'Microsoft.Discovery/tools@2026-06-01' = {
-  name: 'thermal-ranking'
+  name: toolName
   location: location
   tags: {
     environment: 'lab'

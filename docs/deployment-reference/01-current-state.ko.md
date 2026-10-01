@@ -2,6 +2,8 @@
 
 [목차](README.ko.md) · **2026-10-01 코어 16:21 조회, 중앙 진단 16:28 검증과 후속 quota 조회를 반영. 이후 상태를 보장하지 않는다.**
 
+**최신 23:32 KST:** home은 Sweden Central, runtime은 Korea Central이다. 새 Workspace·Project·검증 모델·Supercomputer·cpulab이 모두 **Succeeded**이며 두 GPT-5.4 배포는 **각 Global Standard 250,000 TPM**이다. 합성 입력 5개와 계산 결과 2개의 실제 CPU 실행·별도 작업 재조회도 성공했다. 남은 것은 Bookshelf 운영 quota, 승인되지 않은 별도 정책 애드온 권한, KB 기반 자율 연구다. [실행 보고서](../reports/EXECUTION-REPORT.ko.md), [교차 리전 절차](06-resume-runbook.ko.md)를 따른다. 아래 표는 이전 Sweden 단일 리전 실행의 시각 고정 기록이다.
+
 ## 활성 배포 범위
 
 | 항목 | 값 |
@@ -10,7 +12,8 @@
 | 구독 ID | `51531604-2337-4c05-bc05-3c3d4ff154e5` |
 | 테넌트 ID | `46e9cdaa-fed3-4131-aa28-c1fc8a8a043a` |
 | 리소스 그룹 | `rg-discovery-hol-20260930` |
-| 리전 | `swedencentral` |
+| Discovery home 리전 | `swedencentral` |
+| 신규 target compute 리전 | `koreacentral` |
 | 실습 태그 | `microsoft-discovery-core-hol` |
 
 계정 정보의 기준은 [config/lab.json](../../config/lab.json)이다. 과거 기록의 `rg-discovery-hol-20260925`와 혼동하지 않는다. 새로운 환경을 만들 때는 구독/RG뿐 아니라 전역 고유 이름, CIDR, 템플릿 매개변수, 스크립트의 리소스 이름도 함께 검토한다.

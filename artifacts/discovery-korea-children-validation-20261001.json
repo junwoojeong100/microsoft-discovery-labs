@@ -1,0 +1,230 @@
+{
+  "error": null,
+  "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Resources/deployments/discovery-korea-children-20261001",
+  "name": "discovery-korea-children-20261001",
+  "properties": {
+    "correlationId": "199981da-1d10-4cb7-a9d0-d2fec4ca117e",
+    "debugSetting": null,
+    "dependencies": [
+      {
+        "dependsOn": [
+          {
+            "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/workspaces/discoveryholjunwookc/chatModelDeployments/gpt-5-4",
+            "resourceGroup": "rg-discovery-hol-20260930",
+            "resourceName": "discoveryholjunwookc/gpt-5-4",
+            "resourceType": "Microsoft.Discovery/workspaces/chatModelDeployments"
+          },
+          {
+            "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/storageContainers/thermaldata-kc",
+            "resourceGroup": "rg-discovery-hol-20260930",
+            "resourceName": "thermaldata-kc",
+            "resourceType": "Microsoft.Discovery/storageContainers"
+          }
+        ],
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/workspaces/discoveryholjunwookc/projects/thermalhol",
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceName": "discoveryholjunwookc/thermalhol",
+        "resourceType": "Microsoft.Discovery/workspaces/projects"
+      },
+      {
+        "dependsOn": [
+          {
+            "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/storageContainers/thermaldata-kc",
+            "resourceGroup": "rg-discovery-hol-20260930",
+            "resourceName": "thermaldata-kc",
+            "resourceType": "Microsoft.Discovery/storageContainers"
+          }
+        ],
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/storageContainers/thermaldata-kc/storageAssets/evidencepack",
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceName": "thermaldata-kc/evidencepack",
+        "resourceType": "Microsoft.Discovery/storageContainers/storageAssets"
+      },
+      {
+        "dependsOn": [
+          {
+            "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/storageContainers/thermaldata-kc",
+            "resourceGroup": "rg-discovery-hol-20260930",
+            "resourceName": "thermaldata-kc",
+            "resourceType": "Microsoft.Discovery/storageContainers"
+          }
+        ],
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/storageContainers/thermaldata-kc/storageAssets/candidatecsv",
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceName": "thermaldata-kc/candidatecsv",
+        "resourceType": "Microsoft.Discovery/storageContainers/storageAssets"
+      }
+    ],
+    "diagnostics": null,
+    "duration": "PT0S",
+    "error": null,
+    "extensions": [],
+    "mode": "Incremental",
+    "onErrorDeployment": null,
+    "outputResources": null,
+    "outputs": null,
+    "parameters": {
+      "deployCompute": {
+        "type": "Bool",
+        "value": true
+      },
+      "identityName": {
+        "type": "String",
+        "value": "id-discovery-hol-kc"
+      },
+      "location": {
+        "type": "String",
+        "value": "swedencentral"
+      },
+      "projectName": {
+        "type": "String",
+        "value": "thermalhol"
+      },
+      "skipAssociateKeyVaultToNsp": {
+        "type": "Bool",
+        "value": true
+      },
+      "storageAccountName": {
+        "type": "String",
+        "value": "stdiscoveryholjunwookc"
+      },
+      "storageContainerName": {
+        "type": "String",
+        "value": "thermaldata-kc"
+      },
+      "supercomputerName": {
+        "type": "String",
+        "value": "sc-discovery-hol-kc"
+      },
+      "targetComputeLocation": {
+        "type": "String",
+        "value": "koreacentral"
+      },
+      "virtualNetworkName": {
+        "type": "String",
+        "value": "vnet-discovery-hol-kc"
+      },
+      "workspaceName": {
+        "type": "String",
+        "value": "discoveryholjunwookc"
+      }
+    },
+    "parametersLink": null,
+    "providers": [
+      {
+        "id": null,
+        "namespace": "Microsoft.Discovery",
+        "providerAuthorizationConsentState": null,
+        "registrationPolicy": null,
+        "registrationState": null,
+        "resourceTypes": [
+          {
+            "aliases": null,
+            "apiProfiles": null,
+            "apiVersions": null,
+            "capabilities": null,
+            "defaultApiVersion": null,
+            "locationMappings": null,
+            "locations": [
+              "swedencentral"
+            ],
+            "properties": null,
+            "resourceType": "workspaces/chatModelDeployments",
+            "zoneMappings": null
+          },
+          {
+            "aliases": null,
+            "apiProfiles": null,
+            "apiVersions": null,
+            "capabilities": null,
+            "defaultApiVersion": null,
+            "locationMappings": null,
+            "locations": [
+              "swedencentral"
+            ],
+            "properties": null,
+            "resourceType": "storageContainers",
+            "zoneMappings": null
+          },
+          {
+            "aliases": null,
+            "apiProfiles": null,
+            "apiVersions": null,
+            "capabilities": null,
+            "defaultApiVersion": null,
+            "locationMappings": null,
+            "locations": [
+              "swedencentral"
+            ],
+            "properties": null,
+            "resourceType": "workspaces/projects",
+            "zoneMappings": null
+          },
+          {
+            "aliases": null,
+            "apiProfiles": null,
+            "apiVersions": null,
+            "capabilities": null,
+            "defaultApiVersion": null,
+            "locationMappings": null,
+            "locations": [
+              "swedencentral"
+            ],
+            "properties": null,
+            "resourceType": "storageContainers/storageAssets",
+            "zoneMappings": null
+          }
+        ]
+      }
+    ],
+    "provisioningState": "Succeeded",
+    "templateHash": "11457829457451005369",
+    "templateLink": null,
+    "timestamp": "2026-10-01T13:59:15.047494+00:00",
+    "validatedResources": [
+      {
+        "apiVersion": null,
+        "extension": null,
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/storageContainers/thermaldata-kc",
+        "identifiers": null,
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceType": null
+      },
+      {
+        "apiVersion": null,
+        "extension": null,
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/storageContainers/thermaldata-kc/storageAssets/candidatecsv",
+        "identifiers": null,
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceType": null
+      },
+      {
+        "apiVersion": null,
+        "extension": null,
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/storageContainers/thermaldata-kc/storageAssets/evidencepack",
+        "identifiers": null,
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceType": null
+      },
+      {
+        "apiVersion": null,
+        "extension": null,
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/workspaces/discoveryholjunwookc/chatModelDeployments/gpt-5-4",
+        "identifiers": null,
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceType": null
+      },
+      {
+        "apiVersion": null,
+        "extension": null,
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/workspaces/discoveryholjunwookc/projects/thermalhol",
+        "identifiers": null,
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceType": null
+      }
+    ],
+    "validationLevel": null
+  },
+  "resourceGroup": "rg-discovery-hol-20260930",
+  "type": "Microsoft.Resources/deployments"
+}

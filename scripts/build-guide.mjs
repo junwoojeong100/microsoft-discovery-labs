@@ -1,12 +1,12 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
-import { resolve } from 'node:path';
+import { dirname, relative, resolve } from 'node:path';
 import { marked } from 'marked';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const documents = [
   {
-    filename: 'MICROSOFT-DISCOVERY-LAB.en.md',
+    filename: 'docs/labs/MICROSOFT-DISCOVERY-LAB.en.md',
     language: 'en',
     title: 'Microsoft Discovery Core Capabilities Hands-on Guide',
     label: '10 core labs + 2 extensions',
@@ -15,7 +15,7 @@ const documents = [
     printLabel: 'Print / PDF',
   },
   {
-    filename: 'MICROSOFT-DISCOVERY-LAB.ko.md',
+    filename: 'docs/labs/MICROSOFT-DISCOVERY-LAB.ko.md',
     language: 'ko',
     title: 'Microsoft Discovery 핵심 기능 실습 가이드',
     label: '핵심 10개 Lab + 확장 2개',
@@ -24,7 +24,7 @@ const documents = [
     printLabel: '인쇄 / PDF',
   },
   {
-    filename: 'EXECUTION-REPORT.ko.md',
+    filename: 'docs/reports/EXECUTION-REPORT.ko.md',
     language: 'ko',
     title: 'Microsoft Discovery 실제 실행 보고서',
     label: '실제 Azure 배포와 차단 원인',
@@ -90,7 +90,9 @@ async function buildDocument(document) {
     return `<h${depth} id="${id}">${text}</h${depth}>`;
   };
   renderer.link = function (token) {
-    const target = documents.find((item) => item.filename === token.href);
+    const [path] = token.href.split('#');
+    const target = documents.find((item) =>
+      resolve(root, item.filename) === resolve(root, dirname(filename), path));
     const html = renderLink.call(this, target ? { ...token, href: token.href.replace(/\.md$/, '.html') } : token);
     return /^S\d{2}$/.test(token.text) ? `<sup class="citation">[${html}]</sup>` : html;
   };
@@ -107,6 +109,7 @@ async function buildDocument(document) {
   };
   const content = marked.parse(markdown, { renderer, gfm: true });
   const toc = headings.map(({ id, text }) => `<a href="#${id}">${text}</a>`).join('\n');
+  const editionPath = (edition) => relative(dirname(filename), `docs/labs/MICROSOFT-DISCOVERY-LAB.${edition}.html`);
   const html = `<!doctype html>
 <html lang="${language}">
 <head>
@@ -143,8 +146,8 @@ async function buildDocument(document) {
   <a class="skip" href="#main">${language === 'ko' ? '본문으로 이동' : 'Skip to content'}</a>
   <aside><b>Microsoft Discovery</b><span class="label">${label}</span>
     <nav class="languages" aria-label="${language === 'ko' ? '언어 선택' : 'Language'}">
-      <a href="MICROSOFT-DISCOVERY-LAB.en.html" data-language="en"${filename.includes('LAB.en') ? ' aria-current="page"' : ''}>English</a>
-      <a href="MICROSOFT-DISCOVERY-LAB.ko.html" data-language="ko"${filename.includes('LAB.ko') ? ' aria-current="page"' : ''}>한국어</a>
+      <a href="${editionPath('en')}" data-language="en"${filename.includes('LAB.en') ? ' aria-current="page"' : ''}>English</a>
+      <a href="${editionPath('ko')}" data-language="ko"${filename.includes('LAB.ko') ? ' aria-current="page"' : ''}>한국어</a>
     </nav>
     <button id="print" type="button">${printLabel}</button>
     <details id="toc" open><summary>${tocLabel}</summary><nav aria-label="${tocLabel}">${toc}</nav></details>
@@ -158,7 +161,7 @@ async function buildDocument(document) {
     media.addEventListener('change', adjustToc);
     document.querySelectorAll('[data-language]').forEach(link => link.addEventListener('click', () => {
       const hash = /^#[slea][0-9]{2}$/.test(location.hash) ? location.hash : '';
-      link.href = 'MICROSOFT-DISCOVERY-LAB.' + link.dataset.language + '.html' + hash;
+      link.href = link.getAttribute('href').split('#')[0] + hash;
     }));
   </script>
 </body>

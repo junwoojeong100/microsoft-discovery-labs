@@ -1,0 +1,21 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "value": "swedencentral"
+    },
+    "storageContainerName": {
+      "value": "thermaldata-kc"
+    },
+    "registryName": {
+      "value": "acrdiscoveryholjunwookc"
+    },
+    "toolName": {
+      "value": "thermal-ranking-kc"
+    },
+    "imageDigest": {
+      "value": "sha256:0051d5db6c367812c22073d807da54b469ecbcc58edb7cfaf0dbce5e78514ad1"
+    }
+  }
+}

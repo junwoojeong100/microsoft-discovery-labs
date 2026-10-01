@@ -1,0 +1,10 @@
+{
+  "adminUserEnabled": false,
+  "anonymousPullEnabled": false,
+  "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.ContainerRegistry/registries/acrdiscoveryholjunwookc",
+  "location": "koreacentral",
+  "loginServer": "acrdiscoveryholjunwookc.azurecr.io",
+  "publicNetworkAccess": "Enabled",
+  "sku": "Basic",
+  "state": "Succeeded"
+}

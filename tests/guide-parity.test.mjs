@@ -8,7 +8,7 @@ import { marked } from 'marked';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const guides = Object.fromEntries(await Promise.all(['ko', 'en'].map(async (language) => [
-  language, await readFile(resolve(root, `MICROSOFT-DISCOVERY-LAB.${language}.md`), 'utf8'),
+  language, await readFile(resolve(root, `docs/labs/MICROSOFT-DISCOVERY-LAB.${language}.md`), 'utf8'),
 ])));
 const expectedSections = [
   's00', 's01', 's02', ...Array.from({ length: 10 }, (_, i) => `l${String(i).padStart(2, '0')}`),

@@ -1,0 +1,212 @@
+[
+  {
+    "message": null,
+    "operation": "Microsoft.Network/networkSecurityPerimeters/resourceAssociations/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/networkSecurityPerimeters/nsp-discoveryholjunwookc-bdnxfqaa/resourceAssociations/nspa-law-dwsp-customlogs-bdnxfqaa-bdnxfqaa",
+    "status": "Accepted",
+    "timestamp": "2026-10-01T13:43:59.2373368Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.Network/networkSecurityPerimeters/resourceAssociations/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/networkSecurityPerimeters/nsp-discoveryholjunwookc-bdnxfqaa/resourceAssociations/nspa-law-dwsp-customlogs-bdnxfqaa-bdnxfqaa",
+    "status": "Started",
+    "timestamp": "2026-10-01T13:43:58.25297Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.Network/networkSecurityPerimeters/ResourceAssociationProxies/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/networkSecurityPerimeters/nsp-discoveryholjunwookc-bdnxfqaa/ResourceAssociationProxies/nspa-cosmos-dwsp-database-bdnxfqaa-bdnxfqaa",
+    "status": "Succeeded",
+    "timestamp": "2026-10-01T13:43:36.8262376Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.Network/networkSecurityPerimeters/ResourceAssociationProxies/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/networkSecurityPerimeters/nsp-discoveryholjunwookc-bdnxfqaa/ResourceAssociationProxies/nspa-cosmos-dwsp-database-bdnxfqaa-bdnxfqaa",
+    "status": "Started",
+    "timestamp": "2026-10-01T13:43:34.2012321Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.Network/networkSecurityPerimeters/resourceAssociations/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/networkSecurityPerimeters/nsp-discoveryholjunwookc-bdnxfqaa/resourceAssociations/nspa-cosmos-dwsp-agentthread-bdnxfqaa-bdnxfqaa",
+    "status": "Succeeded",
+    "timestamp": "2026-10-01T13:43:19.3116494Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.Network/networkSecurityPerimeters/resourceAssociations/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/networkSecurityPerimeters/nsp-discoveryholjunwookc-bdnxfqaa/resourceAssociations/nspa-cosmos-dwsp-database-bdnxfqaa-bdnxfqaa",
+    "status": "Accepted",
+    "timestamp": "2026-10-01T13:43:11.7936212Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.Network/networkSecurityPerimeters/resourceAssociations/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/networkSecurityPerimeters/nsp-discoveryholjunwookc-bdnxfqaa/resourceAssociations/nspa-cosmos-dwsp-database-bdnxfqaa-bdnxfqaa",
+    "status": "Started",
+    "timestamp": "2026-10-01T13:43:11.2780119Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.Network/networkSecurityPerimeters/ResourceAssociationProxies/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/networkSecurityPerimeters/nsp-discoveryholjunwookc-bdnxfqaa/ResourceAssociationProxies/nspa-cosmos-dwsp-agentthread-bdnxfqaa-bdnxfqaa",
+    "status": "Succeeded",
+    "timestamp": "2026-10-01T13:42:59.0746015Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.Network/networkSecurityPerimeters/ResourceAssociationProxies/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/networkSecurityPerimeters/nsp-discoveryholjunwookc-bdnxfqaa/ResourceAssociationProxies/nspa-cosmos-dwsp-agentthread-bdnxfqaa-bdnxfqaa",
+    "status": "Started",
+    "timestamp": "2026-10-01T13:42:58.3714586Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.Network/networkSecurityPerimeters/resourceAssociations/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/networkSecurityPerimeters/nsp-discoveryholjunwookc-bdnxfqaa/resourceAssociations/nspa-stdwspfuncqbdnxfqaa-bdnxfqaa",
+    "status": "Succeeded",
+    "timestamp": "2026-10-01T13:42:36.9729463Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.DocumentDB/databaseAccounts/networkSecurityPerimeterAssociationProxies/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.DocumentDB/databaseAccounts/cosmos-dwsp-agentthread-bdnxfqaa/networkSecurityPerimeterAssociationProxies/64f735d7-b628-4ab8-91c9-89e1c59d22eb.nspa-cosmos-dwsp-agentthread-bdnxfqaa-bdnxfqaa",
+    "status": "Accepted",
+    "timestamp": "2026-10-01T13:42:29.7249923Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.DocumentDB/databaseAccounts/networkSecurityPerimeterAssociationProxies/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.DocumentDB/databaseAccounts/cosmos-dwsp-agentthread-bdnxfqaa/networkSecurityPerimeterAssociationProxies/64f735d7-b628-4ab8-91c9-89e1c59d22eb.nspa-cosmos-dwsp-agentthread-bdnxfqaa-bdnxfqaa",
+    "status": "Started",
+    "timestamp": "2026-10-01T13:42:27.9281283Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.Network/networkSecurityPerimeters/resourceAssociations/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/networkSecurityPerimeters/nsp-discoveryholjunwookc-bdnxfqaa/resourceAssociations/nspa-cosmos-dwsp-agentthread-bdnxfqaa-bdnxfqaa",
+    "status": "Accepted",
+    "timestamp": "2026-10-01T13:42:27.8547045Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.Network/networkSecurityPerimeters/resourceAssociations/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/networkSecurityPerimeters/nsp-discoveryholjunwookc-bdnxfqaa/resourceAssociations/nspa-cosmos-dwsp-agentthread-bdnxfqaa-bdnxfqaa",
+    "status": "Started",
+    "timestamp": "2026-10-01T13:42:26.2296879Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.Storage/storageAccounts/networkSecurityPerimeterAssociationProxies/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Storage/storageAccounts/stdwspfuncqbdnxfqaa/networkSecurityPerimeterAssociationProxies/64f735d7-b628-4ab8-91c9-89e1c59d22eb.nspa-stdwspfuncqbdnxfqaa-bdnxfqaa",
+    "status": "Succeeded",
+    "timestamp": "2026-10-01T13:42:23.5062731Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.Storage/storageAccounts/networkSecurityPerimeterAssociationProxies/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Storage/storageAccounts/stdwspfuncqbdnxfqaa/networkSecurityPerimeterAssociationProxies/64f735d7-b628-4ab8-91c9-89e1c59d22eb.nspa-stdwspfuncqbdnxfqaa-bdnxfqaa",
+    "status": "Started",
+    "timestamp": "2026-10-01T13:42:22.9125223Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.Network/networkSecurityPerimeters/resourceAssociations/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/networkSecurityPerimeters/nsp-discoveryholjunwookc-bdnxfqaa/resourceAssociations/nspa-stdwspfoundrybdnxfqaa-bdnxfqaa",
+    "status": "Succeeded",
+    "timestamp": "2026-10-01T13:42:20.0130358Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.Network/networkSecurityPerimeters/resourceAssociations/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/networkSecurityPerimeters/nsp-discoveryholjunwookc-bdnxfqaa/resourceAssociations/nspa-stdwspfuncqbdnxfqaa-bdnxfqaa",
+    "status": "Accepted",
+    "timestamp": "2026-10-01T13:42:19.335352Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.Network/networkSecurityPerimeters/resourceAssociations/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/networkSecurityPerimeters/nsp-discoveryholjunwookc-bdnxfqaa/resourceAssociations/nspa-stdwspfuncqbdnxfqaa-bdnxfqaa",
+    "status": "Started",
+    "timestamp": "2026-10-01T13:42:18.8353504Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.Storage/storageAccounts/networkSecurityPerimeterAssociationProxies/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Storage/storageAccounts/stdwspfoundrybdnxfqaa/networkSecurityPerimeterAssociationProxies/64f735d7-b628-4ab8-91c9-89e1c59d22eb.nspa-stdwspfoundrybdnxfqaa-bdnxfqaa",
+    "status": "Succeeded",
+    "timestamp": "2026-10-01T13:42:12.537577Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.Storage/storageAccounts/networkSecurityPerimeterAssociationProxies/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Storage/storageAccounts/stdwspfoundrybdnxfqaa/networkSecurityPerimeterAssociationProxies/64f735d7-b628-4ab8-91c9-89e1c59d22eb.nspa-stdwspfoundrybdnxfqaa-bdnxfqaa",
+    "status": "Started",
+    "timestamp": "2026-10-01T13:42:07.1157216Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.Network/networkSecurityPerimeters/resourceAssociations/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/networkSecurityPerimeters/nsp-discoveryholjunwookc-bdnxfqaa/resourceAssociations/nspa-aif-dwsp-foundry-bdnxfqaa-bdnxfqaa",
+    "status": "Succeeded",
+    "timestamp": "2026-10-01T13:42:03.8270925Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.Network/networkSecurityPerimeters/resourceAssociations/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/networkSecurityPerimeters/nsp-discoveryholjunwookc-bdnxfqaa/resourceAssociations/nspa-stdwspfoundrybdnxfqaa-bdnxfqaa",
+    "status": "Accepted",
+    "timestamp": "2026-10-01T13:42:02.4920021Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.Network/networkSecurityPerimeters/resourceAssociations/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/networkSecurityPerimeters/nsp-discoveryholjunwookc-bdnxfqaa/resourceAssociations/nspa-stdwspfoundrybdnxfqaa-bdnxfqaa",
+    "status": "Started",
+    "timestamp": "2026-10-01T13:42:01.4295156Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.CognitiveServices/accounts/networkSecurityPerimeterAssociationProxies/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.CognitiveServices/accounts/aif-dwsp-foundry-bdnxfqaa/networkSecurityPerimeterAssociationProxies/64f735d7-b628-4ab8-91c9-89e1c59d22eb.nspa-aif-dwsp-foundry-bdnxfqaa-bdnxfqaa",
+    "status": "Succeeded",
+    "timestamp": "2026-10-01T13:41:56.7407735Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.CognitiveServices/accounts/networkSecurityPerimeterAssociationProxies/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.CognitiveServices/accounts/aif-dwsp-foundry-bdnxfqaa/networkSecurityPerimeterAssociationProxies/64f735d7-b628-4ab8-91c9-89e1c59d22eb.nspa-aif-dwsp-foundry-bdnxfqaa-bdnxfqaa",
+    "status": "Started",
+    "timestamp": "2026-10-01T13:41:49.3345578Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.Network/networkSecurityPerimeters/resourceAssociations/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/networkSecurityPerimeters/nsp-discoveryholjunwookc-bdnxfqaa/resourceAssociations/nspa-aif-dwsp-foundry-bdnxfqaa-bdnxfqaa",
+    "status": "Accepted",
+    "timestamp": "2026-10-01T13:41:47.2014485Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.Network/networkSecurityPerimeters/resourceAssociations/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/networkSecurityPerimeters/nsp-discoveryholjunwookc-bdnxfqaa/resourceAssociations/nspa-aif-dwsp-foundry-bdnxfqaa-bdnxfqaa",
+    "status": "Started",
+    "timestamp": "2026-10-01T13:41:46.0451698Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.Network/networkSecurityPerimeters/profiles/accessRules/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/networkSecurityPerimeters/nsp-discoveryholjunwookc-bdnxfqaa/profiles/default/accessRules/allow-customer-subscription",
+    "status": "Succeeded",
+    "timestamp": "2026-10-01T13:41:44.8541644Z"
+  },
+  {
+    "message": null,
+    "operation": "Microsoft.Network/networkSecurityPerimeters/profiles/accessRules/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/networkSecurityPerimeters/nsp-discoveryholjunwookc-bdnxfqaa/profiles/default/accessRules/allow-customer-subscription",
+    "status": "Started",
+    "timestamp": "2026-10-01T13:41:44.2447882Z"
+  }
+]

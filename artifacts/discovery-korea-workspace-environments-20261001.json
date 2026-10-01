@@ -1,0 +1,9 @@
+[
+  {
+    "error": null,
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.App/managedEnvironments/mrg-dwsp-discoveryholjunwookc-bdnxfq",
+    "location": "Korea Central",
+    "name": "mrg-dwsp-discoveryholjunwookc-bdnxfq",
+    "state": "Succeeded"
+  }
+]

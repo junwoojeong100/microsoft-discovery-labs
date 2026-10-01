@@ -1,0 +1,43 @@
+{
+  "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/supercomputers/sc-discovery-hol-kc",
+  "location": "swedencentral",
+  "properties": {
+    "customerManagedKeys": "Disabled",
+    "identities": {
+      "clusterIdentity": {
+        "clientId": "61dbcdb3-bc5b-4b15-bed4-c3ea92082398",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-discovery-hol-kc",
+        "principalId": "6eea6eb1-c9fd-45b1-8544-830a17ab526a"
+      },
+      "kubeletIdentity": {
+        "clientId": "61dbcdb3-bc5b-4b15-bed4-c3ea92082398",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-discovery-hol-kc",
+        "principalId": "6eea6eb1-c9fd-45b1-8544-830a17ab526a"
+      },
+      "workloadIdentities": {
+        "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-discovery-hol-kc": {
+          "clientId": "61dbcdb3-bc5b-4b15-bed4-c3ea92082398",
+          "principalId": "6eea6eb1-c9fd-45b1-8544-830a17ab526a"
+        }
+      }
+    },
+    "managedOnBehalfOfConfiguration": {
+      "moboBrokerResources": [
+        {
+          "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Resources/moboBrokers/mobr-dscmp-sc-discovery-hol-kc-a13wxu"
+        }
+      ]
+    },
+    "outboundType": "LoadBalancer",
+    "provisioningState": "Succeeded",
+    "subnetId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol-kc/subnets/aksSubnet",
+    "systemSku": "Standard_D4s_v6"
+  },
+  "tags": {
+    "NetworkIsolation": "true",
+    "SkipAssociateKeyVaultToNsp": "true",
+    "discovery.overridemrgregion": "koreacentral",
+    "environment": "lab",
+    "project": "microsoft-discovery-core-hol"
+  }
+}

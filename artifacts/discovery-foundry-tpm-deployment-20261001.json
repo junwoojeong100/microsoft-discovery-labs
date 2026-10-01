@@ -1,0 +1,72 @@
+{
+  "etag": "\"77f64bfa-e0c7-47f2-9503-469d646c7188\"",
+  "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwoosc-ym5ffv/providers/Microsoft.CognitiveServices/accounts/aif-dwsp-foundry-ym5ffvaa/deployments/gpt-5.4",
+  "name": "gpt-5.4",
+  "properties": {
+    "callRateLimit": null,
+    "capabilities": {
+      "agentsV2": "true",
+      "area": "EUR",
+      "assistants": "true",
+      "chatCompletion": "true",
+      "responses": "true"
+    },
+    "capacitySettings": null,
+    "currentCapacity": 3000,
+    "deploymentState": "Running",
+    "dynamicThrottlingEnabled": null,
+    "model": {
+      "callRateLimit": null,
+      "format": "OpenAI",
+      "name": "gpt-5.4",
+      "publisher": null,
+      "source": null,
+      "sourceAccount": null,
+      "version": "2026-03-05"
+    },
+    "parentDeploymentName": null,
+    "provisioningState": "Succeeded",
+    "raiPolicyName": "cogloopcontentfilter",
+    "rateLimits": [
+      {
+        "count": 30000.0,
+        "dynamicThrottlingEnabled": null,
+        "key": "request",
+        "matchPatterns": null,
+        "minCount": null,
+        "renewalPeriod": 60.0
+      },
+      {
+        "count": 3000000.0,
+        "dynamicThrottlingEnabled": null,
+        "key": "token",
+        "matchPatterns": null,
+        "minCount": null,
+        "renewalPeriod": 60.0
+      }
+    ],
+    "routing": null,
+    "scaleSettings": null,
+    "serviceTier": "Default",
+    "spilloverDeploymentName": null,
+    "versionUpgradeOption": "OnceCurrentVersionExpired"
+  },
+  "resourceGroup": "mrg-dwsp-discoveryholjunwoosc-ym5ffv",
+  "sku": {
+    "capacity": 3000,
+    "family": null,
+    "name": "GlobalStandard",
+    "size": null,
+    "tier": null
+  },
+  "systemData": {
+    "createdAt": "2026-10-01T01:16:29.181242+00:00",
+    "createdBy": "92c174ac-8e41-4815-a1b7-d81b19ab03ce",
+    "createdByType": "Application",
+    "lastModifiedAt": "2026-10-01T10:48:30.868508+00:00",
+    "lastModifiedBy": "junwoojeong@MngEnvMCAP757124.onmicrosoft.com",
+    "lastModifiedByType": "User"
+  },
+  "tags": null,
+  "type": "Microsoft.CognitiveServices/accounts/deployments"
+}

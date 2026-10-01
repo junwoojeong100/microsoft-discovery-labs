@@ -42,9 +42,9 @@
 ## 원본 자료
 
 - [활성 범위 설정](../../config/lab.json)
-- [전체 한국어 실습 가이드](../../MICROSOFT-DISCOVERY-LAB.ko.md)
-- [상세 아키텍처와 버전 의존성](../../MICROSOFT-DISCOVERY-ARCHITECTURE.ko.md)
-- [날짜별 실제 실행 보고서](../../EXECUTION-REPORT.ko.md)
+- [전체 한국어 실습 가이드](../labs/MICROSOFT-DISCOVERY-LAB.ko.md)
+- [상세 아키텍처와 버전 의존성](../architecture/MICROSOFT-DISCOVERY-ARCHITECTURE.ko.md)
+- [날짜별 실제 실행 보고서](../reports/EXECUTION-REPORT.ko.md)
 - [개인 연락처를 제외한 quota 접수 기록](../../artifacts/discovery-model-quota-requests-20261001.json)
 
 토큰, 비밀번호, 개인 키, 신청인의 회사 이메일·주소 등 연락처는 이 참고 자료에 저장하지 않는다. 이 문서의 명령은 저장소 루트에서 실행하는 예시이며, **변경 명령은 별도 승인과 검증 후에만** 사용한다.

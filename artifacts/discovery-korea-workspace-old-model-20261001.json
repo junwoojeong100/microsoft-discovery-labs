@@ -1,0 +1,20 @@
+{
+  "capacity": 1,
+  "currentCapacity": 1,
+  "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwoosc-ym5ffv/providers/Microsoft.CognitiveServices/accounts/aif-dwsp-foundry-ym5ffvaa/deployments/gpt-5.4",
+  "rateLimits": [
+    {
+      "count": 10,
+      "key": "request",
+      "renewalPeriod": 60
+    },
+    {
+      "count": 1000,
+      "key": "token",
+      "renewalPeriod": 60
+    }
+  ],
+  "state": "Succeeded",
+  "updatedAt": "2026-10-01T12:46:15.4469151Z",
+  "version": "2026-03-05"
+}

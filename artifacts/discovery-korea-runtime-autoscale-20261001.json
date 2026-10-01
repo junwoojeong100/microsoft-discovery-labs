@@ -1,0 +1,20 @@
+{
+  "location": "koreacentral",
+  "pools": [
+    {
+      "count": 2,
+      "max": 3,
+      "min": 2,
+      "name": "system",
+      "state": "Succeeded"
+    },
+    {
+      "count": 0,
+      "max": 1,
+      "min": 0,
+      "name": "cpulab",
+      "state": "Succeeded"
+    }
+  ],
+  "state": "Succeeded"
+}

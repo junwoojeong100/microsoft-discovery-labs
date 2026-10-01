@@ -1,0 +1,10 @@
+using './cross-region-foundation.bicep'
+
+param targetComputeLocation = 'koreacentral'
+param virtualNetworkName = 'vnet-discovery-hol-kc'
+param identityName = 'id-discovery-hol-kc'
+param storageAccountName = 'stdiscoveryholjunwookc'
+param registryName = 'acrdiscoveryholjunwookc'
+param privateEndpointName = 'pe-discovery-blob-kc'
+param virtualNetworkLinkName = 'discovery-lab-kc'
+param administratorObjectId = '085bc565-8298-4c5b-a726-20050d18cbb7'

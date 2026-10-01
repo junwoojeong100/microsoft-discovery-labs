@@ -1,0 +1,122 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "languageVersion": "2.0",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.45.15.27210",
+      "templateHash": "6900071727582780527"
+    }
+  },
+  "parameters": {
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]"
+    },
+    "targetComputeLocation": {
+      "type": "string",
+      "defaultValue": "[parameters('location')]",
+      "metadata": {
+        "description": "Managed runtime region. Discovery resources themselves remain in the home location. Set the override when creating new resources, not to migrate existing ones."
+      }
+    },
+    "skipAssociateKeyVaultToNsp": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Required by the cross-region guide for Microsoft-owned subscriptions only."
+      }
+    },
+    "identityName": {
+      "type": "string",
+      "defaultValue": "id-discovery-hol"
+    },
+    "virtualNetworkName": {
+      "type": "string",
+      "defaultValue": "vnet-discovery-hol"
+    },
+    "storageAccountName": {
+      "type": "string",
+      "defaultValue": "stdiscoveryholjunwoosc"
+    },
+    "supercomputerName": {
+      "type": "string",
+      "defaultValue": "sc-discovery-hol"
+    },
+    "workspaceName": {
+      "type": "string",
+      "defaultValue": "discoveryholjunwoosc"
+    },
+    "projectName": {
+      "type": "string",
+      "defaultValue": "thermalhol"
+    },
+    "storageContainerName": {
+      "type": "string",
+      "defaultValue": "thermaldata"
+    },
+    "deployCompute": {
+      "type": "bool",
+      "defaultValue": true,
+      "metadata": {
+        "description": "False separates Workspace preparation from compute. It does not bypass regional capacity limits or complete the compute labs."
+      }
+    }
+  },
+  "variables": {
+    "tags": {
+      "environment": "lab",
+      "project": "microsoft-discovery-core-hol",
+      "NetworkIsolation": "true"
+    },
+    "managedResourceTags": "[union(variables('tags'), if(equals(parameters('targetComputeLocation'), parameters('location')), createObject(), createObject('discovery.overridemrgregion', parameters('targetComputeLocation'))), if(parameters('skipAssociateKeyVaultToNsp'), createObject('SkipAssociateKeyVaultToNsp', 'true'), createObject()))]"
+  },
+  "resources": {
+    "identity": {
+      "existing": true,
+      "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+      "apiVersion": "2024-11-30",
+      "name": "[parameters('identityName')]"
+    },
+    "supercomputer": {
+      "type": "Microsoft.Discovery/supercomputers",
+      "apiVersion": "2026-06-01",
+      "name": "[parameters('supercomputerName')]",
+      "existing": true
+    },
+    "workspace": {
+      "type": "Microsoft.Discovery/workspaces",
+      "apiVersion": "2026-06-01",
+      "name": "[parameters('workspaceName')]",
+      "location": "[parameters('location')]",
+      "tags": "[variables('managedResourceTags')]",
+      "properties": {
+        "workspaceIdentity": {
+          "id": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('identityName'))]"
+        },
+        "supercomputerIds": "[if(parameters('deployCompute'), createArray(resourceId('Microsoft.Discovery/supercomputers', parameters('supercomputerName'))), createArray())]",
+        "workspaceSubnetId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), 'workspaceSubnet')]",
+        "privateEndpointSubnetId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), 'privateEndpointSubnet')]",
+        "agentSubnetId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), 'agentSubnet')]",
+        "customerManagedKeys": "Disabled",
+        "publicNetworkAccess": "Enabled"
+      },
+      "dependsOn": []
+    }
+  },
+  "outputs": {
+    "workspaceId": {
+      "type": "string",
+      "value": "[resourceId('Microsoft.Discovery/workspaces', parameters('workspaceName'))]"
+    },
+    "workspaceApiUri": {
+      "type": "string",
+      "value": "[reference('workspace').workspaceApiUri]"
+    },
+    "workspaceUiUri": {
+      "type": "string",
+      "value": "[reference('workspace').workspaceUiUri]"
+    }
+  }
+}

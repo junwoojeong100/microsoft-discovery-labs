@@ -1,0 +1,27 @@
+[
+  {
+    "error": null,
+    "resource": "discoveryholjunwookc/thermalhol",
+    "state": "Running"
+  },
+  {
+    "error": null,
+    "resource": "thermaldata-kc/candidatecsv",
+    "state": "Succeeded"
+  },
+  {
+    "error": null,
+    "resource": "thermaldata-kc/evidencepack",
+    "state": "Succeeded"
+  },
+  {
+    "error": null,
+    "resource": "discoveryholjunwookc/gpt-5-4",
+    "state": "Succeeded"
+  },
+  {
+    "error": null,
+    "resource": "thermaldata-kc",
+    "state": "Succeeded"
+  }
+]

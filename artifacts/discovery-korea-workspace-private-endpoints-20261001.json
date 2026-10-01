@@ -1,0 +1,86 @@
+[
+  {
+    "connections": [
+      {
+        "description": "Approved",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.CognitiveServices/accounts/aif-dwsp-foundry-bdnxfqaa",
+        "status": "Approved"
+      }
+    ],
+    "location": "koreacentral",
+    "name": "aif-dwsp-foundry-bdnxfqaa-aiservices-pe",
+    "state": "Succeeded"
+  },
+  {
+    "connections": [
+      {
+        "description": "",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.DocumentDB/databaseAccounts/cosmos-dwsp-agentthread-bdnxfqaa",
+        "status": "Approved"
+      }
+    ],
+    "location": "koreacentral",
+    "name": "cosmos-dwsp-agentthread-bdnxfqaa-cosmosdb-pe",
+    "state": "Succeeded"
+  },
+  {
+    "connections": [
+      {
+        "description": "Auto-approved",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Search/searchServices/srch-dwsp-foundry-bdnxfqaa",
+        "status": "Approved"
+      }
+    ],
+    "location": "koreacentral",
+    "name": "srch-dwsp-foundry-bdnxfqaa-search-pe",
+    "state": "Succeeded"
+  },
+  {
+    "connections": [
+      {
+        "description": "Auto-Approved",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Storage/storageAccounts/stdwspfoundrybdnxfqaa",
+        "status": "Approved"
+      }
+    ],
+    "location": "koreacentral",
+    "name": "stdwspfoundrybdnxfqaa-storage-blob-pe",
+    "state": "Succeeded"
+  },
+  {
+    "connections": [
+      {
+        "description": "Auto-Approved",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Storage/storageAccounts/stdwspfoundrybdnxfqaa",
+        "status": "Approved"
+      }
+    ],
+    "location": "koreacentral",
+    "name": "stdwspfoundrybdnxfqaa-storage-file-pe",
+    "state": "Succeeded"
+  },
+  {
+    "connections": [
+      {
+        "description": "Auto-Approved",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Storage/storageAccounts/stdwspfoundrybdnxfqaa",
+        "status": "Approved"
+      }
+    ],
+    "location": "koreacentral",
+    "name": "stdwspfoundrybdnxfqaa-storage-queue-pe",
+    "state": "Succeeded"
+  },
+  {
+    "connections": [
+      {
+        "description": "Auto-Approved",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Storage/storageAccounts/stdwspfoundrybdnxfqaa",
+        "status": "Approved"
+      }
+    ],
+    "location": "koreacentral",
+    "name": "stdwspfoundrybdnxfqaa-storage-table-pe",
+    "state": "Succeeded"
+  }
+]

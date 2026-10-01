@@ -1,0 +1,293 @@
+{
+  "verifiedAt": "2026-10-01T12:32:43.609Z",
+  "outcome": "compute_and_support_infrastructure_succeeded_workspace_blocked",
+  "homeRegion": "swedencentral",
+  "targetComputeRegion": "koreacentral",
+  "subscriptionId": "51531604-2337-4c05-bc05-3c3d4ff154e5",
+  "resourceGroup": "rg-discovery-hol-20260930",
+  "deployments": [
+    {
+      "name": "discovery-korea-foundation-20261001",
+      "state": "Succeeded",
+      "completedTimestamp": "2026-10-01T12:05:23.977799+00:00",
+      "correlationId": "7bae398f-2d3c-4745-a635-9a201844aa10"
+    },
+    {
+      "name": "discovery-korea-compute-20261001",
+      "state": "Succeeded",
+      "completedTimestamp": "2026-10-01T12:28:45.924125+00:00",
+      "correlationId": "3d539b46-1818-4c7e-914c-c00934d1177e"
+    }
+  ],
+  "supercomputer": {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/supercomputers/sc-discovery-hol-kc",
+    "state": "Succeeded",
+    "location": "swedencentral",
+    "tags": {
+      "NetworkIsolation": "true",
+      "SkipAssociateKeyVaultToNsp": "true",
+      "discovery.overridemrgregion": "koreacentral",
+      "environment": "lab",
+      "project": "microsoft-discovery-core-hol"
+    }
+  },
+  "nodePool": {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/supercomputers/sc-discovery-hol-kc/nodePools/cpulab",
+    "state": "Succeeded",
+    "location": "swedencentral",
+    "min": 0,
+    "max": 1,
+    "sku": "Standard_D4s_v6"
+  },
+  "managedResourceGroup": {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu",
+    "location": "swedencentral",
+    "managedBy": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/supercomputers/sc-discovery-hol-kc",
+    "name": "mrg-dscmp-sc-discovery-hol-kc-a13wxu",
+    "state": "Succeeded"
+  },
+  "aks": {
+    "azurePolicy": null,
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-a13wxu",
+    "location": "koreacentral",
+    "nodeResourceGroup": "MC_mrg-dscmp-sc-discovery-hol-kc-a13wxu_aks-dscmp-a13wxu_koreacentral",
+    "pools": [
+      {
+        "count": 2,
+        "max": 3,
+        "min": 2,
+        "mode": "System",
+        "name": "system",
+        "state": "Succeeded",
+        "subnet": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol-kc/subnets/aksSubnet",
+        "vmSize": "Standard_D4s_v6"
+      },
+      {
+        "count": 0,
+        "max": 1,
+        "min": 0,
+        "mode": "User",
+        "name": "cpulab",
+        "state": "Succeeded",
+        "subnet": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol-kc/subnets/supercomputerNodepoolSubnet",
+        "vmSize": "Standard_D4s_v6"
+      }
+    ],
+    "state": "Succeeded"
+  },
+  "support": {
+    "vnet": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol-kc",
+    "identity": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-discovery-hol-kc",
+    "storage": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Storage/storageAccounts/stdiscoveryholjunwookc",
+    "registry": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.ContainerRegistry/registries/acrdiscoveryholjunwookc",
+    "privateEndpoint": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/privateEndpoints/pe-discovery-blob-kc",
+    "privateDns": {
+      "fqdn": "stdiscoveryholjunwookc.privatelink.blob.core.windows.net.",
+      "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/privateDnsZones/privatelink.blob.core.windows.net/A/stdiscoveryholjunwookc",
+      "records": [
+        {
+          "ipv4Address": "10.80.8.4"
+        }
+      ]
+    },
+    "rolesVerified": true
+  },
+  "workspace": {
+    "submitted": false,
+    "configuredName": "discoveryholjunwookc",
+    "reason": "Zero unallocated GPT-5.4 GlobalStandard TPM at the target quota endpoint; existing 3,000,000 TPM allocation preserved. Reallocation confirmation was unavailable.",
+    "requiredNewTpm": 500000
+  },
+  "bookshelf": {
+    "submitted": false,
+    "reason": "Operational gpt-5-mini and embedding quota remain insufficient"
+  },
+  "governance": {
+    "status": "separate_policy_addon_provisioning_failure",
+    "failedDeployments": [
+      {
+        "name": "Policy-Update-aks-dscmp-a13wxu",
+        "error": {
+          "additionalInfo": null,
+          "code": "DeploymentFailed",
+          "details": [
+            {
+              "additionalInfo": null,
+              "code": "LinkedAuthorizationFailed",
+              "details": null,
+              "message": "The client '5e93f33d-f8f5-42e4-86f4-82426e071044' with object id '02e03d89-915c-4be6-a882-ebde1beda2e4' has permission to perform action 'Microsoft.ContainerService/managedClusters/write' on scope '/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-a13wxu'; however, it does not have permission to perform action(s) 'Microsoft.Network/virtualNetworks/subnets/join/action' on the linked scope(s) '/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol-kc/subnets/aksSubnet' (respectively) or the linked scope(s) are invalid.",
+              "target": null
+            }
+          ],
+          "message": "At least one resource deployment operation failed. Please list deployment operations for details. Please see https://aka.ms/arm-deployment-operations for usage details.",
+          "target": null
+        }
+      },
+      {
+        "name": "PolicyDeployment_6833426721961857027",
+        "error": {
+          "additionalInfo": null,
+          "code": "DeploymentFailed",
+          "details": [
+            {
+              "additionalInfo": null,
+              "code": "ResourceDeploymentFailure",
+              "details": null,
+              "message": "The resource write operation failed to complete successfully, because it reached terminal provisioning state 'Failed'.",
+              "target": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.Resources/deployments/Policy-Update-aks-dscmp-a13wxu"
+            }
+          ],
+          "message": "At least one resource deployment operation failed. Please list deployment operations for details. Please see https://aka.ms/arm-deployment-operations for usage details.",
+          "target": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.Resources/deployments/PolicyDeployment_6833426721961857027"
+        }
+      }
+    ],
+    "assignment": {
+      "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Authorization/policyAssignments/Defender for Containers provisioning Azure Policy Addon for Kub",
+      "identity": {
+        "principalId": "02e03d89-915c-4be6-a882-ebde1beda2e4",
+        "tenantId": "46e9cdaa-fed3-4131-aa28-c1fc8a8a043a",
+        "type": "SystemAssigned"
+      },
+      "name": "Defender for Containers provisioning Azure Policy Addon for Kub",
+      "parameters": null,
+      "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/a8eff44f-8c92-45c3-a3fb-9880802d67a7"
+    },
+    "missingPermission": "Microsoft.Network/virtualNetworks/subnets/join/action",
+    "linkedScope": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol-kc/subnets/aksSubnet",
+    "rolesOrPoliciesChangedForThisIssue": false
+  },
+  "cleanup": {
+    "performedByAgent": false,
+    "handedToUser": true,
+    "oldParent": "sc-discovery-hol",
+    "oldManagedResourceGroup": "mrg-dscmp-sc-discovery-hol-b6wiwf",
+    "neverDeleteForOldCleanup": [
+      "rg-discovery-hol-20260930",
+      "mrg-dscmp-sc-discovery-hol-kc-a13wxu",
+      "mrg-dwsp-discoveryholjunwoosc-ym5ffv",
+      "McapsGovernance"
+    ]
+  },
+  "verificationBoundaries": [
+    "No old resource deletion or model quota reduction",
+    "No new Workspace, Foundry cognition or validation model, Project, or Bookshelf deployed",
+    "No Blob data or tool image copied to the new storage/registry",
+    "No in-cluster tool execution, Studio investigation, or end-to-end Discovery run verified",
+    "No claim of full Azure Policy compliance; the separate addon failure is retained"
+  ],
+  "evidence": {
+    "foundation-deployment": {
+      "path": "artifacts/discovery-korea-foundation-deployment-20261001.json",
+      "collectedAt": "2026-10-01T12:05:41.254Z"
+    },
+    "compute-deployment": {
+      "path": "artifacts/discovery-korea-compute-deployment-20261001.json",
+      "collectedAt": "2026-10-01T12:30:23.329Z"
+    },
+    "compute-resource": {
+      "path": "artifacts/discovery-korea-compute-resource-20261001.json",
+      "collectedAt": "2026-10-01T12:24:23.831Z"
+    },
+    "cpulab": {
+      "path": "artifacts/discovery-korea-cpulab-20261001.json",
+      "collectedAt": "2026-10-01T12:27:48.733Z"
+    },
+    "aks-current": {
+      "path": "artifacts/discovery-korea-aks-current-20261001.json",
+      "collectedAt": "2026-10-01T12:27:47.051Z"
+    },
+    "home-group": {
+      "path": "artifacts/discovery-korea-home-group-20261001.json",
+      "collectedAt": "2026-10-01T12:30:25.737Z"
+    },
+    "compute-managed-groups": {
+      "path": "artifacts/discovery-korea-compute-managed-groups-20261001.json",
+      "collectedAt": "2026-10-01T12:14:51.372Z"
+    },
+    "compute-managed-resources": {
+      "path": "artifacts/discovery-korea-compute-managed-resources-20261001.json",
+      "collectedAt": "2026-10-01T12:15:16.877Z"
+    },
+    "registry": {
+      "path": "artifacts/discovery-korea-registry-20261001.json",
+      "collectedAt": "2026-10-01T12:30:24.245Z"
+    },
+    "network": {
+      "path": "artifacts/discovery-korea-network-20261001.json",
+      "collectedAt": "2026-10-01T12:06:18.747Z"
+    },
+    "storage": {
+      "path": "artifacts/discovery-korea-storage-20261001.json",
+      "collectedAt": "2026-10-01T12:07:12.734Z"
+    },
+    "private-endpoint": {
+      "path": "artifacts/discovery-korea-private-endpoint-20261001.json",
+      "collectedAt": "2026-10-01T12:07:10.573Z"
+    },
+    "dns-link": {
+      "path": "artifacts/discovery-korea-dns-link-20261001.json",
+      "collectedAt": "2026-10-01T12:07:14.951Z"
+    },
+    "private-dns": {
+      "path": "artifacts/discovery-korea-private-dns-20261001.json",
+      "collectedAt": "2026-10-01T12:30:24.667Z"
+    },
+    "postdeploy-roles": {
+      "path": "artifacts/discovery-korea-postdeploy-roles-20261001.json",
+      "collectedAt": "2026-10-01T12:30:26.305Z"
+    },
+    "workspace-boundary": {
+      "path": "artifacts/discovery-korea-workspace-boundary-20261001.json",
+      "collectedAt": "2026-10-01T12:30:22.988Z"
+    },
+    "readiness": {
+      "path": "artifacts/discovery-korea-readiness-20261001.json",
+      "collectedAt": "2026-10-01T12:18:59.158Z"
+    },
+    "preserved-model": {
+      "path": "artifacts/discovery-korea-preserved-model-20261001.json",
+      "collectedAt": "2026-10-01T12:20:55.730Z"
+    },
+    "managed-deployments": {
+      "path": "artifacts/discovery-korea-managed-deployments-20261001.json",
+      "collectedAt": "2026-10-01T12:24:24.008Z"
+    },
+    "policy-assignment": {
+      "path": "artifacts/discovery-korea-policy-assignment-20261001.json",
+      "collectedAt": "2026-10-01T12:26:54.730Z"
+    },
+    "nodeResourceGroup": {
+      "path": "artifacts/discovery-korea-node-resource-group-20261001.json",
+      "collectedAt": "2026-10-01T12:32:18.377Z"
+    },
+    "vmss": {
+      "path": "artifacts/discovery-korea-vmss-20261001.json",
+      "collectedAt": "2026-10-01T12:32:19.401Z"
+    }
+  },
+  "backingNodeResourceGroup": {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/MC_mrg-dscmp-sc-discovery-hol-kc-a13wxu_aks-dscmp-a13wxu_koreacentral",
+    "location": "koreacentral",
+    "managedBy": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-a13wxu",
+    "state": "Succeeded"
+  },
+  "scaleSets": [
+    {
+      "capacity": 0,
+      "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/MC_mrg-dscmp-sc-discovery-hol-kc-a13wxu_aks-dscmp-a13wxu_koreacentral/providers/Microsoft.Compute/virtualMachineScaleSets/aks-cpulab-21384680-vmss",
+      "location": "koreacentral",
+      "name": "aks-cpulab-21384680-vmss",
+      "sku": "Standard_D4s_v6",
+      "state": "Succeeded"
+    },
+    {
+      "capacity": 2,
+      "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/MC_mrg-dscmp-sc-discovery-hol-kc-a13wxu_aks-dscmp-a13wxu_koreacentral/providers/Microsoft.Compute/virtualMachineScaleSets/aks-system-33633578-vmss",
+      "location": "koreacentral",
+      "name": "aks-system-33633578-vmss",
+      "sku": "Standard_D4s_v6",
+      "state": "Succeeded"
+    }
+  ]
+}

@@ -3,6 +3,8 @@ targetScope = 'resourceGroup'
 param location string = resourceGroup().location
 param virtualNetworkName string = 'vnet-discovery-hol'
 param storageAccountName string = 'stdiscoveryholjunwoosc'
+param privateEndpointName string = 'pe-discovery-blob'
+param virtualNetworkLinkName string = 'discovery-lab'
 
 @description('Reuse a Blob private DNS zone only after verifying it is already linked to this VNet. Empty creates a lab-owned zone and link.')
 param existingBlobPrivateDnsZoneId string = ''
@@ -26,7 +28,7 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
 }
 
 resource endpoint 'Microsoft.Network/privateEndpoints@2024-05-01' = {
-  name: 'pe-discovery-blob'
+  name: privateEndpointName
   location: location
   tags: {
     environment: 'lab'
@@ -61,7 +63,7 @@ resource blobZone 'Microsoft.Network/privateDnsZones@2020-06-01' = if (empty(exi
 
 resource link 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = if (empty(existingBlobPrivateDnsZoneId)) {
   parent: blobZone
-  name: 'discovery-lab'
+  name: virtualNetworkLinkName
   location: 'global'
   properties: {
     registrationEnabled: false

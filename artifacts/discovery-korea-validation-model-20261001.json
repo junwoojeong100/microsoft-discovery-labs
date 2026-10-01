@@ -1,0 +1,22 @@
+{
+  "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/workspaces/discoveryholjunwookc/chatModelDeployments/gpt-5-4",
+  "location": "swedencentral",
+  "name": "gpt-5-4",
+  "properties": {
+    "capacity": 250,
+    "modelFormat": "OpenAI",
+    "modelName": "gpt-5.4",
+    "modelVersion": "2026-03-05",
+    "provisioningState": "Succeeded",
+    "skuName": "GlobalStandard"
+  },
+  "systemData": {
+    "createdAt": "2026-10-01T14:00:46.0545102Z",
+    "createdBy": "junwoojeong@MngEnvMCAP757124.onmicrosoft.com",
+    "createdByType": "User",
+    "lastModifiedAt": "2026-10-01T14:00:46.0545102Z",
+    "lastModifiedBy": "junwoojeong@MngEnvMCAP757124.onmicrosoft.com",
+    "lastModifiedByType": "User"
+  },
+  "type": "microsoft.discovery/workspaces/chatmodeldeployments"
+}

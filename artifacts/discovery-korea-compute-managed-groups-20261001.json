@@ -1,0 +1,9 @@
+[
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu",
+    "location": "swedencentral",
+    "managedBy": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/supercomputers/sc-discovery-hol-kc",
+    "name": "mrg-dscmp-sc-discovery-hol-kc-a13wxu",
+    "state": "Succeeded"
+  }
+]

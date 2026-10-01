@@ -1,0 +1,30 @@
+{
+  "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/supercomputers/sc-discovery-hol-kc/nodePools/cpulab",
+  "location": "swedencentral",
+  "name": "cpulab",
+  "properties": {
+    "imageCacheLowerThreshold": 40,
+    "imageCacheUpperThreshold": 60,
+    "maxNodeCount": 1,
+    "minNodeCount": 0,
+    "osDiskSizeGb": 128,
+    "provisioningState": "Succeeded",
+    "scaleSetPriority": "Regular",
+    "subnetId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol-kc/subnets/supercomputerNodepoolSubnet",
+    "vmSize": "Standard_D4s_v6"
+  },
+  "systemData": {
+    "createdAt": "2026-10-01T12:24:29.4604014Z",
+    "createdBy": "junwoojeong@MngEnvMCAP757124.onmicrosoft.com",
+    "createdByType": "User",
+    "lastModifiedAt": "2026-10-01T12:24:29.4604014Z",
+    "lastModifiedBy": "junwoojeong@MngEnvMCAP757124.onmicrosoft.com",
+    "lastModifiedByType": "User"
+  },
+  "tags": {
+    "NetworkIsolation": "true",
+    "environment": "lab",
+    "project": "microsoft-discovery-core-hol"
+  },
+  "type": "microsoft.discovery/supercomputers/nodepools"
+}

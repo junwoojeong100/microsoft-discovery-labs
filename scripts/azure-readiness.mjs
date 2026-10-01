@@ -2,7 +2,7 @@ import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { parseArgs } from 'node:util';
 import {
   assessModelQuotas, azJson, discoveryGate, modelRequirements, providerSummary,
-  redact, safeArmUrl, selectAccount, validateConfig,
+  redact, safeArmUrl, selectAccount, targetComputeLocation, validateConfig,
 } from './lab-support.mjs';
 
 const root = new URL('../', import.meta.url);
@@ -62,7 +62,7 @@ try {
       (body) => body.error ? body : body.value.map((item) => ({ name: item.name, state: item.properties.state }))),
     get(`${scope}/providers/Microsoft.Discovery/workspaces?api-version=2026-06-01`,
       (body) => body.error ? body : { value: body.value.map((item) => ({ id: item.id, state: item.properties.provisioningState })) }),
-    get(`${scope}/providers/Microsoft.CognitiveServices/locations/${config.location}/usages?api-version=2025-06-01`,
+    get(`${scope}/providers/Microsoft.CognitiveServices/locations/${targetComputeLocation(config)}/usages?api-version=2025-06-01`,
       (body) => body.error ? body : body.value.filter((item) =>
         modelRequirements.some(({ model }) => item.name.value === `OpenAI.GlobalStandard.${model}`))),
   ]);

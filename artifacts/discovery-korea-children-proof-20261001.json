@@ -1,0 +1,47 @@
+{
+  "validatedAt": "2026-10-01T14:00:11.229Z",
+  "status": "validated_final_globalstandard_children",
+  "parentState": "Succeeded",
+  "home": "swedencentral",
+  "target": "koreacentral",
+  "creates": [
+    {
+      "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/storageContainers/thermaldata-kc",
+      "type": "Microsoft.Discovery/storageContainers"
+    },
+    {
+      "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/storageContainers/thermaldata-kc/storageAssets/candidatecsv",
+      "type": "Microsoft.Discovery/storageContainers/storageAssets"
+    },
+    {
+      "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/storageContainers/thermaldata-kc/storageAssets/evidencepack",
+      "type": "Microsoft.Discovery/storageContainers/storageAssets"
+    },
+    {
+      "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/workspaces/discoveryholjunwookc/chatModelDeployments/gpt-5-4",
+      "type": "Microsoft.Discovery/workspaces/chatModelDeployments"
+    },
+    {
+      "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/workspaces/discoveryholjunwookc/projects/thermalhol",
+      "type": "Microsoft.Discovery/workspaces/projects"
+    }
+  ],
+  "modifies": 0,
+  "deletes": 0,
+  "cognitionTpm": 250000,
+  "validationTpm": 250000,
+  "finalNewWorkspaceTpm": 500000,
+  "oldSwedenTpm": 1000,
+  "model": {
+    "capacity": 250,
+    "modelFormat": "OpenAI",
+    "modelName": "gpt-5.4",
+    "modelVersion": "2026-03-05",
+    "skuName": "GlobalStandard"
+  },
+  "availableBeforeCreateTpm": 2749000,
+  "expectedRemainingAfterCreateTpm": 2499000,
+  "DataZoneAlternativeSubmitted": false,
+  "existingModelWrites": false,
+  "storageAssetsAreReferencesNotFileCopies": true
+}

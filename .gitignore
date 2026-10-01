@@ -9,3 +9,4 @@ __pycache__/
 .playwright-mcp/
 artifacts/raw/
 artifacts/narration/
+site/

@@ -1,0 +1,70 @@
+[
+  {
+    "displayName": "Azure Security Baseline",
+    "enforcementMode": "Default",
+    "name": "Azure_Security_Baseline",
+    "parameters": {
+      "disableUnrestrictedNetworkToStorageAccountMonitoringEffect": {
+        "value": "Audit"
+      },
+      "fTPSOnlyShouldBeRequiredInYourAPIAppMonitoringEffect": {
+        "value": "Disabled"
+      },
+      "fTPSOnlyShouldBeRequiredInYourFunctionAppMonitoringEffect": {
+        "value": "Disabled"
+      },
+      "fTPSShouldBeRequiredInYourWebAppMonitoringEffect": {
+        "value": "Disabled"
+      },
+      "keysExpirationSetEffect": {
+        "value": "Audit"
+      },
+      "networkSecurityGroupsOnSubnetsMonitoringEffect": {
+        "value": "AuditIfNotExists"
+      },
+      "secretsExpirationSetEffect": {
+        "value": "Audit"
+      },
+      "vnetEnableDDoSProtectionMonitoringEffect": {
+        "value": "Disabled"
+      },
+      "windowsWebServersShouldBeConfiguredToUseSecureCommunicationProtocolsMinimumTLSVersion": {
+        "value": "1.2"
+      }
+    },
+    "policyDefinitionId": "/providers/Microsoft.Authorization/policySetDefinitions/1f3afdf9-d0c9-4c3d-847f-89da613e70a8",
+    "scope": "/providers/Microsoft.Management/managementGroups/46e9cdaa-fed3-4131-aa28-c1fc8a8a043a"
+  },
+  {
+    "displayName": "MCAPSGov Deny Policies",
+    "enforcementMode": "Default",
+    "name": "MCAPSGovDenyPolicies",
+    "parameters": null,
+    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/46e9cdaa-fed3-4131-aa28-c1fc8a8a043a/providers/Microsoft.Authorization/policySetDefinitions/MCAPSGovDenyPolicies",
+    "scope": "/providers/Microsoft.Management/managementGroups/46e9cdaa-fed3-4131-aa28-c1fc8a8a043a"
+  },
+  {
+    "displayName": "MCAPSGov Audit Policies",
+    "enforcementMode": "Default",
+    "name": "MCAPSGovAuditPolicies",
+    "parameters": null,
+    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/46e9cdaa-fed3-4131-aa28-c1fc8a8a043a/providers/Microsoft.Authorization/policySetDefinitions/MCAPSGovAuditPolicies",
+    "scope": "/providers/Microsoft.Management/managementGroups/46e9cdaa-fed3-4131-aa28-c1fc8a8a043a"
+  },
+  {
+    "displayName": "MCAPSGov Deploy and Modify Policies",
+    "enforcementMode": "Default",
+    "name": "MCAPSGovDeployPolicies",
+    "parameters": null,
+    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/46e9cdaa-fed3-4131-aa28-c1fc8a8a043a/providers/Microsoft.Authorization/policySetDefinitions/MCAPSGovDeployPolicies",
+    "scope": "/providers/Microsoft.Management/managementGroups/46e9cdaa-fed3-4131-aa28-c1fc8a8a043a"
+  },
+  {
+    "displayName": "Block Azure RM Resource Creation",
+    "enforcementMode": "Default",
+    "name": "735fe1d18af84e69a99bd5ec",
+    "parameters": {},
+    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/46e9cdaa-fed3-4131-aa28-c1fc8a8a043a/providers/Microsoft.Authorization/policyDefinitions/20b376a2-13e4-4d66-bd94-ed4b8543ac9b",
+    "scope": "/providers/Microsoft.Management/managementGroups/46e9cdaa-fed3-4131-aa28-c1fc8a8a043a"
+  }
+]

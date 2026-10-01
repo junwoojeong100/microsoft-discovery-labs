@@ -1,0 +1,27 @@
+{
+  "validatedAt": "2026-10-01T12:51:10.580Z",
+  "status": "validated_workspace_only",
+  "subscription": "51531604-2337-4c05-bc05-3c3d4ff154e5",
+  "resourceGroup": "rg-discovery-hol-20260930",
+  "home": "swedencentral",
+  "target": "koreacentral",
+  "name": "discoveryholjunwookc",
+  "creates": 1,
+  "modifies": 0,
+  "deletes": 0,
+  "gpt54AvailableTpm": 2999000,
+  "oldModelDesiredTpm": 1000,
+  "existingComputeUnchanged": true,
+  "existingIdentityRolesVerified": true,
+  "modelAllocation": "Automatic new cognition initially 250,000 TPM; separate 250,000 TPM validation stage after parent succeeds",
+  "publicEndpoint": "Authenticated Discovery Studio/REST endpoint enabled; managed resource isolation retained",
+  "testsPassed": 22,
+  "excluded": [
+    "old Workspace",
+    "old model allocation",
+    "existing compute updates",
+    "customer infrastructure writes",
+    "RBAC changes",
+    "Bookshelf"
+  ]
+}

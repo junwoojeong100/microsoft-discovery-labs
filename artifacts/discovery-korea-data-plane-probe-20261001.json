@@ -1,0 +1,25 @@
+{
+  "checkedAt": "2026-10-01T14:08:21.095Z",
+  "method": "GET",
+  "url": "https://discoveryholjunwookc.workspace.discovery.azure.com/tools/projects/thermalhol/computeUsage?api-version=2026-02-01-preview",
+  "status": 200,
+  "requestId": "8a87e7a8-ed56-4fb1-af3a-78129393cd05",
+  "body": {
+    "supercomputers": {
+      "sc-discovery-hol-kc": {
+        "activeJobs": 0,
+        "pendingJobs": 0,
+        "nodepools": {
+          "cpulab": {
+            "reservedCPUs": "0",
+            "allocatableCPUs": "3",
+            "reservedMemory": "0",
+            "allocatableMemory": "13Gi",
+            "reservedGPUs": "0",
+            "allocatableGPUs": "0"
+          }
+        }
+      }
+    }
+  }
+}

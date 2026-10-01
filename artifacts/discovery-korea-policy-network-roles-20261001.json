@@ -1,0 +1,17 @@
+[
+  {
+    "condition": null,
+    "role": "Defender Containers Sensor",
+    "scope": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5"
+  },
+  {
+    "condition": null,
+    "role": "Defender Kubernetes Agent Operator",
+    "scope": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5"
+  },
+  {
+    "condition": null,
+    "role": "Log Analytics Contributor",
+    "scope": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5"
+  }
+]

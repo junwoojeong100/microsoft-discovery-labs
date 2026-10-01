@@ -1,0 +1,37 @@
+[
+  {
+    "condition": null,
+    "principalId": "6eea6eb1-c9fd-45b1-8544-830a17ab526a",
+    "role": "Network Contributor",
+    "roleDefinitionId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Authorization/roleDefinitions/4d97b98b-1d4f-4787-a291-c67834d212e7",
+    "scope": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol-kc"
+  },
+  {
+    "condition": null,
+    "principalId": "6eea6eb1-c9fd-45b1-8544-830a17ab526a",
+    "role": "Managed Identity Operator",
+    "roleDefinitionId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Authorization/roleDefinitions/f1a07417-d97a-45cb-824c-7a7467783830",
+    "scope": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/rg-discovery-hol-20260930/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-discovery-hol-kc"
+  },
+  {
+    "condition": null,
+    "principalId": "6eea6eb1-c9fd-45b1-8544-830a17ab526a",
+    "role": "Microsoft Discovery Platform Contributor",
+    "roleDefinitionId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Authorization/roleDefinitions/01288891-85ee-45a7-b367-9db3b752fc65",
+    "scope": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/rg-discovery-hol-20260930"
+  },
+  {
+    "condition": null,
+    "principalId": "6eea6eb1-c9fd-45b1-8544-830a17ab526a",
+    "role": "AcrPull",
+    "roleDefinitionId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Authorization/roleDefinitions/7f951dda-4ed3-4680-a7ca-43fe172d538d",
+    "scope": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/rg-discovery-hol-20260930/providers/Microsoft.ContainerRegistry/registries/acrdiscoveryholjunwookc"
+  },
+  {
+    "condition": null,
+    "principalId": "6eea6eb1-c9fd-45b1-8544-830a17ab526a",
+    "role": "Storage Blob Data Contributor",
+    "roleDefinitionId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Authorization/roleDefinitions/ba92f5b4-2d11-453d-a403-e96b0029c9fe",
+    "scope": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/rg-discovery-hol-20260930/providers/Microsoft.Storage/storageAccounts/stdiscoveryholjunwookc"
+  }
+]

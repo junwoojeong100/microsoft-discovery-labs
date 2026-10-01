@@ -1,0 +1,22 @@
+{
+  "currentCapacity": 250,
+  "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.CognitiveServices/accounts/aif-dwsp-foundry-bdnxfqaa/deployments/gpt-5.4",
+  "rateLimits": [
+    {
+      "count": 2500,
+      "key": "request",
+      "renewalPeriod": 60
+    },
+    {
+      "count": 250000,
+      "key": "token",
+      "renewalPeriod": 60
+    }
+  ],
+  "sku": {
+    "capacity": 250,
+    "name": "GlobalStandard"
+  },
+  "state": "Succeeded",
+  "updatedAt": "2026-10-01T13:58:45.6457229Z"
+}

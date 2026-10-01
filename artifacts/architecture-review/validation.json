@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-09-25T00:37:59.640Z",
+  "checkedAt": "2026-10-01T14:36:53.227Z",
   "scope": "Local Mermaid parsing and rendering; no Azure resource inventory or mutation",
   "renderer": {
     "package": "mermaid",

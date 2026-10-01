@@ -1,0 +1,26 @@
+[
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.Network/networkSecurityPerimeters/nsp-sc-discovery-hol-kc-a13wxu",
+    "location": "koreacentral",
+    "name": "nsp-sc-discovery-hol-kc-a13wxu",
+    "type": "Microsoft.Network/networkSecurityPerimeters"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.OperationalInsights/workspaces/sc-discovery-hol-kc-loganalytics",
+    "location": "koreacentral",
+    "name": "sc-discovery-hol-kc-loganalytics",
+    "type": "Microsoft.OperationalInsights/workspaces"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.Insights/dataCollectionRules/sc-discovery-hol-kc-aks-dcr",
+    "location": "koreacentral",
+    "name": "sc-discovery-hol-kc-aks-dcr",
+    "type": "Microsoft.Insights/dataCollectionRules"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-a13wxu",
+    "location": "koreacentral",
+    "name": "aks-dscmp-a13wxu",
+    "type": "Microsoft.ContainerService/managedClusters"
+  }
+]

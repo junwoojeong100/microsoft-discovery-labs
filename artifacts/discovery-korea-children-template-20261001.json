@@ -1,0 +1,158 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "languageVersion": "2.0",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.45.15.27210",
+      "templateHash": "2434747586794513372"
+    }
+  },
+  "parameters": {
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]"
+    },
+    "targetComputeLocation": {
+      "type": "string",
+      "defaultValue": "[parameters('location')]",
+      "metadata": {
+        "description": "Managed runtime region. Discovery resources themselves remain in the home location. Set the override when creating new resources, not to migrate existing ones."
+      }
+    },
+    "skipAssociateKeyVaultToNsp": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Required by the cross-region guide for Microsoft-owned subscriptions only."
+      }
+    },
+    "identityName": {
+      "type": "string",
+      "defaultValue": "id-discovery-hol"
+    },
+    "virtualNetworkName": {
+      "type": "string",
+      "defaultValue": "vnet-discovery-hol"
+    },
+    "storageAccountName": {
+      "type": "string",
+      "defaultValue": "stdiscoveryholjunwoosc"
+    },
+    "supercomputerName": {
+      "type": "string",
+      "defaultValue": "sc-discovery-hol"
+    },
+    "workspaceName": {
+      "type": "string",
+      "defaultValue": "discoveryholjunwoosc"
+    },
+    "projectName": {
+      "type": "string",
+      "defaultValue": "thermalhol"
+    },
+    "storageContainerName": {
+      "type": "string",
+      "defaultValue": "thermaldata"
+    },
+    "deployCompute": {
+      "type": "bool",
+      "defaultValue": true,
+      "metadata": {
+        "description": "False separates Workspace preparation from compute. It does not bypass regional capacity limits or complete the compute labs."
+      }
+    }
+  },
+  "variables": {
+    "tags": {
+      "environment": "lab",
+      "project": "microsoft-discovery-core-hol",
+      "NetworkIsolation": "true"
+    },
+    "managedResourceTags": "[union(variables('tags'), if(equals(parameters('targetComputeLocation'), parameters('location')), createObject(), createObject('discovery.overridemrgregion', parameters('targetComputeLocation'))), if(parameters('skipAssociateKeyVaultToNsp'), createObject('SkipAssociateKeyVaultToNsp', 'true'), createObject()))]"
+  },
+  "resources": {
+    "storage": {
+      "existing": true,
+      "type": "Microsoft.Storage/storageAccounts",
+      "apiVersion": "2023-05-01",
+      "name": "[parameters('storageAccountName')]"
+    },
+    "workspace": {
+      "type": "Microsoft.Discovery/workspaces",
+      "apiVersion": "2026-06-01",
+      "name": "[parameters('workspaceName')]",
+      "existing": true
+    },
+    "chatModel": {
+      "type": "Microsoft.Discovery/workspaces/chatModelDeployments",
+      "apiVersion": "2026-06-01",
+      "name": "[format('{0}/{1}', parameters('workspaceName'), 'gpt-5-4')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "modelFormat": "OpenAI",
+        "modelName": "gpt-5.4",
+        "modelVersion": "2026-03-05",
+        "skuName": "GlobalStandard",
+        "capacity": 250
+      },
+      "dependsOn": []
+    },
+    "data": {
+      "type": "Microsoft.Discovery/storageContainers",
+      "apiVersion": "2026-06-01",
+      "name": "[parameters('storageContainerName')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "storageStore": {
+          "kind": "AzureStorageBlob",
+          "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
+          "mountProtocol": "BlobfuseCaching"
+        }
+      }
+    },
+    "assets": {
+      "copy": {
+        "name": "assets",
+        "count": "[length(createArray(createObject('name', 'evidencepack', 'path', 'discoveryinputs/bookshelf/', 'description', 'Four original synthetic evidence documents for the thermal materials lab.'), createObject('name', 'candidatecsv', 'path', 'discoveryinputs/compute/materials.csv', 'description', 'Eight synthetic candidates with the authoritative GAMMA correction applied.')))]"
+      },
+      "type": "Microsoft.Discovery/storageContainers/storageAssets",
+      "apiVersion": "2026-06-01",
+      "name": "[format('{0}/{1}', parameters('storageContainerName'), createArray(createObject('name', 'evidencepack', 'path', 'discoveryinputs/bookshelf/', 'description', 'Four original synthetic evidence documents for the thermal materials lab.'), createObject('name', 'candidatecsv', 'path', 'discoveryinputs/compute/materials.csv', 'description', 'Eight synthetic candidates with the authoritative GAMMA correction applied.'))[copyIndex()].name)]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "path": "[createArray(createObject('name', 'evidencepack', 'path', 'discoveryinputs/bookshelf/', 'description', 'Four original synthetic evidence documents for the thermal materials lab.'), createObject('name', 'candidatecsv', 'path', 'discoveryinputs/compute/materials.csv', 'description', 'Eight synthetic candidates with the authoritative GAMMA correction applied.'))[copyIndex()].path]",
+        "description": "[createArray(createObject('name', 'evidencepack', 'path', 'discoveryinputs/bookshelf/', 'description', 'Four original synthetic evidence documents for the thermal materials lab.'), createObject('name', 'candidatecsv', 'path', 'discoveryinputs/compute/materials.csv', 'description', 'Eight synthetic candidates with the authoritative GAMMA correction applied.'))[copyIndex()].description]"
+      },
+      "dependsOn": [
+        "data"
+      ]
+    },
+    "project": {
+      "type": "Microsoft.Discovery/workspaces/projects",
+      "apiVersion": "2026-06-01",
+      "name": "[format('{0}/{1}', parameters('workspaceName'), parameters('projectName'))]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "storageContainerIds": [
+          "[resourceId('Microsoft.Discovery/storageContainers', parameters('storageContainerName'))]"
+        ]
+      },
+      "dependsOn": [
+        "chatModel",
+        "data"
+      ]
+    }
+  },
+  "outputs": {
+    "projectId": {
+      "type": "string",
+      "value": "[resourceId('Microsoft.Discovery/workspaces/projects', parameters('workspaceName'), parameters('projectName'))]"
+    },
+    "storageContainerId": {
+      "type": "string",
+      "value": "[resourceId('Microsoft.Discovery/storageContainers', parameters('storageContainerName'))]"
+    }
+  }
+}

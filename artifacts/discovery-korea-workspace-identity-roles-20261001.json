@@ -1,0 +1,42 @@
+[
+  {
+    "condition": null,
+    "role": "Network Contributor",
+    "scope": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol-kc"
+  },
+  {
+    "condition": null,
+    "role": "Managed Identity Operator",
+    "scope": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/rg-discovery-hol-20260930/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-discovery-hol-kc"
+  },
+  {
+    "condition": null,
+    "role": "Microsoft Discovery Platform Contributor",
+    "scope": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/rg-discovery-hol-20260930"
+  },
+  {
+    "condition": null,
+    "role": "AcrPull",
+    "scope": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/rg-discovery-hol-20260930/providers/Microsoft.ContainerRegistry/registries/acrdiscoveryholjunwookc"
+  },
+  {
+    "condition": null,
+    "role": "Storage Blob Data Contributor",
+    "scope": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/rg-discovery-hol-20260930/providers/Microsoft.Storage/storageAccounts/stdiscoveryholjunwookc"
+  },
+  {
+    "condition": null,
+    "role": "Network Contributor",
+    "scope": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol-kc/subnets/aksSubnet"
+  },
+  {
+    "condition": null,
+    "role": "Contributor",
+    "scope": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/MC_mrg-dscmp-sc-discovery-hol-kc-a13wxu_aks-dscmp-a13wxu_koreacentral"
+  },
+  {
+    "condition": null,
+    "role": "Network Contributor",
+    "scope": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol-kc/subnets/supercomputerNodepoolSubnet"
+  }
+]

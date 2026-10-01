@@ -92,7 +92,7 @@ try {
   await page.goto(origin);
   await page.waitForFunction(() => window.rendererReady === true);
   for (const language of ['ko', 'en']) {
-    const markdown = await readFile(resolve(root, `MICROSOFT-DISCOVERY-ARCHITECTURE.${language}.md`), 'utf8');
+    const markdown = await readFile(resolve(root, `docs/architecture/MICROSOFT-DISCOVERY-ARCHITECTURE.${language}.md`), 'utf8');
     const diagrams = [...markdown.matchAll(/```mermaid\n([\s\S]*?)\n```/g)].map((match) => match[1]);
     assert.equal(diagrams.length, names.length);
     for (const [index, definition] of diagrams.entries()) {

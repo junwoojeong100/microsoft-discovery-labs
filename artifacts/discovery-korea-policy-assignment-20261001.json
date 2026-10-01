@@ -1,0 +1,13 @@
+[
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Authorization/policyAssignments/Defender for Containers provisioning Azure Policy Addon for Kub",
+    "identity": {
+      "principalId": "02e03d89-915c-4be6-a882-ebde1beda2e4",
+      "tenantId": "46e9cdaa-fed3-4131-aa28-c1fc8a8a043a",
+      "type": "SystemAssigned"
+    },
+    "name": "Defender for Containers provisioning Azure Policy Addon for Kub",
+    "parameters": null,
+    "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/a8eff44f-8c92-45c3-a3fb-9880802d67a7"
+  }
+]

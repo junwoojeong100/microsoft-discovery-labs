@@ -1,0 +1,29 @@
+[
+  {
+    "allocated": 220.0,
+    "limit": 1000.0,
+    "name": {
+      "localizedValue": "Tokens Per Minute (thousands) - text-embedding-3-small",
+      "value": "OpenAI.GlobalStandard.text-embedding-3-small"
+    },
+    "unit": "Count"
+  },
+  {
+    "allocated": 10.0,
+    "limit": 1000.0,
+    "name": {
+      "localizedValue": "One Thousand Tokens Per Minute - gpt-5-mini - GlobalStandard",
+      "value": "OpenAI.GlobalStandard.gpt-5-mini"
+    },
+    "unit": "Count"
+  },
+  {
+    "allocated": 3000.0,
+    "limit": 3000.0,
+    "name": {
+      "localizedValue": "One Thousand Tokens Per Minute - gpt-5.4 - GlobalStandard",
+      "value": "OpenAI.GlobalStandard.gpt-5.4"
+    },
+    "unit": "Count"
+  }
+]

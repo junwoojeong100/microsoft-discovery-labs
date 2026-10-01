@@ -1,0 +1,22 @@
+{
+  "checkedAt": "2026-10-01T14:29:20.454Z",
+  "status": 200,
+  "body": {
+    "supercomputers": {
+      "sc-discovery-hol-kc": {
+        "activeJobs": 0,
+        "pendingJobs": 0,
+        "nodepools": {
+          "cpulab": {
+            "reservedCPUs": "0",
+            "allocatableCPUs": "3",
+            "reservedMemory": "0",
+            "allocatableMemory": "13Gi",
+            "reservedGPUs": "0",
+            "allocatableGPUs": "0"
+          }
+        }
+      }
+    }
+  }
+}

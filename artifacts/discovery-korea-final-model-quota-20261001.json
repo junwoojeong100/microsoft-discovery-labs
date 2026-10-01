@@ -1,0 +1,8 @@
+[
+  {
+    "allocated": 501,
+    "limit": 3000,
+    "metric": "OpenAI.GlobalStandard.gpt-5.4",
+    "unit": "One Thousand Tokens Per Minute - gpt-5.4 - GlobalStandard"
+  }
+]

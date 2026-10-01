@@ -26,9 +26,18 @@ export function validateConfig(config) {
   if (!['eastus', 'swedencentral', 'uksouth'].includes(config.location)) {
     throw new Error('Use a documented production Discovery region');
   }
+  if (config.targetComputeLocation !== undefined
+      && (typeof config.targetComputeLocation !== 'string'
+        || !/^[a-z][a-z0-9]{1,62}$/.test(config.targetComputeLocation))) {
+    throw new Error('Target compute location must be an Azure programmatic region identifier');
+  }
   if (!/^rg-discovery-hol-[a-z0-9-]+$/.test(config.resourceGroup) || !config.labTag) {
     throw new Error('A dedicated, tagged Discovery lab resource group is required');
   }
+}
+
+export function targetComputeLocation(config) {
+  return config.targetComputeLocation ?? config.location;
 }
 
 export function selectAccount(accounts, config) {

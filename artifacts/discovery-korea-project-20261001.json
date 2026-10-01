@@ -1,0 +1,21 @@
+{
+  "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/workspaces/discoveryholjunwookc/projects/thermalhol",
+  "location": "swedencentral",
+  "name": "thermalhol",
+  "properties": {
+    "foundryProjectEndpoint": "https://aif-dwsp-foundry-bdnxfqaa.services.ai.azure.com/api/projects/thermalholbdnxfqaa",
+    "provisioningState": "Succeeded",
+    "storageContainerIds": [
+      "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/storageContainers/thermaldata-kc"
+    ]
+  },
+  "systemData": {
+    "createdAt": "2026-10-01T14:02:22.2594779Z",
+    "createdBy": "junwoojeong@MngEnvMCAP757124.onmicrosoft.com",
+    "createdByType": "User",
+    "lastModifiedAt": "2026-10-01T14:02:22.2594779Z",
+    "lastModifiedBy": "junwoojeong@MngEnvMCAP757124.onmicrosoft.com",
+    "lastModifiedByType": "User"
+  },
+  "type": "microsoft.discovery/workspaces/projects"
+}

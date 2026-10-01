@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "targetComputeLocation": {
+      "value": "koreacentral"
+    },
+    "virtualNetworkName": {
+      "value": "vnet-discovery-hol-kc"
+    },
+    "identityName": {
+      "value": "id-discovery-hol-kc"
+    },
+    "storageAccountName": {
+      "value": "stdiscoveryholjunwookc"
+    },
+    "registryName": {
+      "value": "acrdiscoveryholjunwookc"
+    },
+    "privateEndpointName": {
+      "value": "pe-discovery-blob-kc"
+    },
+    "virtualNetworkLinkName": {
+      "value": "discovery-lab-kc"
+    },
+    "administratorObjectId": {
+      "value": "085bc565-8298-4c5b-a726-20050d18cbb7"
+    }
+  }
+}

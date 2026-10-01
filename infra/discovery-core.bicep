@@ -1,12 +1,19 @@
 targetScope = 'resourceGroup'
 
 param location string = resourceGroup().location
+@description('Managed runtime region. Discovery resources themselves remain in the home location. Set the override when creating new resources, not to migrate existing ones.')
+param targetComputeLocation string = location
+
+@description('Required by the cross-region guide for Microsoft-owned subscriptions only.')
+param skipAssociateKeyVaultToNsp bool = false
+
 param identityName string = 'id-discovery-hol'
 param virtualNetworkName string = 'vnet-discovery-hol'
 param storageAccountName string = 'stdiscoveryholjunwoosc'
 param supercomputerName string = 'sc-discovery-hol'
 param workspaceName string = 'discoveryholjunwoosc'
 param projectName string = 'thermalhol'
+param storageContainerName string = 'thermaldata'
 
 @description('False separates Workspace preparation from compute. It does not bypass regional capacity limits or complete the compute labs.')
 param deployCompute bool = true
@@ -16,6 +23,11 @@ var tags = {
   project: 'microsoft-discovery-core-hol'
   NetworkIsolation: 'true'
 }
+var managedResourceTags = union(tags, targetComputeLocation == location ? {} : {
+  'discovery.overridemrgregion': targetComputeLocation
+}, skipAssociateKeyVaultToNsp ? {
+  SkipAssociateKeyVaultToNsp: 'true'
+} : {})
 
 resource identity 'Microsoft.ManagedIdentity/userAssignedIdentities@2024-11-30' existing = {
   name: identityName
@@ -28,7 +40,7 @@ resource storage 'Microsoft.Storage/storageAccounts@2023-05-01' existing = {
 resource supercomputer 'Microsoft.Discovery/supercomputers@2026-06-01' = if (deployCompute) {
   name: supercomputerName
   location: location
-  tags: tags
+  tags: managedResourceTags
   properties: {
     subnetId: resourceId('Microsoft.Network/virtualNetworks/subnets', virtualNetworkName, 'aksSubnet')
     systemSku: 'Standard_D4s_v6'
@@ -65,7 +77,7 @@ resource cpuPool 'Microsoft.Discovery/supercomputers/nodePools@2026-06-01' = if 
 resource workspace 'Microsoft.Discovery/workspaces@2026-06-01' = {
   name: workspaceName
   location: location
-  tags: tags
+  tags: managedResourceTags
   properties: {
     workspaceIdentity: {
       id: identity.id
@@ -89,11 +101,14 @@ resource chatModel 'Microsoft.Discovery/workspaces/chatModelDeployments@2026-06-
   properties: {
     modelFormat: 'OpenAI'
     modelName: 'gpt-5.4'
+    modelVersion: '2026-03-05'
+    skuName: 'GlobalStandard'
+    capacity: 250
   }
 }
 
 resource data 'Microsoft.Discovery/storageContainers@2026-06-01' = {
-  name: 'thermaldata'
+  name: storageContainerName
   location: location
   properties: {
     storageStore: {

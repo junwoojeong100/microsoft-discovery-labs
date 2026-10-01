@@ -1,0 +1,91 @@
+{
+  "checkedAt": "2026-10-01T13:56:19.463Z",
+  "location": "koreacentral",
+  "model": {
+    "kind": "AIServices",
+    "name": "gpt-5.4",
+    "version": "2026-03-05",
+    "capabilities": {
+      "agentsV2": "true",
+      "area": "APAC",
+      "assistants": "true",
+      "chatCompletion": "true",
+      "priorityTierSkus": "GlobalStandard",
+      "responses": "true"
+    }
+  },
+  "sku": {
+    "capacity": {
+      "default": 10,
+      "maximum": 1000000
+    },
+    "costs": [
+      {
+        "meterId": "",
+        "name": "CachedContextToken",
+        "offeringId": "50c9af99-3be5-5f20-af52-4ca93377fdd7",
+        "unit": "1M Tokens"
+      },
+      {
+        "meterId": "",
+        "name": "NoCachedContextToken",
+        "offeringId": "c7fa4dce-29ae-5e05-823f-e9760304581c",
+        "unit": "1M Tokens"
+      },
+      {
+        "meterId": "",
+        "name": "GeneratedToken",
+        "offeringId": "1f843dda-d529-5755-b155-8d9abc016bed",
+        "unit": "1M Tokens"
+      },
+      {
+        "meterId": "",
+        "name": "CachedContextToken.Priority",
+        "offeringId": "fe50f56b-6a57-5f76-b3bf-0632b7fea841",
+        "unit": "1M Tokens"
+      },
+      {
+        "meterId": "",
+        "name": "NoCachedContextToken.Priority",
+        "offeringId": "c4b917c2-6969-5019-93b4-4f2177dde40f",
+        "unit": "1M Tokens"
+      },
+      {
+        "meterId": "",
+        "name": "GeneratedToken.Priority",
+        "offeringId": "18e438e8-4744-57b8-b5f0-e895cd54b63a",
+        "unit": "1M Tokens"
+      },
+      {
+        "name": "CachedLongContextContextToken",
+        "offeringId": "9ab62f04-c7c9-512e-9103-0a3497bdf805",
+        "unit": "1M Tokens"
+      },
+      {
+        "name": "NoCachedLongContextContextToken",
+        "offeringId": "8f420782-e314-5336-84fa-0d74d03d31c3",
+        "unit": "1M Tokens"
+      },
+      {
+        "name": "LongContextGeneratedToken",
+        "offeringId": "def76aa0-484b-535a-a051-a50809bacc15",
+        "unit": "1M Tokens"
+      }
+    ],
+    "deprecationDate": "2027-09-02T00:00:00Z",
+    "name": "DataZoneStandard",
+    "rateLimits": [
+      {
+        "count": 1,
+        "key": "request",
+        "renewalPeriod": 60
+      },
+      {
+        "count": 1000,
+        "key": "token",
+        "renewalPeriod": 60
+      }
+    ],
+    "usageName": "OpenAI.DataZoneStandard.gpt-5.4"
+  }
+}

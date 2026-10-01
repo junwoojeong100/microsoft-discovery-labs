@@ -1,0 +1,302 @@
+[
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Search/searchServices/srch-dwsp-foundry-bdnxfqaa",
+    "location": "koreacentral",
+    "name": "srch-dwsp-foundry-bdnxfqaa",
+    "type": "Microsoft.Search/searchServices"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.ManagedIdentity/userAssignedIdentities/mi-dwsp-identity-bdnxfqaa",
+    "location": "koreacentral",
+    "name": "mi-dwsp-identity-bdnxfqaa",
+    "type": "Microsoft.ManagedIdentity/userAssignedIdentities"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Storage/storageAccounts/stdwspfoundrybdnxfqaa",
+    "location": "koreacentral",
+    "name": "stdwspfoundrybdnxfqaa",
+    "type": "Microsoft.Storage/storageAccounts"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.CognitiveServices/accounts/aif-dwsp-foundry-bdnxfqaa",
+    "location": "koreacentral",
+    "name": "aif-dwsp-foundry-bdnxfqaa",
+    "type": "Microsoft.CognitiveServices/accounts"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.DocumentDB/databaseAccounts/cosmos-dwsp-agentthread-bdnxfqaa",
+    "location": "koreacentral",
+    "name": "cosmos-dwsp-agentthread-bdnxfqaa",
+    "type": "Microsoft.DocumentDB/databaseAccounts"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Storage/storageAccounts/stdwspfuncqbdnxfqaa",
+    "location": "koreacentral",
+    "name": "stdwspfuncqbdnxfqaa",
+    "type": "Microsoft.Storage/storageAccounts"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/privateDnsZones/stdwspfoundrybdnxfqaa.privatelink.file.core.windows.net",
+    "location": "global",
+    "name": "stdwspfoundrybdnxfqaa.privatelink.file.core.windows.net",
+    "type": "Microsoft.Network/privateDnsZones"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/privateDnsZones/stdwspfoundrybdnxfqaa.privatelink.table.core.windows.net",
+    "location": "global",
+    "name": "stdwspfoundrybdnxfqaa.privatelink.table.core.windows.net",
+    "type": "Microsoft.Network/privateDnsZones"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/privateDnsZones/stdwspfoundrybdnxfqaa.privatelink.blob.core.windows.net",
+    "location": "global",
+    "name": "stdwspfoundrybdnxfqaa.privatelink.blob.core.windows.net",
+    "type": "Microsoft.Network/privateDnsZones"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/privateDnsZones/aif-dwsp-foundry-bdnxfqaa.privatelink.openai.azure.com",
+    "location": "global",
+    "name": "aif-dwsp-foundry-bdnxfqaa.privatelink.openai.azure.com",
+    "type": "Microsoft.Network/privateDnsZones"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/privateDnsZones/aif-dwsp-foundry-bdnxfqaa.privatelink.cognitiveservices.azure.com",
+    "location": "global",
+    "name": "aif-dwsp-foundry-bdnxfqaa.privatelink.cognitiveservices.azure.com",
+    "type": "Microsoft.Network/privateDnsZones"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/privateDnsZones/cosmos-dwsp-agentthread-bdnxfqaa-koreacentral.privatelink.documents.azure.com",
+    "location": "global",
+    "name": "cosmos-dwsp-agentthread-bdnxfqaa-koreacentral.privatelink.documents.azure.com",
+    "type": "Microsoft.Network/privateDnsZones"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/privateDnsZones/cosmos-dwsp-agentthread-bdnxfqaa.privatelink.documents.azure.com",
+    "location": "global",
+    "name": "cosmos-dwsp-agentthread-bdnxfqaa.privatelink.documents.azure.com",
+    "type": "Microsoft.Network/privateDnsZones"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/privateDnsZones/srch-dwsp-foundry-bdnxfqaa.privatelink.search.windows.net",
+    "location": "global",
+    "name": "srch-dwsp-foundry-bdnxfqaa.privatelink.search.windows.net",
+    "type": "Microsoft.Network/privateDnsZones"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/privateDnsZones/aif-dwsp-foundry-bdnxfqaa.privatelink.services.ai.azure.com",
+    "location": "global",
+    "name": "aif-dwsp-foundry-bdnxfqaa.privatelink.services.ai.azure.com",
+    "type": "Microsoft.Network/privateDnsZones"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/privateDnsZones/stdwspfoundrybdnxfqaa.privatelink.queue.core.windows.net",
+    "location": "global",
+    "name": "stdwspfoundrybdnxfqaa.privatelink.queue.core.windows.net",
+    "type": "Microsoft.Network/privateDnsZones"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/privateDnsZones/srch-dwsp-foundry-bdnxfqaa.privatelink.search.windows.net/virtualNetworkLinks/vnetlink-mrg-dwsp-discoveryholjunwookc-bdnxfq",
+    "location": "global",
+    "name": "srch-dwsp-foundry-bdnxfqaa.privatelink.search.windows.net/vnetlink-mrg-dwsp-discoveryholjunwookc-bdnxfq",
+    "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/privateDnsZones/stdwspfoundrybdnxfqaa.privatelink.blob.core.windows.net/virtualNetworkLinks/vnetlink-mrg-dwsp-discoveryholjunwookc-bdnxfq",
+    "location": "global",
+    "name": "stdwspfoundrybdnxfqaa.privatelink.blob.core.windows.net/vnetlink-mrg-dwsp-discoveryholjunwookc-bdnxfq",
+    "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/privateDnsZones/aif-dwsp-foundry-bdnxfqaa.privatelink.services.ai.azure.com/virtualNetworkLinks/vnetlink-mrg-dwsp-discoveryholjunwookc-bdnxfq",
+    "location": "global",
+    "name": "aif-dwsp-foundry-bdnxfqaa.privatelink.services.ai.azure.com/vnetlink-mrg-dwsp-discoveryholjunwookc-bdnxfq",
+    "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/privateDnsZones/stdwspfoundrybdnxfqaa.privatelink.table.core.windows.net/virtualNetworkLinks/vnetlink-mrg-dwsp-discoveryholjunwookc-bdnxfq",
+    "location": "global",
+    "name": "stdwspfoundrybdnxfqaa.privatelink.table.core.windows.net/vnetlink-mrg-dwsp-discoveryholjunwookc-bdnxfq",
+    "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/privateDnsZones/cosmos-dwsp-agentthread-bdnxfqaa.privatelink.documents.azure.com/virtualNetworkLinks/vnetlink-mrg-dwsp-discoveryholjunwookc-bdnxfq",
+    "location": "global",
+    "name": "cosmos-dwsp-agentthread-bdnxfqaa.privatelink.documents.azure.com/vnetlink-mrg-dwsp-discoveryholjunwookc-bdnxfq",
+    "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/privateDnsZones/aif-dwsp-foundry-bdnxfqaa.privatelink.openai.azure.com/virtualNetworkLinks/vnetlink-mrg-dwsp-discoveryholjunwookc-bdnxfq",
+    "location": "global",
+    "name": "aif-dwsp-foundry-bdnxfqaa.privatelink.openai.azure.com/vnetlink-mrg-dwsp-discoveryholjunwookc-bdnxfq",
+    "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/privateDnsZones/cosmos-dwsp-agentthread-bdnxfqaa-koreacentral.privatelink.documents.azure.com/virtualNetworkLinks/vnetlink-mrg-dwsp-discoveryholjunwookc-bdnxfq",
+    "location": "global",
+    "name": "cosmos-dwsp-agentthread-bdnxfqaa-koreacentral.privatelink.documents.azure.com/vnetlink-mrg-dwsp-discoveryholjunwookc-bdnxfq",
+    "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/privateDnsZones/stdwspfoundrybdnxfqaa.privatelink.queue.core.windows.net/virtualNetworkLinks/vnetlink-mrg-dwsp-discoveryholjunwookc-bdnxfq",
+    "location": "global",
+    "name": "stdwspfoundrybdnxfqaa.privatelink.queue.core.windows.net/vnetlink-mrg-dwsp-discoveryholjunwookc-bdnxfq",
+    "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/privateEndpoints/srch-dwsp-foundry-bdnxfqaa-search-pe",
+    "location": "koreacentral",
+    "name": "srch-dwsp-foundry-bdnxfqaa-search-pe",
+    "type": "Microsoft.Network/privateEndpoints"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/privateEndpoints/stdwspfoundrybdnxfqaa-storage-blob-pe",
+    "location": "koreacentral",
+    "name": "stdwspfoundrybdnxfqaa-storage-blob-pe",
+    "type": "Microsoft.Network/privateEndpoints"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/privateEndpoints/stdwspfoundrybdnxfqaa-storage-table-pe",
+    "location": "koreacentral",
+    "name": "stdwspfoundrybdnxfqaa-storage-table-pe",
+    "type": "Microsoft.Network/privateEndpoints"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/privateEndpoints/stdwspfoundrybdnxfqaa-storage-queue-pe",
+    "location": "koreacentral",
+    "name": "stdwspfoundrybdnxfqaa-storage-queue-pe",
+    "type": "Microsoft.Network/privateEndpoints"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/privateEndpoints/cosmos-dwsp-agentthread-bdnxfqaa-cosmosdb-pe",
+    "location": "koreacentral",
+    "name": "cosmos-dwsp-agentthread-bdnxfqaa-cosmosdb-pe",
+    "type": "Microsoft.Network/privateEndpoints"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/networkInterfaces/stdwspfoundrybdnxfqaa-storage-table-pe.nic.6473b6b5-af81-44e5-8c16-ae0954e26484",
+    "location": "koreacentral",
+    "name": "stdwspfoundrybdnxfqaa-storage-table-pe.nic.6473b6b5-af81-44e5-8c16-ae0954e26484",
+    "type": "Microsoft.Network/networkInterfaces"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/networkInterfaces/stdwspfoundrybdnxfqaa-storage-blob-pe.nic.d7709e68-14fb-4168-bfd1-f0677acc1274",
+    "location": "koreacentral",
+    "name": "stdwspfoundrybdnxfqaa-storage-blob-pe.nic.d7709e68-14fb-4168-bfd1-f0677acc1274",
+    "type": "Microsoft.Network/networkInterfaces"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/networkInterfaces/stdwspfoundrybdnxfqaa-storage-queue-pe.nic.db109397-d7e3-4d9d-894a-b34d0a854a20",
+    "location": "koreacentral",
+    "name": "stdwspfoundrybdnxfqaa-storage-queue-pe.nic.db109397-d7e3-4d9d-894a-b34d0a854a20",
+    "type": "Microsoft.Network/networkInterfaces"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/networkInterfaces/cosmos-dwsp-agentthread-bdnxfqaa-cosmosdb-p.nic.1686535e-88fe-4626-9cb2-df3ee733376b",
+    "location": "koreacentral",
+    "name": "cosmos-dwsp-agentthread-bdnxfqaa-cosmosdb-p.nic.1686535e-88fe-4626-9cb2-df3ee733376b",
+    "type": "Microsoft.Network/networkInterfaces"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/networkInterfaces/srch-dwsp-foundry-bdnxfqaa-search-pe.nic.bfae05e3-b620-46e1-ba58-ef178a4134a1",
+    "location": "koreacentral",
+    "name": "srch-dwsp-foundry-bdnxfqaa-search-pe.nic.bfae05e3-b620-46e1-ba58-ef178a4134a1",
+    "type": "Microsoft.Network/networkInterfaces"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/privateDnsZones/aif-dwsp-foundry-bdnxfqaa.privatelink.cognitiveservices.azure.com/virtualNetworkLinks/vnetlink-mrg-dwsp-discoveryholjunwookc-bdnxfq",
+    "location": "global",
+    "name": "aif-dwsp-foundry-bdnxfqaa.privatelink.cognitiveservices.azure.com/vnetlink-mrg-dwsp-discoveryholjunwookc-bdnxfq",
+    "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/privateDnsZones/stdwspfoundrybdnxfqaa.privatelink.file.core.windows.net/virtualNetworkLinks/vnetlink-mrg-dwsp-discoveryholjunwookc-bdnxfq",
+    "location": "global",
+    "name": "stdwspfoundrybdnxfqaa.privatelink.file.core.windows.net/vnetlink-mrg-dwsp-discoveryholjunwookc-bdnxfq",
+    "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/privateEndpoints/stdwspfoundrybdnxfqaa-storage-file-pe",
+    "location": "koreacentral",
+    "name": "stdwspfoundrybdnxfqaa-storage-file-pe",
+    "type": "Microsoft.Network/privateEndpoints"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/privateEndpoints/aif-dwsp-foundry-bdnxfqaa-aiservices-pe",
+    "location": "koreacentral",
+    "name": "aif-dwsp-foundry-bdnxfqaa-aiservices-pe",
+    "type": "Microsoft.Network/privateEndpoints"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/networkInterfaces/aif-dwsp-foundry-bdnxfqaa-aiservices-pe.nic.a34eff70-6444-412c-b231-ec6966265322",
+    "location": "koreacentral",
+    "name": "aif-dwsp-foundry-bdnxfqaa-aiservices-pe.nic.a34eff70-6444-412c-b231-ec6966265322",
+    "type": "Microsoft.Network/networkInterfaces"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/networkInterfaces/stdwspfoundrybdnxfqaa-storage-file-pe.nic.f92fde8c-6b0f-4d43-a3dd-3c2fcd5032a9",
+    "location": "koreacentral",
+    "name": "stdwspfoundrybdnxfqaa-storage-file-pe.nic.f92fde8c-6b0f-4d43-a3dd-3c2fcd5032a9",
+    "type": "Microsoft.Network/networkInterfaces"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.CognitiveServices/accounts/aif-dwsp-foundry-bdnxfqaa/projects/discoverydefaultprojectbdnxfqaa",
+    "location": "koreacentral",
+    "name": "aif-dwsp-foundry-bdnxfqaa/discoverydefaultprojectbdnxfqaa",
+    "type": "Microsoft.CognitiveServices/accounts/projects"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Storage/storageAccounts/stdwspwbkbdnxfqaa",
+    "location": "koreacentral",
+    "name": "stdwspwbkbdnxfqaa",
+    "type": "Microsoft.Storage/storageAccounts"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.OperationalInsights/workspaces/law-dwsp-customlogs-bdnxfqaa",
+    "location": "koreacentral",
+    "name": "law-dwsp-customlogs-bdnxfqaa",
+    "type": "Microsoft.OperationalInsights/workspaces"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.DocumentDB/databaseAccounts/cosmos-dwsp-database-bdnxfqaa",
+    "location": "koreacentral",
+    "name": "cosmos-dwsp-database-bdnxfqaa",
+    "type": "Microsoft.DocumentDB/databaseAccounts"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Insights/dataCollectionRules/discovery-logs-dcr",
+    "location": "koreacentral",
+    "name": "discovery-logs-dcr",
+    "type": "Microsoft.Insights/dataCollectionRules"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.Network/networkSecurityPerimeters/nsp-discoveryholjunwookc-bdnxfqaa",
+    "location": "koreacentral",
+    "name": "nsp-discoveryholjunwookc-bdnxfqaa",
+    "type": "Microsoft.Network/networkSecurityPerimeters"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.App/managedEnvironments/mrg-dwsp-discoveryholjunwookc-bdnxfq",
+    "location": "koreacentral",
+    "name": "mrg-dwsp-discoveryholjunwookc-bdnxfq",
+    "type": "Microsoft.App/managedEnvironments"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.App/containerApps/func-dwsp-copilot-bdnxfqaa",
+    "location": "koreacentral",
+    "name": "func-dwsp-copilot-bdnxfqaa",
+    "type": "Microsoft.App/containerApps"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.App/containerApps/app-dwsp-cogloop-bdnxfqaa",
+    "location": "koreacentral",
+    "name": "app-dwsp-cogloop-bdnxfqaa",
+    "type": "Microsoft.App/containerApps"
+  },
+  {
+    "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.CognitiveServices/accounts/aif-dwsp-foundry-bdnxfqaa/projects/thermalholbdnxfqaa",
+    "location": "koreacentral",
+    "name": "aif-dwsp-foundry-bdnxfqaa/thermalholbdnxfqaa",
+    "type": "Microsoft.CognitiveServices/accounts/projects"
+  }
+]

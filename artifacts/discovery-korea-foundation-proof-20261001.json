@@ -1,0 +1,17 @@
+{
+  "checkedAt": "2026-10-01T12:01:18.435Z",
+  "status": "validated_for_foundation_only",
+  "homeLocation": "swedencentral",
+  "targetComputeLocation": "koreacentral",
+  "previewCreates": 21,
+  "modifications": 0,
+  "deletions": 0,
+  "unchanged": [
+    "existing administrator role",
+    "existing global Blob private DNS zone"
+  ],
+  "testsPassed": 22,
+  "authorization": "Original user request to recreate target-compute resources in Korea Central while retaining Sweden Central home. ask_user was attempted; it returned user unavailable, not a new affirmative response.",
+  "workspaceModelGate": "blocked: zero unallocated GlobalStandard gpt-5.4 TPM; no Workspace or model submitted",
+  "destructiveCleanup": "blocked: ask_user unavailable; no affirmative confirmation"
+}

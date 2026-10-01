@@ -2,13 +2,13 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile, access } from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
-import { resolve } from 'node:path';
+import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { marked } from 'marked';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const documents = Object.fromEntries(await Promise.all(['ko', 'en'].map(async (language) => [
-  language, await readFile(resolve(root, `MICROSOFT-DISCOVERY-ARCHITECTURE.${language}.md`), 'utf8'),
+  language, await readFile(resolve(root, `docs/architecture/MICROSOFT-DISCOVERY-ARCHITECTURE.${language}.md`), 'utf8'),
 ])));
 const evidence = JSON.parse(await readFile(resolve(root, 'artifacts/discovery-architecture-evidence.json'), 'utf8'));
 const blockList = (text, language) =>
@@ -115,9 +115,14 @@ test('inspection commands match, parse as Bash, and contain only approved read o
 });
 
 test('architecture cross-links point to existing Markdown companions', async () => {
-  for (const text of Object.values(documents)) {
-    for (const match of text.matchAll(/\]\((MICROSOFT-DISCOVERY-[^)]+\.md)\)/g)) {
-      await access(resolve(root, match[1]));
+  for (const [language, text] of Object.entries(documents)) {
+    const directory = dirname(resolve(root, `docs/architecture/MICROSOFT-DISCOVERY-ARCHITECTURE.${language}.md`));
+    const links = [];
+    marked.walkTokens(marked.lexer(text), token => {
+      if ((token.type === 'link' || token.type === 'image') && !/^(https?:|#)/.test(token.href)) links.push(token.href);
+    });
+    for (const link of links) {
+      await access(resolve(directory, link.split('#')[0]));
     }
   }
 });

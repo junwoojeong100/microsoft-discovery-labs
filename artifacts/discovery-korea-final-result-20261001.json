@@ -1,0 +1,152 @@
+{
+  "verifiedAt": "2026-10-01T14:32:22.964Z",
+  "outcome": "core_and_direct_synthetic_tool_execution_succeeded",
+  "homeRegion": "swedencentral",
+  "targetComputeRegion": "koreacentral",
+  "workspace": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/workspaces/discoveryholjunwookc",
+  "workspaceUrl": "https://studio.discovery.microsoft.com/workspaces/discoveryholjunwookc",
+  "project": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/workspaces/discoveryholjunwookc/projects/thermalhol",
+  "foundryProjectEndpoint": "https://aif-dwsp-foundry-bdnxfqaa.services.ai.azure.com/api/projects/thermalholbdnxfqaa",
+  "newWorkspaceModels": [
+    {
+      "capacity": 250,
+      "model": "gpt-5.4",
+      "name": "gpt-5.4",
+      "rateLimits": [
+        {
+          "count": 2500,
+          "dynamicThrottlingEnabled": null,
+          "key": "request",
+          "matchPatterns": null,
+          "minCount": null,
+          "renewalPeriod": 60
+        },
+        {
+          "count": 250000,
+          "dynamicThrottlingEnabled": null,
+          "key": "token",
+          "matchPatterns": null,
+          "minCount": null,
+          "renewalPeriod": 60
+        }
+      ],
+      "sku": "GlobalStandard",
+      "state": "Succeeded",
+      "version": "2026-03-05"
+    },
+    {
+      "capacity": 250,
+      "model": "gpt-5.4",
+      "name": "gpt-5-4",
+      "rateLimits": [
+        {
+          "count": 2500,
+          "dynamicThrottlingEnabled": null,
+          "key": "request",
+          "matchPatterns": null,
+          "minCount": null,
+          "renewalPeriod": 60
+        },
+        {
+          "count": 250000,
+          "dynamicThrottlingEnabled": null,
+          "key": "token",
+          "matchPatterns": null,
+          "minCount": null,
+          "renewalPeriod": 60
+        }
+      ],
+      "sku": "GlobalStandard",
+      "state": "Succeeded",
+      "version": "2026-03-05"
+    }
+  ],
+  "totalNewWorkspaceTpm": 500000,
+  "totalSubscriptionAllocatedGpt54Tpm": 501000,
+  "remainingGpt54Tpm": 2499000,
+  "oldSwedenModelTpm": 1000,
+  "DataZoneModelCreated": false,
+  "tool": {
+    "syncOperationId": "792ae74bbb5d419b861cf0505adb9217",
+    "readbackOperationId": "5d8604fa785b42a18e5a86e2841e3fa1",
+    "nodePoolId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/supercomputers/sc-discovery-hol-kc/nodePools/cpulab",
+    "syntheticInputFiles": 5,
+    "rankingOutputs": 2,
+    "persistedReadbackHashesMatch": true,
+    "localRankingContractVerified": [
+      "baseline",
+      "cost3"
+    ],
+    "activeJobs": 0,
+    "pendingJobs": 0,
+    "initialFailedAttemptPreserved": "8faa084217154c7eab9260629acf93ef",
+    "fix": "Gzip-compressed inline files must be explicitly decompressed in the container; original image digest retained"
+  },
+  "remaining": {
+    "bookshelf": "Operational model quota still insufficient; previous requests not approved in live limits",
+    "policyAddon": "Extra scoped subnet read/join role approval unavailable; no RBAC or policy modification performed",
+    "engine": "No Bookshelf-backed multi-agent or autonomous investigation claimed",
+    "pages": "Private repository Pages rejected by GitHub plan (HTTP 422); curated site and gated workflow prepared, no visibility or paid-plan change"
+  },
+  "repository": {
+    "name": "junwoojeong100/microsoft-discovery-labs",
+    "visibility": "PRIVATE"
+  },
+  "evidence": {
+    "workspace": {
+      "path": "artifacts/discovery-korea-workspace-resource-20261001.json",
+      "collectedAt": "2026-10-01T13:53:39.232Z"
+    },
+    "project": {
+      "path": "artifacts/discovery-korea-project-20261001.json",
+      "collectedAt": "2026-10-01T14:28:19.847Z"
+    },
+    "model": {
+      "path": "artifacts/discovery-korea-validation-model-20261001.json",
+      "collectedAt": "2026-10-01T14:08:14.577Z"
+    },
+    "models": {
+      "path": "artifacts/discovery-korea-final-models-20261001.json",
+      "collectedAt": "2026-10-01T14:28:22.572Z"
+    },
+    "quota": {
+      "path": "artifacts/discovery-korea-final-model-quota-20261001.json",
+      "collectedAt": "2026-10-01T14:28:23.363Z"
+    },
+    "operations": {
+      "path": "artifacts/discovery-korea-runtime-operations-20261001.json",
+      "collectedAt": "2026-10-01T14:29:17.308Z"
+    },
+    "compute": {
+      "path": "artifacts/discovery-korea-runtime-compute-20261001.json",
+      "collectedAt": "2026-10-01T14:29:20.455Z"
+    },
+    "sync": {
+      "path": "artifacts/discovery-tool-lab-korea-20261001-v2-sync-and-rank.json",
+      "collectedAt": "2026-10-01T14:24:58.202Z"
+    },
+    "readback": {
+      "path": "artifacts/discovery-tool-lab-korea-20261001-v2-verify-files.json",
+      "collectedAt": "2026-10-01T14:25:55.290Z"
+    },
+    "resources": {
+      "path": "artifacts/discovery-korea-workspace-managed-resources-20261001.json",
+      "collectedAt": "2026-10-01T14:29:16.561Z"
+    },
+    "managedDeployments": {
+      "path": "artifacts/discovery-korea-workspace-managed-deployments-20261001.json",
+      "collectedAt": "2026-10-01T14:29:18.303Z"
+    },
+    "postRunAutoscale": {
+      "path": "artifacts/discovery-korea-runtime-autoscale-20261001.json"
+    }
+  },
+  "postRunAutoscale": {
+    "checkedAt": "2026-10-01T14:37:36.951Z",
+    "systemNodeCount": 2,
+    "userNodeCount": 0,
+    "userMin": 0,
+    "userMax": 1,
+    "manuallyScaled": false
+  }
+}

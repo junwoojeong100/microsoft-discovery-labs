@@ -1,0 +1,83 @@
+[
+  {
+    "caller": "junwoojeong@MngEnvMCAP757124.onmicrosoft.com",
+    "correlationId": "5e68098a-3b4b-41ea-9364-0972b43b00b7",
+    "operation": "Microsoft.CognitiveServices/accounts/deployments/write",
+    "properties": {
+      "entity": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.CognitiveServices/accounts/aif-dwsp-foundry-bdnxfqaa/deployments/gpt-5.4",
+      "eventCategory": "Administrative",
+      "hierarchy": "46e9cdaa-fed3-4131-aa28-c1fc8a8a043a/51531604-2337-4c05-bc05-3c3d4ff154e5",
+      "message": "Microsoft.CognitiveServices/accounts/deployments/write",
+      "statusCode": "OK"
+    },
+    "status": "Succeeded",
+    "timestamp": "2026-10-01T13:31:02.6475707Z"
+  },
+  {
+    "caller": "junwoojeong@MngEnvMCAP757124.onmicrosoft.com",
+    "correlationId": "5e68098a-3b4b-41ea-9364-0972b43b00b7",
+    "operation": "Microsoft.CognitiveServices/accounts/deployments/write",
+    "properties": {
+      "entity": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.CognitiveServices/accounts/aif-dwsp-foundry-bdnxfqaa/deployments/gpt-5.4",
+      "eventCategory": "Administrative",
+      "hierarchy": "46e9cdaa-fed3-4131-aa28-c1fc8a8a043a/51531604-2337-4c05-bc05-3c3d4ff154e5",
+      "message": "Microsoft.CognitiveServices/accounts/deployments/write"
+    },
+    "status": "Started",
+    "timestamp": "2026-10-01T13:30:59.4756968Z"
+  },
+  {
+    "caller": "junwoojeong@MngEnvMCAP757124.onmicrosoft.com",
+    "correlationId": "1d3e1c88-f475-458c-82dd-5b9533dfcbfd",
+    "operation": "Microsoft.CognitiveServices/accounts/deployments/write",
+    "properties": {
+      "entity": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.CognitiveServices/accounts/aif-dwsp-foundry-bdnxfqaa/deployments/gpt-5.4",
+      "eventCategory": "Administrative",
+      "hierarchy": "46e9cdaa-fed3-4131-aa28-c1fc8a8a043a/51531604-2337-4c05-bc05-3c3d4ff154e5",
+      "message": "Microsoft.CognitiveServices/accounts/deployments/write",
+      "statusCode": "OK"
+    },
+    "status": "Succeeded",
+    "timestamp": "2026-10-01T13:30:30.4126801Z"
+  },
+  {
+    "caller": "junwoojeong@MngEnvMCAP757124.onmicrosoft.com",
+    "correlationId": "1d3e1c88-f475-458c-82dd-5b9533dfcbfd",
+    "operation": "Microsoft.CognitiveServices/accounts/deployments/write",
+    "properties": {
+      "entity": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.CognitiveServices/accounts/aif-dwsp-foundry-bdnxfqaa/deployments/gpt-5.4",
+      "eventCategory": "Administrative",
+      "hierarchy": "46e9cdaa-fed3-4131-aa28-c1fc8a8a043a/51531604-2337-4c05-bc05-3c3d4ff154e5",
+      "message": "Microsoft.CognitiveServices/accounts/deployments/write"
+    },
+    "status": "Started",
+    "timestamp": "2026-10-01T13:30:28.1314342Z"
+  },
+  {
+    "caller": "junwoojeong@MngEnvMCAP757124.onmicrosoft.com",
+    "correlationId": "bb33a6ad-fb5b-4b1c-b6d6-e53b07956b57",
+    "operation": "Microsoft.CognitiveServices/accounts/deployments/write",
+    "properties": {
+      "entity": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.CognitiveServices/accounts/aif-dwsp-foundry-bdnxfqaa/deployments/gpt-5.4",
+      "eventCategory": "Administrative",
+      "hierarchy": "46e9cdaa-fed3-4131-aa28-c1fc8a8a043a/51531604-2337-4c05-bc05-3c3d4ff154e5",
+      "message": "Microsoft.CognitiveServices/accounts/deployments/write",
+      "statusCode": "OK"
+    },
+    "status": "Succeeded",
+    "timestamp": "2026-10-01T13:29:49.5984177Z"
+  },
+  {
+    "caller": "junwoojeong@MngEnvMCAP757124.onmicrosoft.com",
+    "correlationId": "bb33a6ad-fb5b-4b1c-b6d6-e53b07956b57",
+    "operation": "Microsoft.CognitiveServices/accounts/deployments/write",
+    "properties": {
+      "entity": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwookc-bdnxfq/providers/Microsoft.CognitiveServices/accounts/aif-dwsp-foundry-bdnxfqaa/deployments/gpt-5.4",
+      "eventCategory": "Administrative",
+      "hierarchy": "46e9cdaa-fed3-4131-aa28-c1fc8a8a043a/51531604-2337-4c05-bc05-3c3d4ff154e5",
+      "message": "Microsoft.CognitiveServices/accounts/deployments/write"
+    },
+    "status": "Started",
+    "timestamp": "2026-10-01T13:29:45.8172157Z"
+  }
+]

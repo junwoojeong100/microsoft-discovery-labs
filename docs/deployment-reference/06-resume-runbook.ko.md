@@ -4,6 +4,45 @@
 
 **현재 상태:** `discovery-core-resume-20261001-1530`은 16:14:43에 최종 Failed로 끝났다. 지역 용량을 해결하기 전 같은 `create`를 반복하지 않는다. Feature 등록과 중앙 진단 복구는 완료됐고, Bookshelf quota 요청은 접수됐지만 실제 한도 미반영 상태다.
 
+## 저녁 교차 리전 경로 — 기존 단일 리전 예제와 구분
+
+**최신 완료 상태:** Workspace는 22:52:51, 검증 모델·Project 등 자식은 23:18:23 KST에 Succeeded다. 이후 실제 입력·계산 실행과 별도 사설 재조회도 성공했다. 두 GPT-5.4는 **Global Standard 250,000 TPM씩**, 총 500,000 TPM이다. 아래의 이전 quota 차단 절은 이 후속 사용자 할당 변경과 성공으로 대체한다. 이미 생성된 core를 다시 제출하지 말고 [최종 결과](../../artifacts/discovery-korea-final-result-20261001.json)를 확인한다.
+
+**Discovery home은 `swedencentral`로 고정하고 target compute만 `koreacentral`로 변경한다.** 기존 RG `rg-discovery-hol-20260930`을 유지하고 새 이름을 사용한다. 같은 이름의 기존 자원을 이동하거나 기존 Workspace의 생성 태그를 수정하지 않는다.
+
+| 단계 | 입력 / 실제 범위 |
+|---|---|
+| Korea 기반 신규 생성 | [cross-region-foundation.bicepparam](../../infra/cross-region-foundation.bicepparam): 새 VNet·관리 ID·Storage·ACR·Blob PE·DNS link. 기존 DNS zone/관리자 역할은 NoChange |
+| Korea 컴퓨트 | [discovery-core.koreacentral.bicepparam](../../infra/discovery-core.koreacentral.bicepparam), [컴퓨트 전용 payload](../../artifacts/discovery-korea-compute-template-20261001.json): `sc-discovery-hol-kc`와 `cpulab`만 쓰기 |
+| Workspace·검증 모델·Project | 전체 core와 별도 단계. 신규 GPT-5.4 quota 조건을 충족하기 전 제출하지 않음 |
+| Bookshelf | 기존 운영 quota 조건을 만족한 뒤 별도 생성 |
+
+기반 배포는 **21:05:23 KST Succeeded**이며 새 지원 자원은 Korea Central에서 확인됐다. 기반 템플릿은 초기 생성용이다. 확장된 VNet에 내부 3-subnet 모듈을 재적용하지 말고 필요한 자원만 별도 검증해 변경한다. 기존 `blob:sync`의 클라이언트/스토리지 이름도 이전 Sweden 환경용이므로 새 저장소 동기화에 그대로 사용하지 않는다.
+
+컴퓨트 배포도 **21:28:45 KST Succeeded**로 종료됐다. 실제 Supercomputer·cpulab·AKS·시스템/사용자 VMSS 모두 Succeeded이며 시스템 2대, 사용자 0대(min 0/max 1)다. 이미 완료한 생성 요청을 다시 제출하지 않는다. [최종 결과](../../artifacts/discovery-korea-deployment-result-20261001.json)를 확인한다.
+
+기존 core를 컴파일한 뒤 symbolic resource 중 `identity`(existing), `supercomputer`, `cpuPool`과 해당 출력만 보존한 payload를 사용했다. 원본 identity map·region tag·min 0/max 1은 유지했다. `location=swedencentral`이며 생성 태그 `discovery.overridemrgregion=koreacentral`이 실제 target을 정한다. 내부 구독용 Key Vault 태그도 포함한다. [검증/미리 보기 증거](../../artifacts/discovery-korea-compute-proof-20261001.json)를 확인하며, 부분 payload를 전체 배포 성공으로 해석하지 않는다.
+
+**모델 별도 차단:** Korea Central quota API에서도 GPT-5.4 GlobalStandard가 3,000/3,000 단위, 미할당 0 TPM으로 관측됐다. 기존 `gpt-5.4`의 3,000,000 TPM를 임의 축소하지 않는다. DataZoneStandard 잔여 300,000 TPM만으로 자동 cognition과 별도 검증 모델의 전체 조건을 충족한다고 가정하지 않는다.
+
+**별도 정책 작업:** 새 AKS는 성공했지만 기존 Defender의 Azure Policy 애드온 자동 배포는 `LinkedAuthorizationFailed`다. 정책 관리 ID에 새 `aksSubnet`의 join 권한이 없으며 Discovery용 UAMI의 역할 누락과는 다른 문제다. 권한 범위 확인·승인 후 해당 정책 작업만 복구한다. ARM 사전 검증이 성공해도 자동 정책의 후속 배포 전체가 성공한다는 보장은 아니다. [실패 및 보존 범위](../reports/EXECUTION-REPORT.ko.md)를 참고한다.
+
+### 실제 파일·도구 실행 재현
+
+새 `config/lab.json.runtime`은 Korea 환경의 `thermalhol`, `thermal-ranking-kc`, `cpulab`, `thermaldata-kc`를 명시한다. 아래 명령은 **실제 클라우드 작업을 제출**한다. 입력 5개를 기존과 비교하고 다른 내용은 덮어쓰지 않는다. 출력 경로와 로컬 증거를 구분하려면 새 run ID를 사용한다.
+
+```bash
+RUN_ID="lab-korea-$(date -u +%Y%m%d%H%M%S)"
+npm run tool:run -- --phase sync-and-rank --run-id "$RUN_ID"
+npm run tool:run -- --phase verify-files --run-id "$RUN_ID"
+```
+
+첫 명령은 기존 사설 mount와 관리 ID로 입력 저장·계산을 수행하고, 두 번째는 별도 작업의 read-only mount에서 영속 파일을 읽는다. GPU 0, replica 1, CPU 1/max 2, 메모리 2Gi/max 4Gi, 30분 제한이다. 로컬 로그에 토큰을 저장하지 않는다. API의 gzip inline 파일은 컨테이너에서 명시적으로 해제한다. 초기 gzip 실패와 수정된 성공을 구분한 [실제 실행 기록](../reports/EXECUTION-REPORT.ko.md)을 참고한다.
+
+**수동 정리:** 사용자가 직접 삭제하기로 했다. 이전 Supercomputer `sc-discovery-hol`과 그 전용 `mrg-dscmp-sc-discovery-hol-b6wiwf`만 후보이며 부모 Discovery 리소스를 먼저 삭제하는 경로를 사용한다. **새 `-kc` Supercomputer/MRG, 기존 랩 RG 전체, Workspace MRG, Foundry 모델, 데이터, 공통 `McapsGovernance`는 삭제하지 않는다.** 새 컴퓨트 MRG가 Sweden Central에 표시되는 것은 정상이다.
+
+이하 기본 명령은 이전 단일 리전 경로의 참고 예제다. 새 배포에는 위 매개변수·검증된 단계 payload와 실제 배포 이름을 사용한다.
+
 ## 실행 전 중단 조건
 
 - 현재 디렉터리/구독/RG가 [활성 설정](../../config/lab.json)과 다르면 중단한다.
@@ -67,7 +106,7 @@ npm run readiness -- --require core
 | 관리자 데이터 클라이언트 | [blob-client.bicep](../../infra/blob-client.bicep) / RG | 공개 SSH 부트스트랩 키만 `sshPublicKey`에 전달. **개인 키 금지**. 현재 VM은 이미 준비됨 |
 | Discovery 코어 | [discovery-core.bicep](../../infra/discovery-core.bicep) / RG | 기본 `deployCompute=true`. 용량 해결·미리 보기 확인 후 실행 |
 | Tool 등록 | [tool.bicep](../../infra/tool.bicep) / RG | 실제 ACR `imageDigest`, GA `properties.version` 사용 |
-| Bookshelf/색인 풀 | 전체 가이드 [L03](../../MICROSOFT-DISCOVERY-LAB.ko.md#l03) | 위 템플릿들이 Bookshelf/`indexlab`까지 자동 생성하지 않음 |
+| Bookshelf/색인 풀 | 전체 가이드 [L03](../labs/MICROSOFT-DISCOVERY-LAB.ko.md#l03) | 위 템플릿들이 Bookshelf/`indexlab`까지 자동 생성하지 않음 |
 
 권한 설정의 Graph 명령은 `--subscription`을 받지 않는다. 필요한 경우에만 아래처럼 **로컬 CLI 문맥**을 명시적으로 바꾸고 계정/테넌트를 다시 확인한다. 이 과정이 역할을 자동 부여하지는 않는다.
 
@@ -131,7 +170,7 @@ az deployment operation group list --name discovery-core-resume-20261001-1530 \
 | MRG `PolicyDeployment_*` 실패 | 과거 실패 이력과 현재 설정을 구분. 중앙 진단은 기존 정책 3개로 복구 완료했으므로 실제 workspace/진단 GET과 새 remediation 결과를 확인 |
 | CLI 명령 미지원·MSAL 오류 | 문서화된 다른 읽기 경로 또는 정상 재로그인. 실패 응답을 0/무제한/성공으로 바꾸지 않음 |
 
-코어가 성공하면 `gpt-5-4`, `thermalhol`, `cpulab`과 실제 연결을 확인한다. 그 다음 Bookshelf/색인 풀/KB를 준비한다. [가이드 L00–L09](../../MICROSOFT-DISCOVERY-LAB.ko.md#l00)의 단계별 완료 기준을 적용한다.
+코어가 성공하면 `gpt-5-4`, `thermalhol`, `cpulab`과 실제 연결을 확인한다. 그 다음 Bookshelf/색인 풀/KB를 준비한다. [가이드 L00–L09](../labs/MICROSOFT-DISCOVERY-LAB.ko.md#l00)의 단계별 완료 기준을 적용한다.
 
 **중앙 진단 재복구 원칙:** [05의 실제 범위](05-network-identity-data.ko.md)를 따른다. 기존 조직 정책에 RG/workspace 생성 규칙이 있으면 해당 구독의 필요한 reference만 순서대로 복구하고, 진단 설정은 대상 리소스 하나로 제한한다. 관리 그룹 전체 initiative를 재적용하거나 다른 workspace로 목적지를 바꾸거나 새로운 Owner 역할을 부여하지 않는다. West US 2 중앙 로그 목적지는 조직 정책의 값이며 Discovery 작업 리전 변경이 아니다.
 
@@ -146,4 +185,4 @@ az deployment operation group list --name discovery-core-resume-20261001-1530 \
 - 공유 `McapsGovernance` RG/중앙 Log Analytics는 실습 RG 정리에서 제외한다. 로그 수집·보관 비용과 `Do Not Delete` 태그를 별도로 확인한다.
 - 구독 scope의 first-party 역할/custom role은 RG 삭제로 사라지지 않으며 다른 환경이 사용할 수 있다.
 
-상세 정리 기준: [L09](../../MICROSOFT-DISCOVERY-LAB.ko.md#l09). 새 실행 결과에는 시각, scope, 성공/실패/미실행 구분과 실제 응답을 남기되 토큰·비밀·개인 연락처는 저장하지 않는다.
+상세 정리 기준: [L09](../labs/MICROSOFT-DISCOVERY-LAB.ko.md#l09). 새 실행 결과에는 시각, scope, 성공/실패/미실행 구분과 실제 응답을 남기되 토큰·비밀·개인 연락처는 저장하지 않는다.

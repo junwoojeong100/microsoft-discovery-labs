@@ -1,0 +1,55 @@
+{
+  "verifiedAt": "2026-10-01T10:50:15.055Z",
+  "outcome": "existing_deployment_at_maximum_tpm",
+  "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwoosc-ym5ffv/providers/Microsoft.CognitiveServices/accounts/aif-dwsp-foundry-ym5ffvaa/deployments/gpt-5.4",
+  "method": "Observed the shared Foundry UI slider at 3000000/3000000 while Saving, waited for that save to finish, then independently verified ARM state. No duplicate save or API write was submitted by the assistant.",
+  "before": {
+    "capacity": 250,
+    "tpm": 250000,
+    "rpm": 2500
+  },
+  "after": {
+    "capacity": 3000,
+    "tpm": 3000000,
+    "rpm": 30000,
+    "provisioningState": "Succeeded"
+  },
+  "maximum": {
+    "uiSliderTpm": 3000000,
+    "allocatedQuotaTpm": 3000000,
+    "totalQuotaTpm": 3000000,
+    "unallocatedTpm": 0
+  },
+  "preserved": {
+    "model": "gpt-5.4",
+    "version": "2026-03-05",
+    "sku": "GlobalStandard",
+    "raiPolicy": "cogloopcontentfilter",
+    "versionUpgradeOption": "OnceCurrentVersionExpired",
+    "privateEndpointApproved": true,
+    "networkDefaultAction": "Deny"
+  },
+  "modelCountBefore": 1,
+  "bookshelves": [
+    {
+      "model": "text-embedding-3-small",
+      "limitTpm": 1000000,
+      "allocatedTpm": 220000,
+      "availableTpm": 780000,
+      "requiredOperationalTpm": 2000000
+    },
+    {
+      "model": "gpt-5-mini",
+      "limitTpm": 1000000,
+      "allocatedTpm": 10000,
+      "availableTpm": 990000,
+      "requiredOperationalTpm": 2000000
+    }
+  ],
+  "limitations": [
+    "This account had only gpt-5.4; gpt-5-mini and embedding deployments were not present and were not created.",
+    "No unallocated GlobalStandard GPT-5.4 quota remains. A later separate gpt-5-4 chat deployment will need an explicit allocation rebalance or a quota increase.",
+    "Configured rate limits and provisioning were verified, not sustained inference performance or end-to-end Discovery readiness.",
+    "No network access, role, model version, guardrail, or deployment SKU was changed by the assistant."
+  ]
+}

@@ -1,0 +1,121 @@
+{
+  "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Resources/deployments/discovery-korea-workspace-20261001",
+  "location": null,
+  "name": "discovery-korea-workspace-20261001",
+  "properties": {
+    "correlationId": "0463894c-3988-4a03-84c9-fa0608bfa556",
+    "debugSetting": null,
+    "dependencies": [],
+    "diagnostics": null,
+    "duration": "PT1H1M12.401572S",
+    "error": null,
+    "extensions": [],
+    "mode": "Incremental",
+    "onErrorDeployment": null,
+    "outputResources": [
+      {
+        "apiVersion": null,
+        "extension": null,
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/workspaces/discoveryholjunwookc",
+        "identifiers": null,
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceType": "Microsoft.Discovery/workspaces"
+      }
+    ],
+    "outputs": {
+      "workspaceApiUri": {
+        "type": "String",
+        "value": "https://discoveryholjunwookc.workspace.discovery.azure.com"
+      },
+      "workspaceId": {
+        "type": "String",
+        "value": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/workspaces/discoveryholjunwookc"
+      },
+      "workspaceUiUri": {
+        "type": "String",
+        "value": "https://studio.discovery.microsoft.com/workspaces/discoveryholjunwookc"
+      }
+    },
+    "parameters": {
+      "deployCompute": {
+        "type": "Bool",
+        "value": true
+      },
+      "identityName": {
+        "type": "String",
+        "value": "id-discovery-hol-kc"
+      },
+      "location": {
+        "type": "String",
+        "value": "swedencentral"
+      },
+      "projectName": {
+        "type": "String",
+        "value": "thermalhol"
+      },
+      "skipAssociateKeyVaultToNsp": {
+        "type": "Bool",
+        "value": true
+      },
+      "storageAccountName": {
+        "type": "String",
+        "value": "stdiscoveryholjunwookc"
+      },
+      "storageContainerName": {
+        "type": "String",
+        "value": "thermaldata-kc"
+      },
+      "supercomputerName": {
+        "type": "String",
+        "value": "sc-discovery-hol-kc"
+      },
+      "targetComputeLocation": {
+        "type": "String",
+        "value": "koreacentral"
+      },
+      "virtualNetworkName": {
+        "type": "String",
+        "value": "vnet-discovery-hol-kc"
+      },
+      "workspaceName": {
+        "type": "String",
+        "value": "discoveryholjunwookc"
+      }
+    },
+    "parametersLink": null,
+    "providers": [
+      {
+        "id": null,
+        "namespace": "Microsoft.Discovery",
+        "providerAuthorizationConsentState": null,
+        "registrationPolicy": null,
+        "registrationState": null,
+        "resourceTypes": [
+          {
+            "aliases": null,
+            "apiProfiles": null,
+            "apiVersions": null,
+            "capabilities": null,
+            "defaultApiVersion": null,
+            "locationMappings": null,
+            "locations": [
+              "swedencentral"
+            ],
+            "properties": null,
+            "resourceType": "workspaces",
+            "zoneMappings": null
+          }
+        ]
+      }
+    ],
+    "provisioningState": "Succeeded",
+    "templateHash": "8989141466729424705",
+    "templateLink": null,
+    "timestamp": "2026-10-01T13:52:51.239558+00:00",
+    "validatedResources": null,
+    "validationLevel": null
+  },
+  "resourceGroup": "rg-discovery-hol-20260930",
+  "tags": null,
+  "type": "Microsoft.Resources/deployments"
+}

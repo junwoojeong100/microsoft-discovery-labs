@@ -1,0 +1,158 @@
+{
+  "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Resources/deployments/discovery-korea-compute-20261001",
+  "location": null,
+  "name": "discovery-korea-compute-20261001",
+  "properties": {
+    "correlationId": "3d539b46-1818-4c7e-914c-c00934d1177e",
+    "debugSetting": null,
+    "dependencies": [
+      {
+        "dependsOn": [
+          {
+            "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/supercomputers/sc-discovery-hol-kc",
+            "resourceGroup": "rg-discovery-hol-20260930",
+            "resourceName": "sc-discovery-hol-kc",
+            "resourceType": "Microsoft.Discovery/supercomputers"
+          }
+        ],
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/supercomputers/sc-discovery-hol-kc/nodePools/cpulab",
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceName": "sc-discovery-hol-kc/cpulab",
+        "resourceType": "Microsoft.Discovery/supercomputers/nodePools"
+      }
+    ],
+    "diagnostics": null,
+    "duration": "PT20M33.9719996S",
+    "error": null,
+    "extensions": [],
+    "mode": "Incremental",
+    "onErrorDeployment": null,
+    "outputResources": [
+      {
+        "apiVersion": null,
+        "extension": null,
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/supercomputers/sc-discovery-hol-kc",
+        "identifiers": null,
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceType": "Microsoft.Discovery/supercomputers"
+      },
+      {
+        "apiVersion": null,
+        "extension": null,
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/supercomputers/sc-discovery-hol-kc/nodePools/cpulab",
+        "identifiers": null,
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceType": "Microsoft.Discovery/supercomputers/nodePools"
+      }
+    ],
+    "outputs": {
+      "computeIncluded": {
+        "type": "Bool",
+        "value": true
+      },
+      "nodepoolId": {
+        "type": "String",
+        "value": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/supercomputers/sc-discovery-hol-kc/nodePools/cpulab"
+      },
+      "supercomputerId": {
+        "type": "String",
+        "value": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/supercomputers/sc-discovery-hol-kc"
+      }
+    },
+    "parameters": {
+      "deployCompute": {
+        "type": "Bool",
+        "value": true
+      },
+      "identityName": {
+        "type": "String",
+        "value": "id-discovery-hol-kc"
+      },
+      "location": {
+        "type": "String",
+        "value": "swedencentral"
+      },
+      "projectName": {
+        "type": "String",
+        "value": "thermalhol"
+      },
+      "skipAssociateKeyVaultToNsp": {
+        "type": "Bool",
+        "value": true
+      },
+      "storageAccountName": {
+        "type": "String",
+        "value": "stdiscoveryholjunwookc"
+      },
+      "storageContainerName": {
+        "type": "String",
+        "value": "thermaldata-kc"
+      },
+      "supercomputerName": {
+        "type": "String",
+        "value": "sc-discovery-hol-kc"
+      },
+      "targetComputeLocation": {
+        "type": "String",
+        "value": "koreacentral"
+      },
+      "virtualNetworkName": {
+        "type": "String",
+        "value": "vnet-discovery-hol-kc"
+      },
+      "workspaceName": {
+        "type": "String",
+        "value": "discoveryholjunwookc"
+      }
+    },
+    "parametersLink": null,
+    "providers": [
+      {
+        "id": null,
+        "namespace": "Microsoft.Discovery",
+        "providerAuthorizationConsentState": null,
+        "registrationPolicy": null,
+        "registrationState": null,
+        "resourceTypes": [
+          {
+            "aliases": null,
+            "apiProfiles": null,
+            "apiVersions": null,
+            "capabilities": null,
+            "defaultApiVersion": null,
+            "locationMappings": null,
+            "locations": [
+              "swedencentral"
+            ],
+            "properties": null,
+            "resourceType": "supercomputers",
+            "zoneMappings": null
+          },
+          {
+            "aliases": null,
+            "apiProfiles": null,
+            "apiVersions": null,
+            "capabilities": null,
+            "defaultApiVersion": null,
+            "locationMappings": null,
+            "locations": [
+              "swedencentral"
+            ],
+            "properties": null,
+            "resourceType": "supercomputers/nodePools",
+            "zoneMappings": null
+          }
+        ]
+      }
+    ],
+    "provisioningState": "Succeeded",
+    "templateHash": "14414265234624290567",
+    "templateLink": null,
+    "timestamp": "2026-10-01T12:28:45.924125+00:00",
+    "validatedResources": null,
+    "validationLevel": null
+  },
+  "resourceGroup": "rg-discovery-hol-20260930",
+  "tags": null,
+  "type": "Microsoft.Resources/deployments"
+}
