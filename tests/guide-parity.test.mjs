@@ -241,3 +241,28 @@ test('sensitive conceptual boundaries are explicit in both editions', () => {
     assert.ok(section(text, 'l08').includes('Blob'));
   }
 });
+
+test('both editions preserve the observed deployment lessons and resumption commands', () => {
+  for (const [language, text] of Object.entries(guides)) {
+    for (const term of [
+      'npm run readiness', '--require core', 'DefaultFeature=Pending',
+      'IncompatibleDelegations', 'StorageAccount_PublicNetwork_Modify',
+      'AKSCapacityHeavyUsage', 'properties.version', 'infra/tool.bicep',
+      '990,000', '780,000', '2,010,000', '2,220,000',
+      'infra/expand-network.bicep', 'infra/storage-private-access.bicep',
+      'npm run blob:sync', 'vm-discovery-blob-client', 'Discovery Default Project',
+      'discoverydefaultprojectym5ffvaa', '3,000,000',
+    ]) assert.ok(text.includes(term), `${language}: missing observed lesson ${term}`);
+  }
+});
+
+test('Graph identity commands use the selected tenant context rather than unsupported subscription flags', () => {
+  for (const text of Object.values(guides)) {
+    const setup = blocks(section(text, 'l01'), 'bash')
+      .find((block) => block.includes('CONTROL_PLANE_OBJECT_ID='));
+    assert.ok(setup.includes('az account set --subscription "$SUBSCRIPTION_ID"'));
+    for (const command of setup.matchAll(/\$\(az ad ([\s\S]*?)\)/g)) {
+      assert.ok(!command[1].includes('--subscription'));
+    }
+  }
+});

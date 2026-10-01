@@ -1,0 +1,14 @@
+[
+  {
+    "allocated": 220.0,
+    "description": "Tokens Per Minute (thousands) - text-embedding-3-small",
+    "limit": 1000.0,
+    "metric": "OpenAI.GlobalStandard.text-embedding-3-small"
+  },
+  {
+    "allocated": 10.0,
+    "description": "One Thousand Tokens Per Minute - gpt-5-mini - GlobalStandard",
+    "limit": 1000.0,
+    "metric": "OpenAI.GlobalStandard.gpt-5-mini"
+  }
+]

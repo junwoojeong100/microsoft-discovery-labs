@@ -1,0 +1,267 @@
+{
+  "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Resources/deployments/discovery-blob-client-20261001",
+  "location": null,
+  "name": "discovery-blob-client-20261001",
+  "properties": {
+    "correlationId": "01b9c080-e372-4d22-874c-f786980cd049",
+    "debugSetting": null,
+    "dependencies": [
+      {
+        "dependsOn": [
+          {
+            "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/networkSecurityGroups/nsg-discovery-blob-client",
+            "resourceGroup": "rg-discovery-hol-20260930",
+            "resourceName": "nsg-discovery-blob-client",
+            "resourceType": "Microsoft.Network/networkSecurityGroups"
+          }
+        ],
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/blobClientSubnet",
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceName": "vnet-discovery-hol/blobClientSubnet",
+        "resourceType": "Microsoft.Network/virtualNetworks/subnets"
+      },
+      {
+        "dependsOn": [
+          {
+            "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/blobClientSubnet",
+            "resourceGroup": "rg-discovery-hol-20260930",
+            "resourceName": "vnet-discovery-hol/blobClientSubnet",
+            "resourceType": "Microsoft.Network/virtualNetworks/subnets"
+          }
+        ],
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/networkInterfaces/nic-discovery-blob-client",
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceName": "nic-discovery-blob-client",
+        "resourceType": "Microsoft.Network/networkInterfaces"
+      },
+      {
+        "dependsOn": [
+          {
+            "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/networkInterfaces/nic-discovery-blob-client",
+            "resourceGroup": "rg-discovery-hol-20260930",
+            "resourceName": "nic-discovery-blob-client",
+            "resourceType": "Microsoft.Network/networkInterfaces"
+          }
+        ],
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Compute/virtualMachines/vm-discovery-blob-client",
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceName": "vm-discovery-blob-client",
+        "resourceType": "Microsoft.Compute/virtualMachines"
+      },
+      {
+        "dependsOn": [
+          {
+            "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Compute/virtualMachines/vm-discovery-blob-client",
+            "resourceGroup": "rg-discovery-hol-20260930",
+            "resourceName": "vm-discovery-blob-client",
+            "resourceType": "Microsoft.Compute/virtualMachines"
+          },
+          {
+            "apiVersion": "2024-11-01",
+            "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Compute/virtualMachines/vm-discovery-blob-client",
+            "resourceGroup": "rg-discovery-hol-20260930",
+            "resourceName": "vm-discovery-blob-client",
+            "resourceType": "Microsoft.Compute/virtualMachines"
+          }
+        ],
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Storage/storageAccounts/stdiscoveryholjunwoosc/providers/Microsoft.Authorization/roleAssignments/38e4399e-c176-5032-a587-91f9077d68b5",
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceName": "38e4399e-c176-5032-a587-91f9077d68b5",
+        "resourceType": "Microsoft.Authorization/roleAssignments"
+      }
+    ],
+    "diagnostics": null,
+    "duration": "PT47.4467229S",
+    "error": null,
+    "extensions": [],
+    "mode": "Incremental",
+    "onErrorDeployment": null,
+    "outputResources": [
+      {
+        "apiVersion": null,
+        "extension": null,
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Compute/virtualMachines/vm-discovery-blob-client",
+        "identifiers": null,
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceType": "Microsoft.Compute/virtualMachines"
+      },
+      {
+        "apiVersion": null,
+        "extension": null,
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/networkInterfaces/nic-discovery-blob-client",
+        "identifiers": null,
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceType": "Microsoft.Network/networkInterfaces"
+      },
+      {
+        "apiVersion": null,
+        "extension": null,
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/networkSecurityGroups/nsg-discovery-blob-client",
+        "identifiers": null,
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceType": "Microsoft.Network/networkSecurityGroups"
+      },
+      {
+        "apiVersion": null,
+        "extension": null,
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/blobClientSubnet",
+        "identifiers": null,
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceType": "Microsoft.Network/virtualNetworks/subnets"
+      },
+      {
+        "apiVersion": null,
+        "extension": null,
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Storage/storageAccounts/stdiscoveryholjunwoosc/providers/Microsoft.Authorization/roleAssignments/38e4399e-c176-5032-a587-91f9077d68b5",
+        "identifiers": null,
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceType": "Microsoft.Authorization/roleAssignments"
+      }
+    ],
+    "outputs": {
+      "principalId": {
+        "type": "String",
+        "value": "657af533-af0d-4c76-b102-5e84dc0121f0"
+      },
+      "virtualMachineId": {
+        "type": "String",
+        "value": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Compute/virtualMachines/vm-discovery-blob-client"
+      }
+    },
+    "parameters": {
+      "adminUsername": {
+        "type": "String",
+        "value": "azureuser"
+      },
+      "location": {
+        "type": "String",
+        "value": "swedencentral"
+      },
+      "sshPublicKey": {
+        "type": "String",
+        "value": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDcYOmhd1xxJkRD6JyHBkrFwYt3QI3IHrES3Pwn5qO7r discovery-blob-client-20261001"
+      },
+      "storageAccountName": {
+        "type": "String",
+        "value": "stdiscoveryholjunwoosc"
+      },
+      "virtualMachineName": {
+        "type": "String",
+        "value": "vm-discovery-blob-client"
+      },
+      "virtualNetworkName": {
+        "type": "String",
+        "value": "vnet-discovery-hol"
+      }
+    },
+    "parametersLink": null,
+    "providers": [
+      {
+        "id": null,
+        "namespace": "Microsoft.Network",
+        "providerAuthorizationConsentState": null,
+        "registrationPolicy": null,
+        "registrationState": null,
+        "resourceTypes": [
+          {
+            "aliases": null,
+            "apiProfiles": null,
+            "apiVersions": null,
+            "capabilities": null,
+            "defaultApiVersion": null,
+            "locationMappings": null,
+            "locations": [
+              "swedencentral"
+            ],
+            "properties": null,
+            "resourceType": "networkSecurityGroups",
+            "zoneMappings": null
+          },
+          {
+            "aliases": null,
+            "apiProfiles": null,
+            "apiVersions": null,
+            "capabilities": null,
+            "defaultApiVersion": null,
+            "locationMappings": null,
+            "locations": [
+              null
+            ],
+            "properties": null,
+            "resourceType": "virtualNetworks/subnets",
+            "zoneMappings": null
+          },
+          {
+            "aliases": null,
+            "apiProfiles": null,
+            "apiVersions": null,
+            "capabilities": null,
+            "defaultApiVersion": null,
+            "locationMappings": null,
+            "locations": [
+              "swedencentral"
+            ],
+            "properties": null,
+            "resourceType": "networkInterfaces",
+            "zoneMappings": null
+          }
+        ]
+      },
+      {
+        "id": null,
+        "namespace": "Microsoft.Compute",
+        "providerAuthorizationConsentState": null,
+        "registrationPolicy": null,
+        "registrationState": null,
+        "resourceTypes": [
+          {
+            "aliases": null,
+            "apiProfiles": null,
+            "apiVersions": null,
+            "capabilities": null,
+            "defaultApiVersion": null,
+            "locationMappings": null,
+            "locations": [
+              "swedencentral"
+            ],
+            "properties": null,
+            "resourceType": "virtualMachines",
+            "zoneMappings": null
+          }
+        ]
+      },
+      {
+        "id": null,
+        "namespace": "Microsoft.Authorization",
+        "providerAuthorizationConsentState": null,
+        "registrationPolicy": null,
+        "registrationState": null,
+        "resourceTypes": [
+          {
+            "aliases": null,
+            "apiProfiles": null,
+            "apiVersions": null,
+            "capabilities": null,
+            "defaultApiVersion": null,
+            "locationMappings": null,
+            "locations": [
+              null
+            ],
+            "properties": null,
+            "resourceType": "roleAssignments",
+            "zoneMappings": null
+          }
+        ]
+      }
+    ],
+    "provisioningState": "Succeeded",
+    "templateHash": "8150908685264093262",
+    "templateLink": null,
+    "timestamp": "2026-10-01T02:34:06.045386+00:00",
+    "validatedResources": null,
+    "validationLevel": null
+  },
+  "resourceGroup": "rg-discovery-hol-20260930",
+  "tags": null,
+  "type": "Microsoft.Resources/deployments"
+}

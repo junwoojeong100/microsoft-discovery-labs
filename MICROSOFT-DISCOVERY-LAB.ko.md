@@ -1,17 +1,17 @@
 # Microsoft Discovery 핵심 기능 실습 가이드
 
-**한국어 · 2026-09-25 기준 · Azure 클라우드 서비스**
+**한국어 · 2026-10-01 실행 기반 개정 · Azure 클라우드 서비스**
 
 [English](MICROSOFT-DISCOVERY-LAB.en.md) · [브라우저용 국문](MICROSOFT-DISCOVERY-LAB.ko.html)
 
 **목표는 하나다. 근거를 찾고, 실제 계산으로 검증하고, 사람이 조건을 바꿨을 때 다시 평가하는 연구 흐름을 만든다.**
 
-> **검증 범위:** 공식 문서를 교차 확인하고 제공 데이터·계산 결과를 로컬에서 검증한 가이드다. 이 계정에서 Discovery의 Azure 종단간 실습을 완료했다는 의미는 아니다. 이번 개정은 가이드만 대상으로 하며 Azure 배포·녹화를 실행하지 않는다.
+> **검증 범위:** 실제 Azure 배포에서 확인한 선행조건·오류·재개 절차를 반영한다. 최신 상태와 미완료 항목은 [실행 보고서](EXECUTION-REPORT.ko.md), 접근·모델 quota는 [읽기 전용 점검 결과](artifacts/discovery-readiness.json)를 확인한다. 리소스 생성, 데이터 평면 접근, Bookshelf 색인, 연구 실행은 각각 다른 완료 기준이다. 로컬 정답이나 ARM `Succeeded`만으로 전체 실습 성공을 주장하지 않는다.
 
 <a id="s00"></a>
 ## S00 — 시작하기
 
-Microsoft Discovery 클라우드 서비스는 **2026-06-02 GA**되었다. 별도 **Discovery 데스크톱 앱과 unified Workbench는 Preview**이며, 이 가이드의 필수 경로가 아니다. 정적 `kind: workflow` 에이전트 대신 **Discovery Engine**을 사용한다. 역할 이름에 남아 있는 `(Preview)`는 공식 표시 이름 그대로 표기한다.[S01][] [S03][] [S10][] [S28][]
+Microsoft Discovery 클라우드 서비스는 **2026-06-02 GA**되었다. 별도 **Discovery 데스크톱 앱과 unified Workbench는 Preview**이며, 이 가이드의 필수 경로가 아니다. 정적 `kind: workflow` 에이전트 대신 **Discovery Engine**을 사용한다. 문서의 역할 이름에 `(Preview)`가 남아 있어도 실제 구독의 표시 이름에서는 빠질 수 있다. 자동화는 검증한 역할 GUID를 사용하며 이름 변경을 권한 변경으로 추정하지 않는다.[S01][] [S03][] [S10][] [S28][]
 
 | 대상 | 따라갈 경로 |
 |---|---|
@@ -128,13 +128,24 @@ az provider show --namespace Microsoft.Discovery \
   --query "{state:registrationState,types:resourceTypes[].resourceType}"
 ```
 
-4. `Registered`뿐 아니라 실제 Workspace 등 필수 리소스 유형의 사용 가능 여부도 확인한다. 기능 등록이 `Pending`이면 서비스 측 확인이 필요하다. 임의의 개발용 feature를 켜지 않는다. 과거 이 계정의 `DefaultFeature` 신청 기록은 별도 실행 보고서에 있으며, 모든 구독에 적용할 범용 설치 절차로 간주하지 않는다.
+4. `Registered`뿐 아니라 `workspaces`/`supercomputers`/`bookshelves` 유형과 실제 Workspace 목록 API의 성공을 확인한다. **`DefaultFeature=Pending`만으로 접근 실패를 판정하지 않는다.** 2026-10-01에는 이 값이 Pending인 채 `DiscoveryEnabled`/`DiscoveryPreview`/`PublicPreview`가 Registered이고 목록 API가 정상 응답했다. 반대로 Provider 등록만으로 quota·배포·실행 성공을 판정하지 않는다. 개발용 feature를 임의 등록하지 않는다.
 5. 관리자는 Platform Administrator persona와 관리 ID의 최소 역할을 준비한다. **역할을 부여할 권한**은 별도다. Owner/RBAC Administrator/User Access Administrator 등 실제 할당 권한을 확인한다. 연구자·검토자의 프로젝트 역할은 L08에서 다룬다.
 6. 관리자는 공식 절차에 따라 Discovery control-plane service App(`92c174ac-8e41-4815-a1b7-d81b19ab03ce`)의 **Discovery NSP Perimeter Joiner + Reader** 구독 역할을 검토·구성한다. 일반 Contributor만으로 역할 할당까지 된다고 가정하지 않는다.[S18]
 7. 지원 생산 리전 **East US / Sweden Central / UK South** 중 하나를 선택한다. 이 실습은 `swedencentral`을 사용한다. A01의 모델·VM quota와 상시 인프라 비용을 확인한다.
 8. 정상 MFA·보안 키 로그인을 완료한다. 사설 접근 경로라면 VPN/ExpressRoute와 Blob 접근 경로를 준비한다. Portal 로그인, Studio 접근, Blob 파일 열기는 각각 확인한다.
 
-**완료 기준:** 서비스 접근·Provider·권한·quota·클라이언트 연결·비용 확인이 모두 끝났다. 하나라도 막히면 배포하지 않고 담당자에게 해결을 요청한다.
+브라우저 없이 다음 읽기 전용 점검을 실행한다. `config/lab.json`의 계정·테넌트·구독을 검증하며 토큰은 저장하지 않는다. 반환 코드 `0`은 선택한 접근·모델 quota 검사 통과, `2`는 선행조건 차단, `1`은 조회/인증 오류다.
+
+```bash
+npm run readiness
+npm run readiness -- --require core
+```
+
+기본 명령은 Bookshelf까지 포함한다. `--require core`는 Workspace용 GPT-5.4만 별도 판정하며 Bookshelf의 부족한 quota를 숨기지 않는다. 신규 할당에 필요한 **미할당 quota**를 보는 보수적 사전 점검이다. 이미 배포한 모델을 재사용할 때는 실제 배포별 할당도 확인하고 같은 모델을 중복 생성하지 않는다. 두 명령 모두 VM·역할·네트워크·Studio 실습 성공을 증명하지 않는다.
+
+Bookshelf quota만 부족하면 L01 기반/코어를 별도 준비할 수 있지만 L03과 H03을 미완료로 남기고 전체 연구 실습을 통과시키지 않는다.
+
+**완료 기준:** 선택한 단계의 서비스 접근·Provider·권한·quota·클라이언트 연결·비용 확인이 끝났다. 막힌 단계와 그 의존 단계는 배포하지 않는다.
 
 <a id="l01"></a>
 ## L01 — Workspace와 Project 만들기
@@ -143,7 +154,7 @@ az provider show --namespace Microsoft.Discovery \
 
 **실행:**
 
-1. 전용 RG `rg-discovery-hol-20260925`를 사용한다. Workspace·저장소·Bookshelf 이름은 Portal에서 전역 고유성을 확인한다. Workspace는 소문자 영문, Project `thermalhol`은 소문자·최대 12자다. 아래 이름은 **생성 제안값**이지 생성 완료 자원이 아니다.
+1. `config/lab.json`과 같은 전용 RG **`rg-discovery-hol-20260930`**를 사용한다. 과거 보고서의 `20260925` RG와 섞지 않는다. Workspace·저장소·Bookshelf 이름은 전역 고유성을 확인한다. Workspace는 소문자 영문, Project `thermalhol`은 소문자·최대 12자다. 아래 이름의 실제 생성 여부는 실행 보고서와 Azure GET으로 확인한다.
 2. VNet `vnet-discovery-hol`을 만든다. `10.80.0.0/16`은 예시이며 기존 네트워크와 겹치면 승인된 대역으로 바꾼다.
 
 | 서브넷 | 예시 CIDR | 설정 |
@@ -153,17 +164,100 @@ az provider show --namespace Microsoft.Discovery \
 | `workspaceSubnet` | `10.80.3.0/24` | Microsoft.App/environments 위임 + Storage 엔드포인트 |
 | `privateEndpointSubnet` | `10.80.4.0/24` | Workspace 전용 |
 | `agentSubnet` | `10.80.5.0/24` | Microsoft.App/environments 위임 + Storage 엔드포인트 |
-| `searchSubnet` | `10.80.6.0/24` | Bookshelf 전용, Microsoft.App/environments 위임 |
+| `searchSubnet` | `10.80.6.0/24` | Bookshelf 전용, Microsoft.App/environments 위임 + Storage 엔드포인트 |
 | `bookshelfPeSubnet` | `10.80.7.0/24` | Bookshelf 전용 |
+| `storagePeSubnet` | `10.80.8.0/24` | 조직 정책에 맞춘 고객 Blob Storage Private Endpoint 전용 |
+| `blobClientSubnet` | `10.80.9.0/24` | 선택적 관리자용 사설 Blob 클라이언트 VM, 인바운드 차단 |
 
-3. UAMI `id-discovery-hol`을 만들고, 필요한 범위에 Discovery Platform Contributor·Storage Blob Data Contributor를 부여한다. 이미지 pull 역할은 Registry가 준비되는 L05에서 구성한다. 서브넷은 다른 Workspace/Bookshelf와 공유하지 않는다.
-4. Standard LRS Storage account를 만든다. 익명 Blob 공개를 끄고 필요한 VNet/클라이언트 경로만 허용한다. `discoveryinputs`, `discoveryoutputs` Blob 컨테이너를 만든다. CORS는 공식 가이드에 맞춰 `https://studio.discovery.microsoft.com`, `https://vscode.dev`, `https://*.vscode-cdn.net`, GET/HEAD/PUT/DELETE/OPTIONS, 헤더 `*`, Max age 200을 설정한다. CORS는 인증을 대체하지 않는다.
-5. Portal → **Microsoft Discovery Supercomputers → Create**에서 VNet, `aksSubnet`, 시스템 SKU `Standard_D4s_v6`, Cluster/Kubelet/Workload identity를 설정한다. 이후 **Settings → Node pool → Create**에서 `cpulab`을 만든다. 도구용 사용자 풀은 지원 설정에서 min 0 / max 1, GPU 0을 목표로 한다. 시스템 풀과 다르다.
-6. **Microsoft Discovery Workspaces → Create**에서 서브넷·UAMI·Supercomputer를 연결한다. 기본 네트워크 격리를 유지하며 접속 경로를 검증한다. Preview Workbench 태그나 `NetworkIsolation=false`를 자동으로 넣지 않는다. 암호화는 조직 정책에 맞게 MMK/CMK를 선택한다. CMK는 별도 Key Vault·권한 구성이 필요하다.
+3. UAMI `id-discovery-hol`을 만들거나 재사용한다. RG에 Discovery Platform Contributor, 데이터 계정에 Storage Blob Data Contributor, Registry에 AcrPull을 부여한다. Supercomputer의 cluster/kubelet/workload에 같은 UAMI를 사용하므로 VNet의 Network Contributor와 해당 UAMI의 Managed Identity Operator도 준비한다. 실행 사용자에게도 Blob 데이터 역할이 필요하며 Owner는 이를 대체하지 않는다. 서브넷은 다른 Workspace/Bookshelf와 공유하지 않는다.
+4. Standard LRS Storage account와 `discoveryinputs`, `discoveryoutputs` 컨테이너를 만든다. **이 구독의 조직 정책은 Storage 공개 네트워크를 비활성화한다.** 템플릿도 `publicNetworkAccess=Disabled`, 공유 키·익명 Blob 비활성으로 맞추고, 아래 Private Endpoint/DNS 단계와 승인된 VNet 내 클라이언트 경로를 사용한다. IP 허용 규칙만으로 이 정책을 통과할 수 없다. CORS는 `https://studio.discovery.microsoft.com`, `https://vscode.dev`, `https://*.vscode-cdn.net`, GET/HEAD/PUT/DELETE/OPTIONS, 헤더 `*`, Max age 200이다. CORS는 인증이나 사설 연결을 대체하지 않는다.
+5. Portal → **Microsoft Discovery Supercomputers → Create**에서 VNet, `aksSubnet`, 시스템 SKU `Standard_D4s_v6`, Cluster/Kubelet/Workload identity를 설정한다. 템플릿은 `outboundType=LoadBalancer`로 명시적 egress를 사용한다. 서브넷의 `defaultOutboundAccess=false`가 모든 아웃바운드를 막는다는 뜻은 아니다. 이후 **Settings → Node pool → Create**에서 `cpulab`을 만든다. 도구용 사용자 풀은 min 0 / max 1, GPU 0이며 상시 시스템 풀과 다르다.
+6. **Microsoft Discovery Workspaces → Create**에서 서브넷·UAMI·Supercomputer를 연결한다. 이 실습은 **`NetworkIsolation=true` + `publicNetworkAccess=Enabled`**다. 관리 리소스의 격리는 유지하면서 Studio/REST의 인증된 서비스 진입점을 사용한다. 이를 `NetworkIsolation=false` 또는 익명 접근과 혼동하지 않는다. Workspace 자체를 private-only로 만들려면 별도 Discovery private endpoint·DNS·VPN/ExpressRoute를 먼저 준비한다. Preview Workbench 태그는 추가하지 않는다. 기본 MMK를 사용하며 CMK는 별도 Key Vault·권한 구성이 필요하다.
 7. Workspace의 **Settings → Chat Model Deployments**에서 검증용 배포 **`gpt-5-4` / 모델 `gpt-5.4`**가 실제 존재하는지 확인한다. 없으면 만든다. cognition용 자동 배포와 구분한다. 다른 에이전트 모델을 추가하더라도 이 배포를 임의로 대체하지 않는다.
 8. Studio <https://studio.discovery.microsoft.com> → **Data → Storage Containers (new) → Create Container**에서 `thermaldata`를 만들고 Storage account를 연결한다. 이것은 Blob 계정의 참조이며 데이터 복사가 아니다.
-9. **Workspaces → 대상 Workspace → Create Project**에서 `thermalhol`과 Storage Container를 연결한다. 필요한 사용자에게 Workspace managed resource group(MRG)의 Foundry User 역할을 관리자가 부여한다.
+9. **Workspaces → 대상 Workspace → Create Project**에서 `thermalhol`과 Storage Container를 연결한다. 관리자는 Workspace managed resource group(MRG)의 실제 데이터 권한을 확인하고, 없을 때 필요한 사용자에게 Foundry User를 부여한다. 이번 실행에서는 서비스가 사용자에게 MRG 범위 Foundry Owner를 이미 부여했으므로 중복 Foundry User를 추가하지 않았다. 관리 plane Owner만 있는 경우와 구분한다.
 10. 생성된 리소스 ID와 MRG 목록을 기록한다. `Accepted`가 아닌 **`Succeeded`**를 기다린다. Discovery 리소스의 태그는 생성 후 변경 불가하다는 문서 제약이 있으므로 생성 전에 확정한다.
+
+### 기존 기반에서 재개하는 CLI 경로
+
+템플릿은 단계별로 분리했다. **삭제 모드/Complete 모드를 사용하지 않는다.** 신규 환경만 `infra/main.bicep`과 `infra/identity.bicep`으로 초기 기반을 만든다. 이 저장소의 현재 RG/VNet/UAMI는 이미 있으므로 재생성하지 않는다. 기존 3개 서브넷에 대한 전체 VNet PUT은 실제 검증에서 `IncompatibleDelegations`로 실패했으며, 추가 4개만 child resource로 생성하도록 수정했다. 확장 후 예전 3개짜리 VNet 템플릿을 다시 배포하지 않는다.
+
+| 순서 | 템플릿 | 확인할 결과 |
+|---|---|---|
+| 1 | `infra/access.bicep` | 공식 control-plane SP의 NSP Joiner + Reader. 해당 역할이 이미 다른 GUID로 존재하면 중복 생성하지 말고 관리자와 재사용 |
+| 2 | `infra/expand-network.bicep` | 새 서브넷 4개만 추가, 기존 3개 유지 |
+| 3 | `infra/lab-foundation.bicep` | LRS Storage·Blob 컨테이너 2개·Basic ACR·범위를 제한한 역할 |
+| 4 | `infra/discovery-core.bicep` | Supercomputer·cpulab·Workspace·모델·Storage Container/Asset·Project |
+| 5 | `infra/storage-private-access.bicep` | 전용 8번째 서브넷·Blob Private Endpoint·Private DNS. 기존 동일 DNS zone/VNet link가 있으면 재사용 |
+
+아래 값을 확인한다. 구독·리전이 다른 이름을 섞지 말고, 다른 환경에서는 Bicep의 이름 매개변수도 함께 변경한다.
+
+```bash
+SUBSCRIPTION_ID='51531604-2337-4c05-bc05-3c3d4ff154e5'
+RESOURCE_GROUP='rg-discovery-hol-20260930'
+LOCATION='swedencentral'
+az account set --subscription "$SUBSCRIPTION_ID"
+az account show --query "{subscription:id,tenant:tenantId,user:user.name}"
+CONTROL_PLANE_OBJECT_ID=$(az ad sp show \
+  --id 92c174ac-8e41-4815-a1b7-d81b19ab03ce \
+  --query id -o tsv)
+ADMIN_OBJECT_ID=$(az ad signed-in-user show --query id -o tsv)
+```
+
+`az ad`는 Microsoft Graph 명령이라 `--subscription`을 받지 않는다. 위에서 CLI 구독 문맥을 명시적으로 선택한 후 표시된 테넌트·계정을 L00과 대조한다. ARM 명령에는 계속 `--subscription`을 명시한다.
+
+먼저 각 단계의 `what-if`를 실행해 예상 범위만 변경되는지 확인한 뒤 **같은 명령의 `what-if`를 `create`로 바꿔** 실행한다. 단계가 끝나면 다음 단계로 진행한다. RG 배포는 기본 Incremental 모드를 유지한다.
+
+```bash
+az deployment sub what-if --name discovery-access-20261001 \
+  --subscription "$SUBSCRIPTION_ID" --location "$LOCATION" \
+  --template-file infra/access.bicep \
+  --parameters discoveryControlPlaneObjectId="$CONTROL_PLANE_OBJECT_ID"
+
+az deployment group what-if --name discovery-network-expansion-20261001 \
+  --subscription "$SUBSCRIPTION_ID" --resource-group "$RESOURCE_GROUP" \
+  --template-file infra/expand-network.bicep
+
+az deployment group what-if --name discovery-foundation-20261001 \
+  --subscription "$SUBSCRIPTION_ID" --resource-group "$RESOURCE_GROUP" \
+  --template-file infra/lab-foundation.bicep \
+  --parameters administratorObjectId="$ADMIN_OBJECT_ID"
+
+az deployment group what-if --name discovery-core-20261001 \
+  --subscription "$SUBSCRIPTION_ID" --resource-group "$RESOURCE_GROUP" \
+  --template-file infra/discovery-core.bicep
+```
+
+**정책 교훈:** 최초 Storage 배포의 what-if는 공개 진입점과 선택 IP를 표시했지만, 실제 생성 중 관리 그룹 정책 `StorageAccount_PublicNetwork_Modify`가 이를 Disabled로 바꿨다. RG 수준 정책 목록이 비어 있어도 상위 관리 그룹 정책이 없다는 뜻이 아니다. Activity Log의 `Microsoft.Authorization/policies/modify/action`과 실제 GET을 확인한다. 템플릿을 정책에 맞춰 고쳤으며 정책·방화벽을 해제하지 않는다.
+
+`privatelink.blob.core.windows.net` zone과 대상 VNet link를 확인한다. 없으면 다음 템플릿으로 생성한다. 이미 있으면 그 zone이 이 VNet에 연결된 것을 확인하고 `existingBlobPrivateDnsZoneId` 매개변수로 실제 ID를 넘긴다. 동일 namespace의 DNS zone을 중복 연결하지 않는다. 이 단계는 Storage/VNet에만 의존하므로 코어의 지역 용량을 기다리는 동안 별도로 준비할 수 있다.
+
+```bash
+az deployment group what-if --name discovery-storage-private-20261001 \
+  --subscription "$SUBSCRIPTION_ID" --resource-group "$RESOURCE_GROUP" \
+  --template-file infra/storage-private-access.bicep
+```
+
+확인 후 `create`로 실행하고, **VNet 내부 또는 승인된 VPN/ExpressRoute 클라이언트에서** Blob FQDN의 사설 IP 해석과 Entra 기반 파일 접근을 검사한다. Private Endpoint를 만든 것만으로 로컬 노트북에 VPN이 생기지는 않는다. 모델·서브넷·역할이 준비되어도 하위 서비스 배포는 실패할 수 있으므로 실제 오류를 보존한다.
+
+```bash
+az deployment group show --name discovery-core-20261001 \
+  --subscription "$SUBSCRIPTION_ID" --resource-group "$RESOURCE_GROUP" \
+  --query "{state:properties.provisioningState,error:properties.error}"
+az deployment operation group list --name discovery-core-20261001 \
+  --subscription "$SUBSCRIPTION_ID" --resource-group "$RESOURCE_GROUP" \
+  --query "[?properties.provisioningState=='Failed'].properties"
+```
+
+**Workspace-only 분리 준비의 한계:** GA Workspace 스키마의 `supercomputerIds`는 선택 항목이라 다음 경로로 컴퓨트와 별도 준비를 검증할 수 있다. **지역 용량 문제의 우회책은 아니다.** 이번 실제 실행에서는 Supercomputer를 제외해도 Workspace의 내부 Container Apps가 `ManagedEnvironmentCapacityHeavyUsageError` → `AKSCapacityHeavyUsage`로 실패했다. 먼저 지역 용량을 해결한다. 진행 중인 배포와 겹치는 쓰기는 피하고, 취소가 필요하면 상태/오류를 보존한 뒤 해당 배포만 정상 취소한다. 취소는 이미 만든 리소스를 삭제하거나 RP 하위 작업을 즉시 중단한다고 보장하지 않는다.
+
+```bash
+az deployment group what-if --name discovery-workspace-20261001 \
+  --subscription "$SUBSCRIPTION_ID" --resource-group "$RESOURCE_GROUP" \
+  --template-file infra/discovery-core.bicep --parameters deployCompute=false
+```
+
+이 경로의 출력은 `computeIncluded=false`, 컴퓨트 ID는 `null`이다. **새 Workspace 또는 연결된 Supercomputer가 없는 경우에만** 사용한다. 이미 연결된 환경에 적용하면 연결 목록을 비울 수 있다. 이 모드는 L01 전체, L03 색인, L05 실제 계산을 통과시키지 않는다. 용량 문제 해결 후 실제 Supercomputer/노드 풀의 성공을 확인하고 기본 경로로 연결한다. 다른 리전을 선택할 때는 VNet·Storage·Workspace를 함께 계획하며 기존 환경과 무작정 혼합하지 않는다.
 
 **완료 기준:** Workspace·Supercomputer·CPU 풀·Storage Container·Project가 준비되고 필수 모델이 존재한다. Studio에서 프로젝트를 열고, 사용자와 관리 ID가 각각 필요한 Blob 경로에 접근할 수 있다.
 
@@ -179,6 +273,37 @@ az provider show --namespace Microsoft.Discovery \
 3. 등록 화면의 Storage Asset 탭 또는 [공식 Storage Asset 등록 절차][S17]를 사용한다. 리소스 그룹 수준의 Storage Container/Asset이 프로젝트에 **참조**되는 구조다. 연결한 backing account와 두 Asset의 경로·상태를 확인한다.
 4. 실제 원본 CSV를 내려받아 후보 8개와 GAMMA=175를 확인하고, 이후 연결할 Asset ID를 기록한다. `discovery://` URI와 Asset ID는 실제 반환값을 복사하며 추측해 만들지 않는다.
 5. 에이전트의 읽기·쓰기·공유는 L04, Task에 대한 입력 연결은 L06에서 수행한다. 문자열 경로를 프롬프트에 쓰는 것만으로 데이터가 연결되는 것은 아니다.
+
+CLI로 업로드할 때도 **L01에서 검증한 사설 접근 경로**와 공유 키 대신 Entra 로그인을 사용한다. 재실행 시 파일이 이미 있으면 원본·해시를 대조한 뒤 덮어쓰기 여부를 결정한다. 자산 템플릿은 경로 참조만 만들며 실제 파일을 업로드하지 않는다.
+
+```bash
+az storage blob upload-batch --account-name stdiscoveryholjunwoosc \
+  --destination discoveryinputs --destination-path bookshelf \
+  --source data/bookshelf --auth-mode login \
+  --subscription "$SUBSCRIPTION_ID"
+az storage blob upload --account-name stdiscoveryholjunwoosc \
+  --container-name discoveryinputs --name compute/materials.csv \
+  --file data/materials.csv --auth-mode login \
+  --subscription "$SUBSCRIPTION_ID"
+```
+
+### 로컬 VPN 없이 입력을 준비하는 관리자 경로
+
+이 환경에는 `infra/blob-client.bicep`으로 배포한 **`vm-discovery-blob-client`**가 있다. 공개 IP와 SSH 인바운드가 없고, 자체 관리 ID에 실습 Storage 계정의 Blob Data Contributor만 부여했다. 별도 Discovery 플랫폼 역할은 없다. `blobClientSubnet`의 Storage 서비스 엔드포인트와 기존 Blob Private Endpoint/DNS를 이용한다.
+
+다음은 **실제 Azure 작업**이며 VM 관리 권한이 있는 관리자가 수행한다. Project Contributor만으로 VM Run Command를 실행할 수 있다고 가정하지 않는다. VM을 시작하고 5개 원본 파일을 전송한 뒤 할당 해제한다.
+
+```bash
+az vm start --name vm-discovery-blob-client \
+  --resource-group "$RESOURCE_GROUP" --subscription "$SUBSCRIPTION_ID"
+npm run blob:sync
+az vm deallocate --name vm-discovery-blob-client \
+  --resource-group "$RESOURCE_GROUP" --subscription "$SUBSCRIPTION_ID"
+```
+
+`blob:sync`는 Azure Run Command로 합성 TXT 4개와 CSV 1개만 전달한다. VM 내부 Python 표준 라이브러리와 IMDS 토큰을 사용해 Blob DNS가 `10.80.8.0/24`의 사설 IP인지 확인하고, 업로드 후 다시 읽어 원본 SHA-256을 비교한다. 키/SAS/토큰은 저장하지 않는다. 기존 파일은 해시가 같으면 재사용하고, 다르면 덮어쓰지 않고 오류를 반환한다. `artifacts/discovery-private-blob-sync.json`의 `outcome=verified`와 파일 5개의 읽기 request ID·해시를 확인한다.
+
+2026-10-01 실제 업로드와 재실행을 모두 확인했다. **이는 원격 VM의 사설 데이터 접근 성공이며 노트북의 브라우저가 VNet에 연결됐다는 뜻은 아니다.** Storage 공개 접근과 조직 정책은 그대로 유지한다. 검증 후 VM은 할당 해제했으며 OS 디스크 비용은 남는다. 새 환경에서 클라이언트를 만들 때는 SKU/image/quota와 `what-if`를 먼저 검증하고, SSH 부트스트랩 개인 키를 저장소에 넣지 않는다.
 
 | 데이터 경로 | 지원·주의점 |
 |---|---|
@@ -317,7 +442,7 @@ az acr build --registry '<acr-name>' \
 ```
 
 4. `.dockerignore`가 계산기·합성 CSV·Dockerfile만 허용하는지 확인한다. 빌드 성공, Registry의 실제 이미지와 digest를 기록한다. 버전 태그도 덮어쓸 수 있으므로 이름만으로 불변성을 보장하지 않는다.
-5. `tools/thermal-ranking/tool-definition.template.json`의 복사본을 만들고 `<acr-login-server>`만 실제 값으로 교체한다. Portal → **Microsoft Discovery Tools → Create → Basics**에서 Name=`thermal-ranking`, Region=`swedencentral`, **Definition content file**=수정한 JSON, **Definition content version**=`1.0.0`을 지정한다. Environment variables는 이 도구에 필요 없으므로 비운다. `worker`, 두 액션, `/outputs`를 유지하고 생성 후 `Succeeded`와 Tool ID를 확인한다. JSON 안의 `version`과 Portal의 Definition content version은 별도 필드이며, REST를 쓰면 정의 객체는 `properties.definitionContent` 안에 들어간다.[S33]
+5. `tools/thermal-ranking/tool-definition.template.json`의 복사본을 만들고 `<acr-login-server>`를 실제 값으로 교체한다. Portal → **Microsoft Discovery Tools → Create → Basics**에서 Name=`thermal-ranking`, Region=`swedencentral`, **Definition content file**=수정한 JSON, **Definition content version**=`1.0.0`을 지정한다. Environment variables는 비운다. `worker`, 두 액션, `/outputs`를 유지하고 `Succeeded`와 Tool ID를 확인한다. **GA API `2026-06-01`은 정의 객체를 `properties.definitionContent`, 리소스 버전을 `properties.version`으로 받는다.** 내부 JSON의 `version`과 리소스 버전은 별도다. S33의 Preview 예제에 있는 `properties.definitionContentVersion`을 GA 요청에 그대로 넣으면 실제 ARM 사전 검증이 실패한다.[S33]
 6. ComputeAnalyst의 **Tools**에서 등록한 도구를 연결한다. 첫 수동 대화에는 **Confirm before running tool**로 승인 대기를 확인할 수 있다. Engine 실습 전에는 검토한 두 합성 액션의 승인 정책을 명시적으로 정해 자율 실행의 승인 대기를 방지한다. 비밀리에 승인 요구를 해제하지 않는다. 이후 `cpulab`에서 `rank_baseline`을 한 번 실제 실행하도록 요청한다. **이 도구는 이미지 안의 합성 CSV를 사용한다.** L02의 Blob CSV를 자동 마운트하지 않으므로 입력 변경 시 이미지 재빌드 또는 명시적 도구 변경이 필요하다.
 7. operation ID와 `Succeeded`, 실제 `nodepoolId`, 로그, `ranking.json` Asset을 확인한다. `nodepoolId`는 H05에서 받은 `cpulab`의 ID와 같아야 한다. 프롬프트에 풀 이름을 적었다는 사실만으로 선택을 확인한 것은 아니다. `auto_promote: true`가 출력 공유를 설정한다. Foundry Code Interpreter 실행을 Supercomputer 실행으로 간주하지 않는다.[S32]
 8. **도구가 만든 원본 파일**을 로컬에 내려받아 다음 검사를 실행한다. `<downloaded-ranking.json>`은 실제 파일 경로로 바꾼다. 에이전트의 요약 JSON이나 로컬 reference 파일을 대신 넣지 않는다.
@@ -328,6 +453,17 @@ python3 scripts/verify_ranking.py \
 ```
 
 검사기는 후보 8개, 모든 판정·사유·결측·출처, 순위·점수, 제약조건과 JSON 구조를 대조한다. 누락·추가 필드, 잘못된 순서, 중복 키, 유효하지 않은 숫자는 실패다. 통과 시 `content_verified: true`, **`execution_verified: false`**가 출력된다. 파일 내용 검사는 실행 위치를 증명할 수 없으므로 Azure 실행 ID·풀·로그·Asset을 별도로 확인해야 한다.
+
+관리자는 UI 대신 다음 Bicep으로 **실제 이미지 digest에 고정한** 같은 도구를 등록할 수 있다. `what-if` 확인 후 `create`로 실행한다. ACR build 성공·도구 등록·Supercomputer 실행 성공은 서로 다른 상태다.
+
+```bash
+IMAGE_DIGEST=$(az acr repository show --name acrdiscoveryholjunwoosc \
+  --image thermal-ranking:1.0.0 --subscription "$SUBSCRIPTION_ID" \
+  --query digest -o tsv)
+az deployment group what-if --name discovery-tool-20261001 \
+  --subscription "$SUBSCRIPTION_ID" --resource-group "$RESOURCE_GROUP" \
+  --template-file infra/tool.bicep --parameters imageDigest="$IMAGE_DIGEST"
+```
 
 **완료 기준:** 실제 클라우드 실행 ID·`cpulab`·로그·Asset, 원본 JSON 검사 통과가 모두 필요하다. `candidate_count=8`, `eligible_count=3`, 순위 DELTA 68.6 → ALPHA 67.8 → THETA 60.8이어야 한다. `Accepted`, `NotStarted`, 실패, 취소는 성공이 아니다. 첫 도구 실행은 cold start로 추가 시간이 걸릴 수 있다.
 
@@ -444,6 +580,8 @@ python3 scripts/verify_ranking.py \
 7. Engine 정지, 작업 종료, 노드 상태, 상시 인프라 잔존, 보존·삭제 결과를 각각 기록한다. 브라우저를 닫거나 min=0을 설정했다고 모든 비용이 0이 되지 않는다.
 8. 검토된 지식을 다른 세션에서 재사용하려면 Asset을 명시적으로 연결하거나 지원되는 KB 생성·갱신 절차를 따른다. Task 성공이 곧 기존 Bookshelf의 자동 재색인을 의미한다고 가정하지 않는다.
 
+**부분 실패 후에도 확인할 항목:** 배포가 실패해도 이미 성공한 Storage·ACR·Private Endpoint·관리 RG의 Log Analytics/NSP는 남을 수 있다. RG를 지웠다는 이유로 구독 scope의 NSP Joiner/Reader 역할과 커스텀 역할까지 삭제됐다고 가정하지 않는다. 다른 Discovery 환경이 이 서비스 역할을 공유할 수 있으므로 구독 역할은 관리자 확인 없이 제거하지 않는다. 이 가이드는 자동 삭제 명령을 실행하지 않는다.
+
 **완료 기준:** 근거→실행→출력 연결이 보존되고, 실행 중인 작업과 잔여 자원·비용의 상태가 명확하다. L08을 수행하지 않았다면 협업 검증까지 완료했다고 표시하지 않는다.
 
 <a id="e01"></a>
@@ -516,6 +654,27 @@ python3 scripts/verify_ranking.py \
 
 모델 quota는 구독·리전·모델·배포 유형을 함께 확인한다. 공식 기본 경로는 Global Standard이며, 데이터 상주 요구로 Data Zone Standard 등을 선택하면 지원 여부와 별도 quota를 다시 확인한다. [S05][]
 
+**실제 사전 점검 예시 (2026-10-01, Sweden Central / Global Standard):**
+
+| 모델 | 전체 한도 TPM | 기존 할당 TPM | 남은 TPM | 이번 단계의 필요 TPM | 판정 |
+|---|---|---|---|---|---|
+| gpt-5.4 | 3,000,000 | 0 | 3,000,000 | 500,000 | 코어 사전 점검 통과 |
+| gpt-5.2 | 3,000,000 | 10,000 | 2,990,000 | 200,000 | Bookshelf 모델 중 이 항목만 통과 |
+| gpt-5-mini | 1,000,000 | 10,000 | 990,000 | 2,000,000 | 부족 |
+| text-embedding-3-small | 1,000,000 | 220,000 | 780,000 | 2,000,000 | 부족 |
+
+이 표는 **배포 전 스냅샷**이지 보장된 현재 잔여량이 아니다. `npm run readiness`로 다시 조회한다. Azure usage 응답의 설명이 `One Thousand Tokens Per Minute` 또는 `Tokens Per Minute (thousands)`이면 값에 **1,000을 곱하고 기존 할당을 뺀다**. `Count`라는 unit 필드만 보고 1,000 TPM으로 해석하거나 Global Standard와 Data Zone Standard를 합산하지 않는다.
+
+이 예시는 미니 모델 최소 총한도 **2,010,000 TPM**, 임베딩 최소 총한도 **2,220,000 TPM**가 있어야 기존 사용량을 유지하며 2,000,000 TPM씩 추가할 수 있다. 다른 배포가 없는 것으로 가정해 한도를 정확히 2,000,000으로만 요청하면 부족할 수 있다. 여유분을 포함한 요청값은 관리자와 정한다. Cognitive Services scope의 `az quota list`가 `BadRequest`이면 무제한/미사용으로 판정하지 말고 Foundry의 공식 quota 증가 절차를 사용한다. 이 실습을 위해 다른 프로젝트의 배포를 삭제하지 않는다.
+
+### 무엇을 증액하고 어느 프로젝트를 선택하는가
+
+**AKS quota와 실제 지역 용량은 다르다.** 실제 오류는 `QuotaExceeded`가 아니라 `AKSCapacityHeavyUsage`였다. 당시 지역/Dsv6 quota는 각각 0/100 vCPU, Container Apps 환경은 1/50이었으므로 이 한도들을 올려 해결된다고 주장하지 않는다. Azure 지원에 해당 구독의 Sweden Central AKS/Container Apps 생성 용량을 확인한다.
+
+Bookshelf는 **`gpt-5-mini`와 `text-embedding-3-small`의 Global Standard TPM**을 증액한다. 이 실습의 권장 요청 총한도는 **각 3,000,000 TPM**이며 추가량이 아니다. 입력 단위가 천 TPM이면 `3000`이다. `gpt-5.4-mini`, PTU 또는 다른 배포 유형과 혼동하지 않는다. 신청·승인·실제 한도 반영은 별도로 확인한다.
+
+Foundry 프로젝트가 안 보인다고 곧바로 새 프로젝트를 만들지 않는다. 이번 환경의 ARM 조회에서는 `aif-dwsp-foundry-ym5ffvaa` 아래 **`Discovery Default Project`**(`discoverydefaultprojectym5ffvaa`)가 `Succeeded`였다. 이것은 아직 생성되지 못한 **Discovery 실습 Project `thermalhol`과 별개**다. 실습 계정의 디렉터리와 구독을 선택한 다음, [공식 Foundry 안내](https://learn.microsoft.com/azure/foundry/how-to/quota)에 따라 **New Foundry → 해당 프로젝트 → Manage → Quota → Token per minute → Request quota**를 사용한다. 모델 quota는 프로젝트마다 별도로 새로 생기는 용량이 아니라 구독·모델·배포 유형의 quota다.
+
 다음은 **확인된 문서 차이**와 이 가이드의 처리 방식이다. 공식 문구를 그대로 옮겨 서로 모순되는 설치 지시를 만들지 않는다.
 
 | 항목 | 문서 차이 | 이 가이드의 기준 |
@@ -525,6 +684,7 @@ python3 scripts/verify_ranking.py \
 | 재색인 | 개념 문서는 삭제·재색인, how-to는 증분 enrichment + 전체 그래프 재구성 [S06][] [S07][] | 첫 전체 색인만 필수. 갱신·삭제는 배포 버전 확인 후 결정 |
 | 모델 응답 제어 | 모델 선택 문서의 temperature 권장 vs reasoning 모델 미지원 안내 [S09][] [S10][] [S25][] | 본 reasoning 모델 경로에서는 temperature/top_p를 지정하지 않음 |
 | 모델 자동 생성 | 자동 기본 모델 설명 vs 수동 배포 Quickstart [S03][] [S13][] | 실제 `gpt-5-4` 존재 확인, 없을 때만 생성 |
+| Tool 버전 필드 | Portal의 Definition content version, Preview REST 예제의 `definitionContentVersion`, GA 실제 스키마가 다름 [S33] | GA `2026-06-01`에서 검증한 `properties.version` 사용; 정의는 `properties.definitionContent` |
 | 과금 단위 | User Message/operation 설명과 10 operations 환산 예제가 불일치 [S24] | API 호출 수에 단가를 바로 곱하지 않음. 해당 리전 meter·계약·실제 청구로 확인 |
 | Storage 계층 | 개념 표의 Workspace child 표현 vs 실제 RG 수준 리소스 ID [S16][] [S17][] | RG 수준 Storage Container/Asset을 프로젝트가 참조하는 운영 경로 사용 |
 | 리전 범위 | 인프라 Quickstart의 생산 리전 목록과 Tool 배포 문서의 East US 2 포함 목록은 범위가 다름 [S03][] [S33][] | 공통 지원 리전인 Sweden Central 사용. Tool 한 종류의 가용성으로 전체 스택 가용성을 추정하지 않음 |
@@ -537,6 +697,12 @@ python3 scripts/verify_ranking.py \
 | 증상 | 확인할 것 |
 |---|---|
 | Provider는 Registered인데 리소스 유형이 안 보임 | 서비스 사용 승인, 실제 지원 유형·API. 비용/RBAC 동의와 구분 |
+| `DefaultFeature=Pending`인데 사용 가능해 보임 | `DiscoveryEnabled` 등 실제 feature와 필수 리소스 유형, Workspace GET을 함께 확인. Pending 하나만으로 거부하지 않음 |
+| VNet 확장이 `IncompatibleDelegations`로 실패 | 기존 위임 서브넷을 재작성하지 말고 추가 서브넷만 child resource로 배포. 기존 VNet에 옛 3개짜리 템플릿을 재적용하지 않음 |
+| Supercomputer가 Accepted/Running에 오래 머묾 | 상위 ARM 상태뿐 아니라 같은 correlation ID의 Activity Log와 MRG 하위 배포를 확인. `AKSCapacityHeavyUsage`는 리전 AKS 용량 문제이며 vCPU quota 증가·Provider 재등록으로 해결되지 않음 |
+| Workspace가 `containerAppsEnvironment` 생성 실패 | MRG의 Managed Environment 오류를 확인. `ManagedEnvironmentCapacityHeavyUsageError` 안의 AKSCapacityHeavyUsage이면 Workspace-only도 같은 용량 문제를 피하지 못함. 같은 요청을 반복 제출하지 말고 지역 용량/지원팀 또는 전체 대체 리전 계획을 검토 |
+| Storage IP 허용·Blob 역할이 있는데 403 | 실제 `publicNetworkAccess`를 GET. 조직의 Azure Policy `modify`가 Disabled로 바꿀 수 있음. Activity Log를 확인하고 Private Endpoint/DNS/승인된 VNet 경로를 마련; 정책을 해제하지 않음 |
+| MRG의 `PolicyDeployment_*`가 `ResourceNotFound` | 진단 설정 정책이 참조하는 중앙 Log Analytics의 실제 존재·scope를 관리자와 확인. 정책 하위 배포 실패와 Discovery 본체 상태를 구분하고, 공통 거버넌스 자원을 임의 생성/변경하지 않음 |
 | Engine 시작 불가 | `gpt-5-4`, 실제 모델 quota, 전문 에이전트·도구 구성 |
 | Task가 New에 머묾 | dependency, Engine 상태, 실행 capacity. 상태를 강제로 Complete로 바꾸지 않음 |
 | 반복 Incomplete / Needs User Attention | 검증 의견, 빠진 도구·입력, 불가능한 기준. 원인 해결 후 재시도 |
@@ -564,7 +730,7 @@ npm test
 <a id="a03"></a>
 ## A03 — 공식 출처
 
-2026-09-25 확인. 두 언어는 같은 Source ID·URL·Lab ID·데이터·정답 기준을 사용한다. UI 명칭은 제품 표시를 찾기 쉽게 영어를 유지했다.
+원본 출처는 2026-09-25 확인, 배포·네트워크·quota·저장소 문서는 2026-10-01 재확인했다. 두 언어는 같은 Source ID·URL·Lab ID·데이터·정답 기준을 사용한다. UI 명칭은 제품 표시를 찾기 쉽게 영어를 유지했다.
 
 | ID | 공식 문서 |
 |---|---|

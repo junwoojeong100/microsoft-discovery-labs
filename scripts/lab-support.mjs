@@ -1,3 +1,20 @@
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
+
+const exec = promisify(execFile);
+
+export async function azJson(args, { timeout = 90000 } = {}) {
+  try {
+    const { stdout } = await exec('az', [...args, '--output', 'json', '--only-show-errors'], {
+      encoding: 'utf8', maxBuffer: 8 * 1024 * 1024, timeout,
+      env: { ...process.env, AZURE_CORE_CONNECTION_TIMEOUT: '15' },
+    });
+    return JSON.parse(stdout);
+  } catch (error) {
+    throw new Error(`Azure CLI ${args.slice(0, 2).join(' ')} failed: ${redact(String(error.stderr || error.message)).slice(0, 1400)}`);
+  }
+}
+
 export function validateConfig(config) {
   const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
   if (!uuid.test(config.subscriptionId) || !uuid.test(config.tenantId)) {
@@ -28,6 +45,16 @@ export function selectAccount(accounts, config) {
     throw new Error('This lab only supports the Azure public cloud');
   }
   return account;
+}
+
+export function validateLabResourceGroup(group, config) {
+  const expectedId = `/subscriptions/${config.subscriptionId}/resourceGroups/${config.resourceGroup}`;
+  const tagged = group.tags?.lab === config.labTag
+    || group.tags?.project === config.labTag && group.tags?.environment === 'lab';
+  if (group.id?.toLowerCase() !== expectedId.toLowerCase()
+      || group.location !== config.location || !tagged) {
+    throw new Error('Existing resource group does not match this lab scope, region, and ownership tags');
+  }
 }
 
 export function safeArmUrl(path, config) {
@@ -73,7 +100,8 @@ export function discoveryGate(provider, workspaceListing) {
   const types = new Set((provider.resourceTypes ?? []).map((item) => item.resourceType.toLowerCase()));
   const required = ['workspaces', 'supercomputers', 'bookshelves'];
   const missing = required.filter((type) => !types.has(type));
-  if (workspaceListing.status < 200 || workspaceListing.status >= 300) {
+  if (!Number.isInteger(workspaceListing.status)
+      || workspaceListing.status < 200 || workspaceListing.status >= 300) {
     return { allowed: false, reason: 'Discovery workspace API did not authorize a successful listing', missing };
   }
   if (provider.registrationState !== 'Registered' || missing.length) {
@@ -89,4 +117,36 @@ export function providerSummary(body) {
     resourceTypes: (body.resourceTypes ?? []).map((item) => item.resourceType),
     error: body.error,
   };
+}
+
+export const modelRequirements = [
+  { model: 'gpt-5.4', phase: 'core', requiredTpm: 500000 },
+  { model: 'gpt-5.2', phase: 'bookshelf', requiredTpm: 200000 },
+  { model: 'gpt-5-mini', phase: 'bookshelf', requiredTpm: 2000000 },
+  { model: 'text-embedding-3-small', phase: 'bookshelf', requiredTpm: 2000000 },
+];
+
+export function assessModelQuotas(usages) {
+  return modelRequirements.map((requirement) => {
+    const metric = `OpenAI.GlobalStandard.${requirement.model}`;
+    const usage = usages.find((item) => item.name?.value === metric);
+    const known = usage && /thousand/i.test(usage.name.localizedValue ?? '')
+      && Number.isFinite(usage.limit) && usage.limit >= 0
+      && Number.isFinite(usage.currentValue) && usage.currentValue >= 0;
+    if (!known) {
+      return {
+        ...requirement, metric, ready: false, availableTpm: null,
+        reason: 'Quota is missing or its TPM unit could not be verified',
+      };
+    }
+    const availableTpm = (usage.limit - usage.currentValue) * 1000;
+    return {
+      ...requirement, metric, limitTpm: usage.limit * 1000,
+      allocatedTpm: usage.currentValue * 1000, availableTpm,
+      ready: availableTpm >= requirement.requiredTpm,
+      reason: availableTpm >= requirement.requiredTpm
+        ? 'Sufficient unallocated Global Standard TPM'
+        : 'Insufficient unallocated Global Standard TPM',
+    };
+  });
 }

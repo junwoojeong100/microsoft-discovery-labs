@@ -1,8 +1,136 @@
 # Microsoft Discovery 실제 실행 보고서
 
-**가이드는 완성했지만, Azure 핵심 기능 실습은 Microsoft 측 사용 승인 대기로 미완료다.**
+**2026-10-01: Discovery 사용 활성화 후 실제 리소스 생성을 진행하고 실습 가이드를 수정했다. 전체 연구 실습은 아직 완료되지 않았다.**
 
-실행일: 2026-09-25 KST. 지정 계정과 구독으로 실제 Azure에 접근했다. 사용자의 “사용 승인, 비용 좀 나와도 돼”라는 추가 허용을 반영해 Provider 등록과 정상적인 feature 사용 승인 신청까지 수행했다. **비용 허용과 Microsoft 서비스 팀의 구독 승인은 다른 조건**이다.
+구독 `51531604-2337-4c05-bc05-3c3d4ff154e5`, 테넌트 `46e9cdaa-fed3-4131-aa28-c1fc8a8a043a`, RG `rg-discovery-hol-20260930`, 리전 Sweden Central을 사용했다. 기존 네트워크와 UAMI를 재사용했으며 다른 프로젝트의 자원·정책·모델 배포를 삭제하지 않았다.
+
+## 2026-10-01 — 실제 배포와 차단 원인
+
+다음 표는 **11:04 KST의 1차 배포 결과**다. 이후의 사설 데이터 클라이언트·파일 업로드 결과는 바로 아래 후속 절에 별도로 기록한다.
+
+| 단계 | 확인된 결과 | 완료 경계 |
+|---|---|---|
+| 서비스 활성화 | DiscoveryEnabled/DiscoveryPreview/PublicPreview Registered, Workspace GET 성공 | DefaultFeature Pending만으로 차단하면 잘못된 판정 |
+| 네트워크 | 기존 3개 보존 + 실습용 4개 + Storage PE용 1개 = **서브넷 8개** | VNet `10.80.0.0/16`; 기본 VM 아웃바운드 비활성 |
+| control-plane 역할 | 공식 SP에 구독 Reader + 2-action NSP Joiner | 일반 사용자에게 구독 권한을 확장한 것이 아님 |
+| Storage/ACR/관리 ID | LRS Storage, Blob 컨테이너 2개, Basic ACR, 범위를 제한한 역할 생성 성공 | 공유 키·익명 Blob·ACR admin 비활성 |
+| 사설 Blob 연결 | PE `pe-discovery-blob` Approved/Succeeded, DNS `10.80.8.4`, VNet link Completed | 로컬 클라이언트의 VPN/사설 경로는 별도 미검증 |
+| Discovery 데이터 참조 | `thermaldata`, `evidencepack`, `candidatecsv` 생성 성공 | Blob 파일 업로드 성공을 의미하지 않음 |
+| Tool 이미지·리소스 | ACR task `dt1` 성공, `thermal-ranking` version 1.0.0 Succeeded | 이미지 build/등록만 완료; Supercomputer 실행 아님 |
+| Supercomputer | `sc-discovery-hol` 최종 `Failed`, 하위 AKS가 반복 `AKSCapacityHeavyUsage` | 실제 노드 풀·계산 실행 불가; 사용 승인 문제가 아님 |
+| Workspace-only 재개 | `discoveryholjunwoosc` 최종 `Failed`; 내부 Container Apps도 지역 AKS 용량 부족 | `gpt-5-4`/Project/Studio 사용 준비 실패. 컴퓨트 제외가 지역 용량 우회책은 아님 |
+| Bookshelf | 생성하지 않음 | gpt-5-mini/embedding quota 부족으로 고정비 인프라 생성 보류 |
+| 에이전트·색인·Engine·협업 | 미실행 | 전체 실습 통과나 실제 기능 시연을 주장하지 않음 |
+
+**Workspace 링크:** <https://studio.discovery.microsoft.com/workspaces/discoveryholjunwoosc>. ARM에 URL이 반환됐지만 Workspace는 실패 상태이며, 사용 가능한 프로젝트를 확인한 링크가 아니다.
+
+최신 리소스별 HTTP 상태·프로비저닝 상태·시각은 [실제 상태 스냅샷](artifacts/discovery-execution-20261001.json)에 있다. **11:04 KST** 조회에서는 Workspace와 Supercomputer 모두 `Failed`, 별도 Chat Model Deployment/Project/CPU pool은 404였다. 새 배포 요청이나 자동 재시도 작업을 추가로 남기지 않았다.
+
+**실제 Tool 이미지 digest:**
+
+```text
+acrdiscoveryholjunwoosc.azurecr.io/thermal-ranking@sha256:0051d5db6c367812c22073d807da54b469ecbcc58edb7cfaf0dbce5e78514ad1
+```
+
+### 후속 — 사설 입력 경로 해결과 quota 화면 안내
+
+사용자가 다음 단계를 진행할 수 있도록 요청한 뒤, `vm-discovery-blob-client`를 실제 배포했다. `Standard_B2als_v2`(2 vCPU/4 GB), Ubuntu 24.04이며 공개 IP·SSH 인바운드·NAT/Bastion 없이 `blobClientSubnet`(`10.80.9.0/24`)에 배치했다. 따라서 **현재 VNet의 서브넷은 9개**다. VM 자체 관리 ID에는 실습 Storage 계정의 Blob Data Contributor만 부여했다.
+
+**11:36:54 KST**에 VM Run Command를 통해 TXT 4개와 CSV 1개를 업로드하고, `10.80.8.4`로 해석된 사설 Blob 주소에서 다시 읽어 원본 SHA-256과 일치함을 확인했다. **11:44:04 KST** 재실행에서는 5개 모두 같은 파일로 판정해 덮어쓰지 않고 재사용했다. [첫 업로드 증거](artifacts/discovery-private-blob-upload-20261001.json)와 [최신 읽기 검증](artifacts/discovery-private-blob-sync.json)에 각 파일의 바이트 수·해시·Azure request ID가 있다. 키/SAS/토큰은 저장하지 않았다.
+
+**11:47:20 KST**에 VM `PowerState/deallocated`를 확인했다. [VM 상태](artifacts/discovery-blob-client-state-20261001.json)를 보존했으며 OS 디스크는 남는다. 명시된 VM 종량제 단가는 USD 0.0389/시간이고 디스크 등은 별도다. 다시 파일을 준비하려면 가이드 L02의 `az vm start → npm run blob:sync → az vm deallocate`를 사용한다. 이는 **원격 VM의 사설 접근**이며 노트북 브라우저의 직접 Blob 접속이나 Studio 로그인을 대신하지 않는다.
+
+Foundry ARM 조회에서 **`Discovery Default Project`**(`discoverydefaultprojectym5ffvaa`)가 기존 `aif-dwsp-foundry-ym5ffvaa` 아래 `Succeeded`인 것을 확인했다. [프로젝트 증거](artifacts/discovery-foundry-default-project-20261001.json)는 아직 생성되지 못한 Discovery 실습 Project `thermalhol`과 구분한다. 불필요한 Foundry 프로젝트를 새로 만들지 않고 해당 리소스 페이지를 사용자 브라우저에 열었다.
+
+처음에는 사용자가 quota 신청을 직접 진행하기로 했으며, 당시 [모델 quota 응답](artifacts/discovery-model-quota-followup-20261001.json)은 두 모델의 총한도를 각각 1,000,000 TPM로 표시했다. 이후 사용자가 대행과 최종 제출을 명시적으로 승인했다.
+
+**13:41 KST 후속:** Playwright headless로 공식 Microsoft 양식에 `gpt-5-mini`, `text-embedding-3-small`을 **각각 한 번씩 제출**했다. 두 요청 모두 Global Standard **총 3,000,000 TPM**이며 입력값은 `3000 kTPM`이다. 선택한 모델에는 별도 리전란이 없어 사용 리전 Sweden Central을 사유에 명시했다. 각 제출 후 **“Thanks! You've completed the request!” / “Your response was submitted.”**를 확인했다. [개인 연락처를 제외한 접수 기록](artifacts/discovery-model-quota-requests-20261001.json)을 보존했다.
+
+**접수와 quota 승인은 다르다.** 화면에 접수번호는 표시되지 않았으며, 실제 한도 반영은 아직 검증하지 않았다. 완료 화면은 통상 다음 영업일, 경우에 따라 2영업일의 처리를 안내하지만 승인을 보장하지 않는다. AKS vCPU나 Container Apps 환경 수 한도 증액을 지역 서비스 용량 문제의 해결책으로 신청한 것은 아니다.
+
+정상 Azure CLI 세션을 통해 Discovery API의 `access_as_user` 토큰 발급도 확인했다. 이는 토큰을 브라우저에 주입하거나 Studio의 사용자 인증을 우회했다는 뜻이 아니다. **Bookshelf quota 승인, AKS/Container Apps 지역 용량, 정상 Studio 로그인이 남아 있어 색인·에이전트·Engine은 여전히 미실행**이다.
+
+### 발견한 문제와 반영한 개선
+
+| 실제 관측 | 수정·대응 |
+|---|---|
+| 과거 가이드/config는 20260925, 실제 기반은 20260930 RG | 현재 config·양 언어 가이드의 활성 RG 통일; 과거 증거는 보존 |
+| DefaultFeature는 Pending인데 서비스는 활성화 | 필수 resource type + 실제 GET + 단계별 모델 quota를 분리한 `npm run readiness` 추가 |
+| 전체 VNet 갱신의 `IncompatibleDelegations` | 기존 서브넷을 재작성하지 않는 `infra/expand-network.bicep`으로 실제 배포 성공 |
+| 문서의 역할 이름 `(Preview)`와 실제 표시 이름이 다름 | 라이브 역할 정의를 확인해 GUID로 할당; Blob/Registry/VNet/UAMI에 범위 제한 |
+| Storage 생성은 성공했지만 클라이언트 파일 조회 403 | Activity Log에서 관리 그룹의 `StorageAccount_PublicNetwork_Modify` 확인. 템플릿을 private-only로 수정하고 PE/DNS 생성; 정책 우회 없음 |
+| 공식 Tool 예제의 버전 필드가 GA 스키마와 다름 | 실제 ARM 검증에 맞춰 `properties.definitionContentVersion` 대신 `properties.version`; 수정 후 등록 성공 |
+| vCPU quota가 충분해도 AKS 생성 실패 | `AKSCapacityHeavyUsage`를 quota와 구분해 기록. 같은 RG의 무의미한 재배포/리전 혼합 대신 명시적 Workspace-only 준비 모드 추가 |
+| PDF에 로컬 증거 링크가 노트북의 절대 경로로 포함됨 | HTML 링크는 유지하고 PDF에서 로컬 파일 링크만 비활성화; 공식 URL·책갈피는 유지 |
+
+### 용량·네트워크 차단 상태
+
+**Bookshelf (배포 전 Global Standard 스냅샷):** gpt-5-mini 잔여 **990,000 TPM**, text-embedding-3-small 잔여 **780,000 TPM**, 필요량은 **각 2,000,000 TPM**다. 기존 할당을 유지하려면 총한도는 각각 최소 **2,010,000 / 2,220,000 TPM**가 필요하다. GPT-5.4 잔여 3,000,000 TPM는 코어 준비 기준 500,000 TPM를 충족했다. 이 수치는 현재 잔여량 보장이 아니며 재조회해야 한다. quota 증가 신청을 완료했다고 주장하지 않는다.
+
+**AKS:** 관리 리소스 `mrg-dscmp-sc-discovery-hol-b6wiwf/aks-dscmp-b6wiwf`가 Sweden Central 용량 부족으로 반복 실패했다. correlation ID는 `75d88d20-5dd2-4963-b2b1-00dc4b1039e4`. 지역 총/Dsv6/Esv6 quota는 각각 100 vCPU, 당시 사용량 0이었다. [공식 오류 설명](https://learn.microsoft.com/troubleshoot/azure/azure-kubernetes/error-codes/akscapacityheavyusage-error)에 따라 지역 용량 문제로 분류했다. 관리 AKS를 직접 수정하거나 보안을 약화하지 않았다.
+
+원래 `discovery-core-20261001` ARM 배포는 중복 Workspace 쓰기를 방지하기 위해 정상 취소했다. **취소는 리소스 삭제가 아니며 RP의 이미 시작된 작업까지 중단됐음을 보장하지 않는다.** GA에서 선택 사항인 `supercomputerIds`를 비우는 `deployCompute=false` 경로를 검증한 뒤 별도 Workspace 배포를 시작했다. 이는 컴퓨트 실습을 완료시키는 대체 구현이 아니다.
+
+**Workspace 최종 실패:** 약 55분 뒤 `containerAppsEnvironment` 단계가 실패했다. MRG Managed Environment의 실제 오류는 `ManagedEnvironmentCapacityHeavyUsageError`이며 내부 원인은 같은 `AKSCapacityHeavyUsage`다. Workspace correlation ID는 `e08e90c5-299f-4552-a354-697e0da7df45`, 하위 AKS request ID는 `0ea9a155-9803-4e6c-85fd-b8ed67a02502`다. Supercomputer를 제외한 대체 경로도 같은 지역 용량에 막힌 것을 확인했으므로 무작정 다시 배포하거나 유료 스택을 다른 리전에 복제하지 않았다.
+
+**Blob:** 최초에는 로컬 노트북의 사설 경로가 없어 차단됐다. 위 후속 작업에서 VNet 내부 VM 경로와 실제 업로드·읽기 검증을 완료했다. Storage 공개 네트워크는 계속 Disabled이며 로컬 노트북의 직접 접속은 별도다.
+
+**조직 공통 진단 설정:** Workspace 관리 RG의 정책 배포 `PolicyDeployment_4802795780941947574`가 중앙 Log Analytics `mcapsgovernance/mcaps4c05bc053c3d4ff154e5-la`를 찾지 못해 실패했다. [실제 실패 응답](artifacts/discovery-workspace-governance-20261001.json)을 보존했다. 이는 별도 거버넌스 결함이며, 확인된 Workspace 최종 실패 원인은 위 Container Apps/AKS 용량 오류다. 공통 거버넌스 대상은 이번 실습 범위 밖이어서 새로 만들거나 정책을 해제하지 않았다.
+
+**모델 구분:** Workspace MRG에서 자동 cognition 모델 `gpt-5.4`, revision `2026-03-05`, GlobalStandard capacity `250`(250,000 TPM)의 `Succeeded`를 확인했다. 이는 별도 Discovery Chat Model Deployment **`gpt-5-4`**와 Project가 준비됐다는 뜻이 아니다.
+
+**사용자 데이터 권한:** MRG에서 서비스가 부여한 Foundry Owner가 이미 확인돼 Foundry User를 중복 추가하지 않았다. 일반 Owner와 Foundry 데이터 권한을 구분해 확인했다.
+
+**Headless UI 확인:** 요청에 따라 Playwright headless로 실제 Workspace Studio URL에 접근했다. 정상 Microsoft 로그인 화면으로 이동했으며, 인증 정보 입력·쿠키/토큰 추출·로그인 우회는 하지 않았다. [관측 기록](artifacts/discovery-studio-headless-20261001.json)은 Studio에서 프로젝트를 열어 실습했다는 증거가 아니다. Computer Use는 사용하지 않았다.
+
+### 비용과 남은 자원
+
+새 Storage, Basic ACR, ACR Tasks, Private Endpoint/DNS와 관리 RG의 Log Analytics/NSP가 남는다. 후속 사설 클라이언트 VM은 할당 해제했지만 OS 디스크가 남는다. 실패·취소된 배포에도 이미 생성한 리소스는 남을 수 있다. **정확한 누적 청구액을 조회한 것은 아니며, 비용이 0이라고 주장하지 않는다.** Bookshelf, GPU, 공개 점프 서버, VPN Gateway는 생성하지 않았다.
+
+Workspace가 준비되는 동안에도 MRG에 Search, Cosmos DB, Foundry, Storage와 Private Endpoint가 생성됐다. Bookshelf를 보류했다고 Workspace 관리 인프라의 상시 비용까지 없다는 뜻은 아니다.
+
+`cpulab`의 목표는 min 0/max 1이지만 시스템 풀·상시 관리 서비스 비용까지 0으로 만드는 설정이 아니다. 연구 종료 시 가이드 L09를 따르고, 공유 가능성이 있는 구독 scope의 서비스 역할을 RG 삭제와 함께 무조건 제거하지 않는다.
+
+### 재개 절차
+
+1. `npm run readiness`와 현재 배포/하위 리소스 상태를 확인한다. `--require core` 통과는 전체 실습 통과가 아니다.
+2. 지역 AKS/Container Apps 용량을 서비스 팀과 해결하거나, 전체 동일 리전 스택을 다른 지원 리전에 계획한다. 기존 리소스를 삭제하거나 다른 리전 자원을 무작정 연결하지 않는다. 중앙 진단 대상 누락도 조직 관리자에게 전달한다.
+3. 재검증 후 배포를 재개하고 Workspace의 실제 `Succeeded`, `gpt-5-4`, Project `thermalhol`을 확인한 다음 정상 로그인으로 Studio 접근을 점검한다.
+4. Bookshelf 모델 quota를 확보하고 준비된 사설 클라이언트에서 입력 5개를 재검증한다. 실제 Asset 연결·Bookshelf 색인 상태를 확인한다.
+5. L04–L07/L09를 실제 실행하며 계산 원본, operation ID, 풀, 로그, 인용, 검증 이력을 수집한다. L08은 별도 테스트 사용자가 있을 때만 수행한다.
+
+### 2026-10-01 증거
+
+| 기록 | 파일 |
+|---|---|
+| 접근·quota | [discovery-readiness.json](artifacts/discovery-readiness.json) |
+| 리소스별 실제 상태·미실행 경계 | [execution snapshot](artifacts/discovery-execution-20261001.json) |
+| 서브넷 실제 배포 | [network expansion](artifacts/discovery-network-expansion-deployment-20261001.json) |
+| control-plane 역할 배포 | [access deployment](artifacts/discovery-access-deployment-20261001.json) |
+| Storage/Registry/역할 | [foundation deployment](artifacts/discovery-foundation-deployment-20261001.json) |
+| Storage 정책 변경 근거 | [Activity Log](artifacts/discovery-storage-policy-20261001.json) |
+| Private Endpoint/DNS | [private access deployment](artifacts/discovery-storage-private-deployment-20261001.json) |
+| ACR cloud build | [build result](artifacts/discovery-tool-build-result-20261001.json) |
+| Tool GA 필드 오류·수정 | [GA contract](artifacts/discovery-tool-ga-contract-20261001.json) |
+| Tool 실제 등록 | [tool deployment](artifacts/discovery-tool-deployment-20261001.json) |
+| AKS 용량 오류 | [capacity failures](artifacts/discovery-core-capacity-failures-20261001.json) |
+| Workspace 최종 실패 | [workspace deployment](artifacts/discovery-workspace-deployment-20261001.json) |
+| 내부 Container Apps 용량 오류 | [workspace capacity](artifacts/discovery-workspace-capacity-20261001.json) |
+| 중앙 진단 대상 누락 | [governance policy deployment](artifacts/discovery-workspace-governance-20261001.json) |
+| Studio headless 진입 확인 | [sign-in boundary](artifacts/discovery-studio-headless-20261001.json) |
+| 사설 클라이언트 배포 | [private client deployment](artifacts/discovery-blob-client-deployment-20261001.json) |
+| 실제 입력 업로드·읽기 검증 | [first upload](artifacts/discovery-private-blob-upload-20261001.json) · [idempotent recheck](artifacts/discovery-private-blob-sync.json) |
+| VM 할당 해제 | [deallocated VM](artifacts/discovery-blob-client-state-20261001.json) |
+| 기존 Foundry 프로젝트 | [Discovery Default Project](artifacts/discovery-foundry-default-project-20261001.json) |
+| 모델 quota 신청 2건 접수 | [submission confirmations](artifacts/discovery-model-quota-requests-20261001.json) |
+| 최초 코어 배포 취소 | [canceled parent](artifacts/discovery-core-cancelled-20261001.json) |
+| 로컬 HTML/PDF 확인 | [guide validation](artifacts/guide-review/validation.json) |
+
+아래는 **2026-09-25의 과거 접근 기록**이다. 당시의 Pending/404와 “생성하지 않음”은 현재 상태가 아니다. 원본 응답·영상의 증거 경계를 보존하기 위해 남긴다.
+
+## 2026-09-25 — 과거 접근 점검
+
+당시에는 서비스 승인 대기로 핵심 기능 실습을 실행하지 못했다. 비용 허용과 Microsoft 서비스 팀의 구독 승인은 서로 다른 조건이었다.
 
 ## 1. 실제로 확인된 결과
 
@@ -20,7 +148,7 @@
 
 `DefaultFeature`의 `Pending`은 제품 팀 승인 필요 상태다. 사용자가 비용을 허용해도 이를 `Registered`로 임의 변경할 수 없다. 다른 개발용·실험용 feature를 켜거나 인증을 우회하지 않았다.
 
-### 현재 구독에 남은 변경
+### 2026-09-25 작업 직후 남은 변경
 
 - `Microsoft.Discovery` Provider 등록
 - `Microsoft.Discovery/DefaultFeature` 사용 승인 요청: `Pending`
@@ -105,10 +233,10 @@ Bookshelf indexing, bounded CPU tool, and Discovery Engine walkthrough.
 No real customer research data and no GPU workload required.
 ```
 
-## 6. 재개 순서
+## 6. 과거 재개 안내 — 현재 실행에는 위 2026-10-01 절차 사용
 
-1. Microsoft 측 `DefaultFeature` 승인과 구독 활성화를 확인한다. `Pending`을 통과로 간주하지 않는다.
-2. Provider를 다시 등록해 변경을 전파하고, 실제 필수 리소스 유형과 Workspace API 성공을 확인한다.
+1. Microsoft 측 구독 활성화를 확인한다. **정정:** DefaultFeature Pending만으로 현재 서비스 접근을 차단하면 안 된다. 실제 필수 리소스 유형과 Workspace API 성공을 함께 확인한다.
+2. Provider 변경 전파가 필요한 경우에만 관리자가 등록 절차를 수행한다. 등록만으로 사용 가능/배포 성공을 주장하지 않는다.
 3. 사용자가 올바른 테넌트에서 정상 MFA·보안 키 로그인을 완료한다.
 4. 모델 quota, IAM·NSP 관리자 작업, 네트워크, 전체 비용을 검토한다.
 5. 가이드 Lab 0~6을 실제 실행하고 각 단계의 클라우드 증거를 추가한다.
@@ -120,10 +248,6 @@ No real customer research data and no GPU workload required.
 npm run preflight
 ```
 
-승인 반영 후에는 다음 명시적 실행으로 Provider를 다시 등록해 변경을 전파하고, 접근 gate를 통과한 경우에만 전용 RG를 생성한다.
-
-```bash
-npm run preflight -- --register --create-resource-group
-```
+현재 RG는 이미 존재하므로 예전의 RG 생성 절차를 반복하지 않는다. `npm run preflight`는 이전 녹화형 점검이며, 빠른 읽기 전용 접근·quota 점검에는 `npm run readiness`를 사용한다.
 
 관련 공식 문서: [Discovery 접근 선행조건](https://learn.microsoft.com/en-us/azure/microsoft-discovery/quickstart-infrastructure), [Azure feature Pending과 승인](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/preview-features).

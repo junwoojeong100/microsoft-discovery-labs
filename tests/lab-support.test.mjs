@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { discoveryGate, publicView, redact, safeArmUrl, selectAccount, validateConfig } from '../scripts/lab-support.mjs';
+import { assessModelQuotas, discoveryGate, publicView, redact, safeArmUrl, selectAccount, validateConfig, validateLabResourceGroup } from '../scripts/lab-support.mjs';
 
 const config = JSON.parse(await readFile(new URL('../config/lab.json', import.meta.url), 'utf8'));
 
@@ -24,6 +24,48 @@ test('account selection never falls back to the default subscription', () => {
   assert.throws(() => selectAccount([{ ...account, state: 'Disabled' }], config));
   assert.throws(() => selectAccount([{ ...account, environmentName: undefined }], config));
   assert.throws(() => selectAccount([{ ...account, cloudName: 'AzureUSGovernment' }], config));
+});
+
+test('existing groups must match scope, region, and either documented lab tag convention', () => {
+  const group = {
+    id: `/subscriptions/${config.subscriptionId}/resourceGroups/${config.resourceGroup}`,
+    location: config.location,
+    tags: { environment: 'lab', project: config.labTag },
+  };
+  validateLabResourceGroup(group, config);
+  validateLabResourceGroup({ ...group, tags: { lab: config.labTag } }, config);
+  assert.throws(() => validateLabResourceGroup({ ...group, tags: {} }, config));
+  assert.throws(() => validateLabResourceGroup({ ...group, location: 'eastus' }, config));
+  assert.throws(() => validateLabResourceGroup({ ...group, id: `${group.id}-other` }, config));
+});
+
+test('model quota gate uses remaining TPM, not the raw thousand-token limit or a different SKU', () => {
+  const usage = (model, limit, currentValue, sku = 'GlobalStandard') => ({
+    name: { value: `OpenAI.${sku}.${model}`, localizedValue: 'One Thousand Tokens Per Minute' },
+    limit, currentValue,
+  });
+  const quotas = assessModelQuotas([
+    usage('gpt-5.4', 3000, 0),
+    usage('gpt-5.2', 3000, 10),
+    usage('gpt-5-mini', 1000, 10),
+    usage('text-embedding-3-small', 1000, 220),
+    usage('gpt-5-mini', 10000, 0, 'DataZoneStandard'),
+  ]);
+  assert.deepEqual(quotas.map((item) => item.availableTpm), [3000000, 2990000, 990000, 780000]);
+  assert.deepEqual(quotas.map((item) => item.ready), [true, true, false, false]);
+  assert.equal(assessModelQuotas([usage('gpt-5.4', 500, 0)])[0].ready, true);
+  assert.equal(assessModelQuotas([usage('gpt-5.4', 500, 1)])[0].ready, false);
+});
+
+test('unknown or invalid quota information fails closed', () => {
+  for (const usages of [
+    [],
+    [{ name: { value: 'OpenAI.GlobalStandard.gpt-5.4', localizedValue: 'Count' }, limit: 999999, currentValue: 0 }],
+    [{ name: { value: 'OpenAI.GlobalStandard.gpt-5.4', localizedValue: 'Thousand TPM' }, limit: NaN, currentValue: 0 }],
+  ]) {
+    assert.equal(assessModelQuotas(usages)[0].ready, false);
+    assert.equal(assessModelQuotas(usages)[0].availableTpm, null);
+  }
 });
 
 test('ARM URLs cannot escape the selected subscription or host', () => {
@@ -64,6 +106,9 @@ test('Registered alone is insufficient for a successful Discovery gate', () => {
     resourceTypes: ['workspaces', 'supercomputers', 'bookshelves'].map((resourceType) => ({ resourceType })),
   };
   assert.equal(discoveryGate(ready, { status: 403 }).allowed, false);
+  assert.equal(discoveryGate(ready, {}).allowed, false);
+  assert.equal(discoveryGate(ready, { status: NaN }).allowed, false);
+  assert.equal(discoveryGate(ready, { status: '200' }).allowed, false);
   assert.equal(discoveryGate(ready, { status: 200 }).allowed, true);
 });
 

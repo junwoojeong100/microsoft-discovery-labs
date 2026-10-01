@@ -1,0 +1,66 @@
+[
+  {
+    "properties": {
+      "ancestors": "46e9cdaa-fed3-4131-aa28-c1fc8a8a043a",
+      "conflictingFields": "",
+      "entity": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/rg-discovery-hol-20260930/providers/Microsoft.Storage/storageAccounts/stdiscoveryholjunwoosc",
+      "eventCategory": "Policy",
+      "fields": "[{\"operation\":\"AddOrReplace\",\"field\":\"Microsoft.Storage/storageAccounts/publicNetworkAccess\",\"condition\":\"[greaterOrEquals(requestContext().apiVersion, '2021-04-01')]\"}]",
+      "hierarchy": "",
+      "isComplianceCheck": "False",
+      "message": "Microsoft.Authorization/policies/modify/action",
+      "policies": "[{\"policyDefinitionId\":\"/providers/Microsoft.Management/managementGroups/46e9cdaa-fed3-4131-aa28-c1fc8a8a043a/providers/Microsoft.Authorization/policyDefinitions/StorageAccount_PublicNetwork_Modify\",\"policySetDefinitionId\":\"/providers/Microsoft.Management/managementGroups/46e9cdaa-fed3-4131-aa28-c1fc8a8a043a/providers/Microsoft.Authorization/policySetDefinitions/MCAPSGovDeployPolicies\",\"policyDefinitionReferenceId\":\"StorageAccountPublicNetworkModify\",\"policySetDefinitionName\":\"MCAPSGovDeployPolicies\",\"policySetDefinitionDisplayName\":\"Set of Deploy and Modify policies used by MCAPS Governance to ensure resources are compliant with security controls\",\"policySetDefinitionVersion\":\"1.0.0\",\"policyDefinitionName\":\"StorageAccount_PublicNetwork_Modify\",\"policyDefinitionDisplayName\":\"SFI - Disable public network access on Storage accounts (excluding NSP configured resources)\",\"policyDefinitionVersion\":\"1.0.0\",\"policyDefinitionEffect\":\"modify\",\"policyAssignmentId\":\"/providers/Microsoft.Management/managementGroups/46e9cdaa-fed3-4131-aa28-c1fc8a8a043a/providers/Microsoft.Authorization/policyAssignments/MCAPSGovDeployPolicies\",\"policyAssignmentName\":\"MCAPSGovDeployPolicies\",\"policyAssignmentDisplayName\":\"MCAPSGov Deploy and Modify Policies\",\"policyAssignmentScope\":\"/providers/Microsoft.Management/managementGroups/46e9cdaa-fed3-4131-aa28-c1fc8a8a043a\",\"policyAssignmentEnforcementMode\":\"Default\",\"policyExemptionIds\":[],\"policyEnrollmentIds\":[]}]",
+      "resourceLocation": "swedencentral",
+      "skippedFields": "[]"
+    },
+    "time": "2026-10-01T00:35:17.58001Z"
+  },
+  {
+    "properties": {
+      "ancestors": "46e9cdaa-fed3-4131-aa28-c1fc8a8a043a",
+      "conflictingFields": "",
+      "entity": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Storage/storageAccounts/stdiscoveryholjunwoosc",
+      "eventCategory": "Policy",
+      "fields": "[{\"operation\":\"AddOrReplace\",\"field\":\"Microsoft.Storage/storageAccounts/publicNetworkAccess\",\"condition\":\"[greaterOrEquals(requestContext().apiVersion, '2021-04-01')]\"}]",
+      "hierarchy": "",
+      "isComplianceCheck": "False",
+      "message": "Microsoft.Authorization/policies/modify/action",
+      "policies": "[{\"policyDefinitionId\":\"/providers/Microsoft.Management/managementGroups/46e9cdaa-fed3-4131-aa28-c1fc8a8a043a/providers/Microsoft.Authorization/policyDefinitions/StorageAccount_PublicNetwork_Modify\",\"policySetDefinitionId\":\"/providers/Microsoft.Management/managementGroups/46e9cdaa-fed3-4131-aa28-c1fc8a8a043a/providers/Microsoft.Authorization/policySetDefinitions/MCAPSGovDeployPolicies\",\"policyDefinitionReferenceId\":\"StorageAccountPublicNetworkModify\",\"policySetDefinitionName\":\"MCAPSGovDeployPolicies\",\"policySetDefinitionDisplayName\":\"Set of Deploy and Modify policies used by MCAPS Governance to ensure resources are compliant with security controls\",\"policySetDefinitionVersion\":\"1.0.0\",\"policyDefinitionName\":\"StorageAccount_PublicNetwork_Modify\",\"policyDefinitionDisplayName\":\"SFI - Disable public network access on Storage accounts (excluding NSP configured resources)\",\"policyDefinitionVersion\":\"1.0.0\",\"policyDefinitionEffect\":\"modify\",\"policyAssignmentId\":\"/providers/Microsoft.Management/managementGroups/46e9cdaa-fed3-4131-aa28-c1fc8a8a043a/providers/Microsoft.Authorization/policyAssignments/MCAPSGovDeployPolicies\",\"policyAssignmentName\":\"MCAPSGovDeployPolicies\",\"policyAssignmentDisplayName\":\"MCAPSGov Deploy and Modify Policies\",\"policyAssignmentScope\":\"/providers/Microsoft.Management/managementGroups/46e9cdaa-fed3-4131-aa28-c1fc8a8a043a\",\"policyAssignmentEnforcementMode\":\"Default\",\"policyExemptionIds\":[],\"policyEnrollmentIds\":[]}]",
+      "resourceLocation": "swedencentral",
+      "skippedFields": "[]"
+    },
+    "time": "2026-10-01T00:35:15.6670746Z"
+  },
+  {
+    "properties": {
+      "ancestors": "46e9cdaa-fed3-4131-aa28-c1fc8a8a043a",
+      "conflictingFields": "",
+      "entity": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Storage/storageAccounts/stdiscoveryholjunwoosc",
+      "eventCategory": "Policy",
+      "fields": "[{\"operation\":\"AddOrReplace\",\"field\":\"Microsoft.Storage/storageAccounts/publicNetworkAccess\",\"condition\":\"[greaterOrEquals(requestContext().apiVersion, '2021-04-01')]\"}]",
+      "hierarchy": "",
+      "isComplianceCheck": "False",
+      "message": "Microsoft.Authorization/policies/modify/action",
+      "policies": "[{\"policyDefinitionId\":\"/providers/Microsoft.Management/managementGroups/46e9cdaa-fed3-4131-aa28-c1fc8a8a043a/providers/Microsoft.Authorization/policyDefinitions/StorageAccount_PublicNetwork_Modify\",\"policySetDefinitionId\":\"/providers/Microsoft.Management/managementGroups/46e9cdaa-fed3-4131-aa28-c1fc8a8a043a/providers/Microsoft.Authorization/policySetDefinitions/MCAPSGovDeployPolicies\",\"policyDefinitionReferenceId\":\"StorageAccountPublicNetworkModify\",\"policySetDefinitionName\":\"MCAPSGovDeployPolicies\",\"policySetDefinitionDisplayName\":\"Set of Deploy and Modify policies used by MCAPS Governance to ensure resources are compliant with security controls\",\"policySetDefinitionVersion\":\"1.0.0\",\"policyDefinitionName\":\"StorageAccount_PublicNetwork_Modify\",\"policyDefinitionDisplayName\":\"SFI - Disable public network access on Storage accounts (excluding NSP configured resources)\",\"policyDefinitionVersion\":\"1.0.0\",\"policyDefinitionEffect\":\"modify\",\"policyAssignmentId\":\"/providers/Microsoft.Management/managementGroups/46e9cdaa-fed3-4131-aa28-c1fc8a8a043a/providers/Microsoft.Authorization/policyAssignments/MCAPSGovDeployPolicies\",\"policyAssignmentName\":\"MCAPSGovDeployPolicies\",\"policyAssignmentDisplayName\":\"MCAPSGov Deploy and Modify Policies\",\"policyAssignmentScope\":\"/providers/Microsoft.Management/managementGroups/46e9cdaa-fed3-4131-aa28-c1fc8a8a043a\",\"policyAssignmentEnforcementMode\":\"Default\",\"policyExemptionIds\":[],\"policyEnrollmentIds\":[]}]",
+      "resourceLocation": "swedencentral",
+      "skippedFields": "[]"
+    },
+    "time": "2026-10-01T00:34:43.9169542Z"
+  },
+  {
+    "properties": {
+      "ancestors": "46e9cdaa-fed3-4131-aa28-c1fc8a8a043a",
+      "conflictingFields": "",
+      "entity": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Storage/storageAccounts/stdiscoveryholjunwoosc",
+      "eventCategory": "Policy",
+      "fields": "[{\"operation\":\"AddOrReplace\",\"field\":\"Microsoft.Storage/storageAccounts/publicNetworkAccess\",\"condition\":\"[greaterOrEquals(requestContext().apiVersion, '2021-04-01')]\"}]",
+      "hierarchy": "",
+      "isComplianceCheck": "False",
+      "message": "Microsoft.Authorization/policies/modify/action",
+      "policies": "[{\"policyDefinitionId\":\"/providers/Microsoft.Management/managementGroups/46e9cdaa-fed3-4131-aa28-c1fc8a8a043a/providers/Microsoft.Authorization/policyDefinitions/StorageAccount_PublicNetwork_Modify\",\"policySetDefinitionId\":\"/providers/Microsoft.Management/managementGroups/46e9cdaa-fed3-4131-aa28-c1fc8a8a043a/providers/Microsoft.Authorization/policySetDefinitions/MCAPSGovDeployPolicies\",\"policyDefinitionReferenceId\":\"StorageAccountPublicNetworkModify\",\"policySetDefinitionName\":\"MCAPSGovDeployPolicies\",\"policySetDefinitionDisplayName\":\"Set of Deploy and Modify policies used by MCAPS Governance to ensure resources are compliant with security controls\",\"policySetDefinitionVersion\":\"1.0.0\",\"policyDefinitionName\":\"StorageAccount_PublicNetwork_Modify\",\"policyDefinitionDisplayName\":\"SFI - Disable public network access on Storage accounts (excluding NSP configured resources)\",\"policyDefinitionVersion\":\"1.0.0\",\"policyDefinitionEffect\":\"modify\",\"policyAssignmentId\":\"/providers/Microsoft.Management/managementGroups/46e9cdaa-fed3-4131-aa28-c1fc8a8a043a/providers/Microsoft.Authorization/policyAssignments/MCAPSGovDeployPolicies\",\"policyAssignmentName\":\"MCAPSGovDeployPolicies\",\"policyAssignmentDisplayName\":\"MCAPSGov Deploy and Modify Policies\",\"policyAssignmentScope\":\"/providers/Microsoft.Management/managementGroups/46e9cdaa-fed3-4131-aa28-c1fc8a8a043a\",\"policyAssignmentEnforcementMode\":\"Default\",\"policyExemptionIds\":[],\"policyEnrollmentIds\":[]}]",
+      "resourceLocation": "swedencentral",
+      "skippedFields": "[]"
+    },
+    "time": "2026-10-01T00:33:20.3422182Z"
+  }
+]

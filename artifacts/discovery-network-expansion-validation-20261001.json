@@ -1,0 +1,140 @@
+{
+  "error": null,
+  "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Resources/deployments/discovery-network-expansion-20261001",
+  "name": "discovery-network-expansion-20261001",
+  "properties": {
+    "correlationId": "ee9c4c6d-cf85-4ae1-8835-d4e595cf67d1",
+    "debugSetting": null,
+    "dependencies": [
+      {
+        "dependsOn": [
+          {
+            "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/supercomputerNodepoolSubnet",
+            "resourceGroup": "rg-discovery-hol-20260930",
+            "resourceName": "vnet-discovery-hol/supercomputerNodepoolSubnet",
+            "resourceType": "Microsoft.Network/virtualNetworks/subnets"
+          },
+          {
+            "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/aksSubnet",
+            "resourceGroup": "rg-discovery-hol-20260930",
+            "resourceName": "vnet-discovery-hol/aksSubnet",
+            "resourceType": "Microsoft.Network/virtualNetworks/subnets"
+          }
+        ],
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/searchSubnet",
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceName": "vnet-discovery-hol/searchSubnet",
+        "resourceType": "Microsoft.Network/virtualNetworks/subnets"
+      },
+      {
+        "dependsOn": [
+          {
+            "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/searchSubnet",
+            "resourceGroup": "rg-discovery-hol-20260930",
+            "resourceName": "vnet-discovery-hol/searchSubnet",
+            "resourceType": "Microsoft.Network/virtualNetworks/subnets"
+          }
+        ],
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/bookshelfPeSubnet",
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceName": "vnet-discovery-hol/bookshelfPeSubnet",
+        "resourceType": "Microsoft.Network/virtualNetworks/subnets"
+      },
+      {
+        "dependsOn": [
+          {
+            "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/supercomputerNodepoolSubnet",
+            "resourceGroup": "rg-discovery-hol-20260930",
+            "resourceName": "vnet-discovery-hol/supercomputerNodepoolSubnet",
+            "resourceType": "Microsoft.Network/virtualNetworks/subnets"
+          }
+        ],
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/aksSubnet",
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceName": "vnet-discovery-hol/aksSubnet",
+        "resourceType": "Microsoft.Network/virtualNetworks/subnets"
+      }
+    ],
+    "diagnostics": null,
+    "duration": "PT0S",
+    "error": null,
+    "extensions": [],
+    "mode": "Incremental",
+    "onErrorDeployment": null,
+    "outputResources": null,
+    "outputs": null,
+    "parameters": {
+      "virtualNetworkName": {
+        "type": "String",
+        "value": "vnet-discovery-hol"
+      }
+    },
+    "parametersLink": null,
+    "providers": [
+      {
+        "id": null,
+        "namespace": "Microsoft.Network",
+        "providerAuthorizationConsentState": null,
+        "registrationPolicy": null,
+        "registrationState": null,
+        "resourceTypes": [
+          {
+            "aliases": null,
+            "apiProfiles": null,
+            "apiVersions": null,
+            "capabilities": null,
+            "defaultApiVersion": null,
+            "locationMappings": null,
+            "locations": [
+              null
+            ],
+            "properties": null,
+            "resourceType": "virtualNetworks/subnets",
+            "zoneMappings": null
+          }
+        ]
+      }
+    ],
+    "provisioningState": "Succeeded",
+    "templateHash": "17878012119295581954",
+    "templateLink": null,
+    "timestamp": "2026-10-01T00:24:00.818875+00:00",
+    "validatedResources": [
+      {
+        "apiVersion": null,
+        "extension": null,
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/aksSubnet",
+        "identifiers": null,
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceType": null
+      },
+      {
+        "apiVersion": null,
+        "extension": null,
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/bookshelfPeSubnet",
+        "identifiers": null,
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceType": null
+      },
+      {
+        "apiVersion": null,
+        "extension": null,
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/searchSubnet",
+        "identifiers": null,
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceType": null
+      },
+      {
+        "apiVersion": null,
+        "extension": null,
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/supercomputerNodepoolSubnet",
+        "identifiers": null,
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceType": null
+      }
+    ],
+    "validationLevel": null
+  },
+  "resourceGroup": "rg-discovery-hol-20260930",
+  "type": "Microsoft.Resources/deployments"
+}

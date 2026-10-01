@@ -1,0 +1,24 @@
+{
+  "apiVersion": "2026-06-01",
+  "resourceType": "Microsoft.Discovery/tools",
+  "operation": "ARM template preflight validation",
+  "trackingId": "8a4b1e06-cd2b-4ef2-a6b1-0b83d50b082e",
+  "deploymentAttemptedWithInvalidPayload": false,
+  "observedErrors": [
+    {
+      "code": "ObjectMissingRequiredProperty",
+      "message": "Missing required property: version. Paths in payload: '$.properties.version'"
+    },
+    {
+      "code": "ObjectAdditionalProperties",
+      "message": "Additional properties not allowed: definitionContentVersion. Paths in payload: '$.properties.definitionContentVersion'"
+    }
+  ],
+  "correction": {
+    "definitionObject": "properties.definitionContent",
+    "resourceVersion": "properties.version",
+    "portalLabel": "Definition content version"
+  },
+  "reference": "https://learn.microsoft.com/en-us/azure/microsoft-discovery/how-to-deploy-tool-to-discovery",
+  "limitation": "The documentation's REST example uses 2026-02-01-preview. This observation verifies the GA 2026-06-01 request contract, not every API version."
+}

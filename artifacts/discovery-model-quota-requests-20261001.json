@@ -1,0 +1,50 @@
+{
+  "status": "submission_confirmed_for_both_models",
+  "subscriptionId": "51531604-2337-4c05-bc05-3c3d4ff154e5",
+  "deploymentType": "Global Standard",
+  "intendedDeploymentRegion": "swedencentral",
+  "officialEntryUrl": "https://aka.ms/oai/stuquotarequest",
+  "submissionHost": "customervoice.microsoft.com",
+  "automation": "Playwright headless",
+  "explicitUserSubmissionApprovalReceived": true,
+  "requests": [
+    {
+      "model": "gpt-5-mini",
+      "observedLimitBeforeRequestTpm": 1000000,
+      "requestedTotalTpm": 3000000,
+      "increaseFromObservedLimitTpm": 2000000,
+      "formValue": 3000,
+      "formUnit": "kTPM",
+      "submitActionObservedAtUtc": "2026-10-01T04:41:03Z",
+      "submitClicks": 1,
+      "confirmationVerified": true,
+      "confirmationText": "Thanks! You've completed the request!",
+      "responseMessage": "Your response was submitted."
+    },
+    {
+      "model": "text-embedding-3-small",
+      "observedLimitBeforeRequestTpm": 1000000,
+      "requestedTotalTpm": 3000000,
+      "increaseFromObservedLimitTpm": 2000000,
+      "formValue": 3000,
+      "formUnit": "kTPM",
+      "submitActionObservedAtUtc": "2026-10-01T04:41:49Z",
+      "submitClicks": 1,
+      "confirmationVerified": true,
+      "confirmationText": "Thanks! You've completed the request!",
+      "responseMessage": "Your response was submitted."
+    }
+  ],
+  "separateRegionFieldDisplayedForSelectedModels": false,
+  "intendedRegionSpecifiedInEachJustification": true,
+  "receiptNumberDisplayed": false,
+  "contactDetailsIncludedInThisRecord": false,
+  "microsoftQuotaApprovalVerified": false,
+  "reflectedQuotaIncreaseVerified": false,
+  "limitations": [
+    "Submission is confirmed by each official form's completion message, not by a quota approval decision.",
+    "The page advises that processing is typically the next business day and sometimes up to two business days; approval is not guaranteed.",
+    "No existing model deployment or provisioned throughput commitment was changed.",
+    "Do not submit these same requests again without checking their outcome."
+  ]
+}

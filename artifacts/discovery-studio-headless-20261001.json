@@ -1,0 +1,13 @@
+{
+  "checkedAt": "2026-10-01T01:49:08Z",
+  "automation": "Playwright headless",
+  "requestedUrl": "https://studio.discovery.microsoft.com/workspaces/discoveryholjunwoosc",
+  "observedOrigin": "https://login.microsoftonline.com",
+  "pageTitle": "Sign in to your account",
+  "outcome": "interactive_sign_in_required",
+  "credentialsEntered": false,
+  "authenticationBypassed": false,
+  "tokensOrCookiesExported": false,
+  "studioWorkspaceVerified": false,
+  "limitation": "The page reached the normal Microsoft sign-in flow. Azure CLI ARM authentication does not establish a signed-in Studio browser session. OAuth query parameters are intentionally not recorded."
+}

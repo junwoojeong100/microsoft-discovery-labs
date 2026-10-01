@@ -1,0 +1,16 @@
+[
+  {
+    "createTime": "2026-10-01T00:38:50.012031+00:00",
+    "finishTime": "2026-10-01T00:39:10.388323+00:00",
+    "outputImages": [
+      {
+        "digest": "sha256:0051d5db6c367812c22073d807da54b469ecbcc58edb7cfaf0dbce5e78514ad1",
+        "registry": "acrdiscoveryholjunwoosc.azurecr.io",
+        "repository": "thermal-ranking",
+        "tag": "1.0.0"
+      }
+    ],
+    "runId": "dt1",
+    "status": "Succeeded"
+  }
+]

@@ -1,0 +1,226 @@
+{
+  "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Resources/deployments/discovery-storage-private-20261001",
+  "location": null,
+  "name": "discovery-storage-private-20261001",
+  "properties": {
+    "correlationId": "d0cbeb2b-5f94-45e3-8ecb-38dc3a8de67c",
+    "debugSetting": null,
+    "dependencies": [
+      {
+        "dependsOn": [
+          {
+            "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/storagePeSubnet",
+            "resourceGroup": "rg-discovery-hol-20260930",
+            "resourceName": "vnet-discovery-hol/storagePeSubnet",
+            "resourceType": "Microsoft.Network/virtualNetworks/subnets"
+          }
+        ],
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/privateEndpoints/pe-discovery-blob",
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceName": "pe-discovery-blob",
+        "resourceType": "Microsoft.Network/privateEndpoints"
+      },
+      {
+        "dependsOn": [
+          {
+            "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/privateDnsZones/privatelink.blob.core.windows.net",
+            "resourceGroup": "rg-discovery-hol-20260930",
+            "resourceName": "privatelink.blob.core.windows.net",
+            "resourceType": "Microsoft.Network/privateDnsZones"
+          }
+        ],
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/privateDnsZones/privatelink.blob.core.windows.net/virtualNetworkLinks/discovery-lab",
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceName": "privatelink.blob.core.windows.net/discovery-lab",
+        "resourceType": "Microsoft.Network/privateDnsZones/virtualNetworkLinks"
+      },
+      {
+        "dependsOn": [
+          {
+            "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/privateDnsZones/privatelink.blob.core.windows.net",
+            "resourceGroup": "rg-discovery-hol-20260930",
+            "resourceName": "privatelink.blob.core.windows.net",
+            "resourceType": "Microsoft.Network/privateDnsZones"
+          },
+          {
+            "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/privateEndpoints/pe-discovery-blob",
+            "resourceGroup": "rg-discovery-hol-20260930",
+            "resourceName": "pe-discovery-blob",
+            "resourceType": "Microsoft.Network/privateEndpoints"
+          }
+        ],
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/privateEndpoints/pe-discovery-blob/privateDnsZoneGroups/blob",
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceName": "pe-discovery-blob/blob",
+        "resourceType": "Microsoft.Network/privateEndpoints/privateDnsZoneGroups"
+      }
+    ],
+    "diagnostics": null,
+    "duration": "PT1M11.1343741S",
+    "error": null,
+    "extensions": [],
+    "mode": "Incremental",
+    "onErrorDeployment": null,
+    "outputResources": [
+      {
+        "apiVersion": null,
+        "extension": null,
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/privateDnsZones/privatelink.blob.core.windows.net",
+        "identifiers": null,
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceType": "Microsoft.Network/privateDnsZones"
+      },
+      {
+        "apiVersion": null,
+        "extension": null,
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/privateDnsZones/privatelink.blob.core.windows.net/virtualNetworkLinks/discovery-lab",
+        "identifiers": null,
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceType": "Microsoft.Network/privateDnsZones/virtualNetworkLinks"
+      },
+      {
+        "apiVersion": null,
+        "extension": null,
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/privateEndpoints/pe-discovery-blob",
+        "identifiers": null,
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceType": "Microsoft.Network/privateEndpoints"
+      },
+      {
+        "apiVersion": null,
+        "extension": null,
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/privateEndpoints/pe-discovery-blob/privateDnsZoneGroups/blob",
+        "identifiers": null,
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceType": "Microsoft.Network/privateEndpoints/privateDnsZoneGroups"
+      },
+      {
+        "apiVersion": null,
+        "extension": null,
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/storagePeSubnet",
+        "identifiers": null,
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceType": "Microsoft.Network/virtualNetworks/subnets"
+      }
+    ],
+    "outputs": {
+      "blobHostname": {
+        "type": "String",
+        "value": "stdiscoveryholjunwoosc.blob.core.windows.net"
+      },
+      "privateEndpointId": {
+        "type": "String",
+        "value": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/privateEndpoints/pe-discovery-blob"
+      }
+    },
+    "parameters": {
+      "existingBlobPrivateDnsZoneId": {
+        "type": "String",
+        "value": ""
+      },
+      "location": {
+        "type": "String",
+        "value": "swedencentral"
+      },
+      "storageAccountName": {
+        "type": "String",
+        "value": "stdiscoveryholjunwoosc"
+      },
+      "virtualNetworkName": {
+        "type": "String",
+        "value": "vnet-discovery-hol"
+      }
+    },
+    "parametersLink": null,
+    "providers": [
+      {
+        "id": null,
+        "namespace": "Microsoft.Network",
+        "providerAuthorizationConsentState": null,
+        "registrationPolicy": null,
+        "registrationState": null,
+        "resourceTypes": [
+          {
+            "aliases": null,
+            "apiProfiles": null,
+            "apiVersions": null,
+            "capabilities": null,
+            "defaultApiVersion": null,
+            "locationMappings": null,
+            "locations": [
+              null
+            ],
+            "properties": null,
+            "resourceType": "virtualNetworks/subnets",
+            "zoneMappings": null
+          },
+          {
+            "aliases": null,
+            "apiProfiles": null,
+            "apiVersions": null,
+            "capabilities": null,
+            "defaultApiVersion": null,
+            "locationMappings": null,
+            "locations": [
+              "swedencentral"
+            ],
+            "properties": null,
+            "resourceType": "privateEndpoints",
+            "zoneMappings": null
+          },
+          {
+            "aliases": null,
+            "apiProfiles": null,
+            "apiVersions": null,
+            "capabilities": null,
+            "defaultApiVersion": null,
+            "locationMappings": null,
+            "locations": [
+              "global"
+            ],
+            "properties": null,
+            "resourceType": "privateDnsZones",
+            "zoneMappings": null
+          },
+          {
+            "aliases": null,
+            "apiProfiles": null,
+            "apiVersions": null,
+            "capabilities": null,
+            "defaultApiVersion": null,
+            "locationMappings": null,
+            "locations": [
+              "global"
+            ],
+            "properties": null,
+            "resourceType": "privateDnsZones/virtualNetworkLinks",
+            "zoneMappings": null
+          },
+          {
+            "aliases": null,
+            "apiProfiles": null,
+            "apiVersions": null,
+            "capabilities": null,
+            "defaultApiVersion": null,
+            "locationMappings": null,
+            "locations": [
+              null
+            ],
+            "properties": null,
+            "resourceType": "privateEndpoints/privateDnsZoneGroups",
+            "zoneMappings": null
+          }
+        ]
+      }
+    ],
+    "provisioningState": "Succeeded",
+    "templateHash": "6498462781150014811",
+    "templateLink": null,
+    "timestamp": "2026-10-01T00:59:00.490237+00:00",
+    "validatedResources": null,
+    "validationLevel": null
+  },
+  "resourceGroup": "rg-discovery-hol-20260930",
+  "tags": null,
+  "type": "Microsoft.Resources/deployments"
+}

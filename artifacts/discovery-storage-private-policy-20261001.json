@@ -1,0 +1,6 @@
+{
+  "defaultAction": "Deny",
+  "ipRules": [],
+  "publicNetworkAccess": "Disabled",
+  "state": "Succeeded"
+}

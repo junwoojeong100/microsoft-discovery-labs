@@ -1,0 +1,37 @@
+[
+  {
+    "correlationId": "75d88d20-5dd2-4963-b2b1-00dc4b1039e4",
+    "operation": "Microsoft.ContainerService/managedClusters/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dscmp-sc-discovery-hol-b6wiwf/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-b6wiwf",
+    "statusMessage": "{\"code\":\"AKSCapacityHeavyUsage\",\"details\":null,\"message\":\"AKS is experiencing heavy usage in region swedencentral. We are working on adding new capacity. In the meantime, please consider creating new AKS clusters in a different region. For a list of all the Azure regions, visit https://aka.ms/aks/regions. For more details on this error, visit https://aka.ms/akscapacityheavyusage.\",\"subcode\":\"\"}",
+    "time": "2026-10-01T01:03:53.9128765Z"
+  },
+  {
+    "correlationId": "75d88d20-5dd2-4963-b2b1-00dc4b1039e4",
+    "operation": "Microsoft.ContainerService/managedClusters/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dscmp-sc-discovery-hol-b6wiwf/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-b6wiwf",
+    "statusMessage": "{\"code\":\"AKSCapacityHeavyUsage\",\"details\":null,\"message\":\"AKS is experiencing heavy usage in region swedencentral. We are working on adding new capacity. In the meantime, please consider creating new AKS clusters in a different region. For a list of all the Azure regions, visit https://aka.ms/aks/regions. For more details on this error, visit https://aka.ms/akscapacityheavyusage.\",\"subcode\":\"\"}",
+    "time": "2026-10-01T00:58:19.5146621Z"
+  },
+  {
+    "correlationId": "75d88d20-5dd2-4963-b2b1-00dc4b1039e4",
+    "operation": "Microsoft.ContainerService/managedClusters/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dscmp-sc-discovery-hol-b6wiwf/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-b6wiwf",
+    "statusMessage": "{\"code\":\"AKSCapacityHeavyUsage\",\"details\":null,\"message\":\"AKS is experiencing heavy usage in region swedencentral. We are working on adding new capacity. In the meantime, please consider creating new AKS clusters in a different region. For a list of all the Azure regions, visit https://aka.ms/aks/regions. For more details on this error, visit https://aka.ms/akscapacityheavyusage.\",\"subcode\":\"\"}",
+    "time": "2026-10-01T00:52:55.4402153Z"
+  },
+  {
+    "correlationId": "75d88d20-5dd2-4963-b2b1-00dc4b1039e4",
+    "operation": "Microsoft.ContainerService/managedClusters/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dscmp-sc-discovery-hol-b6wiwf/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-b6wiwf",
+    "statusMessage": "{\"code\":\"AKSCapacityHeavyUsage\",\"details\":null,\"message\":\"AKS is experiencing heavy usage in region swedencentral. We are working on adding new capacity. In the meantime, please consider creating new AKS clusters in a different region. For a list of all the Azure regions, visit https://aka.ms/aks/regions. For more details on this error, visit https://aka.ms/akscapacityheavyusage.\",\"subcode\":\"\"}",
+    "time": "2026-10-01T00:47:37.5322152Z"
+  },
+  {
+    "correlationId": "75d88d20-5dd2-4963-b2b1-00dc4b1039e4",
+    "operation": "Microsoft.ContainerService/managedClusters/write",
+    "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dscmp-sc-discovery-hol-b6wiwf/providers/Microsoft.ContainerService/managedClusters/aks-dscmp-b6wiwf",
+    "statusMessage": "{\"code\":\"AKSCapacityHeavyUsage\",\"details\":null,\"message\":\"AKS is experiencing heavy usage in region swedencentral. We are working on adding new capacity. In the meantime, please consider creating new AKS clusters in a different region. For a list of all the Azure regions, visit https://aka.ms/aks/regions. For more details on this error, visit https://aka.ms/akscapacityheavyusage.\",\"subcode\":\"\"}",
+    "time": "2026-10-01T00:42:00.0145565Z"
+  }
+]

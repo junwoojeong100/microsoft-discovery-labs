@@ -1,0 +1,13 @@
+{
+  "stage": "initial-inline-vnet-expansion-validation",
+  "outcome": "Failed",
+  "deploymentAttempted": false,
+  "error": {
+    "code": "InvalidTemplateDeployment",
+    "trackingId": "6d093c02-0dd1-4ff5-b5a1-a67b3b6d8e7c",
+    "innerCode": "IncompatibleDelegations",
+    "targetSubnet": "agentSubnet",
+    "message": "Service delegation to  cannot coexist with delegation to Microsoft.App/environments"
+  },
+  "resolution": "Preserved the original VNet template and validated four separate child-subnet resources in infra/expand-network.bicep. No failing VNet update was deployed."
+}

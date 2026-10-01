@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-09-25T01:10:36.235Z",
+  "checkedAt": "2026-10-01T03:02:50.319Z",
   "scope": "Local bilingual guide, link, layout, language-switch, and PDF verification only",
   "azureOperationsPerformed": false,
   "azureEndToEndValidated": false,
@@ -10,12 +10,12 @@
       "language": "en",
       "sections": 18,
       "officialSources": 33,
-      "localLinksChecked": 21,
+      "localLinksChecked": 23,
       "desktopOverflow": false,
       "mobileOverflow": false,
       "printOverflow": false,
-      "pdfPages": 21,
-      "pdfBytes": 1000375,
+      "pdfPages": 27,
+      "pdfBytes": 1196784,
       "pdfBookmarks": true,
       "pdfLocalFileLinks": 0
     },
@@ -23,12 +23,12 @@
       "language": "ko",
       "sections": 18,
       "officialSources": 33,
-      "localLinksChecked": 21,
+      "localLinksChecked": 23,
       "desktopOverflow": false,
       "mobileOverflow": false,
       "printOverflow": false,
-      "pdfPages": 19,
-      "pdfBytes": 1556966,
+      "pdfPages": 25,
+      "pdfBytes": 1803711,
       "pdfBookmarks": true,
       "pdfLocalFileLinks": 0
     }

@@ -1,0 +1,991 @@
+{
+  "_redactions": ["Client public IPv4 address removed before repository publication."],
+  "changes": [
+    {
+      "after": {
+        "apiVersion": "2022-04-01",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Authorization/roleAssignments/2af301e8-4865-5089-987a-afd5b3699439",
+        "name": "2af301e8-4865-5089-987a-afd5b3699439",
+        "properties": {
+          "principalId": "085bc565-8298-4c5b-a726-20050d18cbb7",
+          "roleDefinitionId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Authorization/roleDefinitions/7a2b6e6c-472e-4b39-8878-a26eb63d75c6"
+        },
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "type": "Microsoft.Authorization/roleAssignments"
+      },
+      "before": {
+        "apiVersion": "2022-04-01",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Authorization/roleAssignments/2af301e8-4865-5089-987a-afd5b3699439",
+        "name": "2af301e8-4865-5089-987a-afd5b3699439",
+        "properties": {
+          "principalId": "085bc565-8298-4c5b-a726-20050d18cbb7",
+          "roleDefinitionId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Authorization/roleDefinitions/7a2b6e6c-472e-4b39-8878-a26eb63d75c6"
+        },
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "type": "Microsoft.Authorization/roleAssignments"
+      },
+      "changeType": "NoChange",
+      "delta": [
+        {
+          "after": "User",
+          "before": null,
+          "children": null,
+          "path": "properties.principalType",
+          "propertyChangeType": "NoEffect"
+        }
+      ],
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Authorization/roleAssignments/2af301e8-4865-5089-987a-afd5b3699439",
+      "symbolicName": null,
+      "unsupportedReason": null
+    },
+    {
+      "after": {
+        "apiVersion": "2022-04-01",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Authorization/roleAssignments/c1f5e6e0-6e9b-5a25-ba46-7ae2ee5cf3ab",
+        "name": "c1f5e6e0-6e9b-5a25-ba46-7ae2ee5cf3ab",
+        "properties": {
+          "principalId": "[reference('/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-discovery-hol', '2024-11-30').principalId]",
+          "roleDefinitionId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Authorization/roleDefinitions/01288891-85ee-45a7-b367-9db3b752fc65"
+        },
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "type": "Microsoft.Authorization/roleAssignments"
+      },
+      "before": {
+        "apiVersion": "2022-04-01",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Authorization/roleAssignments/c1f5e6e0-6e9b-5a25-ba46-7ae2ee5cf3ab",
+        "name": "c1f5e6e0-6e9b-5a25-ba46-7ae2ee5cf3ab",
+        "properties": {
+          "principalId": "d3e217ab-24b0-4f5b-bea7-7048dab36e55",
+          "roleDefinitionId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Authorization/roleDefinitions/01288891-85ee-45a7-b367-9db3b752fc65"
+        },
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "type": "Microsoft.Authorization/roleAssignments"
+      },
+      "changeType": "Modify",
+      "delta": [
+        {
+          "after": "[reference('/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-discovery-hol', '2024-11-30').principalId]",
+          "before": "d3e217ab-24b0-4f5b-bea7-7048dab36e55",
+          "children": null,
+          "path": "properties.principalId",
+          "propertyChangeType": "Modify"
+        },
+        {
+          "after": "ServicePrincipal",
+          "before": null,
+          "children": null,
+          "path": "properties.principalType",
+          "propertyChangeType": "NoEffect"
+        }
+      ],
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Authorization/roleAssignments/c1f5e6e0-6e9b-5a25-ba46-7ae2ee5cf3ab",
+      "symbolicName": null,
+      "unsupportedReason": null
+    },
+    {
+      "after": {
+        "apiVersion": "2023-07-01",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.ContainerRegistry/registries/acrdiscoveryholjunwoosc",
+        "location": "swedencentral",
+        "name": "acrdiscoveryholjunwoosc",
+        "properties": {
+          "adminUserEnabled": false,
+          "networkRuleBypassOptions": "AzureServices",
+          "policies": {
+            "exportPolicy": {
+              "status": "enabled"
+            },
+            "quarantinePolicy": {
+              "status": "disabled"
+            },
+            "retentionPolicy": {
+              "days": 7,
+              "status": "disabled"
+            },
+            "trustPolicy": {
+              "status": "disabled",
+              "type": "Notary"
+            }
+          },
+          "publicNetworkAccess": "Enabled",
+          "zoneRedundancy": "Disabled"
+        },
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "sku": {
+          "name": "Basic"
+        },
+        "tags": {
+          "environment": "lab",
+          "project": "microsoft-discovery-core-hol"
+        },
+        "type": "Microsoft.ContainerRegistry/registries"
+      },
+      "before": {
+        "apiVersion": "2023-07-01",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.ContainerRegistry/registries/acrdiscoveryholjunwoosc",
+        "location": "swedencentral",
+        "name": "acrdiscoveryholjunwoosc",
+        "properties": {
+          "adminUserEnabled": false,
+          "anonymousPullEnabled": false,
+          "dataEndpointEnabled": false,
+          "encryption": {
+            "status": "disabled"
+          },
+          "networkRuleBypassOptions": "AzureServices",
+          "policies": {
+            "azureADAuthenticationAsArmPolicy": {
+              "status": "enabled"
+            },
+            "exportPolicy": {
+              "status": "enabled"
+            },
+            "quarantinePolicy": {
+              "status": "disabled"
+            },
+            "retentionPolicy": {
+              "days": 7,
+              "status": "disabled"
+            },
+            "trustPolicy": {
+              "status": "disabled",
+              "type": "Notary"
+            }
+          },
+          "publicNetworkAccess": "Enabled",
+          "zoneRedundancy": "Disabled"
+        },
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "sku": {
+          "name": "Basic"
+        },
+        "tags": {
+          "environment": "lab",
+          "project": "microsoft-discovery-core-hol"
+        },
+        "type": "Microsoft.ContainerRegistry/registries"
+      },
+      "changeType": "Modify",
+      "delta": [
+        {
+          "after": null,
+          "before": false,
+          "children": null,
+          "path": "properties.anonymousPullEnabled",
+          "propertyChangeType": "Delete"
+        },
+        {
+          "after": null,
+          "before": false,
+          "children": null,
+          "path": "properties.dataEndpointEnabled",
+          "propertyChangeType": "Delete"
+        },
+        {
+          "after": null,
+          "before": {
+            "status": "disabled"
+          },
+          "children": null,
+          "path": "properties.encryption",
+          "propertyChangeType": "Delete"
+        },
+        {
+          "after": null,
+          "before": {
+            "status": "enabled"
+          },
+          "children": null,
+          "path": "properties.policies.azureADAuthenticationAsArmPolicy",
+          "propertyChangeType": "Delete"
+        }
+      ],
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.ContainerRegistry/registries/acrdiscoveryholjunwoosc",
+      "symbolicName": null,
+      "unsupportedReason": null
+    },
+    {
+      "after": {
+        "apiVersion": "2022-04-01",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.ContainerRegistry/registries/acrdiscoveryholjunwoosc/providers/Microsoft.Authorization/roleAssignments/8a87ebe3-7317-55d4-9862-60606c91971d",
+        "name": "8a87ebe3-7317-55d4-9862-60606c91971d",
+        "properties": {
+          "principalId": "[reference('/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-discovery-hol', '2024-11-30').principalId]",
+          "roleDefinitionId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Authorization/roleDefinitions/7f951dda-4ed3-4680-a7ca-43fe172d538d"
+        },
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "type": "Microsoft.Authorization/roleAssignments"
+      },
+      "before": {
+        "apiVersion": "2022-04-01",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.ContainerRegistry/registries/acrdiscoveryholjunwoosc/providers/Microsoft.Authorization/roleAssignments/8a87ebe3-7317-55d4-9862-60606c91971d",
+        "name": "8a87ebe3-7317-55d4-9862-60606c91971d",
+        "properties": {
+          "principalId": "d3e217ab-24b0-4f5b-bea7-7048dab36e55",
+          "roleDefinitionId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Authorization/roleDefinitions/7f951dda-4ed3-4680-a7ca-43fe172d538d"
+        },
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "type": "Microsoft.Authorization/roleAssignments"
+      },
+      "changeType": "Modify",
+      "delta": [
+        {
+          "after": "[reference('/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-discovery-hol', '2024-11-30').principalId]",
+          "before": "d3e217ab-24b0-4f5b-bea7-7048dab36e55",
+          "children": null,
+          "path": "properties.principalId",
+          "propertyChangeType": "Modify"
+        },
+        {
+          "after": "ServicePrincipal",
+          "before": null,
+          "children": null,
+          "path": "properties.principalType",
+          "propertyChangeType": "NoEffect"
+        }
+      ],
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.ContainerRegistry/registries/acrdiscoveryholjunwoosc/providers/Microsoft.Authorization/roleAssignments/8a87ebe3-7317-55d4-9862-60606c91971d",
+      "symbolicName": null,
+      "unsupportedReason": null
+    },
+    {
+      "after": {
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/storagecontainers/thermaldata",
+        "location": "swedencentral",
+        "name": "thermaldata",
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "type": "Microsoft.Discovery/storagecontainers"
+      },
+      "before": {
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/storagecontainers/thermaldata",
+        "location": "swedencentral",
+        "name": "thermaldata",
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "type": "Microsoft.Discovery/storagecontainers"
+      },
+      "changeType": "Ignore",
+      "delta": null,
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/storagecontainers/thermaldata",
+      "symbolicName": null,
+      "unsupportedReason": null
+    },
+    {
+      "after": {
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/storagecontainers/thermaldata/storageassets/candidatecsv",
+        "location": "swedencentral",
+        "name": "thermaldata/candidatecsv",
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "type": "Microsoft.Discovery/storagecontainers/storageassets"
+      },
+      "before": {
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/storagecontainers/thermaldata/storageassets/candidatecsv",
+        "location": "swedencentral",
+        "name": "thermaldata/candidatecsv",
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "type": "Microsoft.Discovery/storagecontainers/storageassets"
+      },
+      "changeType": "Ignore",
+      "delta": null,
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/storagecontainers/thermaldata/storageassets/candidatecsv",
+      "symbolicName": null,
+      "unsupportedReason": null
+    },
+    {
+      "after": {
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/storagecontainers/thermaldata/storageassets/evidencepack",
+        "location": "swedencentral",
+        "name": "thermaldata/evidencepack",
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "type": "Microsoft.Discovery/storagecontainers/storageassets"
+      },
+      "before": {
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/storagecontainers/thermaldata/storageassets/evidencepack",
+        "location": "swedencentral",
+        "name": "thermaldata/evidencepack",
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "type": "Microsoft.Discovery/storagecontainers/storageassets"
+      },
+      "changeType": "Ignore",
+      "delta": null,
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/storagecontainers/thermaldata/storageassets/evidencepack",
+      "symbolicName": null,
+      "unsupportedReason": null
+    },
+    {
+      "after": {
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/supercomputers/sc-discovery-hol",
+        "location": "swedencentral",
+        "name": "sc-discovery-hol",
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "tags": {
+          "NetworkIsolation": "true",
+          "environment": "lab",
+          "project": "microsoft-discovery-core-hol"
+        },
+        "type": "Microsoft.Discovery/supercomputers"
+      },
+      "before": {
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/supercomputers/sc-discovery-hol",
+        "location": "swedencentral",
+        "name": "sc-discovery-hol",
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "tags": {
+          "NetworkIsolation": "true",
+          "environment": "lab",
+          "project": "microsoft-discovery-core-hol"
+        },
+        "type": "Microsoft.Discovery/supercomputers"
+      },
+      "changeType": "Ignore",
+      "delta": null,
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/supercomputers/sc-discovery-hol",
+      "symbolicName": null,
+      "unsupportedReason": null
+    },
+    {
+      "after": {
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-discovery-hol",
+        "location": "swedencentral",
+        "name": "id-discovery-hol",
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "tags": {
+          "deploymentScope": "workspace-prerequisite",
+          "environment": "lab",
+          "project": "microsoft-discovery-core-hol"
+        },
+        "type": "Microsoft.ManagedIdentity/userAssignedIdentities"
+      },
+      "before": {
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-discovery-hol",
+        "location": "swedencentral",
+        "name": "id-discovery-hol",
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "tags": {
+          "deploymentScope": "workspace-prerequisite",
+          "environment": "lab",
+          "project": "microsoft-discovery-core-hol"
+        },
+        "type": "Microsoft.ManagedIdentity/userAssignedIdentities"
+      },
+      "changeType": "Ignore",
+      "delta": null,
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-discovery-hol",
+      "symbolicName": null,
+      "unsupportedReason": null
+    },
+    {
+      "after": {
+        "apiVersion": "2022-04-01",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-discovery-hol/providers/Microsoft.Authorization/roleAssignments/25ec9073-693f-50a4-a82e-f34400cd0237",
+        "name": "25ec9073-693f-50a4-a82e-f34400cd0237",
+        "properties": {
+          "principalId": "[reference('/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-discovery-hol', '2024-11-30').principalId]",
+          "roleDefinitionId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Authorization/roleDefinitions/f1a07417-d97a-45cb-824c-7a7467783830"
+        },
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "type": "Microsoft.Authorization/roleAssignments"
+      },
+      "before": {
+        "apiVersion": "2022-04-01",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-discovery-hol/providers/Microsoft.Authorization/roleAssignments/25ec9073-693f-50a4-a82e-f34400cd0237",
+        "name": "25ec9073-693f-50a4-a82e-f34400cd0237",
+        "properties": {
+          "principalId": "d3e217ab-24b0-4f5b-bea7-7048dab36e55",
+          "roleDefinitionId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Authorization/roleDefinitions/f1a07417-d97a-45cb-824c-7a7467783830"
+        },
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "type": "Microsoft.Authorization/roleAssignments"
+      },
+      "changeType": "Modify",
+      "delta": [
+        {
+          "after": "[reference('/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-discovery-hol', '2024-11-30').principalId]",
+          "before": "d3e217ab-24b0-4f5b-bea7-7048dab36e55",
+          "children": null,
+          "path": "properties.principalId",
+          "propertyChangeType": "Modify"
+        },
+        {
+          "after": "ServicePrincipal",
+          "before": null,
+          "children": null,
+          "path": "properties.principalType",
+          "propertyChangeType": "NoEffect"
+        }
+      ],
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-discovery-hol/providers/Microsoft.Authorization/roleAssignments/25ec9073-693f-50a4-a82e-f34400cd0237",
+      "symbolicName": null,
+      "unsupportedReason": null
+    },
+    {
+      "after": {
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol",
+        "location": "swedencentral",
+        "name": "vnet-discovery-hol",
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "tags": {
+          "deploymentScope": "network-foundation",
+          "environment": "lab",
+          "project": "microsoft-discovery-core-hol"
+        },
+        "type": "Microsoft.Network/virtualNetworks"
+      },
+      "before": {
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol",
+        "location": "swedencentral",
+        "name": "vnet-discovery-hol",
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "tags": {
+          "deploymentScope": "network-foundation",
+          "environment": "lab",
+          "project": "microsoft-discovery-core-hol"
+        },
+        "type": "Microsoft.Network/virtualNetworks"
+      },
+      "changeType": "Ignore",
+      "delta": null,
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol",
+      "symbolicName": null,
+      "unsupportedReason": null
+    },
+    {
+      "after": {
+        "apiVersion": "2022-04-01",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/providers/Microsoft.Authorization/roleAssignments/cf65b2c1-4e96-5836-aa32-1b43f67aa5a3",
+        "name": "cf65b2c1-4e96-5836-aa32-1b43f67aa5a3",
+        "properties": {
+          "principalId": "[reference('/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-discovery-hol', '2024-11-30').principalId]",
+          "roleDefinitionId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Authorization/roleDefinitions/4d97b98b-1d4f-4787-a291-c67834d212e7"
+        },
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "type": "Microsoft.Authorization/roleAssignments"
+      },
+      "before": {
+        "apiVersion": "2022-04-01",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/providers/Microsoft.Authorization/roleAssignments/cf65b2c1-4e96-5836-aa32-1b43f67aa5a3",
+        "name": "cf65b2c1-4e96-5836-aa32-1b43f67aa5a3",
+        "properties": {
+          "principalId": "d3e217ab-24b0-4f5b-bea7-7048dab36e55",
+          "roleDefinitionId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Authorization/roleDefinitions/4d97b98b-1d4f-4787-a291-c67834d212e7"
+        },
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "type": "Microsoft.Authorization/roleAssignments"
+      },
+      "changeType": "Modify",
+      "delta": [
+        {
+          "after": "[reference('/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-discovery-hol', '2024-11-30').principalId]",
+          "before": "d3e217ab-24b0-4f5b-bea7-7048dab36e55",
+          "children": null,
+          "path": "properties.principalId",
+          "propertyChangeType": "Modify"
+        },
+        {
+          "after": "ServicePrincipal",
+          "before": null,
+          "children": null,
+          "path": "properties.principalType",
+          "propertyChangeType": "NoEffect"
+        }
+      ],
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/providers/Microsoft.Authorization/roleAssignments/cf65b2c1-4e96-5836-aa32-1b43f67aa5a3",
+      "symbolicName": null,
+      "unsupportedReason": null
+    },
+    {
+      "after": {
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/microsoft.resources/moboBrokers/mobr-dscmp-sc-discovery-hol-b6wiwf",
+        "location": "swedencentral",
+        "name": "mobr-dscmp-sc-discovery-hol-b6wiwf",
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "tags": {
+          "NetworkIsolation": "true",
+          "environment": "lab",
+          "project": "microsoft-discovery-core-hol"
+        },
+        "type": "microsoft.resources/moboBrokers"
+      },
+      "before": {
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/microsoft.resources/moboBrokers/mobr-dscmp-sc-discovery-hol-b6wiwf",
+        "location": "swedencentral",
+        "name": "mobr-dscmp-sc-discovery-hol-b6wiwf",
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "tags": {
+          "NetworkIsolation": "true",
+          "environment": "lab",
+          "project": "microsoft-discovery-core-hol"
+        },
+        "type": "microsoft.resources/moboBrokers"
+      },
+      "changeType": "Ignore",
+      "delta": null,
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/microsoft.resources/moboBrokers/mobr-dscmp-sc-discovery-hol-b6wiwf",
+      "symbolicName": null,
+      "unsupportedReason": null
+    },
+    {
+      "after": {
+        "apiVersion": "2023-05-01",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Storage/storageAccounts/stdiscoveryholjunwoosc",
+        "kind": "StorageV2",
+        "location": "swedencentral",
+        "name": "stdiscoveryholjunwoosc",
+        "properties": {
+          "accessTier": "Hot",
+          "allowBlobPublicAccess": false,
+          "allowCrossTenantReplication": false,
+          "allowSharedKeyAccess": false,
+          "encryption": {
+            "keySource": "Microsoft.Storage"
+          },
+          "minimumTlsVersion": "TLS1_2",
+          "networkAcls": {
+            "bypass": "AzureServices",
+            "defaultAction": "Deny",
+            "virtualNetworkRules": [
+              {
+                "action": "Allow",
+                "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/supercomputerNodepoolSubnet",
+                "resourceGroup": "rg-discovery-hol-20260930"
+              },
+              {
+                "action": "Allow",
+                "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/aksSubnet",
+                "resourceGroup": "rg-discovery-hol-20260930"
+              },
+              {
+                "action": "Allow",
+                "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/workspaceSubnet",
+                "resourceGroup": "rg-discovery-hol-20260930"
+              },
+              {
+                "action": "Allow",
+                "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/agentSubnet",
+                "resourceGroup": "rg-discovery-hol-20260930"
+              },
+              {
+                "action": "Allow",
+                "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/searchSubnet",
+                "resourceGroup": "rg-discovery-hol-20260930"
+              }
+            ]
+          },
+          "publicNetworkAccess": "Disabled",
+          "supportsHttpsTrafficOnly": true
+        },
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "sku": {
+          "name": "Standard_LRS"
+        },
+        "tags": {
+          "environment": "lab",
+          "project": "microsoft-discovery-core-hol"
+        },
+        "type": "Microsoft.Storage/storageAccounts"
+      },
+      "before": {
+        "apiVersion": "2023-05-01",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Storage/storageAccounts/stdiscoveryholjunwoosc",
+        "kind": "StorageV2",
+        "location": "swedencentral",
+        "name": "stdiscoveryholjunwoosc",
+        "properties": {
+          "accessTier": "Hot",
+          "allowBlobPublicAccess": false,
+          "allowCrossTenantReplication": false,
+          "allowSharedKeyAccess": false,
+          "encryption": {
+            "keySource": "Microsoft.Storage"
+          },
+          "minimumTlsVersion": "TLS1_2",
+          "networkAcls": {
+            "bypass": "AzureServices",
+            "defaultAction": "Deny",
+            "ipRules": [
+              {
+                "action": "Allow",
+                "value": "[REDACTED CLIENT IPV4]"
+              }
+            ],
+            "virtualNetworkRules": [
+              {
+                "action": "Allow",
+                "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/supercomputerNodepoolSubnet",
+                "resourceGroup": "rg-discovery-hol-20260930"
+              },
+              {
+                "action": "Allow",
+                "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/aksSubnet",
+                "resourceGroup": "rg-discovery-hol-20260930"
+              },
+              {
+                "action": "Allow",
+                "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/workspaceSubnet",
+                "resourceGroup": "rg-discovery-hol-20260930"
+              },
+              {
+                "action": "Allow",
+                "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/agentSubnet",
+                "resourceGroup": "rg-discovery-hol-20260930"
+              },
+              {
+                "action": "Allow",
+                "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/searchSubnet",
+                "resourceGroup": "rg-discovery-hol-20260930"
+              }
+            ]
+          },
+          "publicNetworkAccess": "Disabled",
+          "supportsHttpsTrafficOnly": true
+        },
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "sku": {
+          "name": "Standard_LRS"
+        },
+        "tags": {
+          "environment": "lab",
+          "project": "microsoft-discovery-core-hol"
+        },
+        "type": "Microsoft.Storage/storageAccounts"
+      },
+      "changeType": "Modify",
+      "delta": [
+        {
+          "after": null,
+          "before": [
+            {
+              "action": "Allow",
+              "value": "[REDACTED CLIENT IPV4]"
+            }
+          ],
+          "children": null,
+          "path": "properties.networkAcls.ipRules",
+          "propertyChangeType": "Delete"
+        }
+      ],
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Storage/storageAccounts/stdiscoveryholjunwoosc",
+      "symbolicName": null,
+      "unsupportedReason": null
+    },
+    {
+      "after": {
+        "apiVersion": "2023-05-01",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Storage/storageAccounts/stdiscoveryholjunwoosc/blobServices/default",
+        "name": "default",
+        "properties": {
+          "cors": {
+            "corsRules": [
+              {
+                "allowedHeaders": [
+                  "*"
+                ],
+                "allowedMethods": [
+                  "GET",
+                  "HEAD",
+                  "PUT",
+                  "DELETE",
+                  "OPTIONS"
+                ],
+                "allowedOrigins": [
+                  "https://studio.discovery.microsoft.com",
+                  "https://vscode.dev",
+                  "https://*.vscode-cdn.net"
+                ],
+                "exposedHeaders": [
+                  "*"
+                ],
+                "maxAgeInSeconds": 200
+              }
+            ]
+          }
+        },
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "type": "Microsoft.Storage/storageAccounts/blobServices"
+      },
+      "before": {
+        "apiVersion": "2023-05-01",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Storage/storageAccounts/stdiscoveryholjunwoosc/blobServices/default",
+        "name": "default",
+        "properties": {
+          "cors": {
+            "corsRules": [
+              {
+                "allowedHeaders": [
+                  "*"
+                ],
+                "allowedMethods": [
+                  "GET",
+                  "HEAD",
+                  "PUT",
+                  "DELETE",
+                  "OPTIONS"
+                ],
+                "allowedOrigins": [
+                  "https://studio.discovery.microsoft.com",
+                  "https://vscode.dev",
+                  "https://*.vscode-cdn.net"
+                ],
+                "exposedHeaders": [
+                  "*"
+                ],
+                "maxAgeInSeconds": 200
+              }
+            ]
+          },
+          "deleteRetentionPolicy": {
+            "allowPermanentDelete": false,
+            "enabled": false
+          }
+        },
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "type": "Microsoft.Storage/storageAccounts/blobServices"
+      },
+      "changeType": "Modify",
+      "delta": [
+        {
+          "after": null,
+          "before": {
+            "allowPermanentDelete": false,
+            "enabled": false
+          },
+          "children": null,
+          "path": "properties.deleteRetentionPolicy",
+          "propertyChangeType": "Delete"
+        }
+      ],
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Storage/storageAccounts/stdiscoveryholjunwoosc/blobServices/default",
+      "symbolicName": null,
+      "unsupportedReason": null
+    },
+    {
+      "after": {
+        "apiVersion": "2023-05-01",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Storage/storageAccounts/stdiscoveryholjunwoosc/blobServices/default/containers/discoveryinputs",
+        "name": "discoveryinputs",
+        "properties": {
+          "publicAccess": "None"
+        },
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "type": "Microsoft.Storage/storageAccounts/blobServices/containers"
+      },
+      "before": {
+        "apiVersion": "2023-05-01",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Storage/storageAccounts/stdiscoveryholjunwoosc/blobServices/default/containers/discoveryinputs",
+        "name": "discoveryinputs",
+        "properties": {
+          "defaultEncryptionScope": "$account-encryption-key",
+          "denyEncryptionScopeOverride": false,
+          "publicAccess": "None"
+        },
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "type": "Microsoft.Storage/storageAccounts/blobServices/containers"
+      },
+      "changeType": "Modify",
+      "delta": [
+        {
+          "after": null,
+          "before": "$account-encryption-key",
+          "children": null,
+          "path": "properties.defaultEncryptionScope",
+          "propertyChangeType": "Delete"
+        },
+        {
+          "after": null,
+          "before": false,
+          "children": null,
+          "path": "properties.denyEncryptionScopeOverride",
+          "propertyChangeType": "Delete"
+        }
+      ],
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Storage/storageAccounts/stdiscoveryholjunwoosc/blobServices/default/containers/discoveryinputs",
+      "symbolicName": null,
+      "unsupportedReason": null
+    },
+    {
+      "after": {
+        "apiVersion": "2023-05-01",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Storage/storageAccounts/stdiscoveryholjunwoosc/blobServices/default/containers/discoveryoutputs",
+        "name": "discoveryoutputs",
+        "properties": {
+          "publicAccess": "None"
+        },
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "type": "Microsoft.Storage/storageAccounts/blobServices/containers"
+      },
+      "before": {
+        "apiVersion": "2023-05-01",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Storage/storageAccounts/stdiscoveryholjunwoosc/blobServices/default/containers/discoveryoutputs",
+        "name": "discoveryoutputs",
+        "properties": {
+          "defaultEncryptionScope": "$account-encryption-key",
+          "denyEncryptionScopeOverride": false,
+          "publicAccess": "None"
+        },
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "type": "Microsoft.Storage/storageAccounts/blobServices/containers"
+      },
+      "changeType": "Modify",
+      "delta": [
+        {
+          "after": null,
+          "before": "$account-encryption-key",
+          "children": null,
+          "path": "properties.defaultEncryptionScope",
+          "propertyChangeType": "Delete"
+        },
+        {
+          "after": null,
+          "before": false,
+          "children": null,
+          "path": "properties.denyEncryptionScopeOverride",
+          "propertyChangeType": "Delete"
+        }
+      ],
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Storage/storageAccounts/stdiscoveryholjunwoosc/blobServices/default/containers/discoveryoutputs",
+      "symbolicName": null,
+      "unsupportedReason": null
+    },
+    {
+      "after": {
+        "apiVersion": "2022-04-01",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Storage/storageAccounts/stdiscoveryholjunwoosc/providers/Microsoft.Authorization/roleAssignments/90494904-627d-5551-bac5-4fc3fcda528b",
+        "name": "90494904-627d-5551-bac5-4fc3fcda528b",
+        "properties": {
+          "principalId": "085bc565-8298-4c5b-a726-20050d18cbb7",
+          "roleDefinitionId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Authorization/roleDefinitions/ba92f5b4-2d11-453d-a403-e96b0029c9fe"
+        },
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "type": "Microsoft.Authorization/roleAssignments"
+      },
+      "before": {
+        "apiVersion": "2022-04-01",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Storage/storageAccounts/stdiscoveryholjunwoosc/providers/Microsoft.Authorization/roleAssignments/90494904-627d-5551-bac5-4fc3fcda528b",
+        "name": "90494904-627d-5551-bac5-4fc3fcda528b",
+        "properties": {
+          "principalId": "085bc565-8298-4c5b-a726-20050d18cbb7",
+          "roleDefinitionId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Authorization/roleDefinitions/ba92f5b4-2d11-453d-a403-e96b0029c9fe"
+        },
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "type": "Microsoft.Authorization/roleAssignments"
+      },
+      "changeType": "NoChange",
+      "delta": [
+        {
+          "after": "User",
+          "before": null,
+          "children": null,
+          "path": "properties.principalType",
+          "propertyChangeType": "NoEffect"
+        }
+      ],
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Storage/storageAccounts/stdiscoveryholjunwoosc/providers/Microsoft.Authorization/roleAssignments/90494904-627d-5551-bac5-4fc3fcda528b",
+      "symbolicName": null,
+      "unsupportedReason": null
+    },
+    {
+      "after": {
+        "apiVersion": "2022-04-01",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Storage/storageAccounts/stdiscoveryholjunwoosc/providers/Microsoft.Authorization/roleAssignments/ba11f1f3-4752-561d-b1ef-f19f7cd52855",
+        "name": "ba11f1f3-4752-561d-b1ef-f19f7cd52855",
+        "properties": {
+          "principalId": "[reference('/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-discovery-hol', '2024-11-30').principalId]",
+          "roleDefinitionId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Authorization/roleDefinitions/ba92f5b4-2d11-453d-a403-e96b0029c9fe"
+        },
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "type": "Microsoft.Authorization/roleAssignments"
+      },
+      "before": {
+        "apiVersion": "2022-04-01",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Storage/storageAccounts/stdiscoveryholjunwoosc/providers/Microsoft.Authorization/roleAssignments/ba11f1f3-4752-561d-b1ef-f19f7cd52855",
+        "name": "ba11f1f3-4752-561d-b1ef-f19f7cd52855",
+        "properties": {
+          "principalId": "d3e217ab-24b0-4f5b-bea7-7048dab36e55",
+          "roleDefinitionId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Authorization/roleDefinitions/ba92f5b4-2d11-453d-a403-e96b0029c9fe"
+        },
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "type": "Microsoft.Authorization/roleAssignments"
+      },
+      "changeType": "Modify",
+      "delta": [
+        {
+          "after": "[reference('/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-discovery-hol', '2024-11-30').principalId]",
+          "before": "d3e217ab-24b0-4f5b-bea7-7048dab36e55",
+          "children": null,
+          "path": "properties.principalId",
+          "propertyChangeType": "Modify"
+        },
+        {
+          "after": "ServicePrincipal",
+          "before": null,
+          "children": null,
+          "path": "properties.principalType",
+          "propertyChangeType": "NoEffect"
+        }
+      ],
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Storage/storageAccounts/stdiscoveryholjunwoosc/providers/Microsoft.Authorization/roleAssignments/ba11f1f3-4752-561d-b1ef-f19f7cd52855",
+      "symbolicName": null,
+      "unsupportedReason": null
+    }
+  ],
+  "diagnostics": null,
+  "error": null,
+  "potentialChanges": null,
+  "status": "Succeeded"
+}

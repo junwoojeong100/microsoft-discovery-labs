@@ -1,0 +1,33 @@
+[
+  {
+    "duration": "PT55M5.4797209S",
+    "provisioningOperation": "Create",
+    "provisioningState": "Failed",
+    "request": null,
+    "response": null,
+    "serviceRequestId": null,
+    "statusCode": "Conflict",
+    "statusMessage": {
+      "error": {
+        "additionalInfo": null,
+        "code": "DeploymentFailed",
+        "details": null,
+        "message": "The Container Apps Environment could not be provisioned. Retry the Workspace operation. If the issue persists, contact support with the correlation ID.",
+        "target": "containerAppsEnvironment"
+      },
+      "status": "Failed"
+    },
+    "targetResource": {
+      "apiVersion": null,
+      "extension": null,
+      "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/workspaces/discoveryholjunwoosc",
+      "identifiers": null,
+      "resourceGroup": "rg-discovery-hol-20260930",
+      "resourceName": "discoveryholjunwoosc",
+      "resourceType": "Microsoft.Discovery/workspaces",
+      "symbolicName": null
+    },
+    "timestamp": "2026-10-01T01:08:32.100543+00:00",
+    "trackingId": "fc282abe-872f-4212-bc08-8460881cf5dc"
+  }
+]

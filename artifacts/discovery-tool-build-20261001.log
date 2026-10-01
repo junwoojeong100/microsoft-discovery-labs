@@ -1,0 +1,90 @@
+2026/10/01 00:38:50 Downloading source code...
+2026/10/01 00:38:51 Finished downloading source code
+2026/10/01 00:38:51 Using acb_vol_65219674-b7b2-459f-ae3f-02ca57a0f992 as the home volume
+2026/10/01 00:38:51 Setting up Docker configuration...
+2026/10/01 00:38:52 Successfully set up Docker configuration
+2026/10/01 00:38:52 Logging in to registry: acrdiscoveryholjunwoosc.azurecr.io
+2026/10/01 00:38:53 Successfully logged into acrdiscoveryholjunwoosc.azurecr.io
+2026/10/01 00:38:53 Executing step ID: build. Timeout(sec): 28800, Working directory: '', Network: ''
+2026/10/01 00:38:53 Scanning for dependencies...
+2026/10/01 00:38:53 Successfully scanned dependencies
+2026/10/01 00:38:53 Launching container with name: build
+Sending build context to Docker daemon  121.3kB
+Step 1/5 : FROM python:3.13-slim
+3.13-slim: Pulling from library/python
+6b37362b3da7: Pulling fs layer
+3d9fb7471420: Pulling fs layer
+264ba3d8ae19: Pulling fs layer
+4a43a40b039e: Pulling fs layer
+4a43a40b039e: Waiting
+3d9fb7471420: Verifying Checksum
+3d9fb7471420: Download complete
+264ba3d8ae19: Verifying Checksum
+264ba3d8ae19: Download complete
+6b37362b3da7: Verifying Checksum
+6b37362b3da7: Download complete
+4a43a40b039e: Verifying Checksum
+4a43a40b039e: Download complete
+6b37362b3da7: Pull complete
+3d9fb7471420: Pull complete
+264ba3d8ae19: Pull complete
+4a43a40b039e: Pull complete
+Digest: sha256:7c61056e61ac89e852de05f3dc6fa51a6dd2181797bceed46aa725dd7cb2cd3b
+Status: Downloaded newer image for python:3.13-slim
+ ---> b2bb53ac7b6f
+Step 2/5 : WORKDIR /app
+ ---> Running in b68a85cec87b
+Removing intermediate container b68a85cec87b
+ ---> 10d386521151
+Step 3/5 : COPY scripts/score_materials.py /app/score_materials.py
+ ---> 73e63af04027
+Step 4/5 : COPY data/materials.csv /app/materials.csv
+ ---> 28b6b8f2f669
+Step 5/5 : CMD ["python", "/app/score_materials.py", "--input", "/app/materials.csv"]
+ ---> Running in 8077fe9fcfd0
+Removing intermediate container 8077fe9fcfd0
+ ---> 13544a420a34
+Successfully built 13544a420a34
+Successfully tagged acrdiscoveryholjunwoosc.azurecr.io/thermal-ranking:1.0.0
+2026/10/01 00:39:02 Successfully executed container: build
+2026/10/01 00:39:02 Executing step ID: push. Timeout(sec): 3600, Working directory: '', Network: ''
+2026/10/01 00:39:02 Pushing image: acrdiscoveryholjunwoosc.azurecr.io/thermal-ranking:1.0.0, attempt 1
+The push refers to repository [acrdiscoveryholjunwoosc.azurecr.io/thermal-ranking]
+3f7a987dcad6: Preparing
+7dcdad0c16f0: Preparing
+b663c7fc226b: Preparing
+9fd5b88d9de9: Preparing
+85ba8efdcdce: Preparing
+45ddbb9fa174: Preparing
+a6dc765193a5: Preparing
+45ddbb9fa174: Waiting
+a6dc765193a5: Waiting
+7dcdad0c16f0: Pushed
+9fd5b88d9de9: Pushed
+b663c7fc226b: Pushed
+3f7a987dcad6: Pushed
+45ddbb9fa174: Pushed
+85ba8efdcdce: Pushed
+a6dc765193a5: Pushed
+1.0.0: digest: sha256:0051d5db6c367812c22073d807da54b469ecbcc58edb7cfaf0dbce5e78514ad1 size: 1780
+2026/10/01 00:39:08 Successfully pushed image: acrdiscoveryholjunwoosc.azurecr.io/thermal-ranking:1.0.0
+2026/10/01 00:39:08 Step ID: build marked as successful (elapsed time in seconds: 9.067810)
+2026/10/01 00:39:08 Populating digests for step ID: build...
+2026/10/01 00:39:09 Successfully populated digests for step ID: build
+2026/10/01 00:39:09 Step ID: push marked as successful (elapsed time in seconds: 6.071276)
+2026/10/01 00:39:09 The following dependencies were found:
+2026/10/01 00:39:09
+- image:
+    registry: acrdiscoveryholjunwoosc.azurecr.io
+    repository: thermal-ranking
+    tag: 1.0.0
+    digest: sha256:0051d5db6c367812c22073d807da54b469ecbcc58edb7cfaf0dbce5e78514ad1
+  runtime-dependency:
+    registry: registry.hub.docker.com
+    repository: library/python
+    tag: 3.13-slim
+    digest: sha256:7c61056e61ac89e852de05f3dc6fa51a6dd2181797bceed46aa725dd7cb2cd3b
+  git: {}
+
+
+Run ID: dt1 was successful after 19s

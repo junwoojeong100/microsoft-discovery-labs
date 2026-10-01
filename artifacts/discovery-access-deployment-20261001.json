@@ -1,0 +1,112 @@
+{
+  "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Resources/deployments/discovery-access-20261001",
+  "location": "swedencentral",
+  "name": "discovery-access-20261001",
+  "properties": {
+    "correlationId": "f7c2753f-71f3-461f-91e0-9bfef9df5aea",
+    "debugSetting": null,
+    "dependencies": [
+      {
+        "dependsOn": [
+          {
+            "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Authorization/roleDefinitions/2c3ce817-efda-5a46-895a-3d42f43b9fa5",
+            "resourceName": "2c3ce817-efda-5a46-895a-3d42f43b9fa5",
+            "resourceType": "Microsoft.Authorization/roleDefinitions"
+          }
+        ],
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Authorization/roleAssignments/87a08d53-7d9d-5748-a888-603ca26a7eea",
+        "resourceName": "87a08d53-7d9d-5748-a888-603ca26a7eea",
+        "resourceType": "Microsoft.Authorization/roleAssignments"
+      }
+    ],
+    "diagnostics": null,
+    "duration": "PT19.3883892S",
+    "error": null,
+    "extensions": [],
+    "mode": "Incremental",
+    "onErrorDeployment": null,
+    "outputResources": [
+      {
+        "apiVersion": null,
+        "extension": null,
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Authorization/roleAssignments/87a08d53-7d9d-5748-a888-603ca26a7eea",
+        "identifiers": null,
+        "resourceType": "Microsoft.Authorization/roleAssignments"
+      },
+      {
+        "apiVersion": null,
+        "extension": null,
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Authorization/roleAssignments/9609b516-811b-51eb-976d-f148b776e1de",
+        "identifiers": null,
+        "resourceType": "Microsoft.Authorization/roleAssignments"
+      },
+      {
+        "apiVersion": null,
+        "extension": null,
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Authorization/roleDefinitions/2c3ce817-efda-5a46-895a-3d42f43b9fa5",
+        "identifiers": null,
+        "resourceType": "Microsoft.Authorization/roleDefinitions"
+      }
+    ],
+    "outputs": {
+      "perimeterJoinerRoleId": {
+        "type": "String",
+        "value": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Authorization/roleDefinitions/2c3ce817-efda-5a46-895a-3d42f43b9fa5"
+      }
+    },
+    "parameters": {
+      "discoveryControlPlaneObjectId": {
+        "type": "String",
+        "value": "ab0c1c51-8ec2-4121-948e-5deaf0b9b262"
+      }
+    },
+    "parametersLink": null,
+    "providers": [
+      {
+        "id": null,
+        "namespace": "Microsoft.Authorization",
+        "providerAuthorizationConsentState": null,
+        "registrationPolicy": null,
+        "registrationState": null,
+        "resourceTypes": [
+          {
+            "aliases": null,
+            "apiProfiles": null,
+            "apiVersions": null,
+            "capabilities": null,
+            "defaultApiVersion": null,
+            "locationMappings": null,
+            "locations": [
+              null
+            ],
+            "properties": null,
+            "resourceType": "roleDefinitions",
+            "zoneMappings": null
+          },
+          {
+            "aliases": null,
+            "apiProfiles": null,
+            "apiVersions": null,
+            "capabilities": null,
+            "defaultApiVersion": null,
+            "locationMappings": null,
+            "locations": [
+              null
+            ],
+            "properties": null,
+            "resourceType": "roleAssignments",
+            "zoneMappings": null
+          }
+        ]
+      }
+    ],
+    "provisioningState": "Succeeded",
+    "templateHash": "15104439530091638341",
+    "templateLink": null,
+    "timestamp": "2026-10-01T00:25:31.529970+00:00",
+    "validatedResources": null,
+    "validationLevel": null
+  },
+  "tags": null,
+  "type": "Microsoft.Resources/deployments"
+}

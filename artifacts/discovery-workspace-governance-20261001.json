@@ -1,0 +1,20 @@
+{
+  "correlationId": "e08e90c5-299f-4552-a354-697e0da7df45",
+  "error": {
+    "additionalInfo": null,
+    "code": "DeploymentFailed",
+    "details": [
+      {
+        "additionalInfo": null,
+        "code": "ResourceNotFound",
+        "details": null,
+        "message": "The resource '/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/mcapsgovernance/providers/microsoft.operationalinsights/workspaces/mcaps4c05bc053c3d4ff154e5-la' doesn't exist.",
+        "target": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwoosc-ym5ffv/providers/Microsoft.CognitiveServices/accounts/aif-dwsp-foundry-ym5ffvaa/providers/Microsoft.Insights/diagnosticSettings/setByPolicy-MCAPSGovernance"
+      }
+    ],
+    "message": "At least one resource deployment operation failed. Please list deployment operations for details. Please see https://aka.ms/arm-deployment-operations for usage details.",
+    "target": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwoosc-ym5ffv/providers/Microsoft.Resources/deployments/PolicyDeployment_4802795780941947574"
+  },
+  "name": "PolicyDeployment_4802795780941947574",
+  "state": "Failed"
+}

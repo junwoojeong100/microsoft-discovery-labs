@@ -1,0 +1,81 @@
+{
+  "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Resources/deployments/discovery-tool-20261001",
+  "location": null,
+  "name": "discovery-tool-20261001",
+  "properties": {
+    "correlationId": "5b1c34de-06fa-4a20-a9e8-763c6d38756f",
+    "debugSetting": null,
+    "dependencies": [],
+    "diagnostics": null,
+    "duration": "PT1M28.052164S",
+    "error": null,
+    "extensions": [],
+    "mode": "Incremental",
+    "onErrorDeployment": null,
+    "outputResources": [
+      {
+        "apiVersion": null,
+        "extension": null,
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/tools/thermal-ranking",
+        "identifiers": null,
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceType": "Microsoft.Discovery/tools"
+      }
+    ],
+    "outputs": {
+      "toolId": {
+        "type": "String",
+        "value": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/tools/thermal-ranking"
+      }
+    },
+    "parameters": {
+      "imageDigest": {
+        "type": "String",
+        "value": "sha256:0051d5db6c367812c22073d807da54b469ecbcc58edb7cfaf0dbce5e78514ad1"
+      },
+      "location": {
+        "type": "String",
+        "value": "swedencentral"
+      },
+      "registryName": {
+        "type": "String",
+        "value": "acrdiscoveryholjunwoosc"
+      }
+    },
+    "parametersLink": null,
+    "providers": [
+      {
+        "id": null,
+        "namespace": "Microsoft.Discovery",
+        "providerAuthorizationConsentState": null,
+        "registrationPolicy": null,
+        "registrationState": null,
+        "resourceTypes": [
+          {
+            "aliases": null,
+            "apiProfiles": null,
+            "apiVersions": null,
+            "capabilities": null,
+            "defaultApiVersion": null,
+            "locationMappings": null,
+            "locations": [
+              "swedencentral"
+            ],
+            "properties": null,
+            "resourceType": "tools",
+            "zoneMappings": null
+          }
+        ]
+      }
+    ],
+    "provisioningState": "Succeeded",
+    "templateHash": "4046167908261509147",
+    "templateLink": null,
+    "timestamp": "2026-10-01T00:59:16.098659+00:00",
+    "validatedResources": null,
+    "validationLevel": null
+  },
+  "resourceGroup": "rg-discovery-hol-20260930",
+  "tags": null,
+  "type": "Microsoft.Resources/deployments"
+}

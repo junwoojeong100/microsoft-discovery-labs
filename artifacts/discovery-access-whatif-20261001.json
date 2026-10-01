@@ -1,0 +1,83 @@
+{
+  "changes": [
+    {
+      "after": {
+        "apiVersion": "2022-04-01",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Authorization/roleAssignments/87a08d53-7d9d-5748-a888-603ca26a7eea",
+        "name": "87a08d53-7d9d-5748-a888-603ca26a7eea",
+        "properties": {
+          "principalId": "ab0c1c51-8ec2-4121-948e-5deaf0b9b262",
+          "roleDefinitionId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Authorization/roleDefinitions/2c3ce817-efda-5a46-895a-3d42f43b9fa5"
+        },
+        "type": "Microsoft.Authorization/roleAssignments"
+      },
+      "before": null,
+      "changeType": "Create",
+      "delta": null,
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Authorization/roleAssignments/87a08d53-7d9d-5748-a888-603ca26a7eea",
+      "symbolicName": null,
+      "unsupportedReason": null
+    },
+    {
+      "after": {
+        "apiVersion": "2022-04-01",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Authorization/roleAssignments/9609b516-811b-51eb-976d-f148b776e1de",
+        "name": "9609b516-811b-51eb-976d-f148b776e1de",
+        "properties": {
+          "principalId": "ab0c1c51-8ec2-4121-948e-5deaf0b9b262",
+          "roleDefinitionId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Authorization/roleDefinitions/acdd72a7-3385-48ef-bd42-f606fba81ae7"
+        },
+        "type": "Microsoft.Authorization/roleAssignments"
+      },
+      "before": null,
+      "changeType": "Create",
+      "delta": null,
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Authorization/roleAssignments/9609b516-811b-51eb-976d-f148b776e1de",
+      "symbolicName": null,
+      "unsupportedReason": null
+    },
+    {
+      "after": {
+        "apiVersion": "2022-04-01",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Authorization/roleDefinitions/2c3ce817-efda-5a46-895a-3d42f43b9fa5",
+        "name": "2c3ce817-efda-5a46-895a-3d42f43b9fa5",
+        "properties": {
+          "assignableScopes": [
+            "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5"
+          ],
+          "description": "Allows the Microsoft Discovery control plane to join NSP inbound access rules.",
+          "permissions": [
+            {
+              "actions": [
+                "Microsoft.Network/networkSecurityPerimeters/joinPerimeterRule/action",
+                "Microsoft.Network/locations/networkSecurityPerimeterOperationStatuses/read"
+              ]
+            }
+          ],
+          "roleName": "Discovery NSP Perimeter Joiner",
+          "type": "CustomRole"
+        },
+        "type": "Microsoft.Authorization/roleDefinitions"
+      },
+      "before": null,
+      "changeType": "Create",
+      "delta": null,
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/Microsoft.Authorization/roleDefinitions/2c3ce817-efda-5a46-895a-3d42f43b9fa5",
+      "symbolicName": null,
+      "unsupportedReason": null
+    }
+  ],
+  "diagnostics": null,
+  "error": null,
+  "potentialChanges": null,
+  "status": "Succeeded"
+}

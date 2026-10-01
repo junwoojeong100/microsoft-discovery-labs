@@ -86,6 +86,14 @@ try {
     await page.setViewportSize({ width: 680, height: 1123 });
     const print = await inspect(page);
     assert.equal(print.pageOverflow, false);
+    // Keep companion links in HTML, but never embed this machine's paths in a shared PDF.
+    await page.evaluate(() => {
+      for (const link of document.querySelectorAll('a[href]')) {
+        if (link.protocol === 'file:' && !link.getAttribute('href').startsWith('#')) {
+          link.removeAttribute('href');
+        }
+      }
+    });
     const pdf = await page.pdf({
       path: resolve(root, `${filename}.pdf`),
       format: 'A4',
@@ -94,7 +102,7 @@ try {
       outline: true,
       displayHeaderFooter: true,
       margin: { top: '17mm', right: '15mm', bottom: '18mm', left: '15mm' },
-      headerTemplate: '<div style="font-family:Arial,sans-serif;font-size:8px;width:100%;text-align:center;color:#526a80">Microsoft Discovery | 2026-09-25</div>',
+      headerTemplate: '<div style="font-family:Arial,sans-serif;font-size:8px;width:100%;text-align:center;color:#526a80">Microsoft Discovery | 2026-10-01</div>',
       footerTemplate: '<div style="font-family:Arial,sans-serif;font-size:8px;width:100%;text-align:center;color:#526a80"><span class="pageNumber"></span> / <span class="totalPages"></span></div>',
     });
     assert.ok(pdf.subarray(0, 5).equals(Buffer.from('%PDF-')));

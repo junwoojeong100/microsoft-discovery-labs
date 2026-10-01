@@ -1,15 +1,13 @@
-import { execFile } from 'node:child_process';
-import { promisify, parseArgs } from 'node:util';
+import { parseArgs } from 'node:util';
 import { mkdir, readFile, writeFile, stat, rename } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { resolve, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
 import {
-  discoveryGate, providerSummary, publicView, redact, safeArmUrl, selectAccount, validateConfig,
+  azJson, discoveryGate, providerSummary, publicView, redact, safeArmUrl, selectAccount, validateConfig, validateLabResourceGroup,
 } from './lab-support.mjs';
 
-const exec = promisify(execFile);
 const root = fileURLToPath(new URL('..', import.meta.url));
 const { values: flags } = parseArgs({
   options: {
@@ -48,17 +46,6 @@ let page;
 let video;
 let token;
 let exitCode = 0;
-
-async function azJson(args) {
-  try {
-    const { stdout } = await exec('az', [...args, '--output', 'json'], {
-      encoding: 'utf8', maxBuffer: 8 * 1024 * 1024, timeout: 60000,
-    });
-    return JSON.parse(stdout);
-  } catch (error) {
-    throw new Error(`Azure CLI ${args.slice(0, 2).join(' ')} failed: ${redact(String(error.stderr || error.message)).slice(0, 1400)}`);
-  }
-}
 
 async function show(title, state, detail) {
   await page.evaluate(({ title, state, text, stamp }) => {
@@ -267,9 +254,7 @@ try {
         report.createdResources.push({ id: group.body.id, type: 'Microsoft.Resources/resourceGroups' });
       } else {
         requireSuccess(group, 'Existing resource group check');
-        if (group.body.tags?.lab !== config.labTag) {
-          throw new Error('Refusing to modify an existing resource group that is not tagged for this lab');
-        }
+        validateLabResourceGroup(group.body, config);
       }
       group = await request('실습 RG 생성 결과 재조회', 'GET', `${groupPath}?api-version=2021-04-01`);
       requireSuccess(group, 'Resource group verification');

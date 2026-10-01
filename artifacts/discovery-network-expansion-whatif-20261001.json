@@ -1,0 +1,188 @@
+{
+  "changes": [
+    {
+      "after": {
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-discovery-hol",
+        "location": "swedencentral",
+        "name": "id-discovery-hol",
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "tags": {
+          "deploymentScope": "workspace-prerequisite",
+          "environment": "lab",
+          "project": "microsoft-discovery-core-hol"
+        },
+        "type": "Microsoft.ManagedIdentity/userAssignedIdentities"
+      },
+      "before": {
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-discovery-hol",
+        "location": "swedencentral",
+        "name": "id-discovery-hol",
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "tags": {
+          "deploymentScope": "workspace-prerequisite",
+          "environment": "lab",
+          "project": "microsoft-discovery-core-hol"
+        },
+        "type": "Microsoft.ManagedIdentity/userAssignedIdentities"
+      },
+      "changeType": "Ignore",
+      "delta": null,
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-discovery-hol",
+      "symbolicName": null,
+      "unsupportedReason": null
+    },
+    {
+      "after": {
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol",
+        "location": "swedencentral",
+        "name": "vnet-discovery-hol",
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "tags": {
+          "deploymentScope": "network-foundation",
+          "environment": "lab",
+          "project": "microsoft-discovery-core-hol"
+        },
+        "type": "Microsoft.Network/virtualNetworks"
+      },
+      "before": {
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol",
+        "location": "swedencentral",
+        "name": "vnet-discovery-hol",
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "tags": {
+          "deploymentScope": "network-foundation",
+          "environment": "lab",
+          "project": "microsoft-discovery-core-hol"
+        },
+        "type": "Microsoft.Network/virtualNetworks"
+      },
+      "changeType": "Ignore",
+      "delta": null,
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol",
+      "symbolicName": null,
+      "unsupportedReason": null
+    },
+    {
+      "after": {
+        "apiVersion": "2024-05-01",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/aksSubnet",
+        "name": "aksSubnet",
+        "properties": {
+          "addressPrefix": "10.80.2.0/24",
+          "defaultOutboundAccess": false,
+          "serviceEndpoints": [
+            {
+              "service": "Microsoft.Storage"
+            }
+          ]
+        },
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "type": "Microsoft.Network/virtualNetworks/subnets"
+      },
+      "before": null,
+      "changeType": "Create",
+      "delta": null,
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/aksSubnet",
+      "symbolicName": null,
+      "unsupportedReason": null
+    },
+    {
+      "after": {
+        "apiVersion": "2024-05-01",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/bookshelfPeSubnet",
+        "name": "bookshelfPeSubnet",
+        "properties": {
+          "addressPrefix": "10.80.7.0/24",
+          "defaultOutboundAccess": false,
+          "privateEndpointNetworkPolicies": "Enabled"
+        },
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "type": "Microsoft.Network/virtualNetworks/subnets"
+      },
+      "before": null,
+      "changeType": "Create",
+      "delta": null,
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/bookshelfPeSubnet",
+      "symbolicName": null,
+      "unsupportedReason": null
+    },
+    {
+      "after": {
+        "apiVersion": "2024-05-01",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/searchSubnet",
+        "name": "searchSubnet",
+        "properties": {
+          "addressPrefix": "10.80.6.0/24",
+          "defaultOutboundAccess": false,
+          "delegations": [
+            {
+              "name": "containerApps",
+              "properties": {
+                "serviceName": "Microsoft.App/environments"
+              }
+            }
+          ],
+          "serviceEndpoints": [
+            {
+              "service": "Microsoft.Storage"
+            }
+          ]
+        },
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "type": "Microsoft.Network/virtualNetworks/subnets"
+      },
+      "before": null,
+      "changeType": "Create",
+      "delta": null,
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/searchSubnet",
+      "symbolicName": null,
+      "unsupportedReason": null
+    },
+    {
+      "after": {
+        "apiVersion": "2024-05-01",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/supercomputerNodepoolSubnet",
+        "name": "supercomputerNodepoolSubnet",
+        "properties": {
+          "addressPrefix": "10.80.1.0/24",
+          "defaultOutboundAccess": false,
+          "serviceEndpoints": [
+            {
+              "service": "Microsoft.Storage"
+            }
+          ]
+        },
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "type": "Microsoft.Network/virtualNetworks/subnets"
+      },
+      "before": null,
+      "changeType": "Create",
+      "delta": null,
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol/subnets/supercomputerNodepoolSubnet",
+      "symbolicName": null,
+      "unsupportedReason": null
+    }
+  ],
+  "diagnostics": null,
+  "error": null,
+  "potentialChanges": null,
+  "status": "Succeeded"
+}

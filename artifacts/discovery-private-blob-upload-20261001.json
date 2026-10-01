@@ -1,0 +1,61 @@
+{
+  "startedAt": "2026-10-01T02:36:16.112Z",
+  "scope": {
+    "account": "junwoojeong@MngEnvMCAP757124.onmicrosoft.com",
+    "tenantId": "46e9cdaa-fed3-4131-aa28-c1fc8a8a043a",
+    "subscriptionId": "51531604-2337-4c05-bc05-3c3d4ff154e5",
+    "subscriptionName": "ME-MngEnvMCAP757124-junwoojeong-1",
+    "location": "swedencentral",
+    "resourceGroup": "rg-discovery-hol-20260930",
+    "labTag": "microsoft-discovery-core-hol"
+  },
+  "vmName": "vm-discovery-blob-client",
+  "storageAccount": "stdiscoveryholjunwoosc",
+  "outcome": "verified",
+  "discoveryResearchExecuted": false,
+  "result": {
+    "status": "verified",
+    "resolvedAddresses": [
+      "10.80.8.4"
+    ],
+    "files": [
+      {
+        "path": "discoveryinputs/bookshelf/01_requirements.txt",
+        "action": "uploaded",
+        "bytes": 1458,
+        "sha256": "15cb0025dfaaedb4d801168caf857c71b14f0f3328f5bf7ede4d16b6d532ae95",
+        "readRequestId": "1ff3deb1-d01e-007b-114d-51e5c4000000"
+      },
+      {
+        "path": "discoveryinputs/bookshelf/02_candidate_catalog.txt",
+        "action": "uploaded",
+        "bytes": 721,
+        "sha256": "ddb2df4fae190e29fbd943cdb8cfad116e391e332a4f705f18d68fe7beb2c17a",
+        "readRequestId": "64ba6e1f-c01e-0077-7d4d-5172cc000000"
+      },
+      {
+        "path": "discoveryinputs/bookshelf/03_screening_results.txt",
+        "action": "uploaded",
+        "bytes": 692,
+        "sha256": "0193a82df3fefe53e0c35965dc2e887d9ff5bf592a0fedd95653a7dcbf827f78",
+        "readRequestId": "3e72f337-401e-00a2-404d-519d41000000"
+      },
+      {
+        "path": "discoveryinputs/bookshelf/04_revision_notes.txt",
+        "action": "uploaded",
+        "bytes": 1090,
+        "sha256": "9323bfaff32dccba9fbbdc008ab5706f649f49e9bb30a312ffdfe5b0ddc9afa2",
+        "readRequestId": "64616778-401e-009d-2b4d-5155e2000000"
+      },
+      {
+        "path": "discoveryinputs/compute/materials.csv",
+        "action": "uploaded",
+        "bytes": 467,
+        "sha256": "65171b9a9ba3477fd5b4926f625d5702e93e56563b06e59ec450f8dad2e60517",
+        "readRequestId": "9b118999-501e-00e3-444d-51c5a5000000"
+      }
+    ]
+  },
+  "authentication": "VM system-assigned managed identity; no keys or SAS",
+  "completedAt": "2026-10-01T02:36:54.463Z"
+}

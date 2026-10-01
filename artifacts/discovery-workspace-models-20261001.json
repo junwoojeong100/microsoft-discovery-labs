@@ -1,0 +1,10 @@
+[
+  {
+    "capacity": 250,
+    "model": "gpt-5.4",
+    "name": "gpt-5.4",
+    "sku": "GlobalStandard",
+    "state": "Succeeded",
+    "version": "2026-03-05"
+  }
+]

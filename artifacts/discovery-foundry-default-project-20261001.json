@@ -1,0 +1,10 @@
+{
+  "displayName": "Discovery Default Project",
+  "endpoints": {
+    "AI Foundry API": "https://aif-dwsp-foundry-ym5ffvaa.services.ai.azure.com/api/projects/discoverydefaultprojectym5ffvaa"
+  },
+  "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/mrg-dwsp-discoveryholjunwoosc-ym5ffv/providers/Microsoft.CognitiveServices/accounts/aif-dwsp-foundry-ym5ffvaa/projects/discoverydefaultprojectym5ffvaa",
+  "location": "swedencentral",
+  "name": "aif-dwsp-foundry-ym5ffvaa/discoverydefaultprojectym5ffvaa",
+  "state": "Succeeded"
+}
