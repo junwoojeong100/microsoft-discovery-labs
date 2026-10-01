@@ -2,7 +2,7 @@
 
 **English · Execution-informed revision 2026-10-01 · Azure cloud service**
 
-[한국어](MICROSOFT-DISCOVERY-LAB.ko.md) · [English browser edition](MICROSOFT-DISCOVERY-LAB.en.html)
+[한국어](MICROSOFT-DISCOVERY-LAB.ko.md) · [English browser edition](https://junwoojeong100.github.io/microsoft-discovery-labs/docs/labs/MICROSOFT-DISCOVERY-LAB.en.html)
 
 **One goal: build a research workflow that finds evidence, verifies it with real computation, and evaluates the results again when a human changes the constraints.**
 

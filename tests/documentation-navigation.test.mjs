@@ -64,6 +64,31 @@ test('both entry pages link to the live Pages site without claiming repository p
   assert.ok(!korean.includes('Pages는 아직 공개되지 않았습니다'));
 });
 
+test('repository HTML links open existing GitHub Pages documents rather than raw files', async () => {
+  const base = 'https://junwoojeong100.github.io/microsoft-discovery-labs/';
+  const documents = [
+    'README.md', 'README.ko.md',
+    'docs/labs/MICROSOFT-DISCOVERY-LAB.en.md',
+    'docs/labs/MICROSOFT-DISCOVERY-LAB.ko.md',
+    'docs/reports/EXECUTION-REPORT.ko.md',
+  ];
+  let checked = 0;
+  for (const name of documents) {
+    for (const { href } of links(await readFile(resolve(root, name), 'utf8'))) {
+      if (!/\.html(?:[?#]|$)/.test(href)) continue;
+      assert.ok(href.startsWith(base), `${name}: unpublished HTML link ${href}`);
+      const path = href.slice(base.length).split(/[?#]/)[0];
+      if (path !== 'evidence.html') {
+        const source = path === 'index.html' ? 'README.md'
+          : path === 'index.ko.html' ? 'README.ko.md' : path.replace(/\.html$/, '.md');
+        await access(resolve(root, source));
+      }
+      checked++;
+    }
+  }
+  assert.ok(checked >= 8);
+});
+
 test('English guides contain no Korean body text beyond translation links', async () => {
   for (const name of ['docs/labs/MICROSOFT-DISCOVERY-LAB.en.md', 'docs/architecture/MICROSOFT-DISCOVERY-ARCHITECTURE.en.md']) {
     const source = await readFile(resolve(root, name), 'utf8');

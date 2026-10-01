@@ -2,7 +2,7 @@
 
 **한국어 · 2026-10-01 실행 기반 개정 · Azure 클라우드 서비스**
 
-[English](MICROSOFT-DISCOVERY-LAB.en.md) · [브라우저용 국문](MICROSOFT-DISCOVERY-LAB.ko.html)
+[English](MICROSOFT-DISCOVERY-LAB.en.md) · [브라우저용 국문](https://junwoojeong100.github.io/microsoft-discovery-labs/docs/labs/MICROSOFT-DISCOVERY-LAB.ko.html)
 
 **목표는 하나다. 근거를 찾고, 실제 계산으로 검증하고, 사람이 조건을 바꿨을 때 다시 평가하는 연구 흐름을 만든다.**
 

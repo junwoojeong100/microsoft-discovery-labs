@@ -102,7 +102,7 @@ async function buildDocument(document) {
   renderer.paragraph = function (token) {
     const editionLinks = token.tokens.filter((item) => item.type === 'link');
     const isEditionSwitcher = editionLinks.length === 2
-      && editionLinks.every((item) => /^MICROSOFT-DISCOVERY-LAB\.(ko|en)\.(md|html)$/.test(item.href))
+      && editionLinks.every((item) => /^MICROSOFT-DISCOVERY-LAB\.(ko|en)\.(md|html)$/.test(item.href.split('/').at(-1)))
       && token.tokens.every((item) => item.type === 'link' || item.type === 'text' && /^[\s·]*$/.test(item.text));
     const html = renderParagraph.call(this, token);
     return isEditionSwitcher ? `<div class="edition-links">${html}</div>` : html;

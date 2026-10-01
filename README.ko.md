@@ -8,7 +8,7 @@ Microsoft Discovery 실습 가이드와 Azure 아키텍처 자료입니다. **20
 
 | 문서 | GitHub에서 읽기 | 다른 형식 |
 |---|---|---|
-| 핵심 기능 실습 가이드 | [가이드 읽기](docs/labs/MICROSOFT-DISCOVERY-LAB.ko.md) | [PDF](docs/labs/MICROSOFT-DISCOVERY-LAB.ko.pdf) · [HTML](docs/labs/MICROSOFT-DISCOVERY-LAB.ko.html) |
+| 핵심 기능 실습 가이드 | [가이드 읽기](docs/labs/MICROSOFT-DISCOVERY-LAB.ko.md) | [PDF](docs/labs/MICROSOFT-DISCOVERY-LAB.ko.pdf) · [HTML](https://junwoojeong100.github.io/microsoft-discovery-labs/docs/labs/MICROSOFT-DISCOVERY-LAB.ko.html) |
 | Azure 아키텍처와 버전 의존성 | [아키텍처 읽기](docs/architecture/MICROSOFT-DISCOVERY-ARCHITECTURE.ko.md) | SVG 그림 3개와 Mermaid 원본 포함 |
 | 다음 배포를 위한 주제별 참고 자료 | [참고 자료 목차](docs/deployment-reference/README.ko.md) | 현재 상태·quota·용량·리전·네트워크·재개 절차 |
 
@@ -106,6 +106,6 @@ Node.js 22 이상, Python 3을 사용합니다. 브라우저 확인에는 설치
 
 ## 이전 접근 점검
 
-[실행 보고서](docs/reports/EXECUTION-REPORT.ko.html)는 최신 배포와 2026-09-25의 과거 접근 시도를 구분합니다. `artifacts/azure-preflight.json`, [2026-09-30 등록 기록](artifacts/discovery-registration-followup-20260930.json), [이전 요약 영상](artifacts/watch-summary.html)은 과거 자료입니다. 영상은 **Discovery 핵심 기능의 성공 시연이 아닙니다.**
+[실행 보고서](https://junwoojeong100.github.io/microsoft-discovery-labs/docs/reports/EXECUTION-REPORT.ko.html)는 최신 배포와 2026-09-25의 과거 접근 시도를 구분합니다. `artifacts/azure-preflight.json`, [2026-09-30 등록 기록](artifacts/discovery-registration-followup-20260930.json), [이전 요약 영상(MP4)](artifacts/microsoft-discovery-summary.ko.mp4)은 과거 자료입니다. 영상은 **Discovery 핵심 기능의 성공 시연이 아닙니다.**
 
 `npm run preflight`는 Azure에 실제 읽기 요청을 합니다. 등록·접근 신청·리소스 그룹 생성 플래그는 변경 작업을 수행하므로 **로컬 문서 빌드 절차에는 포함하지 않습니다**.

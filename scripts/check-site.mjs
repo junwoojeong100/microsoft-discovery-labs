@@ -7,6 +7,7 @@ import { chromium } from 'playwright';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const site = resolve(root, 'site');
+const publishedSite = 'https://junwoojeong100.github.io/microsoft-discovery-labs/';
 const manifest = JSON.parse(await readFile(resolve(site, 'manifest.json'), 'utf8'));
 const allowedFiles = new Set([...manifest.files, 'manifest.json', '.nojekyll']);
 async function assertCurated(directory = '') {
@@ -52,6 +53,7 @@ try {
   const page = await context.newPage();
   page.on('pageerror', error => errors.push(error.message));
   let checkedLinks = 0;
+  let checkedPublishedLinks = 0;
   for (const name of manifest.files.filter(name => name.endsWith('.html'))) {
     const response = await page.goto(`${origin}/${name}`);
     assert.equal(response.status(), 200, name);
@@ -60,8 +62,12 @@ try {
       loaded: node.tagName !== 'IMG' || node.complete && node.naturalWidth > 0,
     })));
     for (const link of links) {
-      if (!link.url.startsWith(origin)) continue;
-      const url = new URL(link.url);
+      const published = link.url.startsWith(publishedSite);
+      const url = published
+        ? new URL(link.url.slice(publishedSite.length), `${origin}/`)
+        : new URL(link.url);
+      if (url.origin !== origin) continue;
+      if (url.pathname.endsWith('/')) url.pathname += 'index.html';
       const target = resolve(site, `.${url.pathname}`);
       await access(target);
       if (url.hash) {
@@ -70,6 +76,7 @@ try {
       }
       assert.equal(link.loaded, true, `${name}: broken image`);
       checkedLinks++;
+      if (published) checkedPublishedLinks++;
     }
   }
   for (const width of [1600, 390]) {
@@ -78,7 +85,8 @@ try {
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false);
   }
   assert.deepEqual(errors, []);
-  console.log(JSON.stringify({ documents: manifest.files.filter(name => name.endsWith('.html')).length, checkedLinks, rawArtifactsPublished: false, desktopAndMobileOverflow: false }, null, 2));
+  assert.ok(checkedPublishedLinks >= 8, 'Published HTML links were not checked');
+  console.log(JSON.stringify({ documents: manifest.files.filter(name => name.endsWith('.html')).length, checkedLinks, checkedPublishedLinks, rawArtifactsPublished: false, desktopAndMobileOverflow: false }, null, 2));
 } finally {
   if (context) await context.close();
   if (browser) await browser.close();

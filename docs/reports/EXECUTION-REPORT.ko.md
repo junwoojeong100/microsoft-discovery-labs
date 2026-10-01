@@ -447,7 +447,7 @@ API 호출은 Playwright의 `APIRequestContext`로 실제 `management.azure.com`
 
 요약 영상은 가이드의 핵심 내용과 실제 Azure 접근 점검을 묶은 영상이다. Bookshelf나 Engine을 성공 실행한 시연 영상이 아니다. 인증 화면·비밀번호·토큰·쿠키는 영상에서 제외했다.
 
-**영상:** [챕터형 재생 페이지](../../artifacts/watch-summary.html) · [MP4](../../artifacts/microsoft-discovery-summary.ko.mp4) · [한국어 SRT](../../artifacts/microsoft-discovery-summary.ko.srt). 길이 약 **3분 10초**, 1600×900, 한국어 음성과 화면 자막 포함. SRT/VTT 문장 타이밍은 음성 길이를 기준으로 추정했으며, 음성은 로컬 macOS Yuna TTS로 생성했다. 원본 Azure 실행 영상은 별도 WebM으로 보존했다.
+**영상:** [Pages 게시 범위 안내](https://junwoojeong100.github.io/microsoft-discovery-labs/evidence.html) · [MP4](../../artifacts/microsoft-discovery-summary.ko.mp4) · [한국어 SRT](../../artifacts/microsoft-discovery-summary.ko.srt). 챕터형 재생 HTML은 Pages에 게시하지 않으며 [GitHub 원본 폴더](https://github.com/junwoojeong100/microsoft-discovery-labs/tree/main/artifacts)에서 확인한다. 길이 약 **3분 10초**, 1600×900, 한국어 음성과 화면 자막 포함. SRT/VTT 문장 타이밍은 음성 길이를 기준으로 추정했으며, 음성은 로컬 macOS Yuna TTS로 생성했다. 원본 Azure 실행 영상은 별도 WebM으로 보존했다.
 
 ## 3. 제공한 실습 자료
 

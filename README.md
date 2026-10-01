@@ -8,7 +8,7 @@ Hands-on guides and Azure architecture documentation for Microsoft Discovery. Th
 
 | Document | Read on GitHub | Other formats |
 |---|---|---|
-| Core capabilities hands-on guide | [Read the guide](docs/labs/MICROSOFT-DISCOVERY-LAB.en.md) | [PDF](docs/labs/MICROSOFT-DISCOVERY-LAB.en.pdf) · [HTML](docs/labs/MICROSOFT-DISCOVERY-LAB.en.html) |
+| Core capabilities hands-on guide | [Read the guide](docs/labs/MICROSOFT-DISCOVERY-LAB.en.md) | [PDF](docs/labs/MICROSOFT-DISCOVERY-LAB.en.pdf) · [HTML](https://junwoojeong100.github.io/microsoft-discovery-labs/docs/labs/MICROSOFT-DISCOVERY-LAB.en.html) |
 | Azure architecture and version dependencies | [Read the architecture](docs/architecture/MICROSOFT-DISCOVERY-ARCHITECTURE.en.md) | Three SVG diagrams with Mermaid source included |
 | Provisioning reference notes (Korean) | [Topic index](docs/deployment-reference/README.ko.md) | Dated state, quota, capacity, regions, networking, and resumption notes |
 
@@ -106,6 +106,6 @@ These commands do not call or modify Azure. Mermaid is a documentation-tool depe
 
 ## Earlier access attempt
 
-The [execution report](docs/reports/EXECUTION-REPORT.ko.html) separates the new deployment from the earlier 2026-09-25 access attempt. `artifacts/azure-preflight.json`, the [2026-09-30 registration evidence](artifacts/discovery-registration-followup-20260930.json), and the [earlier summary recording](artifacts/watch-summary.html) are historical. The recording is **not a successful Discovery feature demo**.
+The [execution report](https://junwoojeong100.github.io/microsoft-discovery-labs/docs/reports/EXECUTION-REPORT.ko.html) separates the new deployment from the earlier 2026-09-25 access attempt. `artifacts/azure-preflight.json`, the [2026-09-30 registration evidence](artifacts/discovery-registration-followup-20260930.json), and the [earlier summary recording (MP4)](artifacts/microsoft-discovery-summary.ko.mp4) are historical. The recording is **not a successful Discovery feature demo**.
 
 These historical artifacts are in Korean. `npm run preflight` makes real Azure read requests; its registration, access-request, and resource-group flags perform changes. It is intentionally **not part of the local documentation build**.
