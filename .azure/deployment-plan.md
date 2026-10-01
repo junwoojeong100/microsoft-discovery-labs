@@ -1,6 +1,90 @@
 # Discovery lab deployment plan
 
-Status: Deployed — subnet grants and Azure Policy addon succeeded; target installation policy Compliant; Bookshelf remains quota-blocked
+Status: Blocked — actual Bookshelf creation requires 2M TPM for mini and embedding despite the 200k how-to; no Bookshelf created
+
+## Actual creation result — 2026-10-02 08:29 KST
+
+The single authorized creation-only request was submitted and reached terminal
+Failed at 2026-10-01T23:29:17Z. The provider rejected the small Bookshelf before
+creation with BadRequest / ValidationError (target Quota). In Korea Central,
+GlobalStandard gpt-5-mini requires capacity 2000 with 990 available, and
+text-embedding-3-small requires capacity 2000 with 780 available. Units are
+1,000 TPM: the server enforces 2,000,000 TPM at creation for both models.
+
+This contradicts the how-to's 200,000 TPM creation threshold. ARM validate and
+what-if succeeded but did not surface this create-time gate. The earlier
+200k preflight pass is only a documentation-based check, not evidence that
+the resource can be created. Do not repeat the same create request or use
+unsupported tags/API versions to evade the server's quota requirement.
+
+Post-attempt ARM listing contains zero Bookshelves in the lab RG and zero
+managed RGs owned by bks-discovery-hol-kc. No KB, indexing pool, index/search
+operation, additional role or model reallocation was created by this stage.
+Parent-dependent environment configuration remains blocked.
+
+`artifacts/discovery-bookshelf-create-result-20261002.json` preserves the exact
+failure, actual required capacity and the empty post-attempt resource lists.
+The creation-only Bicep and validated artifacts are ready for a future retry
+after the provider's required capacity is actually available. Creation and
+operation remain separate scopes; the user has not authorized indexing.
+
+## 2026-10-02 08:23 KST — create Bookshelf now, operate later
+
+The user explicitly requests creation and environment setup now, followed by
+operation only after the submitted TPM increase is reflected. The previously
+documented 200,000 TPM per model creation prerequisite applies to this stage;
+the higher operational targets are not being lowered or declared satisfied.
+Always-on managed infrastructure costs were disclosed before this request.
+
+Recipe: standalone Bicep in the existing lab resource group and subscription.
+Create one `bks-discovery-hol-kc` with `indexSize=small`, Sweden Central home
+and Korea Central managed runtime. Reuse `id-discovery-hol-kc` and only the
+unused `searchSubnet` / `bookshelfPeSubnet` in `vnet-discovery-hol-kc`.
+Keep NetworkIsolation enabled, public Bookshelf access disabled and the
+documented internal-subscription Key Vault tag. No current workspace, model,
+network, data or policy resources are to be rewritten.
+
+The initial read-only checks found no existing Bookshelf and no running lab-RG
+deployments. Both dedicated subnets are Succeeded and have no IP configurations.
+The search subnet has Microsoft.App/environments delegation. The existing
+Korea identity already has scoped Blob Data Contributor, Network Contributor
+and Managed Identity Operator access; do not add duplicate or broader roles.
+
+Validation checklist:
+
+- [x] Compile `infra/bookshelf.bicep` and its Korea parameters.
+- [x] Check live creation availability of 200,000 TPM for each of gpt-5.2,
+  gpt-5-mini and text-embedding-3-small; preserve existing allocations.
+- [x] ARM validate and Incremental what-if must show exactly one new Bookshelf
+  and no existing-resource modification or deletion.
+- [x] Pass the small/private/creation-only infrastructure contract test.
+
+### Section 7: Validation Proof — creation-only Bookshelf
+
+At 2026-10-01T23:28:24Z, live available GlobalStandard quota is 2,990,000 TPM
+for gpt-5.2, 990,000 for gpt-5-mini and 780,000 for text-embedding-3-small.
+Each exceeds the documented 200,000 TPM creation minimum. No operational
+quota success is claimed.
+
+`az bicep build`, `az bicep build-params`, `az deployment group validate`
+and Incremental `az deployment group what-if` succeeded for the exact
+creation artifacts. What-if contains one Create for bks-discovery-hol-kc;
+all other resources are Ignore/NoChange. All 13 infrastructure tests passed.
+`artifacts/discovery-bookshelf-create-preflight-20261002.json` records the
+source hashes, exact actionable preview and creation quota arithmetic.
+
+The submitted `discovery-bookshelf-create-20261002` used the compiled
+`artifacts/discovery-bookshelf-create-template-20261002.json` and
+`artifacts/discovery-bookshelf-create-parameters-20261002.json`. It failed at
+the create-time quota gate described above; do not resubmit unchanged.
+
+After parent success, inspect actual managed model allocations and resource
+locations, then configure supported idle knowledgebase/data associations.
+Do not start indexing, search, agent conversations, model evaluation or a
+Discovery investigation. Do not claim L03 indexing or end-to-end research passed.
+Prepare further environment resources only where required, with independent
+validation and bounded scaling. Historical operational blockers below remain
+valid for operation, not an instruction to block this authorized creation stage.
 
 ## Final addon activation — 2026-10-01T19:17:07Z
 

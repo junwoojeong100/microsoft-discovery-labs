@@ -1,0 +1,67 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.45.15.27210",
+      "templateHash": "7489290659092196305"
+    }
+  },
+  "parameters": {
+    "location": {
+      "type": "string"
+    },
+    "targetComputeLocation": {
+      "type": "string"
+    },
+    "bookshelfName": {
+      "type": "string"
+    },
+    "identityName": {
+      "type": "string"
+    },
+    "virtualNetworkName": {
+      "type": "string"
+    },
+    "skipAssociateKeyVaultToNsp": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Required by the cross-region guide for Microsoft-owned subscriptions only."
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Discovery/bookshelves",
+      "apiVersion": "2026-06-01",
+      "name": "[parameters('bookshelfName')]",
+      "location": "[parameters('location')]",
+      "tags": "[union(createObject('environment', 'lab', 'project', 'microsoft-discovery-core-hol', 'NetworkIsolation', 'true', 'indexSize', 'small', 'discovery.overridemrgregion', parameters('targetComputeLocation')), if(parameters('skipAssociateKeyVaultToNsp'), createObject('SkipAssociateKeyVaultToNsp', 'true'), createObject()))]",
+      "properties": {
+        "workloadIdentities": {
+          "[format('{0}', resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('identityName')))]": {}
+        },
+        "customerManagedKeys": "Disabled",
+        "publicNetworkAccess": "Disabled",
+        "privateEndpointSubnetId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), 'bookshelfPeSubnet')]",
+        "searchSubnetId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), 'searchSubnet')]"
+      }
+    }
+  ],
+  "outputs": {
+    "bookshelfId": {
+      "type": "string",
+      "value": "[resourceId('Microsoft.Discovery/bookshelves', parameters('bookshelfName'))]"
+    },
+    "bookshelfUri": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Discovery/bookshelves', parameters('bookshelfName')), '2026-06-01').bookshelfUri]"
+    },
+    "managedResourceGroup": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Discovery/bookshelves', parameters('bookshelfName')), '2026-06-01').managedResourceGroup]"
+    }
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "observedAt": "2026-10-01T23:30:46.949Z",
+  "outcome": "blocked-by-server-enforced-creation-quota",
+  "apiVersion": "2026-06-01",
+  "bookshelfName": "bks-discovery-hol-kc",
+  "indexSize": "small",
+  "creationOnlyRequested": true,
+  "documentedHowToMinimumTpm": 200000,
+  "documentedMinimumUrl": "https://learn.microsoft.com/azure/microsoft-discovery/how-to-index-bookshelf-knowledgebase",
+  "armValidate": "Succeeded",
+  "armWhatIf": "Succeeded",
+  "deployment": {
+    "correlationId": "c62f1cab-4ee9-4f1e-99b1-794a0a55afa3",
+    "error": {
+      "additionalInfo": null,
+      "code": "DeploymentFailed",
+      "details": [
+        {
+          "additionalInfo": null,
+          "code": "BadRequest",
+          "details": null,
+          "message": "Resource payload validation failed",
+          "target": null
+        }
+      ],
+      "message": "At least one resource deployment operation failed. Please list deployment operations for details. Please see https://aka.ms/arm-deployment-operations for usage details.",
+      "target": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Resources/deployments/discovery-bookshelf-create-20261002"
+    },
+    "name": "discovery-bookshelf-create-20261002",
+    "outputs": null,
+    "state": "Failed",
+    "timestamp": "2026-10-01T23:29:17.768255+00:00"
+  },
+  "failedOperations": [
+    {
+      "status": {
+        "error": {
+          "additionalInfo": null,
+          "code": "BadRequest",
+          "details": [
+            {
+              "additionalInfo": null,
+              "code": "ValidationError",
+              "details": null,
+              "message": "Model:text-embedding-3-small, version:1, AvailableCapacity:780, RequiredCapacity:2000, SkuName: GlobalStandard, Location:koreacentral",
+              "target": "Quota"
+            },
+            {
+              "additionalInfo": null,
+              "code": "ValidationError",
+              "details": null,
+              "message": "Model:gpt-5-mini, version:2025-08-07, AvailableCapacity:990, RequiredCapacity:2000, SkuName: GlobalStandard, Location:koreacentral",
+              "target": "Quota"
+            }
+          ],
+          "message": "Resource payload validation failed",
+          "target": null
+        },
+        "status": "Failed"
+      },
+      "target": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/bookshelves/bks-discovery-hol-kc",
+      "timestamp": "2026-10-01T23:29:10.661892+00:00"
+    }
+  ],
+  "enforcedQuota": [
+    {
+      "model": "text-embedding-3-small",
+      "version": "1",
+      "sku": "GlobalStandard",
+      "location": "koreacentral",
+      "availableCapacity": 780,
+      "requiredCapacity": 2000,
+      "capacityUnitTpm": 1000,
+      "availableTpm": 780000,
+      "requiredAtCreationTpm": 2000000,
+      "deficitTpm": 1220000
+    },
+    {
+      "model": "gpt-5-mini",
+      "version": "2025-08-07",
+      "sku": "GlobalStandard",
+      "location": "koreacentral",
+      "availableCapacity": 990,
+      "requiredCapacity": 2000,
+      "capacityUnitTpm": 1000,
+      "availableTpm": 990000,
+      "requiredAtCreationTpm": 2000000,
+      "deficitTpm": 1010000
+    }
+  ],
+  "postAttemptBookshelves": [],
+  "postAttemptOwnedManagedResourceGroups": [],
+  "indexingStarted": false,
+  "searchStarted": false,
+  "existingModelAllocationsChanged": false,
+  "additionalRoleAssignmentsCreated": false,
+  "duplicateQuotaRequestSubmitted": false
+}

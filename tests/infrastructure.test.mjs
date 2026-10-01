@@ -80,6 +80,27 @@ test('core preserves network isolation, a one-node CPU cap, and independent mode
   assert.ok(text.includes('output supercomputerId string? = deployCompute ? supercomputer.id : null'));
 });
 
+test('Bookshelf creation is small, private and separate from indexing or existing model writes', async () => {
+  const text = await source('bookshelf.bicep');
+  const params = await source('bookshelf.koreacentral.bicepparam');
+  const writableResources = [...text.matchAll(/^resource \w+ '([^']+)'(?! existing) =/gm)]
+    .map(match => match[1]);
+  assert.deepEqual(writableResources, ['Microsoft.Discovery/bookshelves@2026-06-01']);
+  assert.match(text, /resource identity .+ existing =/);
+  for (const setting of [
+    "indexSize: 'small'", "NetworkIsolation: 'true'", "publicNetworkAccess: 'Disabled'",
+    "'discovery.overridemrgregion': targetComputeLocation",
+    "'bookshelfPeSubnet'", "'searchSubnet'", 'workloadIdentities:',
+    'location: location',
+  ]) assert.ok(text.includes(setting), setting);
+  assert.ok(!/modelName:|modelVersion:|capacity:|startIndex|indexing|roleAssignments/.test(text));
+  assert.ok(params.includes("param location = 'swedencentral'"));
+  assert.ok(params.includes("param targetComputeLocation = 'koreacentral'"));
+  assert.ok(params.includes("param bookshelfName = 'bks-discovery-hol-kc'"));
+  assert.ok(params.includes("param virtualNetworkName = 'vnet-discovery-hol-kc'"));
+  assert.ok(params.includes('param skipAssociateKeyVaultToNsp = true'));
+});
+
 test('the validation model pins the published version and a bounded non-provisioned allocation', async () => {
   const text = await source('discovery-core.bicep');
   const model = text.slice(text.indexOf('resource chatModel '), text.indexOf('resource data '));

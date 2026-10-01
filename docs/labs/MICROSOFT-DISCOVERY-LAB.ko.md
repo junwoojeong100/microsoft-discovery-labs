@@ -345,6 +345,8 @@ az vm deallocate --name vm-discovery-blob-client \
 
 **목표:** 여러 문서를 종합하는 근거 검색에 사용할 지식 색인을 만든다. 실제 검색·인용 확인은 색인이 준비된 다음 L04에서 수행한다.[S06][] [S07][]
 
+> **실제 생성 조건, 2026-10-02:** small Bookshelf 생성만 요청해 ARM validate/what-if는 통과했으나, 서비스가 `gpt-5-mini`·`text-embedding-3-small` 각각 **생성 시 2,000,000 TPM**을 요구하며 거절했다. how-to의 200,000 TPM 생성 안내만으로는 이 환경에서 부족했다. [실제 결과](../../artifacts/discovery-bookshelf-create-result-20261002.json)를 따른다. 생성 승인은 색인 시작 승인이 아니다.
+
 **실행:**
 
 1. Portal → **Microsoft Discovery Bookshelves → Create**에서 동일 구독·RG·리전, 전용 `searchSubnet`/`bookshelfPeSubnet`, UAMI를 지정한다. 생성 시 `indexSize=small`을 설정한다. **Bookshelf당 Knowledgebase 1개**가 현재 문서의 제한이다.

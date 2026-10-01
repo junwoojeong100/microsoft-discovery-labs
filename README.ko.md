@@ -26,6 +26,8 @@ GitHub에서는 Markdown 또는 PDF를 선택하세요. HTML 가이드는 `docs/
 
 ## 실행 상태
 
+**Bookshelf 생성만 시도한 결과, 2026-10-02 08:29 KST:** 실제 provider는 small 생성에도 `gpt-5-mini`·`text-embedding-3-small` 각각 **생성 시 2,000,000 TPM**을 요구하며 거절했습니다. 생성 how-to의 200,000 TPM 안내와 ARM 사전 검증 통과만으로는 부족했습니다. Bookshelf와 해당 managed RG는 생성되지 않았고 색인·검색도 시작하지 않았습니다. [실제 실패 응답](artifacts/discovery-bookshelf-create-result-20261002.json)을 참고하세요.
+
 **최신: Workspace·검증 모델·Project와 실제 합성 CPU 작업을 완료했습니다.** 새 GPT-5.4 배포 두 개는 **각 Global Standard 250,000 TPM**, 합계 **500,000 TPM**입니다. 입력 5개와 계산 결과 2개를 Korea 사설 런타임에서 저장하고 별도 성공한 Discovery 작업으로 다시 읽었습니다. [최종 실행 보고서](docs/reports/EXECUTION-REPORT.ko.md)를 확인하세요. Bookshelf quota는 여전히 대기 중입니다. 승인된 서브넷 권한 부여와 Azure Policy 애드온 활성화는 완료했으며, 해당 AKS의 애드온 설치 정책도 **Compliant**로 확인했습니다. 자율 연구 전체를 완료했다고 주장하지 않습니다.
 
 **이전 컴퓨트 단계 기록, 21:32 KST:** Discovery home은 Sweden Central로 유지하고 target compute만 Korea Central로 변경했습니다. 새 Supercomputer·cpulab과 실제 Korea AKS·VMSS는 **21:28:45 KST Succeeded**였습니다. 당시 Workspace는 quota 때문에 보류했으며, 위 최신 생성 성공이 그 차단 상태를 대체합니다.

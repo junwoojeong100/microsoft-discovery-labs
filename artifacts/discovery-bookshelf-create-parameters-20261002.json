@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "value": "swedencentral"
+    },
+    "targetComputeLocation": {
+      "value": "koreacentral"
+    },
+    "bookshelfName": {
+      "value": "bks-discovery-hol-kc"
+    },
+    "identityName": {
+      "value": "id-discovery-hol-kc"
+    },
+    "virtualNetworkName": {
+      "value": "vnet-discovery-hol-kc"
+    },
+    "skipAssociateKeyVaultToNsp": {
+      "value": true
+    }
+  }
+}

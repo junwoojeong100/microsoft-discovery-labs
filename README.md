@@ -26,6 +26,8 @@ Repository: [junwoojeong100/microsoft-discovery-labs](https://github.com/junwooj
 
 ## Execution status
 
+**Bookshelf creation-only attempt, 2026-10-02 08:29 KST:** The real provider rejected even the small creation request because `gpt-5-mini` and `text-embedding-3-small` each require **2,000,000 TPM at creation**. The how-to's 200,000 TPM threshold and successful ARM preview were insufficient. No Bookshelf or owned managed resource group was created; indexing/search were not started. See the [actual failure](artifacts/discovery-bookshelf-create-result-20261002.json).
+
 **Latest: Workspace, validation model, Project and direct synthetic CPU runs succeeded.** Both new GPT-5.4 deployments use **Global Standard 250,000 TPM each**, totaling **500,000 TPM**. Five inputs and two ranking outputs were saved through the Korea private runtime and independently read back by a second successful Discovery operation. See the [final execution report](docs/reports/EXECUTION-REPORT.ko.md). Bookshelf quota remains outstanding. The approved subnet grants and Azure Policy add-on activation are complete; the target cluster's add-on installation policy is **Compliant**. A full autonomous investigation is not claimed.
 
 **Earlier compute-only result, 21:32 KST:** Discovery home remained Sweden Central and target compute moved to Korea Central. The new Supercomputer, cpulab, and actual Korea AKS/VMSS were Succeeded at **21:28:45 KST**. Workspace creation was still quota-blocked at that point; the later successful resumption above supersedes that blocker.

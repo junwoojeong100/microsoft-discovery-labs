@@ -345,6 +345,8 @@ Both the actual upload and a rerun were verified on 2026-10-01. **This proves pr
 
 **Goal:** Build the knowledge index for cross-document reasoning. Actual retrieval and citation verification follow in L04, after the index is ready.[S06][] [S07][]
 
+> **Observed creation gate, 2026-10-02:** A small, creation-only Bookshelf request passed ARM validation/what-if but was rejected by the service because `gpt-5-mini` and `text-embedding-3-small` each require **2,000,000 TPM at creation**. The how-to's 200,000 TPM creation value was insufficient in this environment. See the [actual result](../../artifacts/discovery-bookshelf-create-result-20261002.json). Creation approval is not approval to start indexing.
+
 **Steps:**
 
 1. In **Microsoft Discovery Bookshelves → Create**, choose the same subscription/RG/region, dedicated `searchSubnet`/`bookshelfPeSubnet`, and UAMI. Set `indexSize=small` at creation. The current documented limit is **one Knowledgebase per Bookshelf**.

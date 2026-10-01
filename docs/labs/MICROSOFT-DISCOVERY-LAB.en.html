@@ -600,6 +600,9 @@ az vm deallocate --name vm-discovery-blob-client \
 </div><p><strong>Pass criteria:</strong> Source Blob files/content, the Storage Container&#39;s backing account, and both input Assets&#39; actual IDs, paths, and successful state are verified. This lab can finish without an agent or computation tool.</p>
 <p><a id="l03"></a></p>
 <h2 id="heading-l03">L03 — Index a Bookshelf knowledgebase</h2><p><strong>Goal:</strong> Build the knowledge index for cross-document reasoning. Actual retrieval and citation verification follow in L04, after the index is ready.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/how-to-index-bookshelf-knowledgebase">S06</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-bookshelf-knowledge-bases">S07</a>]</sup></p>
+<blockquote>
+<p><strong>Observed creation gate, 2026-10-02:</strong> A small, creation-only Bookshelf request passed ARM validation/what-if but was rejected by the service because <code>gpt-5-mini</code> and <code>text-embedding-3-small</code> each require <strong>2,000,000 TPM at creation</strong>. The how-to&#39;s 200,000 TPM creation value was insufficient in this environment. See the <a href="../../artifacts/discovery-bookshelf-create-result-20261002.json">actual result</a>. Creation approval is not approval to start indexing.</p>
+</blockquote>
 <p><strong>Steps:</strong></p>
 <ol>
 <li>In <strong>Microsoft Discovery Bookshelves → Create</strong>, choose the same subscription/RG/region, dedicated <code>searchSubnet</code>/<code>bookshelfPeSubnet</code>, and UAMI. Set <code>indexSize=small</code> at creation. The current documented limit is <strong>one Knowledgebase per Bookshelf</strong>.</li>

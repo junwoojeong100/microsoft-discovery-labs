@@ -1,0 +1,82 @@
+{
+  "observedAt": "2026-10-01T23:28:24.296Z",
+  "userScope": "Create Bookshelf and configure the idle environment only; indexing/search deferred until quota increase.",
+  "validationBoundary": "The 200,000 TPM checks below follow the published how-to, not the actual creation-time provider requirement. See discovery-bookshelf-create-result-20261002.json for the server-enforced 2,000,000 TPM rejection.",
+  "subscriptionId": "51531604-2337-4c05-bc05-3c3d4ff154e5",
+  "resourceGroup": "rg-discovery-hol-20260930",
+  "homeRegion": "swedencentral",
+  "managedRuntimeRegion": "koreacentral",
+  "validation": "Succeeded",
+  "whatIf": "Succeeded",
+  "actionableChanges": [
+    {
+      "after": {
+        "apiVersion": "2026-06-01",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/bookshelves/bks-discovery-hol-kc",
+        "location": "swedencentral",
+        "name": "bks-discovery-hol-kc",
+        "properties": {
+          "customerManagedKeys": "Disabled",
+          "privateEndpointSubnetId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol-kc/subnets/bookshelfPeSubnet",
+          "publicNetworkAccess": "Disabled",
+          "searchSubnetId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol-kc/subnets/searchSubnet"
+        },
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "tags": {
+          "NetworkIsolation": "true",
+          "SkipAssociateKeyVaultToNsp": "true",
+          "discovery.overridemrgregion": "koreacentral",
+          "environment": "lab",
+          "indexSize": "small",
+          "project": "microsoft-discovery-core-hol"
+        },
+        "type": "Microsoft.Discovery/bookshelves"
+      },
+      "before": null,
+      "changeType": "Create",
+      "delta": null,
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Discovery/bookshelves/bks-discovery-hol-kc",
+      "symbolicName": null,
+      "unsupportedReason": null
+    }
+  ],
+  "sourceHashes": {
+    "infra/bookshelf.bicep": "c615d69686af7ba52be2623c46d108f1469f8025a46ad4a5f8b3e358f85dd87d",
+    "infra/bookshelf.koreacentral.bicepparam": "abfc3c54ed1c435fbbbe8ee8481dacd8653ef55f988712402827bbda73e2ae58",
+    "artifacts/discovery-bookshelf-create-template-20261002.json": "8895ccfd16cd3ef117a2d25e2989d6437bf3a1870cdd7c23e06ff81ed6add69c",
+    "artifacts/discovery-bookshelf-create-parameters-20261002.json": "ccef2739bbc6a83a4a53a8b9f92fde01b6af0813e053ea88b5a763018a1e87f2"
+  },
+  "modelQuota": [
+    {
+      "model": "OpenAI.GlobalStandard.text-embedding-3-small",
+      "limitTpm": 1000000,
+      "allocatedTpm": 220000,
+      "availableTpm": 780000,
+      "creationMinimumTpm": 200000,
+      "documentedCreationThresholdPassed": true
+    },
+    {
+      "model": "OpenAI.GlobalStandard.gpt-5-mini",
+      "limitTpm": 1000000,
+      "allocatedTpm": 10000,
+      "availableTpm": 990000,
+      "creationMinimumTpm": 200000,
+      "documentedCreationThresholdPassed": true
+    },
+    {
+      "model": "OpenAI.GlobalStandard.gpt-5.2",
+      "limitTpm": 3000000,
+      "allocatedTpm": 10000,
+      "availableTpm": 2990000,
+      "creationMinimumTpm": 200000,
+      "documentedCreationThresholdPassed": true
+    }
+  ],
+  "existingModelsResized": false,
+  "duplicateQuotaRequestSubmitted": false,
+  "indexingRequested": false,
+  "searchRequested": false
+}

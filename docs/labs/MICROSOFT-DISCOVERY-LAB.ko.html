@@ -600,6 +600,9 @@ az vm deallocate --name vm-discovery-blob-client \
 </div><p><strong>완료 기준:</strong> 원본 Blob 파일과 내용, Storage Container의 backing account, 입력 Asset 2개의 실제 ID·경로·성공 상태가 확인된다. 이 Lab은 에이전트나 계산 도구가 없어도 완료할 수 있다.</p>
 <p><a id="l03"></a></p>
 <h2 id="heading-l03">L03 — Bookshelf 지식 색인</h2><p><strong>목표:</strong> 여러 문서를 종합하는 근거 검색에 사용할 지식 색인을 만든다. 실제 검색·인용 확인은 색인이 준비된 다음 L04에서 수행한다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/how-to-index-bookshelf-knowledgebase">S06</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-bookshelf-knowledge-bases">S07</a>]</sup></p>
+<blockquote>
+<p><strong>실제 생성 조건, 2026-10-02:</strong> small Bookshelf 생성만 요청해 ARM validate/what-if는 통과했으나, 서비스가 <code>gpt-5-mini</code>·<code>text-embedding-3-small</code> 각각 <strong>생성 시 2,000,000 TPM</strong>을 요구하며 거절했다. how-to의 200,000 TPM 생성 안내만으로는 이 환경에서 부족했다. <a href="../../artifacts/discovery-bookshelf-create-result-20261002.json">실제 결과</a>를 따른다. 생성 승인은 색인 시작 승인이 아니다.</p>
+</blockquote>
 <p><strong>실행:</strong></p>
 <ol>
 <li>Portal → <strong>Microsoft Discovery Bookshelves → Create</strong>에서 동일 구독·RG·리전, 전용 <code>searchSubnet</code>/<code>bookshelfPeSubnet</code>, UAMI를 지정한다. 생성 시 <code>indexSize=small</code>을 설정한다. <strong>Bookshelf당 Knowledgebase 1개</strong>가 현재 문서의 제한이다.</li>

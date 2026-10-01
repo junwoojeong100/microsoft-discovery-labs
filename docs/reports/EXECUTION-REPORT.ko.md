@@ -4,6 +4,25 @@
 
 구독 `51531604-2337-4c05-bc05-3c3d4ff154e5`, 테넌트 `46e9cdaa-fed3-4131-aa28-c1fc8a8a043a`, RG `rg-discovery-hol-20260930`과 **Discovery home Sweden Central**을 유지했다. 초기 단일 리전 실행에서는 기존 네트워크·UAMI를 재사용했고, 저녁 교차 리전 실행에서는 Korea Central 전용 지원 자원을 추가했다. 다른 프로젝트의 자원·정책·모델 배포를 삭제하지 않았다.
 
+## 2026-10-02 08:29 KST — Bookshelf 생성만 요청했으나 실제 생성 쿼타로 거절
+
+사용자는 운영·색인과 분리해 **Bookshelf 생성 및 환경 구성만** 요청했다. [생성 전용 Bicep](../../infra/bookshelf.bicep)과 [Korea 매개변수](../../infra/bookshelf.koreacentral.bicepparam)로 `bks-discovery-hol-kc`, `indexSize=small`, Sweden Central home / Korea Central runtime을 지정했다. 기존 전용 `searchSubnet`·`bookshelfPeSubnet`과 UAMI를 재사용하고 public access는 Disabled로 유지했다.
+
+세 모델 모두 [생성 how-to](https://learn.microsoft.com/azure/microsoft-discovery/how-to-index-bookshelf-knowledgebase)의 **200,000 TPM** 기준을 충족했다. Bicep 컴파일, ARM validate, what-if도 통과했고 변경 예정은 **Bookshelf 1개 Create**뿐이었다. 그러나 실제 `discovery-bookshelf-create-20261002` 제출은 **08:29:17 KST에 Failed**로 끝났다.
+
+**실제 서비스는 생성 단계부터 두 모델에 각각 2,000,000 TPM를 요구했다.** `BadRequest → ValidationError`, target=`Quota` 응답은 다음과 같다. capacity 단위는 1,000 TPM다.
+
+| 모델 / 버전 | 서버 AvailableCapacity | 서버 RequiredCapacity | 부족 TPM |
+|---|---:|---:|---:|
+| `gpt-5-mini` / `2025-08-07` | 990 | **2000** | **1,010,000** |
+| `text-embedding-3-small` / `1` | 780 | **2000** | **1,220,000** |
+
+따라서 **이 환경에서 200,000 TPM로 생성만 먼저 할 수 있다는 가능성은 실제 요청으로 성립하지 않음이 확인됐다.** 문서의 생성 최소치와 실제 provider 검증이 다르며, ARM 사전 검증 성공도 실제 생성 성공을 보장하지 않는다. 기본 모델을 교체하거나 임의 태그·다른 API 버전으로 이 제한을 우회하지 않았다.
+
+후속 조회에서 랩 RG의 Bookshelf는 **0개**, 해당 이름을 소유자로 갖는 managed RG도 **0개**였다. KB 연결·색인 풀 생성은 부모 리소스가 없어 진행하지 못했다. 기존 모델·데이터·권한·성공한 Workspace 및 정책 애드온을 변경하지 않았고, **색인·검색·추가 증액 신청은 실행하지 않았다.** 두 모델의 실제 쿼타 반영 또는 서비스 측 문서/검증 불일치 해결 전에는 같은 생성 요청을 반복하지 않는다.
+
+증거: [문서 기준 사전 점검](../../artifacts/discovery-bookshelf-create-preflight-20261002.json) · [실제 생성 실패와 미생성 확인](../../artifacts/discovery-bookshelf-create-result-20261002.json).
+
 ## 2026-10-02 04:17 KST — 정책 애드온 활성화 완료, HTML 링크 게시
 
 사용자가 추가 권한을 승인한 뒤 **두 전용 서브넷의 read/join 권한만** 부여했고 Azure Policy 애드온을 활성화했다. 아래 00시대의 승인 대기 기록은 당시 상태다.

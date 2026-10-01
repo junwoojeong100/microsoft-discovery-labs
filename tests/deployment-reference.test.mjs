@@ -87,6 +87,26 @@ test('quota arithmetic preserves existing allocations and the two submitted tota
   assert.ok(text.includes('중복 제출 금지'));
 });
 
+test('the observed Bookshelf creation rejection is not mistaken for a 200k-ready deployment', async () => {
+  const result = JSON.parse(await readFile(resolve(root, 'artifacts/discovery-bookshelf-create-result-20261002.json'), 'utf8'));
+  assert.equal(result.armValidate, 'Succeeded');
+  assert.equal(result.armWhatIf, 'Succeeded');
+  assert.equal(result.deployment.state, 'Failed');
+  assert.equal(result.documentedHowToMinimumTpm, 200000);
+  assert.deepEqual(result.enforcedQuota.map(row => row.model).sort(), ['gpt-5-mini', 'text-embedding-3-small']);
+  for (const row of result.enforcedQuota) {
+    assert.equal(row.requiredCapacity, 2000);
+    assert.equal(row.requiredAtCreationTpm, row.requiredCapacity * row.capacityUnitTpm);
+    assert.equal(row.deficitTpm, row.requiredAtCreationTpm - row.availableTpm);
+  }
+  assert.deepEqual(result.postAttemptBookshelves, []);
+  assert.deepEqual(result.postAttemptOwnedManagedResourceGroups, []);
+  assert.equal(result.indexingStarted, false);
+  assert.equal(result.searchStarted, false);
+  assert.ok(documents['02-model-quota.ko.md'].includes('생성 단계부터'));
+  assert.ok(documents['06-resume-runbook.ko.md'].includes('RequiredCapacity:2000'));
+});
+
 test('compute examples include system nodes and the retained client quota', () => {
   const text = documents['03-compute-capacity.ko.md'].replaceAll('`', '');
   const rows = [...text.matchAll(/^\| (Standard_([DE])(\d+)s_v6) \| (\d+) \| (\d+) \| (\d+) \| (\d+) \| (.+) \|$/gm)];

@@ -15,7 +15,9 @@
 | Korea 기반 신규 생성 | [cross-region-foundation.bicepparam](../../infra/cross-region-foundation.bicepparam): 새 VNet·관리 ID·Storage·ACR·Blob PE·DNS link. 기존 DNS zone/관리자 역할은 NoChange |
 | Korea 컴퓨트 | [discovery-core.koreacentral.bicepparam](../../infra/discovery-core.koreacentral.bicepparam), [컴퓨트 전용 payload](../../artifacts/discovery-korea-compute-template-20261001.json): `sc-discovery-hol-kc`와 `cpulab`만 쓰기 |
 | Workspace·검증 모델·Project | 전체 core와 별도 단계. 신규 GPT-5.4 quota 조건을 충족하기 전 제출하지 않음 |
-| Bookshelf | 기존 운영 quota 조건을 만족한 뒤 별도 생성 |
+| Bookshelf | [생성 전용 Bicep](../../infra/bookshelf.koreacentral.bicepparam). 10-02 08:29 실제 요청은 mini·embedding 생성 quota 각 2M TPM 부족으로 Failed. 200k 안내만으로 재제출하지 않음 |
+
+**Bookshelf 생성 재개:** 운영을 시작하지 않는 small 생성 요청도 실제 provider는 `gpt-5-mini`와 `text-embedding-3-small`에 각각 `RequiredCapacity:2000`을 요구했다. [실패 증거](../../artifacts/discovery-bookshelf-create-result-20261002.json)를 보존했다. 실제 한도가 반영된 뒤 현재 가용량과 동일 입력의 validate/what-if를 다시 확인하고 새 배포 이름으로 생성한다. 부모 성공 전에는 KB나 색인 풀을 만들지 않으며, 생성 성공 후에도 사용자가 별도로 시작하기 전 색인·검색은 보류한다.
 
 기반 배포는 **21:05:23 KST Succeeded**이며 새 지원 자원은 Korea Central에서 확인됐다. 기반 템플릿은 초기 생성용이다. 확장된 VNet에 내부 3-subnet 모듈을 재적용하지 말고 필요한 자원만 별도 검증해 변경한다. 기존 `blob:sync`의 클라이언트/스토리지 이름도 이전 Sweden 환경용이므로 새 저장소 동기화에 그대로 사용하지 않는다.
 
