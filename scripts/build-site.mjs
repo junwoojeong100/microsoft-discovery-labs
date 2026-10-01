@@ -89,7 +89,7 @@ for (const name of await readdir(resolve(root, 'assets'))) {
   await copyFile(resolve(root, 'assets', name), resolve(assetDirectory, name));
   emitted.push(`assets/${name}`);
 }
-await writeFile(resolve(output, 'evidence.html'), page('en', 'Private evidence boundary', `<h1>Private evidence boundary</h1><p>Raw Azure responses, identity records, configuration files, source files and PDF downloads stay in the private repository. This public site intentionally does not expose them.</p><p>원본 Azure 응답·ID·설정·소스·PDF는 비공개 저장소에 보관합니다. 이 사이트에서는 공개하지 않습니다.</p><p><a href="index.html">Back to the lab index</a></p>`, './'));
+await writeFile(resolve(output, 'evidence.html'), page('en', 'Pages publication boundary', `<h1>Pages publication boundary</h1><p>This GitHub repository is public. The Pages site includes only curated documentation and excludes raw Azure responses, identity records, configuration files, infrastructure sources and PDF downloads. Excluding files from this site does not make the repository or its committed history private.</p><p>GitHub 저장소는 공개 상태입니다. Pages에는 정리된 문서만 게시하며 원본 Azure 응답·ID·설정·인프라 소스·PDF는 포함하지 않습니다. 사이트에서 제외해도 저장소와 커밋 이력이 비공개가 되는 것은 아닙니다.</p><p><a href="index.html">Back to the lab index</a></p>`, './'));
 emitted.push('evidence.html');
 await writeFile(resolve(output, 'manifest.json'), JSON.stringify({ generatedAt: new Date().toISOString(), files: emitted.sort(), rawArtifactsPublished: false, repositoryVisibilityChanged: false }, null, 2) + '\n');
 for (const filename of emitted.filter(name => name.endsWith('.html'))) {

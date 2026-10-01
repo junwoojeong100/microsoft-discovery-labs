@@ -1,0 +1,103 @@
+{
+  "observedAt": "2026-10-01T16:00:14.933Z",
+  "repository": {
+    "nameWithOwner": "junwoojeong100/microsoft-discovery-labs",
+    "url": "https://github.com/junwoojeong100/microsoft-discovery-labs",
+    "visibility": "PUBLIC"
+  },
+  "pages": {
+    "status": "published",
+    "firstPublicationRunId": 36887594041,
+    "firstPublicationRevision": "376390bb4f000b23842ef972a12e3ed6330fde1a",
+    "firstPublicationRunUrl": "https://github.com/junwoojeong100/microsoft-discovery-labs/actions/runs/36887594041",
+    "jobs": [
+      {
+        "name": "build",
+        "conclusion": "success",
+        "completedAt": "2026-10-01T15:52:28Z"
+      },
+      {
+        "name": "deploy",
+        "conclusion": "success",
+        "completedAt": "2026-10-01T15:52:42Z"
+      }
+    ],
+    "endpoints": [
+      {
+        "url": "https://junwoojeong100.github.io/microsoft-discovery-labs/",
+        "status": 200
+      },
+      {
+        "url": "https://junwoojeong100.github.io/microsoft-discovery-labs/index.ko.html",
+        "status": 200
+      }
+    ]
+  },
+  "bookshelf": {
+    "status": "blocked-by-model-quota",
+    "requiredAvailableTpmPerModel": 2000000,
+    "quotas": [
+      {
+        "model": "OpenAI.GlobalStandard.text-embedding-3-small",
+        "limitTpm": 1000000,
+        "allocatedTpm": 220000,
+        "availableTpm": 780000
+      },
+      {
+        "model": "OpenAI.GlobalStandard.gpt-5-mini",
+        "limitTpm": 1000000,
+        "allocatedTpm": 10000,
+        "availableTpm": 990000
+      },
+      {
+        "model": "OpenAI.GlobalStandard.gpt-5.2",
+        "limitTpm": 3000000,
+        "allocatedTpm": 10000,
+        "availableTpm": 2990000
+      }
+    ],
+    "increaseRequestsDuplicated": false,
+    "created": false
+  },
+  "policyAddon": {
+    "status": "blocked-awaiting-explicit-access-approval",
+    "principalId": "02e03d89-915c-4be6-a882-ebde1beda2e4",
+    "permissionApprovalReceived": false,
+    "roleChangesApplied": false,
+    "remediationSubmitted": false,
+    "policyStates": [
+      {
+        "complianceState": "NonCompliant",
+        "policyAssignmentId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/providers/microsoft.authorization/policyassignments/defender for containers provisioning azure policy addon for kub",
+        "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourcegroups/mrg-dscmp-sc-discovery-hol-kc-a13wxu/providers/microsoft.containerservice/managedclusters/aks-dscmp-a13wxu",
+        "timestamp": "2026-10-01T13:33:28.440562+00:00"
+      }
+    ],
+    "validation": "Succeeded",
+    "whatIf": "Succeeded",
+    "plannedChanges": [
+      {
+        "type": "Create",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Authorization/roleDefinitions/04efaf40-861c-515b-919e-26156d2bd7a9"
+      },
+      {
+        "type": "Create",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol-kc/subnets/aksSubnet/providers/Microsoft.Authorization/roleAssignments/ecd29fe1-8174-5a28-b8dd-9f32a7b7ca91"
+      },
+      {
+        "type": "Create",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol-kc/subnets/supercomputerNodepoolSubnet/providers/Microsoft.Authorization/roleAssignments/694ae642-f66d-5d7d-8b3a-61eb6c24b9a1"
+      }
+    ],
+    "allowedActions": [
+      "Microsoft.Network/virtualNetworks/subnets/read",
+      "Microsoft.Network/virtualNetworks/subnets/join/action"
+    ],
+    "hashes": {
+      "infra/policy-subnet-access.bicep": "05e358f6d2252c099c34c50acbefff1107c3f0f442a1fe152924f92d8e9061ba",
+      "infra/policy-subnet-access.koreacentral.bicepparam": "4a001c205f8d4e9b7c734c8970be3bd959bf02bb14a611398dcfc9c364284870",
+      "artifacts/discovery-policy-subnet-access-template-20261002.json": "ed8d52b05b79285ae2e39c1f74995a89bda661977a8b7af70147797335518f79",
+      "artifacts/discovery-policy-subnet-access-parameters-20261002.json": "76fd82814c61b91320b0559377ab1fd2adafbab9db1f576457a785669d6e3548"
+    }
+  }
+}

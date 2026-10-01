@@ -52,6 +52,18 @@ test('entry-page links and local build instructions stay valid', async () => {
   }
 });
 
+test('both entry pages link to the live Pages site without claiming repository privacy', () => {
+  const url = 'https://junwoojeong100.github.io/microsoft-discovery-labs/';
+  for (const text of [english, korean]) {
+    assert.ok(links(text).some((link) => link.href === url));
+    assert.ok(text.includes('PAGES_ENABLED=true'));
+  }
+  assert.ok(english.includes('The repository and its committed history are public.'));
+  assert.ok(korean.includes('저장소와 커밋 이력은 공개 상태입니다.'));
+  assert.ok(!english.includes('Pages is not live'));
+  assert.ok(!korean.includes('Pages는 아직 공개되지 않았습니다'));
+});
+
 test('English guides contain no Korean body text beyond translation links', async () => {
   for (const name of ['docs/labs/MICROSOFT-DISCOVERY-LAB.en.md', 'docs/architecture/MICROSOFT-DISCOVERY-ARCHITECTURE.en.md']) {
     const source = await readFile(resolve(root, name), 'utf8');

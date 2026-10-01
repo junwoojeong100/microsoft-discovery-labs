@@ -27,6 +27,33 @@
 
 **별도 정책 작업:** 새 AKS는 성공했지만 기존 Defender의 Azure Policy 애드온 자동 배포는 `LinkedAuthorizationFailed`다. 정책 관리 ID에 새 `aksSubnet`의 join 권한이 없으며 Discovery용 UAMI의 역할 누락과는 다른 문제다. 권한 범위 확인·승인 후 해당 정책 작업만 복구한다. ARM 사전 검증이 성공해도 자동 정책의 후속 배포 전체가 성공한다는 보장은 아니다. [실패 및 보존 범위](../reports/EXECUTION-REPORT.ko.md)를 참고한다.
 
+### 2026-10-02 정책 애드온 최소 권한 준비 — 아직 미적용
+
+[policy-subnet-access.bicep](../../infra/policy-subnet-access.bicep)은 기존 Defender 정책 관리 ID에 전용 `aksSubnet`과 `supercomputerNodepoolSubnet`의 **read/join 두 동작만** 부여한다. [Korea 매개변수](../../infra/policy-subnet-access.koreacentral.bicepparam)는 실제 VNet과 정책 principal을 고정한다. 구독 전체 역할 부여, 기존 정책 수정·예외, 관리 AKS 직접 재구성은 포함하지 않는다.
+
+ARM validate와 Incremental what-if는 통과했으며 역할 정의 1개·서브넷 역할 할당 2개만 Create다. **추가 권한 승인은 받지 못했으므로 실제 배포는 하지 않았다.** 아래 명령은 배포가 아닌 읽기 전용 재검증이다. 증거 파일은 해당 소스와 매개변수를 컴파일한 결과이며, 소스를 수정했다면 다시 컴파일해야 한다.
+
+```bash
+az deployment group validate \
+  --subscription 51531604-2337-4c05-bc05-3c3d4ff154e5 \
+  --resource-group rg-discovery-hol-20260930 \
+  --name discovery-policy-subnet-access-20261002 \
+  --template-file artifacts/discovery-policy-subnet-access-template-20261002.json \
+  --parameters @artifacts/discovery-policy-subnet-access-parameters-20261002.json
+
+az deployment group what-if \
+  --subscription 51531604-2337-4c05-bc05-3c3d4ff154e5 \
+  --resource-group rg-discovery-hol-20260930 \
+  --name discovery-policy-subnet-access-20261002 \
+  --template-file artifacts/discovery-policy-subnet-access-template-20261002.json \
+  --parameters @artifacts/discovery-policy-subnet-access-parameters-20261002.json \
+  --mode Incremental
+```
+
+승인 후에는 검증한 동일 입력만 Incremental 배포한다. 두 서브넷의 역할 할당이 모두 확인되고 전파된 뒤, 기존 **Defender for Containers provisioning Azure Policy Addon for Kub** 할당의 remediation을 **`mrg-dscmp-sc-discovery-hol-kc-a13wxu/aks-dscmp-a13wxu` 한 개의 resource scope**로 제출한다. `ReEvaluateCompliance`로 현재 상태를 재평가하며 구독 전체 remediation으로 넓히지 않는다.
+
+완료 기준은 remediation 성공, AKS `addonProfiles.azurepolicy.enabled=true`, 후속 정책 평가 Compliant다. 기존 AKS·nodepool·직접 Tool 실행이 성공했다는 사실만으로 정책 애드온 복구까지 완료됐다고 판단하지 않는다.
+
 ### 실제 파일·도구 실행 재현
 
 새 `config/lab.json.runtime`은 Korea 환경의 `thermalhol`, `thermal-ranking-kc`, `cpulab`, `thermaldata-kc`를 명시한다. 아래 명령은 **실제 클라우드 작업을 제출**한다. 입력 5개를 기존과 비교하고 다른 내용은 덮어쓰지 않는다. 출력 경로와 로컬 증거를 구분하려면 새 run ID를 사용한다.

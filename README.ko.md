@@ -20,9 +20,9 @@ GitHub에서는 Markdown 또는 PDF를 선택하세요. HTML 가이드는 `docs/
 
 ## GitHub Pages 게시
 
-저장소는 [junwoojeong100/microsoft-discovery-labs](https://github.com/junwoojeong100/microsoft-discovery-labs)로 변경했습니다. **Private 상태를 유지하며 Pages는 아직 공개되지 않았습니다.** 현재 요금제에서 Private 저장소 Pages 생성이 HTTP 422로 거절됐으며 공개 전환이나 결제는 하지 않았습니다.
+저장소 [junwoojeong100/microsoft-discovery-labs](https://github.com/junwoojeong100/microsoft-discovery-labs)는 **Public**입니다. **[GitHub Pages에서 게시된 문서 읽기](https://junwoojeong100.github.io/microsoft-discovery-labs/)**. 사용자 요청으로 공개 전환한 뒤 2026-10-02 KST에 첫 게시를 완료했으며 유료 요금제로 변경하지 않았습니다.
 
-`npm run check:site`는 HTML 링크를 갖춘 공개용 `site/`를 생성·확인합니다. 계정 식별자는 예시로 치환하고 원본 Azure 증거·설정·인프라 소스·PDF는 제외합니다. 지원 요금제에서 Pages를 활성화한 뒤 source를 **GitHub Actions**로 선택하고 저장소 변수 **`PAGES_ENABLED=true`**를 설정해 **Publish lab documentation**을 실행합니다. 예정 주소는 `https://junwoojeong100.github.io/microsoft-discovery-labs/`이며, 현재 사용 가능한 링크로 검증된 것은 아닙니다.
+`npm run check:site`는 HTML 링크를 갖춘 공개용 `site/`를 생성·확인합니다. 계정 식별자는 예시로 치환하고 원본 Azure 증거·설정·인프라 소스·PDF는 **Pages 사이트에서만 제외**합니다. 저장소와 커밋 이력은 공개 상태입니다. Pages source는 **GitHub Actions**, 저장소 변수는 **`PAGES_ENABLED=true`**이며 **Publish lab documentation**이 `main`의 관련 변경을 자동 게시합니다. 수동 실행도 가능합니다.
 
 ## 실행 상태
 

@@ -1,0 +1,88 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.45.15.27210",
+      "templateHash": "17577526376039247280"
+    }
+  },
+  "parameters": {
+    "virtualNetworkName": {
+      "type": "string",
+      "metadata": {
+        "description": "Existing virtual network containing the two Discovery compute subnets."
+      }
+    },
+    "policyPrincipalId": {
+      "type": "string",
+      "metadata": {
+        "description": "Verified object ID of the existing Defender policy assignment managed identity."
+      }
+    }
+  },
+  "variables": {
+    "subnetNames": [
+      "aksSubnet",
+      "supercomputerNodepoolSubnet"
+    ]
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Authorization/roleDefinitions",
+      "apiVersion": "2022-04-01",
+      "name": "[guid(resourceGroup().id, 'Discovery Policy Subnet Read Join')]",
+      "properties": {
+        "roleName": "[format('Discovery Policy Subnet Read Join - {0}', resourceGroup().name)]",
+        "description": "Allows the existing Defender policy identity to read and join dedicated Discovery compute subnets.",
+        "type": "CustomRole",
+        "permissions": [
+          {
+            "actions": [
+              "Microsoft.Network/virtualNetworks/subnets/read",
+              "Microsoft.Network/virtualNetworks/subnets/join/action"
+            ],
+            "notActions": [],
+            "dataActions": [],
+            "notDataActions": []
+          }
+        ],
+        "assignableScopes": [
+          "[resourceGroup().id]"
+        ]
+      }
+    },
+    {
+      "copy": {
+        "name": "subnetAssignments",
+        "count": "[length(variables('subnetNames'))]"
+      },
+      "type": "Microsoft.Authorization/roleAssignments",
+      "apiVersion": "2022-04-01",
+      "scope": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), variables('subnetNames')[copyIndex()])]",
+      "name": "[guid(resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), variables('subnetNames')[copyIndex()]), parameters('policyPrincipalId'), resourceId('Microsoft.Authorization/roleDefinitions', guid(resourceGroup().id, 'Discovery Policy Subnet Read Join')))]",
+      "properties": {
+        "principalId": "[parameters('policyPrincipalId')]",
+        "principalType": "ServicePrincipal",
+        "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', guid(resourceGroup().id, 'Discovery Policy Subnet Read Join'))]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Authorization/roleDefinitions', guid(resourceGroup().id, 'Discovery Policy Subnet Read Join'))]"
+      ]
+    }
+  ],
+  "outputs": {
+    "roleDefinitionId": {
+      "type": "string",
+      "value": "[resourceId('Microsoft.Authorization/roleDefinitions', guid(resourceGroup().id, 'Discovery Policy Subnet Read Join'))]"
+    },
+    "roleAssignmentIds": {
+      "type": "array",
+      "copy": {
+        "count": "[length(variables('subnetNames'))]",
+        "input": "[extensionResourceId(resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), variables('subnetNames')[copyIndex()]), 'Microsoft.Authorization/roleAssignments', guid(resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), variables('subnetNames')[copyIndex()]), parameters('policyPrincipalId'), resourceId('Microsoft.Authorization/roleDefinitions', guid(resourceGroup().id, 'Discovery Policy Subnet Read Join'))))]"
+      }
+    }
+  }
+}

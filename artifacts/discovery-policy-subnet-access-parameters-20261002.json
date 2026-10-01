@@ -1,0 +1,12 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "virtualNetworkName": {
+      "value": "vnet-discovery-hol-kc"
+    },
+    "policyPrincipalId": {
+      "value": "02e03d89-915c-4be6-a882-ebde1beda2e4"
+    }
+  }
+}

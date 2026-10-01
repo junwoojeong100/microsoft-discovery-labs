@@ -20,6 +20,9 @@ await assertCurated();
 for (const directory of ['artifacts', 'config', 'infra', 'node_modules', '.azure', '.git']) {
   await assert.rejects(access(resolve(site, directory)), { code: 'ENOENT' });
 }
+const evidence = await readFile(resolve(site, 'evidence.html'), 'utf8');
+assert.ok(evidence.includes('This GitHub repository is public.'));
+assert.ok(evidence.includes('Excluding files from this site does not make the repository or its committed history private.'));
 const errors = [];
 const server = createServer(async (request, response) => {
   const pathname = decodeURIComponent(new URL(request.url, 'http://localhost').pathname);

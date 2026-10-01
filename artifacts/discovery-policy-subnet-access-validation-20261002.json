@@ -1,0 +1,130 @@
+{
+  "error": null,
+  "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Resources/deployments/discovery-policy-subnet-access-20261002",
+  "name": "discovery-policy-subnet-access-20261002",
+  "properties": {
+    "correlationId": "c0ab8eb1-457a-4b09-ba70-b9f8b8101356",
+    "debugSetting": null,
+    "dependencies": [
+      {
+        "dependsOn": [
+          {
+            "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Authorization/roleDefinitions/04efaf40-861c-515b-919e-26156d2bd7a9",
+            "resourceGroup": "rg-discovery-hol-20260930",
+            "resourceName": "04efaf40-861c-515b-919e-26156d2bd7a9",
+            "resourceType": "Microsoft.Authorization/roleDefinitions"
+          }
+        ],
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol-kc/subnets/aksSubnet/providers/Microsoft.Authorization/roleAssignments/ecd29fe1-8174-5a28-b8dd-9f32a7b7ca91",
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceName": "ecd29fe1-8174-5a28-b8dd-9f32a7b7ca91",
+        "resourceType": "Microsoft.Authorization/roleAssignments"
+      },
+      {
+        "dependsOn": [
+          {
+            "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Authorization/roleDefinitions/04efaf40-861c-515b-919e-26156d2bd7a9",
+            "resourceGroup": "rg-discovery-hol-20260930",
+            "resourceName": "04efaf40-861c-515b-919e-26156d2bd7a9",
+            "resourceType": "Microsoft.Authorization/roleDefinitions"
+          }
+        ],
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol-kc/subnets/supercomputerNodepoolSubnet/providers/Microsoft.Authorization/roleAssignments/694ae642-f66d-5d7d-8b3a-61eb6c24b9a1",
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceName": "694ae642-f66d-5d7d-8b3a-61eb6c24b9a1",
+        "resourceType": "Microsoft.Authorization/roleAssignments"
+      }
+    ],
+    "diagnostics": null,
+    "duration": "PT0S",
+    "error": null,
+    "extensions": [],
+    "mode": "Incremental",
+    "onErrorDeployment": null,
+    "outputResources": null,
+    "outputs": null,
+    "parameters": {
+      "policyPrincipalId": {
+        "type": "String",
+        "value": "02e03d89-915c-4be6-a882-ebde1beda2e4"
+      },
+      "virtualNetworkName": {
+        "type": "String",
+        "value": "vnet-discovery-hol-kc"
+      }
+    },
+    "parametersLink": null,
+    "providers": [
+      {
+        "id": null,
+        "namespace": "Microsoft.Authorization",
+        "providerAuthorizationConsentState": null,
+        "registrationPolicy": null,
+        "registrationState": null,
+        "resourceTypes": [
+          {
+            "aliases": null,
+            "apiProfiles": null,
+            "apiVersions": null,
+            "capabilities": null,
+            "defaultApiVersion": null,
+            "locationMappings": null,
+            "locations": [
+              null
+            ],
+            "properties": null,
+            "resourceType": "roleDefinitions",
+            "zoneMappings": null
+          },
+          {
+            "aliases": null,
+            "apiProfiles": null,
+            "apiVersions": null,
+            "capabilities": null,
+            "defaultApiVersion": null,
+            "locationMappings": null,
+            "locations": [
+              null
+            ],
+            "properties": null,
+            "resourceType": "roleAssignments",
+            "zoneMappings": null
+          }
+        ]
+      }
+    ],
+    "provisioningState": "Succeeded",
+    "templateHash": "17577526376039247280",
+    "templateLink": null,
+    "timestamp": "2026-10-01T15:55:51.742375+00:00",
+    "validatedResources": [
+      {
+        "apiVersion": null,
+        "extension": null,
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Authorization/roleDefinitions/04efaf40-861c-515b-919e-26156d2bd7a9",
+        "identifiers": null,
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceType": null
+      },
+      {
+        "apiVersion": null,
+        "extension": null,
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol-kc/subnets/aksSubnet/providers/Microsoft.Authorization/roleAssignments/ecd29fe1-8174-5a28-b8dd-9f32a7b7ca91",
+        "identifiers": null,
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceType": null
+      },
+      {
+        "apiVersion": null,
+        "extension": null,
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol-kc/subnets/supercomputerNodepoolSubnet/providers/Microsoft.Authorization/roleAssignments/694ae642-f66d-5d7d-8b3a-61eb6c24b9a1",
+        "identifiers": null,
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "resourceType": null
+      }
+    ],
+    "validationLevel": null
+  },
+  "resourceGroup": "rg-discovery-hol-20260930",
+  "type": "Microsoft.Resources/deployments"
+}

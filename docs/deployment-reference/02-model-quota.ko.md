@@ -2,6 +2,12 @@
 
 [목차](README.ko.md) · **기준일: 2026-10-01. 조회값과 신청 상태는 배포 직전에 재확인한다.**
 
+## 2026-10-02 후속 재확인
+
+Korea Central의 GlobalStandard 조회에서도 `gpt-5-mini`는 총 **1,000,000 / 할당 10,000 / 잔여 990,000 TPM**, `text-embedding-3-small`은 총 **1,000,000 / 할당 220,000 / 잔여 780,000 TPM**다. 각 운영 목표 **2,000,000 TPM**에 미달하며, 기존 총 3,000,000 TPM 신청의 증액은 실제 한도에 반영되지 않았다. `gpt-5.2` 잔여는 **2,990,000 TPM**로 해당 모델은 통과한다.
+
+[실제 응답](../../artifacts/discovery-followup-model-quota-20261002.json)의 thousand-TPM 단위를 환산했다. 기존 신청을 중복 제출하거나 다른 배포를 축소·삭제하지 않았으며 Bookshelf 생성은 계속 보류한다. 저장소 Public 전환이나 Pages 게시는 Azure 모델 quota를 변경하지 않는다.
+
 ## 최종 실습 할당 — 사용자 지정
 
 | 배포 | 용도 | 모델 / 버전 | 배포 유형 | 할당 TPM / capacity |

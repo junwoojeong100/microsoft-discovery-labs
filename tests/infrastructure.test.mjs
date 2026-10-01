@@ -45,6 +45,28 @@ test('NSP custom role contains only the two documented actions', async () => {
   assert.ok(text.includes('param discoveryControlPlaneObjectId string'));
 });
 
+test('policy addon access grants only subnet read and join on the two existing compute subnets', async () => {
+  const text = await source('policy-subnet-access.bicep');
+  const actions = text.match(/actions: \[([\s\S]*?)\]/)[1].match(/'([^']+)'/g);
+  assert.deepEqual(actions, [
+    "'Microsoft.Network/virtualNetworks/subnets/read'",
+    "'Microsoft.Network/virtualNetworks/subnets/join/action'",
+  ]);
+  const subnets = text.match(/var subnetNames = \[([\s\S]*?)\]/)[1].match(/'([^']+)'/g);
+  assert.deepEqual(subnets, ["'aksSubnet'", "'supercomputerNodepoolSubnet'"]);
+  assert.match(text, /assignableScopes: \[\s+resourceGroup\(\)\.id\s+\]/);
+  assert.match(text, /resource virtualNetwork .+ existing =/);
+  assert.match(text, /resource subnets .+ existing =/);
+  assert.ok(text.includes('scope: subnets[index]'));
+  assert.ok(text.includes('principalId: policyPrincipalId'));
+  assert.ok(text.includes("principalType: 'ServicePrincipal'"));
+  assert.ok(!text.includes('subscription().id'));
+  assert.ok(!text.includes('Microsoft.ContainerService/managedClusters'));
+  const params = await source('policy-subnet-access.koreacentral.bicepparam');
+  assert.ok(params.includes("param virtualNetworkName = 'vnet-discovery-hol-kc'"));
+  assert.ok(params.includes("param policyPrincipalId = '02e03d89-915c-4be6-a882-ebde1beda2e4'"));
+});
+
 test('core preserves network isolation, a one-node CPU cap, and independent model naming', async () => {
   const text = await source('discovery-core.bicep');
   for (const setting of [

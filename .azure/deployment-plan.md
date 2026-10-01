@@ -1,6 +1,54 @@
 # Discovery lab deployment plan
 
-Status: Deployed — core and direct runtime; external gates remain
+Status: Deployed — core, direct runtime and Pages; Bookshelf quota and policy access approval remain blocked
+
+## 2026-10-02 follow-up
+
+The user requested immediate continuation after making the repository public.
+Pages is enabled with the workflow source and `PAGES_ENABLED=true`.
+Run 36887594041 completed build and deploy successfully; both language entry
+pages returned HTTP 200 at 2026-10-01T15:53:42Z. No billing change was needed.
+The repository and committed history are public; site exclusions are not
+a repository privacy boundary.
+
+At 2026-10-01T15:55:47Z, the Bookshelf GlobalStandard quotas still leave
+990,000 TPM for gpt-5-mini and 780,000 TPM for text-embedding-3-small,
+below the 2,000,000 TPM operational target for each. Existing increase
+requests were not duplicated and no deployment was resized or deleted.
+
+### Policy access preparation and approval gate
+
+Recipe: standalone Bicep, resource-group scope. Reuse the configured
+subscription 51531604-2337-4c05-bc05-3c3d4ff154e5 and lab RG.
+The existing VNet and AKS remain in Korea Central; Discovery home remains
+Sweden Central. This follow-up does not provision or reconfigure compute.
+
+`infra/policy-subnet-access.bicep` and its Korea parameters contain only
+a custom read/join role and two subnet-scoped assignments to the verified
+existing Defender policy identity. Live AKS GET confirmed the system and
+cpulab subnets. Live policy state is NonCompliant and the addon is absent.
+An explicit confirmation request for those exact two subnet grants and
+single-cluster remediation received no user response. Do not treat that
+as approval. No role definition, role assignment, or remediation was created.
+
+### Section 7: Validation Proof — follow-up RBAC only
+
+- `az bicep build` compiled `infra/policy-subnet-access.bicep`.
+- `az bicep build-params` compiled the Korea parameter file.
+- `az deployment group validate` passed for the resulting template and parameters.
+- `az deployment group what-if --mode Incremental` returned Succeeded:
+  exactly one role definition and two subnet role assignments Create;
+  no Modify or Delete changes.
+- Static tests check the exact two actions, exact two existing subnet names,
+  resource-group assignability, subnet assignment scopes and ServicePrincipal type.
+- Evidence: `artifacts/discovery-policy-subnet-access-{template,parameters,validation,whatif}-20261002.json`.
+- The public what-if evidence retains all three actionable changes and the
+  original change counts; payloads for 42 unrelated Ignore resources are omitted.
+
+These are dry-run results, not deployment authorization or proof of policy
+compliance. Keep the follow-up blocked until the exact RBAC scope is approved;
+then refresh validation, deploy only that template and use resource-scoped
+policy remediation. Do not replay any completed core deployment.
 
 ## Final verified state — 2026-10-01T14:32:22Z
 

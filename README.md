@@ -20,9 +20,9 @@ Use the Markdown or PDF links on GitHub. HTML editions are under `docs/labs/`, w
 
 ## GitHub Pages
 
-Repository: [junwoojeong100/microsoft-discovery-labs](https://github.com/junwoojeong100/microsoft-discovery-labs). **The repository remains private and Pages is not live:** GitHub rejected creation because the current plan does not support Pages for this private repository (HTTP 422). No visibility or billing change was made.
+Repository: [junwoojeong100/microsoft-discovery-labs](https://github.com/junwoojeong100/microsoft-discovery-labs) is **public**. **[Read the published documentation on GitHub Pages](https://junwoojeong100.github.io/microsoft-discovery-labs/)**. The first publication completed on 2026-10-02 KST after the user requested the visibility change; no paid plan was required.
 
-`npm run check:site` builds and checks a curated `site/` with working HTML links. Account identifiers are replaced with examples; raw Azure artifacts, configuration, infrastructure sources and PDFs are excluded. After enabling private-repository Pages on an eligible plan, select **GitHub Actions** as the Pages source, set repository variable **`PAGES_ENABLED=true`**, and run **Publish lab documentation**. The intended URL is `https://junwoojeong100.github.io/microsoft-discovery-labs/`, not a currently verified live endpoint.
+`npm run check:site` builds and checks a curated `site/` with working HTML links. Account identifiers are replaced with examples; raw Azure artifacts, configuration, infrastructure sources and PDFs are excluded **from the Pages site only**. The repository and its committed history are public. Pages uses **GitHub Actions** with repository variable **`PAGES_ENABLED=true`**; **Publish lab documentation** publishes relevant pushes to `main` and can also be run manually.
 
 ## Execution status
 

@@ -1,0 +1,90 @@
+{
+  "status": "Succeeded",
+  "evidenceProjection": {
+    "description": "Only actionable changes retained; unrelated Ignore and NoChange resource payloads omitted from the public repository.",
+    "counts": {
+      "Create": 3,
+      "Ignore": 42
+    }
+  },
+  "changes": [
+    {
+      "after": {
+        "apiVersion": "2022-04-01",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Authorization/roleDefinitions/04efaf40-861c-515b-919e-26156d2bd7a9",
+        "name": "04efaf40-861c-515b-919e-26156d2bd7a9",
+        "properties": {
+          "assignableScopes": [
+            "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930"
+          ],
+          "description": "Allows the existing Defender policy identity to read and join dedicated Discovery compute subnets.",
+          "permissions": [
+            {
+              "actions": [
+                "Microsoft.Network/virtualNetworks/subnets/read",
+                "Microsoft.Network/virtualNetworks/subnets/join/action"
+              ]
+            }
+          ],
+          "roleName": "Discovery Policy Subnet Read Join - rg-discovery-hol-20260930",
+          "type": "CustomRole"
+        },
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "type": "Microsoft.Authorization/roleDefinitions"
+      },
+      "before": null,
+      "changeType": "Create",
+      "delta": null,
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Authorization/roleDefinitions/04efaf40-861c-515b-919e-26156d2bd7a9",
+      "symbolicName": null,
+      "unsupportedReason": null
+    },
+    {
+      "after": {
+        "apiVersion": "2022-04-01",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol-kc/subnets/aksSubnet/providers/Microsoft.Authorization/roleAssignments/ecd29fe1-8174-5a28-b8dd-9f32a7b7ca91",
+        "name": "ecd29fe1-8174-5a28-b8dd-9f32a7b7ca91",
+        "properties": {
+          "principalId": "02e03d89-915c-4be6-a882-ebde1beda2e4",
+          "roleDefinitionId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Authorization/roleDefinitions/04efaf40-861c-515b-919e-26156d2bd7a9"
+        },
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "type": "Microsoft.Authorization/roleAssignments"
+      },
+      "before": null,
+      "changeType": "Create",
+      "delta": null,
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol-kc/subnets/aksSubnet/providers/Microsoft.Authorization/roleAssignments/ecd29fe1-8174-5a28-b8dd-9f32a7b7ca91",
+      "symbolicName": null,
+      "unsupportedReason": null
+    },
+    {
+      "after": {
+        "apiVersion": "2022-04-01",
+        "id": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol-kc/subnets/supercomputerNodepoolSubnet/providers/Microsoft.Authorization/roleAssignments/694ae642-f66d-5d7d-8b3a-61eb6c24b9a1",
+        "name": "694ae642-f66d-5d7d-8b3a-61eb6c24b9a1",
+        "properties": {
+          "principalId": "02e03d89-915c-4be6-a882-ebde1beda2e4",
+          "roleDefinitionId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Authorization/roleDefinitions/04efaf40-861c-515b-919e-26156d2bd7a9"
+        },
+        "resourceGroup": "rg-discovery-hol-20260930",
+        "type": "Microsoft.Authorization/roleAssignments"
+      },
+      "before": null,
+      "changeType": "Create",
+      "delta": null,
+      "deploymentId": null,
+      "extension": null,
+      "identifiers": null,
+      "resourceId": "/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/providers/Microsoft.Network/virtualNetworks/vnet-discovery-hol-kc/subnets/supercomputerNodepoolSubnet/providers/Microsoft.Authorization/roleAssignments/694ae642-f66d-5d7d-8b3a-61eb6c24b9a1",
+      "symbolicName": null,
+      "unsupportedReason": null
+    }
+  ]
+}

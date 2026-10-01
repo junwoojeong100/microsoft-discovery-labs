@@ -4,6 +4,23 @@
 
 구독 `51531604-2337-4c05-bc05-3c3d4ff154e5`, 테넌트 `46e9cdaa-fed3-4131-aa28-c1fc8a8a043a`, RG `rg-discovery-hol-20260930`과 **Discovery home Sweden Central**을 유지했다. 초기 단일 리전 실행에서는 기존 네트워크·UAMI를 재사용했고, 저녁 교차 리전 실행에서는 Korea Central 전용 지원 자원을 추가했다. 다른 프로젝트의 자원·정책·모델 배포를 삭제하지 않았다.
 
+## 2026-10-02 후속 — GitHub Pages 게시 완료, 외부 승인 조건 재확인
+
+사용자 요청으로 저장소를 **Public**으로 전환한 뒤 Pages source를 **GitHub Actions**, `PAGES_ENABLED=true`로 설정했다. [첫 게시 실행](https://github.com/junwoojeong100/microsoft-discovery-labs/actions/runs/36887594041)은 **build/deploy 모두 success**, 배포 완료는 **00:52:42 KST**다. [공개 사이트](https://junwoojeong100.github.io/microsoft-discovery-labs/)와 [한국어 시작 페이지](https://junwoojeong100.github.io/microsoft-discovery-labs/index.ko.html)는 HTTP 200으로 확인했다. 요금제 변경이나 결제는 하지 않았다.
+
+Pages에는 기존의 정리·식별자 치환 빌드만 올린다. **원본 파일을 Pages에서 제외하는 것과 GitHub 저장소의 비공개 여부는 다르다. 저장소와 커밋 이력은 공개 상태다.** README와 사이트의 이전 비공개 안내를 수정했다. 아래 10-01 절의 Private·Pages 미게시 설명은 당시 기록이며 이번 결과로 대체한다.
+
+| 남은 항목 | 이번 재확인 / 실제 변경 여부 |
+|---|---|
+| Bookshelf | Korea Central의 GlobalStandard 총한도는 두 모델 모두 **1,000,000 TPM**. `gpt-5-mini` 잔여 **990,000**, `text-embedding-3-small` 잔여 **780,000 TPM**로 운영 목표 각 **2,000,000 TPM** 미달. 생성·모델 재할당·중복 증액 신청을 하지 않음 |
+| Defender 정책 애드온 | AKS `aks-dscmp-a13wxu`는 Succeeded지만 `azurepolicy` 애드온이 없고, 최근 정책 평가가 NonCompliant. 정확한 권한 범위에 대한 추가 승인 요청에 응답을 받지 못해 **역할 생성·할당과 정책 재적용은 실행하지 않음** |
+
+정책 복구 입력은 [최소 권한 Bicep](../../infra/policy-subnet-access.bicep)과 [Korea 매개변수](../../infra/policy-subnet-access.koreacentral.bicepparam)로 준비했다. 기존 정책 관리 ID `02e03d89-915c-4be6-a882-ebde1beda2e4`에 새 VNet의 **`aksSubnet`, `supercomputerNodepoolSubnet` 두 곳만** 대상으로 `Microsoft.Network/virtualNetworks/subnets/read`와 `Microsoft.Network/virtualNetworks/subnets/join/action`을 허용한다. 역할 정의의 할당 가능 범위는 실습 RG지만, 실제 권한 할당 scope는 각 서브넷이다. 구독/VNet 전체 Network Contributor를 부여하는 안이 아니다.
+
+컴파일·ARM validate·Incremental what-if를 수행했다. 결과는 **사용자 지정 역할 1개와 서브넷 역할 할당 2개 생성 예정**, 기존 리소스 수정·삭제 **0개**다. 사전 검증은 실제 권한 부여나 정책 준수 완료를 의미하지 않는다. 승인 후 역할 전파를 확인하고 **해당 AKS 한 개에 한정한 remediation**을 실행하는 [재개 절차](../deployment-reference/06-resume-runbook.ko.md)를 남겼다.
+
+증거: [후속 결과](../../artifacts/discovery-followup-20261002.json) · [모델 quota](../../artifacts/discovery-followup-model-quota-20261002.json) · [정책 평가](../../artifacts/discovery-followup-policy-state-20261002.json) · [권한 사전 검증](../../artifacts/discovery-policy-subnet-access-validation-20261002.json) · [변경 미리 보기](../../artifacts/discovery-policy-subnet-access-whatif-20261002.json). 공개 what-if 증거에는 변경 3개와 원본 변경 수를 남기고, 범위 밖 Ignore 리소스 42개의 상세 본문은 제외했다.
+
 ## 2026-10-01 23:32 KST — Workspace·Project·실제 CPU 실행 완료
 
 **새 코어 리소스 생성과 실제 합성 파일·도구 실행을 완료했다.** Discovery home은 **Sweden Central**, 관리 런타임·Foundry·AKS·Blob·ACR은 **Korea Central**이다. 아래 이전 절의 Workspace quota 차단은 당시 기록이며, 현재 Workspace와 Project는 Succeeded다.
