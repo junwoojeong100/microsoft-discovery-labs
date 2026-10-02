@@ -1,0 +1,117 @@
+{
+  "observedAtUtc": "2026-10-02T20:45:07.662Z",
+  "observedAtKst": "2026-10-03 05:45:07 KST",
+  "outcome": "verified",
+  "scope": "User-approved retired Discovery Home cleanup; current Korea and shared resources preserved",
+  "homeRegion": "swedencentral",
+  "runtimeRegion": "koreacentral",
+  "discoveryDeleteApiVersion": "2026-06-01",
+  "brokerReadApiVersion": "2023-06-01-preview",
+  "resourceCounts": {
+    "before": 95,
+    "after": 87,
+    "removed": 8,
+    "protected": 87,
+    "protectedResourceIdSetMatches": true
+  },
+  "resourceGroupCounts": {
+    "before": 8,
+    "after": 6,
+    "automaticallyRemoved": 2
+  },
+  "retiredResources": [
+    { "name": "thermaldata", "type": "Microsoft.Discovery/storagecontainers", "method": "normal-delete", "result": "ResourceNotFound" },
+    { "name": "thermaldata/candidatecsv", "type": "Microsoft.Discovery/storagecontainers/storageassets", "method": "normal-delete", "result": "ResourceNotFound" },
+    { "name": "thermaldata/evidencepack", "type": "Microsoft.Discovery/storagecontainers/storageassets", "method": "normal-delete", "result": "ResourceNotFound" },
+    { "name": "thermal-ranking", "type": "Microsoft.Discovery/tools", "method": "normal-delete", "result": "ResourceNotFound" },
+    { "name": "discoveryholjunwoosc", "type": "Microsoft.Discovery/workspaces", "method": "normal-delete", "result": "ResourceNotFound" },
+    { "name": "sc-discovery-hol", "type": "Microsoft.Discovery/supercomputers", "method": "normal-delete", "result": "ResourceNotFound" },
+    { "name": "mobr-dwsp-discoveryholjunwoosc-ym5ffv", "type": "Microsoft.Resources/moboBrokers", "method": "parent-managed", "result": "ResourceNotFound" },
+    { "name": "mobr-dscmp-sc-discovery-hol-b6wiwf", "type": "Microsoft.Resources/moboBrokers", "method": "parent-managed", "result": "ResourceNotFound" }
+  ],
+  "removedManagedGroups": [
+    { "name": "mrg-dwsp-discoveryholjunwoosc-ym5ffv", "oldOwner": "discoveryholjunwoosc", "resourcesBefore": 0, "existsAfter": false, "method": "parent-managed" },
+    { "name": "mrg-dscmp-sc-discovery-hol-b6wiwf", "oldOwner": "sc-discovery-hol", "resourcesBefore": 0, "existsAfter": false, "method": "parent-managed" }
+  ],
+  "remainingGroups": [
+    { "name": "rg-discovery-hol-20260930", "resources": 22 },
+    { "name": "mrg-dwsp-discoveryholjunwookc-bdnxfq", "resources": 53 },
+    { "name": "mrg-dscmp-sc-discovery-hol-kc-a13wxu", "resources": 4 },
+    { "name": "MC_mrg-dscmp-sc-discovery-hol-kc-a13wxu_aks-dscmp-a13wxu_koreacentral", "resources": 6 },
+    { "name": "ME_mrg-dwsp-discoveryholjunwookc-bdnxfq_mrg-dwsp-discoveryholjunwookc-bdnxfq_koreacentral", "resources": 1 },
+    { "name": "McapsGovernance", "resources": 1 }
+  ],
+  "preflight": {
+    "oldWorkspaceProjects": 0,
+    "oldWorkspaceChatModelDeployments": 0,
+    "oldSupercomputerNodePools": 0,
+    "oldManagedGroupOwnershipVerified": true,
+    "currentWorkspaceReferencesOnlyKoreaSupercomputer": true,
+    "currentProjectReferencesOnlyKoreaStorageContainer": true
+  },
+  "toolDependencyCheck": {
+    "directAgentEnumerationSucceeded": false,
+    "limitation": "Foundry agent listing was rejected by NSP; Discovery Studio required interactive sign-in",
+    "method": "Normal Discovery DELETE with documented service-side dependency validation",
+    "toolDeletionSucceeded": true,
+    "referenceOverrideUsed": false,
+    "officialGuide": "https://learn.microsoft.com/azure/microsoft-discovery/how-to-delete-discovery-resources"
+  },
+  "propagationDelays": [
+    {
+      "target": "thermaldata",
+      "firstErrorCode": "CannotDeleteResource",
+      "detail": "ARM still reported the two deleted Storage Asset IDs after their individual GET requests returned ResourceNotFound",
+      "resolution": "Confirmed an empty child collection and retried the same normal DELETE; final GET returned ResourceNotFound"
+    },
+    {
+      "target": "sc-discovery-hol",
+      "detail": "Resource Graph briefly retained the resource after its direct GET returned ResourceNotFound",
+      "resolution": "Waited for read-only listing propagation; no second deletion was issued"
+    }
+  ],
+  "currentKorea": {
+    "homeResources": 13,
+    "workspace": { "name": "discoveryholjunwookc", "state": "Succeeded" },
+    "supercomputer": { "name": "sc-discovery-hol-kc", "state": "Succeeded" },
+    "project": { "name": "thermalhol", "state": "Succeeded" },
+    "tool": { "name": "thermal-ranking-kc", "state": "Succeeded" },
+    "storageContainer": { "name": "thermaldata-kc", "state": "Succeeded" },
+    "aks": {
+      "name": "aks-dscmp-a13wxu",
+      "location": "koreacentral",
+      "state": "Succeeded",
+      "powerState": "Running",
+      "policyAddonEnabled": true,
+      "pools": [
+        { "name": "system", "count": 2, "min": 2, "max": 3 },
+        { "name": "cpulab", "count": 0, "min": 0, "max": 1 }
+      ]
+    },
+    "modelDeployments": [
+      { "name": "gpt-5.4", "model": "gpt-5.4", "state": "Succeeded", "sku": "GlobalStandard", "allocatedTpm": 250000 },
+      { "name": "gpt-5-4", "model": "gpt-5.4", "state": "Succeeded", "sku": "GlobalStandard", "allocatedTpm": 250000 }
+    ],
+    "sharedDnsLink": { "name": "discovery-lab-kc", "state": "Succeeded", "currentKoreaVnetLinked": true },
+    "organizationalLogResourcePreserved": true
+  },
+  "boundaries": {
+    "directBrokerDelete": false,
+    "directManagedGroupDelete": false,
+    "forceDeleteOrPurge": false,
+    "networkProtectionChanged": false,
+    "roleAssignmentsChanged": false,
+    "modelAllocationsChanged": false,
+    "newDataWorkloadRun": false,
+    "completeAgentReferenceAuditClaimed": false,
+    "quotaRechecked": false,
+    "endToEndResearchVerified": false,
+    "billingVerified": false
+  },
+  "sourceEvidence": [
+    { "file": "home-cleanup-before-20261003.json", "scope": "session-only baseline", "sha256": "dded43c83a065cab2e84d3f8dbb1e042945f165ce56d19bdb371b2e10e34a35e" },
+    { "file": "home-cleanup-after-20261003.json", "scope": "session-only final inventory", "sha256": "f5676bd3e2c60d4f6ee6c5146d3807996c40756236abafdf6f39641d811b3729" },
+    { "file": "home-cleanup-operations-20261003.json", "scope": "session-only initial sequence and first Container failure", "sha256": "4dbb85fe4ed3a004fd08f6592b9dd1a1010c1aedfbfb6110335d3ddab68cb4cb" },
+    { "file": "home-cleanup-verification-20261003.json", "scope": "session-only final direct GET and preservation checks", "sha256": "9b8cce968efbfa993042eac4dfae771e5f5f7508a6fb4836ca83a5bc31180637" }
+  ]
+}

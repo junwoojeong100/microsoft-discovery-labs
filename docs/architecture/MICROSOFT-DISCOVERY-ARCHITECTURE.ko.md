@@ -4,11 +4,11 @@
 
 [English](MICROSOFT-DISCOVERY-ARCHITECTURE.en.md) · [국문 실습 가이드](../labs/MICROSOFT-DISCOVERY-LAB.ko.md)
 
-**핵심:** Discovery는 Foundry의 에이전트·모델, AKS 기반 Supercomputer, Bookshelf의 검색·지식 저장 계층을 연결한다. **Bookshelf에서 Azure AI Search는 문서 enrichment, Azure SQL Database는 지식 그래프·벡터 저장, Azure Container Apps는 검색 실행**을 담당한다. Workspace/Project는 Cosmos DB를 사용하고, 파일 입출력은 Blob Storage 등 연결 저장소를 사용한다.[R01][] [R02][] [R04][] [R05][] [R06][]
+**핵심:** Discovery는 Foundry의 에이전트·모델, AKS 기반 Supercomputer, Bookshelf의 검색·지식 저장 계층을 연결합니다. **Bookshelf에서 Azure AI Search는 문서 enrichment, Azure SQL Database는 지식 그래프·벡터 저장, Azure Container Apps는 검색 실행**을 담당합니다. Workspace/Project는 Cosmos DB를 사용하고, 파일 입출력은 Blob Storage 등 연결 저장소를 사용합니다.[R01][] [R02][] [R04][] [R05][] [R06][]
 
-이 문서는 **공식 문서 기반 참조 구조**다. 실제 Azure 구독을 조사한 자원 목록이나 고정된 내부 소프트웨어 BOM이 아니다. 공개 문서가 특정 Kubernetes·DB 엔진·서비스 내부 빌드 버전을 명시하지 않으면 임의로 채우지 않는다.
+이 문서는 **공식 문서 기반 참조 구조**입니다. 실제 Azure 구독을 조사한 자원 목록이나 고정된 내부 소프트웨어 BOM이 아닙니다. 공개 문서가 특정 Kubernetes·DB 엔진·서비스 내부 빌드 버전을 명시하지 않으면 임의로 채우지 않습니다.
 
-**처음 읽는 순서:** [전체 구조](#architecture) → [Bookshelf의 색인·검색](#bookshelf) → [네트워크·ID](#security). 버전 검토가 필요하면 아래 구분표와 [변경 영향](#impact)을 확인한다. 고객 공통 구성 절차는 [실습 가이드 S00](../labs/MICROSOFT-DISCOVERY-LAB.ko.md#s00), 특정 환경의 시도·관측값은 [설치·운영 참고 자료](../deployment-reference/README.ko.md)에서 별도로 다룬다. 그림에 포함됐다는 이유로 모든 구성요소가 배포·검증됐다고 해석하지 않는다.
+**처음 읽는 순서:** [전체 구조](#architecture) → [Bookshelf의 색인·검색](#bookshelf) → [네트워크·ID](#security). 버전 검토가 필요하면 아래 구분표와 [변경 영향](#impact)을 확인합니다. 고객 공통 구성 절차는 [실습 가이드 S00](../labs/MICROSOFT-DISCOVERY-LAB.ko.md#s00), 특정 환경의 시도·관측값은 [설치·운영 참고 자료](../deployment-reference/README.ko.md)에서 별도로 다룹니다. 그림에 포함됐다는 이유로 모든 구성요소가 배포·검증됐다고 해석하지 않습니다.
 
 <a id="reading"></a>
 ## 1. “버전”을 먼저 구분하기
@@ -23,7 +23,7 @@
 | 런타임·아티팩트 버전 | Kubernetes, node image, 컨테이너 digest | 실행 호환성에 직접 영향. 실제 배포/이미지에서 확인 |
 | 암호화 키 버전 | `keyVersion` | Key Vault 키의 특정 버전. Key Vault 서비스 버전이 아님 |
 
-표에서 **D = 문서에 명시된 계약/관계**, **E = 문서 예시·구성값**, **O = 실제 배포에서 확인할 값**이다. “미확인”은 “최신 버전”이나 “제약 없음”이라는 뜻이 아니다.
+표에서 **D = 문서에 명시된 계약/관계**, **E = 문서 예시·구성값**, **O = 실제 배포에서 확인할 값**입니다. “미확인”은 “최신 버전”이나 “제약 없음”이라는 뜻이 아닙니다.
 
 <a id="architecture"></a>
 ## 2. 전체 구조
@@ -69,12 +69,12 @@ graph TB
 
 </details>
 
-**화살표는 논리적 사용·의존 관계**이며 실제 패킷 경로·프로세스 호출 순서·리소스 개수를 확정하지 않는다. 점선은 조건부 경로다. 사용자 ACR이 조건부라는 것은 컨테이너 이미지가 필요 없다는 뜻이 아니다. Foundry 노드는 구독의 서비스/모델 배포를 나타내며 추론 GPU가 고객 VNet 안에 있다는 뜻이 아니다.
+**화살표는 논리적 사용·의존 관계**이며 실제 패킷 경로·프로세스 호출 순서·리소스 개수를 확정하지 않습니다. 점선은 조건부 경로입니다. 사용자 ACR이 조건부라는 것은 컨테이너 이미지가 필요 없다는 뜻이 아닙니다. Foundry 노드는 구독의 서비스/모델 배포를 나타내며 추론 GPU가 고객 VNet 안에 있다는 뜻이 아닙니다.
 
-Discovery 문서는 Workspace·Bookshelf·Supercomputer의 **관리 리소스 그룹**(MRG)을 설명한다. 실제 환경은 AKS node resource group 등 추가 그룹을 가질 수 있다. 그룹 수·이름·자원 개수를 이 그림으로 단정하지 않는다.[R02][] [R07][]
+Discovery 문서는 Workspace·Bookshelf·Supercomputer의 **관리 리소스 그룹**(MRG)을 설명합니다. 실제 환경은 AKS node resource group 등 추가 그룹을 가질 수 있습니다. 그룹 수·이름·자원 개수를 이 그림으로 단정하지 않습니다.[R02][] [R07][]
 
 <a id="bookshelf"></a>
-## 3. Bookshelf: 색인과 검색은 다른 경로다
+## 3. Bookshelf: 색인과 검색은 다른 경로입니다
 
 ![Bookshelf 색인과 검색 의존성](../../assets/discovery-bookshelf.ko.svg)
 
@@ -112,17 +112,17 @@ graph LR
 
 </details>
 
-위 그림도 **논리적 의존 관계**다. 특정 인덱싱 프로세스가 SQL에 직접 연결하는지, 중간 서비스가 대신 쓰는지까지 공개된 것으로 간주하지 않는다.[R04][] [R05][] [R06][]
+위 그림도 **논리적 의존 관계**입니다. 특정 인덱싱 프로세스가 SQL에 직접 연결하는지, 중간 서비스가 대신 쓰는지까지 공개된 것으로 간주하지 않습니다.[R04][] [R05][] [R06][]
 
-- **색인:** Blob → 문서 추출/enrichment → 임베딩·고메모리 계산 → SQL의 그래프/벡터 KB가 연결된다.
-- **검색:** 이미 만든 KB를 검색 런타임과 모델이 사용한다. 따라서 색인 풀의 장애와 기존 KB 검색 장애는 **별도 확인**해야 한다.
-- **인용 열기:** 검색 응답을 받는 것과 사용자가 원본 Blob을 여는 것은 다른 권한·네트워크 경로다.
-- **저장소 혼동 금지:** “지식 그래프”라는 이유로 Cosmos DB Gremlin이나 Neo4j를 필수 구성요소로 추가하지 않는다. 인용한 Bookshelf 문서는 KB 저장 위치를 Azure SQL DB로 명시한다.
+- **색인:** Blob → 문서 추출/enrichment → 임베딩·고메모리 계산 → SQL의 그래프/벡터 KB가 연결됩니다.
+- **검색:** 이미 만든 KB를 검색 런타임과 모델이 사용합니다. 따라서 색인 풀의 장애와 기존 KB 검색 장애는 **별도 확인**해야 합니다.
+- **인용 열기:** 검색 응답을 받는 것과 사용자가 원본 Blob을 여는 것은 다른 권한·네트워크 경로입니다.
+- **저장소 혼동 금지:** “지식 그래프”라는 이유로 Cosmos DB Gremlin이나 Neo4j를 필수 구성요소로 추가하지 않습니다. 인용한 Bookshelf 문서는 KB 저장 위치를 Azure SQL DB로 명시합니다.
 
 <a id="services"></a>
 ## 4. Azure 구성요소별 역할과 버전 근거
 
-“필수”는 **선택한 기능 안에서의 의존성**이다. 모든 Workspace에 아래 자원이 항상 같은 개수·SKU로 생긴다는 뜻은 아니다.
+“필수”는 **선택한 기능 안에서의 의존성**입니다. 모든 Workspace에 아래 자원이 항상 같은 개수·SKU로 생긴다는 뜻은 아닙니다.
 
 | ID | Azure 구성요소 | 역할·적용 범위 | 확인 가능한 버전/SKU와 남는 확인 사항 |
 |---|---|---|---|
@@ -142,10 +142,10 @@ graph LR
 | D14 | Azure NetApp Files | 고성능 HPC 파일 저장소의 조건부 경로 | **D:** `AzureNetAppFiles` storage kind 지원. **O:** 실제 volume·protocol·성능 계층. 특정 ANF/NFS 버전을 Discovery 공통 pin으로 확인할 근거 없음.[R07][] [R16][] |
 | D15 | Disk Encryption Set (Azure Compute 리소스) | Supercomputer CMK의 디스크 키 연결 | **D:** Supercomputer CMK에는 `diskEncryptionSetId`가 필요. 별도 제품 버전이 아니라 키·리소스 바인딩이며 Key Vault와 함께 수명주기 관리.[R10][] [R12][] |
 
-**Provider 등록 목록은 배포 BOM이 아니다.** `Microsoft.Web`, `Microsoft.ContainerInstance`, `Microsoft.MachineLearningServices`, `Microsoft.Bing`, `Microsoft.ResourceGraph`, `Microsoft.Insights` 등이 선행 등록 목록에 있어도, 그것만으로 모든 배포에 해당 서비스 인스턴스가 존재하거나 특정 런타임 버전이 필수라고 결론낼 수 없다. 실제 목록으로 확인해야 한다.[R03][] [R24][]
+**Provider 등록 목록은 배포 BOM이 아닙니다.** `Microsoft.Web`, `Microsoft.ContainerInstance`, `Microsoft.MachineLearningServices`, `Microsoft.Bing`, `Microsoft.ResourceGraph`, `Microsoft.Insights` 등이 선행 등록 목록에 있어도, 그것만으로 모든 배포에 해당 서비스 인스턴스가 존재하거나 특정 런타임 버전이 필수라고 결론낼 수 없습니다. 실제 목록으로 확인해야 합니다.[R03][] [R24][]
 
 <a id="versions"></a>
-## 5. 구체적으로 어떤 버전에 의존하는가
+## 5. 구체적으로 어떤 버전에 의존합니까?
 
 ### 모델과 API
 
@@ -161,7 +161,7 @@ graph LR
 | V08 | Bookshelf 내부 GraphRAG 구현 | GraphRAG/LazyGraphRAG 방식이 문서에 설명됨 | 특정 OSS `graphrag` 패키지 버전과 동일하다고 가정하지 않음. 내부 build/스키마 pin은 공개 자료로 확인 불가.[R05][] [R06][] |
 | V09 | 도구 버전 | Definition content version + 컨테이너 digest | 고객이 관리하는 계약/아티팩트. 에이전트 버전 불변성만으로 모델 revision·도구·가변 image tag까지 고정되지 않음.[R17][] [R25][] [R26][] |
 
-예를 들어 **`gpt-5.4`를 `gpt-5-4`라는 이름으로 `2026-06-01` API를 사용해 만든다**는 문장에는 모델 이름, 배포 이름, API 계약이 함께 들어 있다. **실제 모델 revision과 upgrade policy는 여전히 별도 확인 대상**이다.
+예를 들어 **`gpt-5.4`를 `gpt-5-4`라는 이름으로 `2026-06-01` API를 사용해 만든다**는 문장에는 모델 이름, 배포 이름, API 계약이 함께 들어 있습니다. **실제 모델 revision과 upgrade policy는 여전히 별도 확인 대상**입니다.
 
 ### 공개 Bicep 예제의 API 버전 — 제품 전체의 최소 버전이 아님
 
@@ -173,7 +173,7 @@ graph LR
 | `Microsoft.Storage/storageAccounts` 및 Blob child resources | `2023-05-01` |
 | `Microsoft.Authorization/roleAssignments` | `2022-04-01` |
 
-이는 [공개 샘플][R14]에서 읽은 **E 값**이다. Discovery 내부가 같은 API 버전으로 모든 관리 자원을 호출한다는 증거가 아니다. 확인한 파일의 SHA-256은 `7092563897d47b4870797236d90d84dc65635f2bb87c398591f16174e48b29aa`다. `master`는 가변 링크이며 이 해시는 **관찰한 파일의 체크섬이지 commit pin이 아니다**.
+이는 [공개 샘플][R14]에서 읽은 **E 값**입니다. Discovery 내부가 같은 API 버전으로 모든 관리 자원을 호출한다는 증거가 아닙니다. 확인한 파일의 SHA-256은 `7092563897d47b4870797236d90d84dc65635f2bb87c398591f16174e48b29aa`입니다. `master`는 가변 링크이며 이 해시는 **관찰한 파일의 체크섬이지 commit pin이 아닙니다**.
 
 <a id="security"></a>
 ## 6. 보안·CMK가 만드는 조건부 의존성
@@ -213,13 +213,13 @@ graph TB
 
 </details>
 
-**ID는 세 층이다.** 사용자 Entra ID/RBAC, 고객 UAMI의 데이터·이미지 접근, Discovery 서비스 주체/내부 관리 ID의 MRG 운영을 구분한다. “모든 Azure 호출이 같은 UAMI로 수행된다”고 표현하지 않는다. Workspace identity와 Supercomputer cluster identity는 문서상 생성 후 변경 불가이고, kubelet/workload identity는 별도 변경 경로가 있다.[R02][]
+**ID는 세 층입니다.** 사용자 Entra ID/RBAC, 고객 UAMI의 데이터·이미지 접근, Discovery 서비스 주체/내부 관리 ID의 MRG 운영을 구분합니다. “모든 Azure 호출이 같은 UAMI로 수행된다”고 표현하지 않습니다. Workspace identity와 Supercomputer cluster identity는 문서상 생성 후 변경 불가이고, kubelet/workload identity는 별도 변경 경로가 있습니다.[R02][]
 
-**CMK는 Key Vault 하나만 추가하는 기능이 아니다.** Workspace/Bookshelf는 키 참조와 Log Analytics dedicated cluster, Supercomputer는 추가 Disk Encryption Set에 의존한다. MMK↔CMK 전환은 생성 이후 불가하다고 명시되어 있다. 키 회전 시 Workspace/Bookshelf 참조와 Supercomputer의 DES를 구분해 갱신하고, 이전 키를 사용하는 자원이 없는지 확인하기 전에는 비활성화하지 않는다.[R10][]
+**CMK는 Key Vault 하나만 추가하는 기능이 아닙니다.** Workspace/Bookshelf는 키 참조와 Log Analytics dedicated cluster, Supercomputer는 추가 Disk Encryption Set에 의존합니다. MMK↔CMK 전환은 생성 이후 불가하다고 명시되어 있습니다. 키 회전 시 Workspace/Bookshelf 참조와 Supercomputer의 DES를 구분해 갱신하고, 이전 키를 사용하는 자원이 없는지 확인하기 전에는 비활성화하지 않습니다.[R10][]
 
 **네트워크에서 특히 구분할 것:**
 
-| 항목 | 무엇을 보장하는가 / 보장하지 않는가 |
+| 항목 | 보장하는 범위 / 보장하지 않는 범위 |
 |---|---|
 | 기본 network hardening | MRG 내부 보호. 고객 API의 public access 차단과 같은 설정이 아님 |
 | Workspace/Bookshelf `publicNetworkAccess` | 문서상 기본 Enabled이면 public/PE 경로 모두 가능. Disabled는 public 경로를 거부 |
@@ -228,12 +228,12 @@ graph TB
 | Blob `allowBlobPublicAccess=false` | 익명 접근 금지. 승인된 사용자의 공용 네트워크 경로 차단과 다름 |
 | 모델 `GlobalStandard` / `DataZoneStandard` | 추론 처리 위치·quota·요금 특성에 영향. **Private Link나 Workspace 리전만으로 모델 처리 위치가 고정되지 않음** |
 
-하드닝 문서에는 “zero public exposure”라는 요약과 별도 public access/API server 조건이 함께 존재한다. 그러므로 **실제 DNS, publicNetworkAccess, AKS API access profile, outboundType, Blob 방화벽, 모델 배포 유형을 각각 확인**한다. 샘플 Bicep도 `NetworkIsolation=true`와 동시에 고객 Storage의 `networkAcls.defaultAction='Allow'`, Preview Workbench 관련 기본값을 포함한다. 샘플을 보안 강화 완료 상태로 간주하지 않는다.[R08][] [R09][] [R12][] [R14][] [R18][]
+하드닝 문서에는 “zero public exposure”라는 요약과 별도 public access/API server 조건이 함께 존재합니다. 그러므로 **실제 DNS, publicNetworkAccess, AKS API access profile, outboundType, Blob 방화벽, 모델 배포 유형을 각각 확인**합니다. 샘플 Bicep도 `NetworkIsolation=true`와 동시에 고객 Storage의 `networkAcls.defaultAction='Allow'`, Preview Workbench 관련 기본값을 포함합니다. 샘플을 보안 강화 완료 상태로 간주하지 않습니다.[R08][] [R09][] [R12][] [R14][] [R18][]
 
 <a id="impact"></a>
 ## 7. 변경·장애가 서로에게 주는 영향
 
-아래 영향은 문서에 나온 의존 관계에서 도출한 **운영 판단**이지 장애 실험 결과나 SLA가 아니다. 범위를 확인하고 실제 경로별로 검증한다.
+아래 영향은 문서에 나온 의존 관계에서 도출한 **운영 판단**이지 장애 실험 결과나 SLA가 아닙니다. 범위를 확인하고 실제 경로별로 검증합니다.
 
 | ID | 변경/문제 | 예상 영향 | 반드시 분리해서 볼 것 |
 |---|---|---|---|
@@ -250,14 +250,14 @@ graph TB
 | I11 | 관리 API 또는 SDK 변경 | 요청 스키마·기본값·지원 속성 변화 가능 | 새 API로 GET한 것만으로 기존 배포가 새 보안/런타임 구성으로 이전되지 않음 |
 | I12 | Engine Stop·노드 scale-to-zero | 새 cognition 작업을 줄이거나 계산 노드 비용을 줄임 | 실행 중 작업과 SQL/Search/ACA 등 상시 비용은 별도. runtime User Messages와 인프라 요금도 별도 |
 
-버전 변경 후 최소 확인: **agent 기본 호출 → KB 검색·실제 인용 → 소형 도구 실행·파일 열기 → Engine 검증 → stop/잔여 작업·비용 확인**. 관리 자원은 Discovery가 지원하는 운영 절차 안에서 변경하며, MRG 자원을 임의로 삭제·업그레이드·축소하지 않는다.[R04][] [R07][] [R10][] [R17][] [R19][] [R27][]
+버전 변경 후 최소 확인: **agent 기본 호출 → KB 검색·실제 인용 → 소형 도구 실행·파일 열기 → Engine 검증 → stop/잔여 작업·비용 확인**. 관리 자원은 Discovery가 지원하는 운영 절차 안에서 변경하며, MRG 자원을 임의로 삭제·업그레이드·축소하지 않습니다.[R04][] [R07][] [R10][] [R17][] [R19][] [R27][]
 
 <a id="observe"></a>
 ## 8. 실제 배포의 버전/BOM을 확인하는 방법
 
-아래는 **배포 후, 허용된 읽기 권한으로 사용하는 예시**다. 이 절에 실제 조회 결과를 포함하지 않는다. 실제 ID·MRG 이름을 사용하고, `null`이나 접근 거부를 “최신/없음”으로 채우지 않는다. Workspace/Bookshelf/Supercomputer MRG와 발견된 node resource group을 각각 확인한다.
+아래는 **배포 후, 허용된 읽기 권한으로 사용하는 예시**입니다. 이 절에 실제 조회 결과를 포함하지 않습니다. 실제 ID·MRG 이름을 사용하고, `null`이나 접근 거부를 “최신/없음”으로 채우지 않습니다. Workspace/Bookshelf/Supercomputer MRG와 발견된 node resource group을 각각 확인합니다.
 
-같은 Bash 세션에서 첫 블록의 변수를 설정한 뒤 다음 블록을 실행한다. `<...>`는 모두 실제 값으로 교체하며, 구독 기본값을 변경하는 `az account set`은 사용하지 않는다.
+같은 Bash 세션에서 첫 블록의 변수를 설정한 뒤 다음 블록을 실행합니다. `<...>`는 모두 실제 값으로 교체하며, 구독 기본값을 변경하는 `az account set`은 사용하지 않습니다.
 
 ### 자원 목록
 
@@ -269,7 +269,7 @@ az resource list --subscription "$SUBSCRIPTION_ID" --resource-group "$MRG" \
   --output json
 ```
 
-목록 응답에서 생략된 SKU/상세 값은 해당 리소스의 GET으로 추가 확인한다. 비밀·키·연결 문자열 전체를 덤프하지 않는다.
+목록 응답에서 생략된 SKU/상세 값은 해당 리소스의 GET으로 추가 확인합니다. 비밀·키·연결 문자열 전체를 덤프하지 않습니다.
 
 ### Discovery 모델 계약과 실제 Foundry 배포
 
@@ -287,7 +287,7 @@ az cognitiveservices account deployment list \
   --output json
 ```
 
-둘은 서로 다른 리소스 표현이다. 자동 cognition 배포도 포함해 실제 모델 목록을 확인한다. 공개 `modelVersion` 속성을 사용할 수 있다는 사실과, 모든 관리형 모델의 revision 변경을 고객이 임의 수행해도 된다는 주장은 다르다.[R13][] [R19][] [R20][] [R23][]
+둘은 서로 다른 리소스 표현입니다. 자동 cognition 배포도 포함해 실제 모델 목록을 확인합니다. 공개 `modelVersion` 속성을 사용할 수 있다는 사실과, 모든 관리형 모델의 revision 변경을 고객이 임의 수행해도 된다는 주장은 다릅니다.[R13][] [R19][] [R20][] [R23][]
 
 ### AKS와 노드 풀
 
@@ -304,14 +304,14 @@ az aks nodepool list --subscription "$SUBSCRIPTION_ID" \
   --output json
 ```
 
-pool 메타데이터만으로 rolling upgrade 중인 모든 노드의 동일 버전을 증명할 수는 없다. 필요한 경우 승인된 운영자가 노드별 실제 버전·이미지/드라이버를 확인한다. 여기서는 cluster-admin 자격증명 취득이나 업그레이드 명령을 제시하지 않는다.[R21][] [R22][]
+pool 메타데이터만으로 rolling upgrade 중인 모든 노드의 동일 버전을 증명할 수는 없습니다. 필요한 경우 승인된 운영자가 노드별 실제 버전·이미지/드라이버를 확인합니다. 여기서는 cluster-admin 자격증명 취득이나 업그레이드 명령을 제시하지 않습니다.[R21][] [R22][]
 
-**최종 BOM에 남길 것:** 확인 시각·리소스 ID, 실제 모델 revision/upgrade policy, 실제 Kubernetes/node image, SKU·capacity, image digest와 도구 라이브러리, CMK keyVersion/DES/로그 연결, 네트워크·신원 바인딩. 읽기 권한으로도 공개되지 않는 서비스 내부 버전은 Microsoft 지원/서비스 담당자의 확인 대상으로 남긴다.
+**최종 BOM에 남길 것:** 확인 시각·리소스 ID, 실제 모델 revision/upgrade policy, 실제 Kubernetes/node image, SKU·capacity, image digest와 도구 라이브러리, CMK keyVersion/DES/로그 연결, 네트워크·신원 바인딩. 읽기 권한으로도 공개되지 않는 서비스 내부 버전은 Microsoft 지원/서비스 담당자의 확인 대상으로 남깁니다.
 
 <a id="sources"></a>
 ## 9. 출처와 확인 범위
 
-API·모델·SKU 숫자는 아래 자료에서 확인했다. 샘플/권장 구성과 지원 계약, 실제 배포 값은 구분했다. 본문 구조·그림·행 ID는 영문판과 동일하다.
+API·모델·SKU 숫자는 아래 자료에서 확인했습니다. 샘플/권장 구성과 지원 계약, 실제 배포 값은 구분했습니다. 본문 구조·그림·행 ID는 영문판과 동일합니다.
 
 | ID | 공식 출처 |
 |---|---|

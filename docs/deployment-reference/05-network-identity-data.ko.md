@@ -1,8 +1,8 @@
 # 05 — 네트워크·권한·사설 데이터 접근
 
-[목차](README.ko.md) · **기준일: 2026-10-01 실제 확인. 주소·역할·정책은 재개 전에 다시 확인한다.**
+[목차](README.ko.md) · **기준일: 2026-10-01 실제 확인. 주소·역할·정책은 재개 전에 다시 확인합니다.**
 
-> **주로 이전 Sweden 환경의 네트워크·정책·클라이언트 기록이다.** 이 문서의 VM·Storage 이름과 `blob:sync`는 새 Korea 또는 고객 환경용 기본값이 아니다. 공통 준비 절차는 [가이드 L01–L02](../labs/MICROSOFT-DISCOVERY-LAB.ko.md#l01)를 따른다.
+> **주로 이전 Sweden 환경의 네트워크·정책·클라이언트 기록입니다.** 이 문서의 VM·Storage 이름과 `blob:sync`는 새 Korea 또는 고객 환경용 기본값이 아닙니다. 공통 준비 절차는 [가이드 L01–L02](../labs/MICROSOFT-DISCOVERY-LAB.ko.md#l01)를 따릅니다.
 
 ## 서로 다른 네트워크 설정
 
@@ -16,17 +16,17 @@
 | 서브넷 `defaultOutboundAccess=false` | VM의 암시적 기본 egress 비활성. 모든 아웃바운드 경로를 차단한다는 뜻은 아님 |
 | Supercomputer `outboundType=LoadBalancer` | 서비스의 명시적 egress 방식. 완전한 private-only 통신을 보장하는 설정이 아님 |
 
-Workspace가 `Failed`인 상태에서 설정값만 보고 모든 관리 자원의 하드닝·실행이 완료됐다고 주장하지 않는다.
+Workspace가 `Failed`인 상태에서 설정값만 보고 모든 관리 자원의 하드닝·실행이 완료됐다고 주장하지 않습니다.
 
-사설 Blob 클라이언트에 공개 IP가 없다는 사실을 전체 Supercomputer에도 공개 IP가 없다는 뜻으로 확대하지 않는다. 기본 `LoadBalancer` egress가 조직 정책에 막히면 지원되는 별도 라우팅/egress 설계를 검토한다. 임의 정책 해제나 검증되지 않은 네트워크 속성 변경으로 우회하지 않는다.
+사설 Blob 클라이언트에 공개 IP가 없다는 사실을 전체 Supercomputer에도 공개 IP가 없다는 뜻으로 확대하지 않습니다. 기본 `LoadBalancer` egress가 조직 정책에 막히면 지원되는 별도 라우팅/egress 설계를 검토합니다. 임의 정책 해제나 검증되지 않은 네트워크 속성 변경으로 우회하지 않습니다.
 
 ## LoadBalancer feature 등록 — 오후 후속 작업에서 해결
 
-`Microsoft.Network/AllowBringYourOwnPublicIpAddress`는 Discovery 활성화 및 Provider 등록과 별개다. 2026-10-01 오후 조회에서는 `NotRegistered`였고, 당시 계정의 상속 Owner 권한으로 등록 요청을 보내 즉시 `Registered`를 받았다. 이어 `Microsoft.Network`를 재등록하고 두 상태를 독립적으로 다시 확인했다.
+`Microsoft.Network/AllowBringYourOwnPublicIpAddress`는 Discovery 활성화 및 Provider 등록과 별개입니다. 2026-10-01 오후 조회에서는 `NotRegistered`였고, 당시 계정의 상속 Owner 권한으로 등록 요청을 보내 즉시 `Registered`를 받았습니다. 이어 `Microsoft.Network`를 재등록하고 두 상태를 독립적으로 다시 확인했습니다.
 
-이 구독에서는 별도 Microsoft 승인 대기가 필요하지 않았다. 다만 **사용자의 동의와 Azure RBAC 권한은 별개**이며 다른 구독에서도 즉시 승인된다는 보장은 없다. 이 등록이 공개 접근을 금지하는 조직 정책, AKS 지역 용량, 모델 quota 제한을 해제하지는 않는다.
+이 구독에서는 별도 Microsoft 승인 대기가 필요하지 않았습니다. 다만 **사용자의 동의와 Azure RBAC 권한은 별개**이며 다른 구독에서도 즉시 승인된다는 보장은 없습니다. 이 등록이 공개 접근을 금지하는 조직 정책, AKS 지역 용량, 모델 quota 제한을 해제하지는 않습니다.
 
-다음은 읽기 전용 확인이다. 이미 등록돼 있다면 다시 요청하지 않는다.
+다음은 읽기 전용 확인입니다. 이미 등록돼 있다면 다시 요청하지 않습니다.
 
 ```bash
 az feature show --namespace Microsoft.Network \
@@ -38,13 +38,13 @@ az provider show --namespace Microsoft.Network \
   --query "{namespace:namespace,state:registrationState}"
 ```
 
-근거: [공식 문제 해결 절차](https://learn.microsoft.com/azure/microsoft-discovery/troubleshoot-microsoft-discovery#supercomputer-deployment-stalls-because-a-required-public-ip-feature-isnt-registered), [실제 등록 응답](../../artifacts/discovery-resume-network-feature-registration-20261001.json), [Provider 재등록 후 상태](../../artifacts/discovery-resume-network-provider-20261001.json). 이 기능의 최초 미등록을 과거 `AKSCapacityHeavyUsage`의 입증된 원인으로 바꾸어 해석하지 않는다.
+근거: [공식 문제 해결 절차](https://learn.microsoft.com/azure/microsoft-discovery/troubleshoot-microsoft-discovery#supercomputer-deployment-stalls-because-a-required-public-ip-feature-isnt-registered), [실제 등록 응답](../../artifacts/discovery-resume-network-feature-registration-20261001.json), [Provider 재등록 후 상태](../../artifacts/discovery-resume-network-provider-20261001.json). 이 기능의 최초 미등록을 과거 `AKSCapacityHeavyUsage`의 입증된 원인으로 바꾸어 해석하지 않습니다.
 
 ## 중앙 진단 저장소 누락 — 기존 정책으로 복구 완료
 
-16:10 후속 조사에서 지정 중앙 workspace뿐 아니라 `McapsGovernance` RG 자체가 없었고, 같은 이름의 soft-delete 복구 대상도 없었다. Discovery MRG의 자체 Log Analytics 두 개는 정상 존재하지만, 조직 정책의 중앙 목적지로 임의 대체하면 같은 준수 조건을 충족하지 않는다.
+16:10 후속 조사에서 지정 중앙 workspace뿐 아니라 `McapsGovernance` RG 자체가 없었고, 같은 이름의 soft-delete 복구 대상도 없었습니다. Discovery MRG의 자체 Log Analytics 두 개는 정상 존재하지만, 조직 정책의 중앙 목적지로 임의 대체하면 같은 준수 조건을 충족하지 않습니다.
 
-기존 `MCAPSGovDeployPolicies`의 다음 규칙만 순차 실행했다. 정책의 기존 관리 ID에 필요한 상속 Owner가 있어 새 권한 부여나 정책 변경은 없었다.
+기존 `MCAPSGovDeployPolicies`의 다음 규칙만 순차 실행했습니다. 정책의 기존 관리 ID에 필요한 상속 Owner가 있어 새 권한 부여나 정책 변경은 없었습니다.
 
 | 규칙 | 범위 | 결과 |
 |---|---|---|
@@ -52,9 +52,9 @@ az provider show --namespace Microsoft.Network \
 | `NewLogAnalyticsWorkspaceDeploy` | 현재 구독의 지정 중앙 workspace | 16:23:41 Succeeded |
 | `EnableCognitiveServicesDiagnostics` | `aif-dwsp-foundry-ym5ffvaa` 리소스 하나 | 16:26:08 Succeeded |
 
-각 작업은 **실제 배포 1 / 성공 1 / 실패 0**이었다. 중앙 workspace의 실제 값은 **West US 2, PerGB2018, 보존 30일, 일일 cap 없음**이며 기존 정책 기본값을 유지했다. 진단 프로필 `setByPolicy-MCAPSGovernance`의 workspace ID 일치와 **allLogs / AllMetrics 활성화**도 GET으로 확인했다. 전체 관리 그룹이나 다른 계정에 일괄 remediation을 실행하지 않았다.
+각 작업은 **실제 배포 1 / 성공 1 / 실패 0**이었습니다. 중앙 workspace의 실제 값은 **West US 2, PerGB2018, 보존 30일, 일일 cap 없음**이며 기존 정책 기본값을 유지했습니다. 진단 프로필 `setByPolicy-MCAPSGovernance`의 workspace ID 일치와 **allLogs / AllMetrics 활성화**도 GET으로 확인했습니다. 전체 관리 그룹이나 다른 계정에 일괄 remediation을 실행하지 않았습니다.
 
-아래는 읽기 전용 확인이다. 이미 복구된 자원을 다시 생성하거나 정책을 비활성화하지 않는다.
+아래는 읽기 전용 확인입니다. 이미 복구된 자원을 다시 생성하거나 정책을 비활성화하지 않습니다.
 
 ```bash
 az monitor log-analytics workspace show \
@@ -68,15 +68,15 @@ az monitor diagnostic-settings show \
   --name setByPolicy-MCAPSGovernance
 ```
 
-후속 [16:30:10 KST 재평가](../../artifacts/discovery-governance-compliance-20261001.json)에서 **이 Foundry 계정의 진단 정책은 Compliant**로 확인됐다. 이전 Failed 배포 이력은 과거 기록으로 남는다. 전체 구독의 모든 정책 준수, 실제 로그 유입, 과거 누락 로그의 소급 복구까지 확인한 것은 아니다. 중앙 workspace는 공유 자원이며 종량제 비용이 발생할 수 있다. `Do Not Delete` 태그를 유지하고 실습 종료와 함께 삭제하지 않는다.
+후속 [16:30:10 KST 재평가](../../artifacts/discovery-governance-compliance-20261001.json)에서 **이 Foundry 계정의 진단 정책은 Compliant**로 확인됐습니다. 이전 Failed 배포 이력은 과거 기록으로 남습니다. 전체 구독의 모든 정책 준수, 실제 로그 유입, 과거 누락 로그의 소급 복구까지 확인한 것은 아닙니다. 중앙 workspace는 공유 자원이며 종량제 비용이 발생할 수 있습니다. `Do Not Delete` 태그를 유지하고 실습 종료와 함께 삭제하지 않습니다.
 
 근거: [기존 정책 remediation 절차](https://learn.microsoft.com/azure/governance/policy/how-to/remediate-resources), [실제 복구 요약](../../artifacts/discovery-governance-recovery-20261001.json), [진단 설정 GET](../../artifacts/discovery-governance-diagnostic-setting-20261001.json).
 
 ## Storage 403의 실제 원인
 
-처음에는 선택 IP를 허용한 Storage를 요청했지만, 관리 그룹 정책 `StorageAccount_PublicNetwork_Modify`가 생성 중 공개 접근을 Disabled로 바꿨다. RG 수준 정책 목록이 비어 있어도 상위 정책이 없다는 뜻은 아니다.
+처음에는 선택 IP를 허용한 Storage를 요청했지만, 관리 그룹 정책 `StorageAccount_PublicNetwork_Modify`가 생성 중 공개 접근을 Disabled로 바꿨습니다. RG 수준 정책 목록이 비어 있어도 상위 정책이 없다는 뜻은 아닙니다.
 
-정책과 실제 GET을 확인한 뒤 템플릿을 private-only로 수정하고 Private Endpoint/DNS 및 VNet 내부 클라이언트를 만들었다. **방화벽을 전체 공개하거나 공유 키를 켜는 방식으로 오류를 숨기지 않았다.**
+정책과 실제 GET을 확인한 뒤 템플릿을 private-only로 수정하고 Private Endpoint/DNS 및 VNet 내부 클라이언트를 만들었습니다. **방화벽을 전체 공개하거나 공유 키를 켜는 방식으로 오류를 숨기지 않았습니다.**
 
 ```bash
 az storage account show \
@@ -87,20 +87,20 @@ az storage account show \
   --output json
 ```
 
-[정책 이벤트](../../artifacts/discovery-storage-policy-20261001.json)와 [사설 연결 배포](../../artifacts/discovery-storage-private-deployment-20261001.json)를 참고한다. `AuthorizationFailure`와 `AuthorizationPermissionMismatch`를 같은 원인으로 단정하지 말고 신원·역할·네트워크를 분리해 조사한다.
+[정책 이벤트](../../artifacts/discovery-storage-policy-20261001.json)와 [사설 연결 배포](../../artifacts/discovery-storage-private-deployment-20261001.json)를 참고합니다. `AuthorizationFailure`와 `AuthorizationPermissionMismatch`를 같은 원인으로 단정하지 말고 신원·역할·네트워크를 분리해 조사합니다.
 
 <a id="key-auth-observation"></a>
 ## Cognitive Services 키 조회 거절 — 배포 원인으로 미확정
 
-10-01 **20:33:04–20:34:50 KST**에 `Microsoft.CognitiveServices/accounts/listkeys/action` 30개가 `BadRequest`와 `Failed to list key. disableLocalAuth is set to be true`를 반환했다. 이 오류는 Storage의 사설 네트워크 403과 다른 관측이다. 키 기반 인증이 비활성인 계정에 대한 키 조회 거절이며, 관리 ID나 Entra 인증의 데이터 접근 실패를 그대로 뜻하지 않는다.
+10-01 **20:33:04–20:34:50 KST**에 `Microsoft.CognitiveServices/accounts/listkeys/action` 30개가 `BadRequest`와 `Failed to list key. disableLocalAuth is set to be true`를 반환했습니다. 이 오류는 Storage의 사설 네트워크 403과 다른 관측입니다. 키 기반 인증이 비활성인 계정에 대한 키 조회 거절이며, 관리 ID나 Entra 인증의 데이터 접근 실패를 그대로 뜻하지 않습니다.
 
-해당 항목 중 기존 Workspace 저녁 배포 correlation과 일치한 것은 **0개**였다. 따라서 원본 파일명이 `workspace-evening-failures`라고 해서 30건을 모두 Workspace 생성 실패 원인으로 취급하지 않는다. 실제 부모 작업의 terminal 오류는 별도 재조회에서 `containerAppsEnvironment`의 `Conflict`로 확인됐다.
+해당 항목 중 기존 Workspace 저녁 배포 correlation과 일치한 것은 **0개**였습니다. 따라서 원본 파일명이 `workspace-evening-failures`라고 해서 30건을 모두 Workspace 생성 실패 원인으로 취급하지 않습니다. 실제 부모 작업의 terminal 오류는 별도 재조회에서 `containerAppsEnvironment`의 `Conflict`로 확인됐습니다.
 
-대응은 **원인 구분과 기록 보완**이며, `disableLocalAuth=false`로 변경하거나 키 인증·권한을 확대하지 않았다. 조회한 오류의 리소스·operation·correlation·시각과 실제 실패한 배포 operation을 함께 확인한다. [최소 관측 요약](../../artifacts/discovery-incident-supplement-20261002.json), [저녁 재시도 결과](../reports/EXECUTION-REPORT.ko.md#incident-supplement)를 참고한다.
+대응은 **원인 구분과 기록 보완**이며, `disableLocalAuth=false`로 변경하거나 키 인증·권한을 확대하지 않았습니다. 조회한 오류의 리소스·operation·correlation·시각과 실제 실패한 배포 operation을 함께 확인합니다. [최소 관측 요약](../../artifacts/discovery-incident-supplement-20261002.json), [저녁 재시도 결과](../reports/EXECUTION-REPORT.ko.md#incident-supplement)를 참고합니다.
 
 ## 이전 Sweden 환경의 9개 서브넷
 
-VNet `vnet-discovery-hol`, `10.80.0.0/16`. 새 환경에서는 기존 네트워크와 중복되지 않는 대역을 선택한다.
+VNet `vnet-discovery-hol`, `10.80.0.0/16`. 새 환경에서는 기존 네트워크와 중복되지 않는 대역을 선택합니다.
 
 | 서브넷 | CIDR | 목적 |
 |---|---|---|
@@ -114,7 +114,7 @@ VNet `vnet-discovery-hol`, `10.80.0.0/16`. 새 환경에서는 기존 네트워�
 | `storagePeSubnet` | `10.80.8.0/24` | 고객 Blob PE |
 | `blobClientSubnet` | `10.80.9.0/24` | 관리자용 사설 Blob 클라이언트 |
 
-Workspace/Bookshelf 인스턴스끼리 위임·PE 서브넷을 임의 공유하지 않는다. 전체 VNet의 inline subnet 배열을 다시 PUT하지 않고 새 child subnet만 추가했던 이유는 실제 `IncompatibleDelegations` 실패를 피하면서 기존 구성을 보존하기 위해서다.
+Workspace/Bookshelf 인스턴스끼리 위임·PE 서브넷을 임의 공유하지 않습니다. 전체 VNet의 inline subnet 배열을 다시 PUT하지 않고 새 child subnet만 추가했던 이유는 실제 `IncompatibleDelegations` 실패를 피하면서 기존 구성을 보존하기 위해서입니다.
 
 ## 신원별 역할
 
@@ -126,19 +126,19 @@ Workspace/Bookshelf 인스턴스끼리 위임·PE 서브넷을 임의 공유하�
 | Foundry 관리 자원 사용자 | 필요한 데이터 권한 확인. 이번에는 서비스가 MRG에 Foundry Owner를 부여해 Foundry User를 중복 추가하지 않음 |
 | 사설 Blob VM의 자체 관리 ID | 고객 Storage 계정의 Blob Data Contributor만. Discovery 플랫폼/네트워크 권한 없음 |
 
-공식 SP의 **애플리케이션 ID**는 `92c174ac-8e41-4815-a1b7-d81b19ab03ce`다. 역할 할당용 **테넌트 object ID**와 혼동하지 않는다. 새 앱/비밀을 만들지 말고 실제 SP를 확인한다.
+공식 SP의 **애플리케이션 ID**는 `92c174ac-8e41-4815-a1b7-d81b19ab03ce`입니다. 역할 할당용 **테넌트 object ID**와 혼동하지 않습니다. 새 앱/비밀을 만들지 말고 실제 SP를 확인합니다.
 
-NSP Joiner의 두 액션은 [access.bicep](../../infra/access.bicep)에 정의돼 있다. 문서의 역할 표시 이름에 `(Preview)`가 남아 있더라도 실제 구독에서는 빠질 수 있으므로 [검증한 역할 GUID](../../infra/lab-foundation.bicep)를 기준으로 확인한다. 구독 범위의 서비스 역할은 다른 Discovery 환경이 공유할 수 있다.
+NSP Joiner의 두 액션은 [access.bicep](../../infra/access.bicep)에 정의돼 있습니다. 문서의 역할 표시 이름에 `(Preview)`가 남아 있더라도 실제 구독에서는 빠질 수 있으므로 [검증한 역할 GUID](../../infra/lab-foundation.bicep)를 기준으로 확인합니다. 구독 범위의 서비스 역할은 다른 Discovery 환경이 공유할 수 있습니다.
 
 ## 검증된 사설 Blob 클라이언트
 
 - VM: `vm-discovery-blob-client`, B2als_v2 2 vCPU/4 GB, Ubuntu 24.04.
 - 공개 IP 없음, 인바운드 전체 차단 NSG, 기본 outbound 비활성, Storage 서비스 엔드포인트.
-- 관측된 VM 사설 주소 `10.80.9.4`, Blob PE 주소 `10.80.8.4`. 주소 자체는 미래 보장값이 아니다.
-- Azure VM Run Command로 Python 표준 라이브러리와 VM의 IMDS 토큰을 사용. 키/SAS/사용자 토큰을 스크립트에 넣지 않는다.
-- 기존 Blob은 같은 해시이면 재사용, 다르면 덮어쓰지 않고 실패. 5개 원본을 읽어 SHA-256 검증했다.
+- 관측된 VM 사설 주소 `10.80.9.4`, Blob PE 주소 `10.80.8.4`. 주소 자체는 미래 보장값이 아닙니다.
+- Azure VM Run Command로 Python 표준 라이브러리와 VM의 IMDS 토큰을 사용. 키/SAS/사용자 토큰을 스크립트에 넣지 않습니다.
+- 기존 Blob은 같은 해시이면 재사용, 다르면 덮어쓰지 않고 실패. 5개 원본을 읽어 SHA-256 검증했습니다.
 
-다음 명령은 **실제 Azure 작업과 과금**을 수반하며 이 기존 환경의 VM 관리 권한이 있는 운영자만 수행한다. 마지막 기록에서 사설 VM은 할당 해제 상태였으며 실행 전에 상태를 다시 확인한다.
+다음 명령은 **실제 Azure 작업과 과금**을 수반하며 이 기존 환경의 VM 관리 권한이 있는 운영자만 수행합니다. 마지막 기록에서 사설 VM은 할당 해제 상태였으며 실행 전에 상태를 다시 확인합니다.
 
 ```bash
 SUBSCRIPTION_ID='51531604-2337-4c05-bc05-3c3d4ff154e5'
@@ -151,17 +151,17 @@ az vm deallocate --name vm-discovery-blob-client \
   --resource-group "$RESOURCE_GROUP" --subscription "$SUBSCRIPTION_ID"
 ```
 
-`blob:sync`가 실패해도 VM의 비용·실행 상태를 정리한다. **마지막 deallocate 성공을 파일 동기화 성공으로 간주하지 않는다.** [최신 결과](../../artifacts/discovery-private-blob-sync.json)의 `outcome=verified`, 파일 5개, 원본 해시와 읽기 request ID를 확인한다.
+`blob:sync`가 실패해도 VM의 비용·실행 상태를 정리합니다. **마지막 deallocate 성공을 파일 동기화 성공으로 간주하지 않습니다.** [최신 결과](../../artifacts/discovery-private-blob-sync.json)의 `outcome=verified`, 파일 5개, 원본 해시와 읽기 request ID를 확인합니다.
 
-현재 [전송 스크립트](../../scripts/sync-private-blobs.mjs)는 이 실습의 VM/Storage 이름과 `10.80.8.0/24`를 사용한다. 다른 환경의 이름·CIDR로 바꾸면 템플릿뿐 아니라 스크립트도 일치시켜야 한다. Run Command에는 이 저장소의 합성 입력만 전달하며 임의의 실제 고객 데이터를 전송하지 않는다.
+현재 [전송 스크립트](../../scripts/sync-private-blobs.mjs)는 이 실습의 VM/Storage 이름과 `10.80.8.0/24`를 사용합니다. 다른 환경의 이름·CIDR로 바꾸면 템플릿뿐 아니라 스크립트도 일치시켜야 합니다. Run Command에는 이 저장소의 합성 입력만 전달하며 임의의 실제 고객 데이터를 전송하지 않습니다.
 
-**원격 VM 접근 성공은 로컬 브라우저의 VNet 연결 성공이 아니다.** 노트북에서 Blob 링크를 직접 열려면 승인된 VPN/ExpressRoute 등 별도 경로가 필요하다. CORS와 사용자 데이터 역할도 따로 확인한다.
+**원격 VM 접근 성공은 로컬 브라우저의 VNet 연결 성공이 아닙니다.** 노트북에서 Blob 링크를 직접 열려면 승인된 VPN/ExpressRoute 등 별도 경로가 필요합니다. CORS와 사용자 데이터 역할도 따로 확인합니다.
 
 ## Studio·CLI 로그인 구분
 
-Discovery API의 정상 `access_as_user` 토큰 발급은 확인했지만, 이것이 Studio 브라우저 로그인은 아니다. Playwright headless로는 정상 Microsoft 로그인 화면까지 확인했다. 비밀번호/MFA/보안 키는 사용자가 정상 절차로 처리하며, CLI 토큰·쿠키를 브라우저에 주입해 우회하지 않는다.
+Discovery API의 정상 `access_as_user` 토큰 발급은 확인했지만, 이것이 Studio 브라우저 로그인은 아닙니다. Playwright headless로는 정상 Microsoft 로그인 화면까지 확인했습니다. 비밀번호/MFA/보안 키는 사용자가 정상 절차로 처리하며, CLI 토큰·쿠키를 브라우저에 주입해 우회하지 않습니다.
 
-Azure MCP와 Azure CLI가 서로 다른 테넌트로 인증됐던 사례도 있었다. 다른 신원의 403을 실습 계정의 권한 부족으로 오인하지 말고 계정·테넌트·구독을 먼저 대조한다.
+Azure MCP와 Azure CLI가 서로 다른 테넌트로 인증됐던 사례도 있었습니다. 다른 신원의 403을 실습 계정의 권한 부족으로 오인하지 말고 계정·테넌트·구독을 먼저 대조합니다.
 
 ## 근거
 

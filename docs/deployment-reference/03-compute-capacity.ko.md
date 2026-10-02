@@ -2,29 +2,29 @@
 
 [목차](README.ko.md) · **기준일: 2026-10-01 독립 에이전트 검토와 실제 배포 오류 기록**
 
-> **작성자 환경의 용량 조사 기록이다.** 아래 지원요청·명령·quota 수치를 새 고객 환경에 그대로 적용하지 않는다. 수요 계산의 가정과 실제 관측을 구분한다.
+> **작성자 환경의 용량 조사 기록입니다.** 아래 지원요청·명령·quota 수치를 새 고객 환경에 그대로 적용하지 않습니다. 수요 계산의 가정과 실제 관측을 구분합니다.
 
-**최신 구분, 2026-10-02 09:10 KST:** 새 Korea Supercomputer·AKS는 Succeeded이며 시스템 2대, cpulab 0대/min 0/max 1이다. 이 문서의 Sweden 용량 오류는 과거 실패 원인으로 보존하며 현재 Korea 런타임의 차단 원인으로 표시하지 않는다. 기존 Sweden 자원은 Failed 상태로 남아 있다. [현재 이슈](01-current-state.ko.md#open-issues), [저녁 재시도 보완](../reports/EXECUTION-REPORT.ko.md#incident-supplement)을 참고한다.
+**최신 구분, 2026-10-03 05:45 KST:** 새 Korea Supercomputer·AKS는 Succeeded이며 시스템 2대, cpulab 0대/min 0/max 1입니다. 과거 Sweden Home과 빈 관리 RG는 삭제됐고, 이 문서의 용량 오류는 실패 이력으로만 보존합니다. 이를 현재 Korea 런타임의 차단 원인으로 표시하지 않습니다. [현재 이슈](01-current-state.ko.md#open-issues), [저녁 재시도 보완](../reports/EXECUTION-REPORT.ko.md#incident-supplement)을 참고합니다.
 
 ## 결론
 
-**아래 10-01 Small·CPU 계획의 조회값만으로 선제적인 VM vCPU·AKS 클러스터 수 quota 증액 필요성을 단정하지 않는다.** 당시 실패는 quota 소진이 아니라 `AKSCapacityHeavyUsage` 계열이었다. Sweden에서 다시 생성하려면 **지역 서비스 용량·구독별 배포 제한 확인**이 필요하며 숫자 한도 증액과 구분한다. 새 색인 풀은 아직 선택·배포하지 않았으므로 그 실제 수요는 생성 전에 별도 확인한다.
+**아래 10-01 Small·CPU 계획의 조회값만으로 선제적인 VM vCPU·AKS 클러스터 수 quota 증액 필요성을 단정하지 않습니다.** 당시 실패는 quota 소진이 아니라 `AKSCapacityHeavyUsage` 계열이었습니다. Sweden에서 다시 생성하려면 **지역 서비스 용량·구독별 배포 제한 확인**이 필요하며 숫자 한도 증액과 구분합니다. 새 색인 풀은 아직 선택·배포하지 않았으므로 그 실제 수요는 생성 전에 별도 확인합니다.
 
-지원 리전, 서비스 사용 승인, quota, SKU/zone 허용, 실제 할당 용량은 서로 다른 조건이다. 현재 가용 용량이 회복됐는지는 과거 오류만으로 알 수 없으므로 재개 시 다시 확인한다.
+지원 리전, 서비스 사용 승인, quota, SKU/zone 허용, 실제 할당 용량은 서로 다른 조건입니다. 현재 가용 용량이 회복됐는지는 과거 오류만으로 알 수 없으므로 재개 시 다시 확인합니다.
 
 ## 2026-10-01 오후 재시도에서 확인한 용량 블로커
 
-`AllowBringYourOwnPublicIpAddress` 등록과 `Microsoft.Network` 전파를 확인한 뒤 기존 코어를 한 번 재시도했다. **15:46:52 KST의 새 하위 AKS 요청도 `AKSCapacityHeavyUsage`로 실패**했다. 이는 오전 오류의 단순 재인용이 아니다. 새 correlation ID는 `cf91439f-960e-430a-96af-798274d51c89`다.
+`AllowBringYourOwnPublicIpAddress` 등록과 `Microsoft.Network` 전파를 확인한 뒤 기존 코어를 한 번 재시도했습니다. **15:46:52 KST의 새 하위 AKS 요청도 `AKSCapacityHeavyUsage`로 실패**했습니다. 이는 오전 오류의 단순 재인용이 아닙니다. 새 correlation ID는 `cf91439f-960e-430a-96af-798274d51c89`입니다.
 
-15:52에는 상위 `discovery-core-resume-20261001-1530`이 **Running**, Supercomputer가 **Accepted**였고 당시에는 최종 결과가 미확정이었다. 네트워크 feature 미등록은 해결됐으나 지역 용량 문제는 남아 있었으며, 진행 중인 요청에 추가 배포를 중첩하지 않았다.
+15:52에는 상위 `discovery-core-resume-20261001-1530`이 **Running**, Supercomputer가 **Accepted**였고 당시에는 최종 결과가 미확정이었습니다. 네트워크 feature 미등록은 해결됐으나 지역 용량 문제는 남아 있었으며, 진행 중인 요청에 추가 배포를 중첩하지 않았습니다.
 
-**해당 오후 요청의 최종 결과:** **16:14:43 KST에 Failed**로 종료됐고 [16:21 GET](../../artifacts/discovery-resume-snapshot-20261001-1621.json)에서도 Workspace와 Supercomputer가 모두 Failed였다. [최종 배포·오류](../../artifacts/discovery-resume-deployment-20261001.json)를 보존했다. 이후 별도의 저녁 컴퓨트 재시도도 **20:32:40 Failed**, 동일 correlation에서 `AKSCapacityHeavyUsage`가 확인됐다. 이후 Korea 경로 성공과 이 두 Sweden 실패를 구분한다.
+**해당 오후 요청의 최종 결과:** **16:14:43 KST에 Failed**로 종료됐고 [16:21 GET](../../artifacts/discovery-resume-snapshot-20261001-1621.json)에서도 Workspace와 Supercomputer가 모두 Failed였습니다. [최종 배포·오류](../../artifacts/discovery-resume-deployment-20261001.json)를 보존했습니다. 이후 별도의 저녁 컴퓨트 재시도도 **20:32:40 Failed**, 동일 correlation에서 `AKSCapacityHeavyUsage`가 확인됐습니다. 이후 Korea 경로 성공과 이 두 Sweden 실패를 구분합니다.
 
-오후 재확인에서도 지역 vCPU 2/100, Dsv6 0/100, Esv6 0/100, Container Apps 환경 수 1/50였다. [새 실제 오류](../../artifacts/discovery-resume-activity-failures-20261001.json), [리소스 상태](../../artifacts/discovery-resume-snapshot-20261001-1552.json), [한도](../../artifacts/discovery-resume-compute-limits-20261001.json), [사용량](../../artifacts/discovery-resume-compute-usage-20261001.json)을 구분해 본다.
+오후 재확인에서도 지역 vCPU 2/100, Dsv6 0/100, Esv6 0/100, Container Apps 환경 수 1/50였습니다. [새 실제 오류](../../artifacts/discovery-resume-activity-failures-20261001.json), [리소스 상태](../../artifacts/discovery-resume-snapshot-20261001-1552.json), [한도](../../artifacts/discovery-resume-compute-limits-20261001.json), [사용량](../../artifacts/discovery-resume-compute-usage-20261001.json)을 구분해 봅니다.
 
 ## 독립 검토의 조회값
 
-아래 표는 Sweden Central, 2026-10-01 약 14:10 KST의 이전 독립 검토다. 지정한 실습 구독/테넌트의 Azure CLI 및 공식 quota/usage API로 확인했다. 오후에 다시 확인한 항목과 모든 과거 행이 동시에 재조회된 것으로 혼동하지 않는다.
+아래 표는 Sweden Central, 2026-10-01 약 14:10 KST의 이전 독립 검토입니다. 지정한 실습 구독/테넌트의 Azure CLI 및 공식 quota/usage API로 확인했습니다. 오후에 다시 확인한 항목과 모든 과거 행이 동시에 재조회된 것으로 혼동하지 않습니다.
 
 | 항목 | 사용량 | 한도 | 여유 |
 |---|---:|---:|---:|
@@ -35,13 +35,13 @@
 | AKS ManagedClusters | 0 | 50 | 50 |
 | Container Apps ManagedEnvironmentCount | 1 | 50 | 49 |
 
-할당 해제된 Blob 클라이언트 VM도 2 vCPU로 집계됐다. **deallocate는 컴퓨트 과금 중단이지 quota 반환과 동일하지 않다.** quota를 확보하려고 데이터 보존·삭제 승인 없이 VM을 삭제하지 않는다.
+할당 해제된 Blob 클라이언트 VM도 2 vCPU로 집계됐습니다. **deallocate는 컴퓨트 과금 중단이지 quota 반환과 동일하지 않습니다.** quota를 확보하려고 데이터 보존·삭제 승인 없이 VM을 삭제하지 않습니다.
 
-East US와 UK South도 독립 검토에서 quota 여유가 확인됐지만 실제 생성은 하지 않았다. 다른 리전의 성공을 보장하는 결과가 아니다. Container Apps 환경 수가 충분하다는 사실만으로 모든 전용 프로파일/GPU quota까지 검증됐다고 주장하지 않는다.
+East US와 UK South도 독립 검토에서 quota 여유가 확인됐지만 실제 생성은 하지 않았습니다. 다른 리전의 성공을 보장하는 결과가 아닙니다. Container Apps 환경 수가 충분하다는 사실만으로 모든 전용 프로파일/GPU quota까지 검증됐다고 주장하지 않습니다.
 
 ## 실습 수요 계산 — 이전 Sweden 환경의 가정
 
-[코어 템플릿](../../infra/discovery-core.bicep)의 시스템 SKU는 D4s_v6, `cpulab`은 D4s_v6 min 0/max 1이다. **당시 Sweden 환경의 시스템 풀의 실제 노드 수는 미확인**이었다. 아래는 AKS 생성 전 계획값이며, 이후 확인한 Korea 시스템 노드 2대의 실측과 다르다. 관례적인 노드 수를 실측값이나 최대값으로 쓰지 않는다.
+[코어 템플릿](../../infra/discovery-core.bicep)의 시스템 SKU는 D4s_v6, `cpulab`은 D4s_v6 min 0/max 1입니다. **당시 Sweden 환경의 시스템 풀의 실제 노드 수는 미확인**이었습니다. 아래는 AKS 생성 전 계획값이며, 이후 확인한 Korea 시스템 노드 2대의 실측과 다릅니다. 관례적인 노드 수를 실측값이나 최대값으로 쓰지 않습니다.
 
 ```text
 regional 필요량 = 기존 클라이언트 2
@@ -50,7 +50,7 @@ regional 필요량 = 기존 클라이언트 2
                 + 색인 노드 수 I × 색인 SKU vCPU
 ```
 
-아래는 **S=3, C=1, I=1이라는 가정**이다. 클라이언트 2 vCPU를 포함하며, SQL/Container Apps/모델 서비스의 CPU와 같은 quota 집계라고 가정하지 않는다.
+아래는 **S=3, C=1, I=1이라는 가정**입니다. 클라이언트 2 vCPU를 포함하며, SQL/Container Apps/모델 서비스의 CPU와 같은 quota 집계라고 가정하지 않습니다.
 
 | 색인 SKU | 색인 vCPU | regional 합계 | Dsv6 합계 | Esv6 합계 | 당시 100 한도 대비 최소 증액 |
 |---|---:|---:|---:|---:|---|
@@ -61,9 +61,9 @@ regional 필요량 = 기존 클라이언트 2
 | `Standard_E96s_v6` | 96 | 114 | 16 | 96 | regional +14 |
 | `Standard_D192s_v6` | 192 | 210 | 208 | 0 | regional +110, Dsv6 +108 |
 
-이 표는 quota 계산 예시이지 실제로 요청·승인받은 수량이 아니다. 실제 시스템 풀 크기, 동시 실행, autoscale 최대치, 다른 VM 사용량을 확정한 뒤 여유분까지 산정한다.
+이 표는 quota 계산 예시이지 실제로 요청·승인받은 수량이 아닙니다. 실제 시스템 풀 크기, 동시 실행, autoscale 최대치, 다른 VM 사용량을 확정한 뒤 여유분까지 산정합니다.
 
-**주의:** E96의 96 vCPU만 보고 “100 이내라 충분하다”고 판단하면 안 된다. 색인 중에도 AKS 시스템 풀이 필요하다. 현재 클라이언트 2 + 최소 시스템 노드 1대의 4 + E96만 합쳐도 102다. 사용자 CPU 풀을 0으로 줄이는 것만으로 이 계산에서 시스템 풀까지 제외할 수는 없다.
+**주의:** E96의 96 vCPU만 보고 “100 이내라 충분하다”고 판단하면 안 됩니다. 색인 중에도 AKS 시스템 풀이 필요합니다. 현재 클라이언트 2 + 최소 시스템 노드 1대의 4 + E96만 합쳐도 102입니다. 사용자 CPU 풀을 0으로 줄이는 것만으로 이 계산에서 시스템 풀까지 제외할 수는 없습니다.
 
 ## 색인 SKU 문서 차이
 
@@ -73,18 +73,18 @@ regional 필요량 = 기존 클라이언트 2
 | Medium | D128s_v6, 128 vCPU / 512 GB | E64s_v6, 64 vCPU / 512 GB |
 | Large | D192s_v6, 192 vCPU / 768 GB | E96s_v6, 96 vCPU / 768 GB |
 
-두 공개 문서는 서로 다른 SKU를 안내한다. 이들 SKU가 모든 Discovery 배포 버전에서 서로 대체 가능하다고 검증한 것은 아니다. 실제 UI/서비스 버전·메모리 요구를 확인한다. 현재 템플릿에는 `indexlab`이 없으며 실제 색인 SKU는 아직 결정·배포하지 않았다.
+두 공개 문서는 서로 다른 SKU를 안내합니다. 이들 SKU가 모든 Discovery 배포 버전에서 서로 대체 가능하다고 검증한 것은 아닙니다. 실제 UI/서비스 버전·메모리 요구를 확인합니다. 현재 템플릿에는 `indexlab`이 없으며 실제 색인 SKU는 아직 결정·배포하지 않았습니다.
 
-조회한 D/E v6 후보에는 **Sweden Central zone 2의 `NotAvailableForSubscription`** 제한이 있었다. zone 1/3에 해당 제한이 없다는 메타데이터만으로 실제 할당 성공이 보장되지는 않는다. 이 zone 제한과 관측된 AKS 서비스 용량 오류의 관계도 지원팀 확인 대상이다.
+조회한 D/E v6 후보에는 **Sweden Central zone 2의 `NotAvailableForSubscription`** 제한이 있었습니다. zone 1/3에 해당 제한이 없다는 메타데이터만으로 실제 할당 성공이 보장되지는 않습니다. 이 zone 제한과 관측된 AKS 서비스 용량 오류의 관계도 지원팀 확인 대상입니다.
 
 ## 실제 실패와 필요한 지원요청
 
 - Supercomputer 하위 AKS: `AKSCapacityHeavyUsage` 반복.
 - Workspace 하위 Container Apps: `ManagedEnvironmentCapacityHeavyUsageError` 안에 같은 AKS 오류 포함.
-- `deployCompute=false`로 Workspace만 생성해도 내부 Container Apps가 AKS 기반이므로 같은 문제를 피하지 못했다.
-- `quotaId=Internal_2014-09-01`이 관측됐다. 이 문자열만으로 우선순위·EA 여부·실패 원인을 확정하지 않고, 구독 유형별 제한을 지원팀에 확인한다.
+- `deployCompute=false`로 Workspace만 생성해도 내부 Container Apps가 AKS 기반이므로 같은 문제를 피하지 못했습니다.
+- `quotaId=Internal_2014-09-01`이 관측됐습니다. 이 문자열만으로 우선순위·EA 여부·실패 원인을 확정하지 않고, 구독 유형별 제한을 지원팀에 확인합니다.
 
-**다음은 지원요청 초안이며 아직 제출하지 않았다.** 모델 TPM 증액 두 건의 접수와 별개다.
+**다음은 지원요청 초안이며 아직 제출하지 않았습니다.** 모델 TPM 증액 두 건의 접수와 별개입니다.
 
 ```text
 제목: Sweden Central AKS/Container Apps creation blocked by capacity errors
@@ -144,7 +144,7 @@ az rest --method get --subscription "$SUBSCRIPTION_ID" \
   --url "https://management.azure.com/subscriptions/$SUBSCRIPTION_ID/providers/Microsoft.ContainerService/locations/$LOCATION/usages?api-version=2026-07-01"
 ```
 
-`az aks list-usage`는 이 환경의 CLI에서 지원되지 않았으므로 사용하지 않는다. API version은 실행 전에 현재 공급자 사양도 확인한다. `az quota` 확장의 인증 오류와 quota 부족은 별개이며, 오류나 빈 값을 “0/무제한”으로 해석하지 않는다. 위의 `az vm list-usage`와 ARM usage API는 조사 당시 동작을 확인한 대체 경로다.
+`az aks list-usage`는 이 환경의 CLI에서 지원되지 않았으므로 사용하지 않습니다. API version은 실행 전에 현재 공급자 사양도 확인합니다. `az quota` 확장의 인증 오류와 quota 부족은 별개이며, 오류나 빈 값을 “0/무제한”으로 해석하지 않습니다. 위의 `az vm list-usage`와 ARM usage API는 조사 당시 동작을 확인한 대체 경로입니다.
 
 ## 근거
 

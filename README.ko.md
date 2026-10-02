@@ -24,9 +24,9 @@
 
 | 알고 싶은 것 | 읽을 문서 |
 |---|---|
-| 어디까지 진행됐고 무엇이 남았는가 | [현재 상태·남은 작업](docs/deployment-reference/01-current-state.ko.md) |
-| 어떤 리소스가 현재 남아 있는가 | [리소스 그룹·자원 목록](docs/deployment-reference/07-resource-inventory.ko.md) |
-| 어떤 순서로 시도했고 무엇을 배웠는가 | [실제 실행 이력](docs/reports/EXECUTION-REPORT.ko.md) |
+| 진행 현황과 남은 작업 | [현재 상태·남은 작업](docs/deployment-reference/01-current-state.ko.md) |
+| 현재 남아 있는 리소스 | [리소스 그룹·자원 목록](docs/deployment-reference/07-resource-inventory.ko.md) |
+| 시도 순서와 배운 점 | [실제 실행 이력](docs/reports/EXECUTION-REPORT.ko.md) |
 | 원인을 조사하거나 작업을 재개하려면 | [설치·운영 참고 자료 목차](docs/deployment-reference/README.ko.md) |
 
 고객 실습을 진행할 때 이 기록을 읽어야 할 필요는 없습니다. 문제가 생겼을 때 해당 원인과 근거를 찾아보는 별도 경로입니다.
@@ -52,6 +52,8 @@ npm run check:site
 ```
 
 `check:guides`는 국문·영문 HTML을 빌드하고 링크·레이아웃·언어 전환을 검사한 뒤 PDF를 생성합니다. 문서는 Markdown, 그림은 Mermaid와 영문 SVG가 편집 원본입니다. HTML·PDF와 파생 그림은 빌드로 갱신하며 검사 화면·로그는 재생성 가능한 로컬 출력입니다. 이 절차는 Azure 환경을 구성하거나 실습 성공을 검증하지 않습니다.
+
+한국어 문서의 설명문은 실습 가이드와 같은 **`입니다`·`합니다`체**로 작성합니다. 코드·명령·리소스 이름·원문 인용은 문체 통일을 위해 변경하지 않습니다.
 
 ## 문서와 파일의 역할
 

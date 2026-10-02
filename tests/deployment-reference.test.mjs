@@ -73,23 +73,73 @@ test('the current inventory accounts for resources and distinguishes Home from t
     if (token.type === 'table') tables.push(token);
   });
   const resourceTables = tables.filter(table => table.header[0].text === '이름');
-  assert.equal(resourceTables.reduce((count, table) => count + table.rows.length, 0), 95);
+  assert.equal(resourceTables.reduce((count, table) => count + table.rows.length, 0), 87);
   const groupTable = tables.find(table => table.header[0].text === '리소스 그룹');
-  assert.equal(groupTable.rows.length, 8);
-  assert.equal(groupTable.rows.reduce((count, row) => count + Number(row[2].text), 0), 95);
+  assert.equal(groupTable.rows.length, 6);
+  assert.equal(groupTable.rows.reduce((count, row) => count + Number(row[2].text), 0), 87);
+  const retiredTable = tables.find(table => table.header[0].text === '삭제된 이름');
+  assert.equal(retiredTable.rows.length, 8);
+  assert.ok(retiredTable.rows.every(row => row[4].text.includes('ResourceNotFound')));
   const modelTable = tables.find(table => table.header[0].text === '배포 이름');
   assert.equal(modelTable.rows.length, 2);
   assert.ok(modelTable.rows.every(row => row[3].text === '250,000'));
   assert.ok(inventory.includes('현재 Korea 실행 경로를 관리하는 Home — 13개'));
-  assert.ok(inventory.includes('과거 Home 메타데이터 — 8개'));
+  assert.ok(inventory.includes('과거 Home 메타데이터 — 8개 삭제 완료'));
   assert.ok(inventory.includes('내부 자원 0개'));
-  assert.ok(inventory.includes('과거 연결로 작업을 다시 실행하지 않는다'));
-  assert.ok(inventory.includes('현재 Korea 구성에 필요하다'));
-  assert.ok(inventory.includes('할당량은 실제 소비 토큰 수가 아니다'));
+  assert.ok(inventory.includes('과거 연결로 작업을 다시 실행하지 않습니다'));
+  assert.ok(inventory.includes('현재 Korea 구성에 필요합니다'));
+  assert.ok(inventory.includes('할당량은 실제 소비 토큰 수가 아닙니다'));
   assert.ok(inventory.includes('자동 갱신되지 않는 시각 고정 스냅샷'));
   assert.ok(documents['01-current-state.ko.md'].includes('07-resource-inventory.ko.md'));
   assert.ok(documents['06-resume-runbook.ko.md'].includes('07-resource-inventory.ko.md'));
   assert.ok(!documents['06-resume-runbook.ko.md'].includes('이전 Supercomputer `sc-discovery-hol`과 그 전용'));
+});
+
+test('retired Home cleanup preserves current resources and uses parent-managed broker deletion', async () => {
+  const cleanup = JSON.parse(await readFile(resolve(root, 'artifacts/discovery-home-cleanup-20261003.json'), 'utf8'));
+  assert.equal(cleanup.outcome, 'verified');
+  assert.equal(cleanup.retiredResources.length, 8);
+  assert.ok(cleanup.retiredResources.every(item => item.result === 'ResourceNotFound'));
+  assert.equal(cleanup.retiredResources.filter(item => item.method === 'normal-delete').length, 6);
+  assert.equal(cleanup.retiredResources.filter(item => item.method === 'parent-managed').length, 2);
+  assert.ok(cleanup.removedManagedGroups.every(item => item.resourcesBefore === 0
+    && item.existsAfter === false && item.method === 'parent-managed'));
+  assert.deepEqual(cleanup.resourceCounts, {
+    before: 95, after: 87, removed: 8, protected: 87, protectedResourceIdSetMatches: true,
+  });
+  assert.equal(cleanup.remainingGroups.length, 6);
+  assert.equal(cleanup.remainingGroups.reduce((sum, item) => sum + item.resources, 0), 87);
+  assert.equal(cleanup.currentKorea.homeResources, 13);
+  assert.equal(cleanup.currentKorea.aks.state, 'Succeeded');
+  assert.equal(cleanup.currentKorea.aks.powerState, 'Running');
+  assert.equal(cleanup.currentKorea.modelDeployments.length, 2);
+  assert.ok(cleanup.currentKorea.modelDeployments.every(item => item.allocatedTpm === 250000));
+  assert.equal(cleanup.toolDependencyCheck.directAgentEnumerationSucceeded, false);
+  assert.equal(cleanup.toolDependencyCheck.toolDeletionSucceeded, true);
+  assert.ok(Object.values(cleanup.boundaries).every(value => value === false));
+  assert.ok(cleanup.sourceEvidence.every(item => /^[a-f0-9]{64}$/.test(item.sha256)));
+  const inventory = documents['07-resource-inventory.ko.md'];
+  for (const item of [...cleanup.retiredResources, ...cleanup.removedManagedGroups]) {
+    assert.ok(inventory.includes(`\`${item.name}\``), item.name);
+  }
+});
+
+test('Korean documentation uses polite declarative prose outside code and quotations', async () => {
+  const paths = execFileSync('git', ['ls-files', '*.md'], { cwd: root, encoding: 'utf8' }).trim().split('\n');
+  const ending = /[가-힣]*다(?=(?:\*{1,2}|_{1,2}|[”"'’]|\])*(?:[.!?。,;:]|\s*(?:\||$)))/gm;
+  for (const path of paths) {
+    const text = await readFile(resolve(root, path), 'utf8');
+    let prose = text;
+    marked.walkTokens(marked.lexer(text), token => {
+      if (token.type === 'code' || token.type === 'codespan') prose = prose.replaceAll(token.raw, '');
+    });
+    prose = prose.replace(/“[^”]*”|‘[^’]*’|"[^"\n]*"|'[^'\n]*'/g, '');
+    const informal = [...prose.matchAll(ending)].map(match => match[0]).filter(word =>
+      !(word.length >= 3 && word.endsWith('니다') && (word.charCodeAt(word.length - 3) - 0xAC00) % 28 === 17));
+    assert.deepEqual(informal, [], `${path}: use 입니다/합니다 prose`);
+    assert.equal(/[가-힣]+(?:는가|인가)(?=[.!?]|\s*\||\s*$)/m.test(prose), false,
+      `${path}: use polite questions or descriptive headings`);
+  }
 });
 
 test('quota arithmetic preserves existing allocations and the two submitted totals', () => {
@@ -189,7 +239,7 @@ test('current issue summary separates active blockers, verified recovery and dis
 
 test('new public incident projections exclude credentials, callers and machine-specific paths', async () => {
   for (const name of ['discovery-incident-supplement-20261002.json', 'discovery-current-issues-20261002.json',
-    'discovery-operator-status-20261002.json']) {
+    'discovery-operator-status-20261002.json', 'discovery-home-cleanup-20261003.json']) {
     const text = await readFile(resolve(root, 'artifacts', name), 'utf8');
     assert.equal(/\/Users\/|\/var\/folders\/|@(?:microsoft\.com|[\w.-]*onmicrosoft\.com)/i.test(text), false, name);
     assert.equal(/"caller"\s*:|"accessToken"\s*:|"refreshToken"\s*:|"clientSecret"\s*:|"password"\s*:/i.test(text), false, name);
@@ -244,7 +294,7 @@ test('compute examples include system nodes and the retained client quota', () =
   assert.ok(text.includes('시스템 풀의 실제 노드 수는 미확인'));
   assert.ok(text.includes('S=3, C=1, I=1'));
   assert.ok(text.includes('102'));
-  assert.ok(text.includes('아직 제출하지 않았다'));
+  assert.ok(text.includes('아직 제출하지 않았습니다'));
 });
 
 test('all reference shell examples parse without performing Azure operations', () => {

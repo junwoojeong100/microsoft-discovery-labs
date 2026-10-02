@@ -1,43 +1,41 @@
 # 07 — 현재 리소스 그룹과 리소스 목록
 
-[목차](README.ko.md) · [상태·블로커](01-current-state.ko.md) · **조회 기준: 2026-10-02 21:21 KST**
+[목차](README.ko.md) · [상태·블로커](01-current-state.ko.md) · **조회 기준: 2026-10-03 05:45 KST**
 
-> 작성자 환경의 현재 Azure 자원 목록이다. 신규 고객의 기본 구성이나 삭제 승인 목록이 아니다. 자동 갱신되지 않는 시각 고정 스냅샷이며, 원본 응답·연락처·자격증명은 이 문서에 포함하지 않았다.
+> 작성자 환경의 현재 Azure 자원 목록입니다. 신규 고객의 기본 구성이나 삭제 승인 목록이 아닙니다. 자동 갱신되지 않는 시각 고정 스냅샷이며, 원본 응답·연락처·자격증명은 이 문서에 포함하지 않았습니다.
 
 ## 먼저 볼 결론
 
-- **Home은 Sweden Central, Target compute는 Korea Central**이다. 리소스 그룹의 위치만으로 내부 실행 위치나 삭제 가능 여부를 판단하지 않는다.
+- **Home은 Sweden Central, Target compute는 Korea Central**입니다. 리소스 그룹의 위치만으로 내부 실행 위치나 삭제 가능 여부를 판단하지 않습니다.
 
-- 관련 **리소스 그룹 8개**, 관리 API/Resource Graph 기준 **리소스 95개**가 남아 있다. 이 중 94개는 Discovery 범위, 1개는 조직 공통 Log Analytics다. 실제 Foundry 모델 배포 2개는 아래 별도 표로 구분한다.
+- 관련 **리소스 그룹 6개**, 관리 API/Resource Graph 기준 **리소스 87개**가 남아 있습니다. 이 중 86개는 Discovery 범위, 1개는 조직 공통 Log Analytics입니다. 실제 Foundry 모델 배포 2개는 아래 별도 표로 구분합니다.
 
-- 공용 랩 RG에 남은 Sweden 자원 **21개는 Home 제어·소유 관계 객체**다. 현재 Korea 경로용 13개와 요청에 따라 남긴 과거 Home 8개로 나뉜다.
+- 공용 랩 RG에 남은 Sweden 자원 **13개는 현재 Korea 경로에 필요한 Home 제어·소유 관계 객체**입니다. 같은 이름의 실행 자원이 Korea에 복제된 것이 아니라, Sweden의 Home이 Korea의 실행 자원을 관리하는 구조입니다.
 
-- 이전 Sweden 실행 자원은 정리됐고 이전 관리 RG 두 개는 비어 있다. Home 객체·관리 RG·MOBO Broker·Korea 자원·공유 DNS·조직 로그는 보존했다.
+- 별도 사용자 승인으로 **과거 Home 8개와 부모가 소유한 빈 관리 RG 2개를 정리했습니다.** Discovery 객체 6개는 정상 삭제 API로, MOBO Broker 2개와 관리 RG는 부모 삭제에 따라 자동 정리됐습니다. 현재 Korea용 Home·관리 RG·실행 자원·공유 DNS·조직 로그는 보존했습니다.
 
-- Bookshelf, `thermal-evidence` KB와 색인 전용 풀 `indexlab`은 이 실습에 아직 구성되지 않았다. 이 목록은 KB 기반 에이전트·Engine 종단간 실습의 완료 선언이 아니다.
+- Bookshelf, `thermal-evidence` KB와 색인 전용 풀 `indexlab`은 이 실습에 아직 구성되지 않았습니다. 이 목록은 KB 기반 에이전트·Engine 종단간 실습의 완료 선언이 아닙니다.
 
 <a id="group-overview"></a>
 ## 리소스 그룹 전체 보기
 
 | 리소스 그룹 | 그룹 위치 | ARM 자원 수 | 역할 / 보존 이유 |
 | --- | --- | --- | --- |
-| `rg-discovery-hol-20260930` | Sweden Central | 30 | 공용 랩 RG. Home 제어 객체, Korea 고객 관리 자원, 공유 DNS가 함께 있음 |
+| `rg-discovery-hol-20260930` | Sweden Central | 22 | 공용 랩 RG. 현재 Home 13개, Korea 고객 관리 자원 7개, 공유 DNS 2개 |
 | `mrg-dwsp-discoveryholjunwookc-bdnxfq` | Sweden Central | 53 | 현재 Workspace의 관리 RG. 그룹은 Home, 내부 실행 자원은 Korea |
 | `mrg-dscmp-sc-discovery-hol-kc-a13wxu` | Sweden Central | 4 | 현재 Supercomputer의 관리 RG. 그룹은 Home, 내부 AKS·로그는 Korea |
 | `MC_mrg-dscmp-sc-discovery-hol-kc-a13wxu_aks-dscmp-a13wxu_koreacentral` | Korea Central | 6 | Korea AKS가 관리하는 노드·네트워크 인프라 |
 | `ME_mrg-dwsp-discoveryholjunwookc-bdnxfq_mrg-dwsp-discoveryholjunwookc-bdnxfq_koreacentral` | Korea Central | 1 | Korea Container Apps 환경이 관리하는 실행 인프라 |
-| `mrg-dwsp-discoveryholjunwoosc-ym5ffv` | Sweden Central | 0 | 이전 Home Workspace가 소유하는 빈 관리 RG. 보존 |
-| `mrg-dscmp-sc-discovery-hol-b6wiwf` | Sweden Central | 0 | 이전 Home Supercomputer가 소유하는 빈 관리 RG. 보존 |
 | `McapsGovernance` | West US 2 | 1 | 조직 공통 로그. Discovery 전용 자원이 아니므로 별도 보존 |
 
-**구분 주의:** 관리 RG와 같은 이름의 Container Apps 환경이 있을 수 있다. RG는 Home의 컨테이너이고, `Microsoft.App/managedEnvironments`는 Korea에서 실행되는 별도 자원이다. `Global`인 DNS 자원도 연결 대상과 소유 관계로 구분한다.
+**구분 주의:** 관리 RG와 같은 이름의 Container Apps 환경이 있을 수 있습니다. RG는 Home의 컨테이너이고, `Microsoft.App/managedEnvironments`는 Korea에서 실행되는 별도 자원입니다. `Global`인 DNS 자원도 연결 대상과 소유 관계로 구분합니다.
 
 <a id="home-resources"></a>
 ## 1. 공용 랩 RG: `rg-discovery-hol-20260930`
 
 ### 1-1. 현재 Korea 실행 경로를 관리하는 Home — 13개
 
-아래 자원은 Sweden에 표시되지만 현재 Korea 구성에 필요하다. 예를 들어 Discovery Supercomputer는 제어 객체이고, 실제 계산은 뒤의 Korea AKS/VMSS에서 수행된다.
+아래 자원은 Sweden에 표시되지만 현재 Korea 구성에 필요합니다. 예를 들어 Discovery Supercomputer는 제어 객체이고, 실제 계산은 뒤의 Korea AKS/VMSS에서 수행됩니다.
 
 | 이름 | 종류 | 위치 | 역할 / 설명 | 상태 / 구분 |
 | --- | --- | --- | --- | --- |
@@ -55,20 +53,22 @@
 | `mobr-dscmp-sc-discovery-hol-kc-a13wxu` | MOBO Broker | Sweden Central | Discovery가 관리 자원을 소유·운영하기 위한 관계 객체. 개별 삭제하지 않음 | Succeeded |
 | `mobr-dwsp-discoveryholjunwookc-bdnxfq` | MOBO Broker | Sweden Central | Discovery가 관리 자원을 소유·운영하기 위한 관계 객체. 개별 삭제하지 않음 | Succeeded |
 
-### 1-2. 과거 Home 메타데이터 — 8개
+### 1-2. 과거 Home 메타데이터 — 8개 삭제 완료
 
-**현재 실행에는 사용하지 않는다.** Home을 삭제하지 않는다는 요청에 따라 남겼다. 이전 Storage·ACR·모델·네트워크는 정리됐으므로 이 메타데이터의 과거 연결로 작업을 다시 실행하지 않는다. `Succeeded` 표시는 메타데이터 상태일 뿐, 폐기된 실행 경로가 작동한다는 의미가 아니다.
+**2026-10-03 05:45 KST에 아래 8개 모두 `ResourceNotFound`를 확인했습니다.** 10-02에는 Home 보존 요청에 따라 남겼지만, 이후 별도 삭제 승인으로 정리했습니다. 아래 표는 삭제 이력이며 현재 리소스 87개에 포함하지 않습니다. 과거 연결로 작업을 다시 실행하지 않습니다.
 
-| 이름 | 종류 | 위치 | 역할 / 설명 | 상태 / 구분 |
+| 삭제된 이름 | 종류 | 과거 위치 | 역할 / 설명 | 삭제 결과 |
 | --- | --- | --- | --- | --- |
-| `thermaldata` | Discovery Storage Container | Sweden Central | 실제 Blob 계정을 가리키는 Home 측 저장소 참조 | Succeeded; 과거 Home 보존 / 실행 경로 폐기 |
-| `thermaldata/candidatecsv` | Discovery Storage Asset | Sweden Central | 입력·출력 파일 경로를 나타내는 Home 메타데이터 | Succeeded; 과거 Home 보존 / 실행 경로 폐기 |
-| `thermaldata/evidencepack` | Discovery Storage Asset | Sweden Central | 입력·출력 파일 경로를 나타내는 Home 메타데이터 | Succeeded; 과거 Home 보존 / 실행 경로 폐기 |
-| `sc-discovery-hol` | Discovery Supercomputer | Sweden Central | 실제 AKS와 노드 풀을 관리하는 Home 제어 객체 | Failed; 과거 Home 보존 / 실행 경로 폐기 |
-| `thermal-ranking` | Discovery Tool | Sweden Central | 컨테이너 이미지와 실행 동작을 정의하는 Home 메타데이터 | Succeeded; 과거 Home 보존 / 실행 경로 폐기 |
-| `discoveryholjunwoosc` | Discovery Workspace | Sweden Central | 연구 환경의 Home 제어 객체. 실행 서비스는 별도의 관리 RG에 배치 | Failed; 과거 Home 보존 / 실행 경로 폐기 |
-| `mobr-dscmp-sc-discovery-hol-b6wiwf` | MOBO Broker | Sweden Central | Discovery가 관리 자원을 소유·운영하기 위한 관계 객체. 개별 삭제하지 않음 | Succeeded; 과거 Home 보존 / 실행 경로 폐기 |
-| `mobr-dwsp-discoveryholjunwoosc-ym5ffv` | MOBO Broker | Sweden Central | Discovery가 관리 자원을 소유·운영하기 위한 관계 객체. 개별 삭제하지 않음 | Succeeded; 과거 Home 보존 / 실행 경로 폐기 |
+| `thermaldata` | Discovery Storage Container | Sweden Central | 폐기된 Blob 계정을 가리키던 저장소 참조 | ResourceNotFound |
+| `thermaldata/candidatecsv` | Discovery Storage Asset | Sweden Central | 과거 입력 파일 경로의 메타데이터 | ResourceNotFound |
+| `thermaldata/evidencepack` | Discovery Storage Asset | Sweden Central | 과거 근거 문서 경로의 메타데이터 | ResourceNotFound |
+| `sc-discovery-hol` | Discovery Supercomputer | Sweden Central | 과거 AKS·노드 풀의 Home 제어 객체 | ResourceNotFound |
+| `thermal-ranking` | Discovery Tool | Sweden Central | 폐기된 ACR 이미지를 참조하던 도구 정의 | ResourceNotFound |
+| `discoveryholjunwoosc` | Discovery Workspace | Sweden Central | 과거 연구 환경의 Home 제어 객체 | ResourceNotFound |
+| `mobr-dscmp-sc-discovery-hol-b6wiwf` | MOBO Broker | Sweden Central | 과거 Supercomputer의 소유 관계 객체 | 부모 삭제로 자동 제거; ResourceNotFound |
+| `mobr-dwsp-discoveryholjunwoosc-ym5ffv` | MOBO Broker | Sweden Central | 과거 Workspace의 소유 관계 객체 | 부모 삭제로 자동 제거; ResourceNotFound |
+
+정상 삭제 순서는 **Tool·Storage Asset → Storage Container → Workspace → Supercomputer**였습니다. Broker나 관리 RG를 직접 삭제하지 않았고, 현재 Korea 자원·권한·네트워크 보호 설정은 변경하지 않았습니다. [삭제·보존 확인 요약](../../artifacts/discovery-home-cleanup-20261003.json)에 실제 범위와 조회 한계를 기록했습니다.
 
 ### 1-3. Korea 고객 관리 실행 자원 — 7개
 
@@ -92,7 +92,7 @@
 <a id="workspace-runtime"></a>
 ## 2. Korea Workspace 관리 실행 자원 — 53개
 
-Home 관리 RG: `mrg-dwsp-discoveryholjunwookc-bdnxfq`. 실제 서비스는 Korea, 전용 DNS는 Global이다.
+Home 관리 RG: `mrg-dwsp-discoveryholjunwookc-bdnxfq`. 실제 서비스는 Korea, 전용 DNS는 Global입니다.
 
 | 이름 | 종류 | 위치 | 역할 / 설명 | 상태 / 구분 |
 | --- | --- | --- | --- | --- |
@@ -162,7 +162,7 @@ Home 관리 RG: `mrg-dwsp-discoveryholjunwookc-bdnxfq`. 실제 서비스는 Kore
 <a id="compute-runtime"></a>
 ## 3. Korea Supercomputer 관리 실행 자원 — 4개
 
-Home 관리 RG: `mrg-dscmp-sc-discovery-hol-kc-a13wxu`. 아래 실제 자원은 Korea Central에 있다.
+Home 관리 RG: `mrg-dscmp-sc-discovery-hol-kc-a13wxu`. 아래 실제 자원은 Korea Central에 있습니다.
 
 | 이름 | 종류 | 위치 | 역할 / 설명 | 상태 / 구분 |
 | --- | --- | --- | --- | --- |
@@ -173,7 +173,7 @@ Home 관리 RG: `mrg-dscmp-sc-discovery-hol-kc-a13wxu`. 아래 실제 자원은 
 
 ## 4. Korea AKS 인프라 — 6개
 
-Target 인프라 RG: `MC_mrg-dscmp-sc-discovery-hol-kc-a13wxu_aks-dscmp-a13wxu_koreacentral`. AKS가 관리하는 자원이며 임의로 노드 VMSS나 네트워크를 개별 삭제하지 않는다.
+Target 인프라 RG: `MC_mrg-dscmp-sc-discovery-hol-kc-a13wxu_aks-dscmp-a13wxu_koreacentral`. AKS가 관리하는 자원이며 임의로 노드 VMSS나 네트워크를 개별 삭제하지 않습니다.
 
 | 이름 | 종류 | 위치 | 역할 / 설명 | 상태 / 구분 |
 | --- | --- | --- | --- | --- |
@@ -193,18 +193,18 @@ Target 인프라 RG: `ME_mrg-dwsp-discoveryholjunwookc-bdnxfq_mrg-dwsp-discovery
 | `capp-svc-lb` | Load Balancer | Korea Central | 해당 실행 환경이 관리하는 네트워크 트래픽 처리 자원 | Succeeded |
 
 <a id="empty-managed-groups"></a>
-## 6. 이전 Home의 빈 관리 RG — 내부 자원 0개
+## 6. 과거 관리 RG — 2개 삭제 완료
 
-| 보존한 관리 RG | 관리 주체 | 현재 처리 |
+| 삭제된 관리 RG | 과거 관리 주체 | 현재 처리 |
 | --- | --- | --- |
-| `mrg-dwsp-discoveryholjunwoosc-ym5ffv` | `discoveryholjunwoosc` | 내부 실행 자원은 정리. Home 소유 관계와 RG 자체는 유지 |
-| `mrg-dscmp-sc-discovery-hol-b6wiwf` | `sc-discovery-hol` | 내부 실행 자원은 정리. Home 소유 관계와 RG 자체는 유지 |
+| `mrg-dwsp-discoveryholjunwoosc-ym5ffv` | `discoveryholjunwoosc` | Workspace 삭제로 자동 제거; 존재하지 않음 |
+| `mrg-dscmp-sc-discovery-hol-b6wiwf` | `sc-discovery-hol` | Supercomputer 삭제로 자동 제거; 존재하지 않음 |
 
-빈 RG 컨테이너 자체에는 별도 사용 요금이 없다. 관리 RG가 비어 있다는 이유만으로 보존 중인 Home 객체와 분리해 추가 삭제하지 않는다. 이 문서에서는 별도 청구 내역이나 소프트 삭제 보존 비용을 조회하지 않았다.
+삭제 직전 두 그룹은 **내부 자원 0개**였으며 소유자가 각각 위 과거 Home인 것을 확인했습니다. 부모의 정상 삭제 후 `az group exists=false`를 확인했습니다. 현재 관리 RG는 보존했으며, 관리 RG가 비어 있다는 이유만으로 부모와 분리해 직접 삭제하지 않습니다. 빈 RG 자체에는 별도 사용 요금이 없고, 이번 작업에서는 실제 청구 내역이나 소프트 삭제 보존 비용을 조회하지 않았습니다.
 
 ## 7. 조직 공통 로그 — 1개
 
-아래 자원은 현재 Korea Foundry 진단 경로가 사용하는 조직 공통 자원이다. Discovery 실습만의 삭제 대상으로 취급하지 않는다.
+아래 자원은 현재 Korea Foundry 진단 경로가 사용하는 조직 공통 자원입니다. Discovery 실습만의 삭제 대상으로 취급하지 않습니다.
 
 | 이름 | 종류 | 위치 | 역할 / 설명 | 상태 / 구분 |
 | --- | --- | --- | --- | --- |
@@ -213,28 +213,28 @@ Target 인프라 RG: `ME_mrg-dwsp-discoveryholjunwookc-bdnxfq_mrg-dwsp-discovery
 <a id="model-deployments"></a>
 ## 8. 실제 Foundry 모델 배포 — 별도 조회 2개
 
-계정은 `aif-dwsp-foundry-bdnxfqaa`이며 생성 위치는 Korea Central이다. Home의 `discoveryholjunwookc/gpt-5-4` 정의와 아래 Foundry 모델 배포는 서로 다른 리소스다.
+계정은 `aif-dwsp-foundry-bdnxfqaa`이며 생성 위치는 Korea Central입니다. Home의 `discoveryholjunwookc/gpt-5-4` 정의와 아래 Foundry 모델 배포는 서로 다른 리소스입니다.
 
 | 배포 이름 | 모델 / 버전 | 배포 유형 | 할당 TPM | 용도 | 상태 |
 | --- | --- | --- | --- | --- | --- |
 | `gpt-5.4` | `gpt-5.4` / 2026-03-05 | GlobalStandard | 250,000 | Cognition | Succeeded |
 | `gpt-5-4` | `gpt-5.4` / 2026-03-05 | GlobalStandard | 250,000 | 작업 검증 | Succeeded |
 
-두 배포의 할당은 합계 **500,000 TPM**이다. 할당량은 실제 소비 토큰 수가 아니다. `GlobalStandard`의 모델 처리 범위를 리소스의 Korea 위치만으로 국내에 한정됐다고 해석하지 않는다.
+두 배포의 할당은 합계 **500,000 TPM**입니다. 할당량은 실제 소비 토큰 수가 아닙니다. `GlobalStandard`의 모델 처리 범위를 리소스의 Korea 위치만으로 국내에 한정됐다고 해석하지 않습니다.
 
 ## 조회 범위와 사용 시 주의
 
-- Azure 관리 API의 RG/자원 목록과 Resource Graph를 대조하고, Foundry 모델 배포는 별도로 조회했다. Resource Graph에는 짧은 반영 지연이 있을 수 있다.
+- Azure 관리 API의 RG/자원 목록과 Resource Graph를 대조하고, Foundry 모델 배포는 별도로 조회했습니다. Resource Graph에는 짧은 반영 지연이 있을 수 있습니다.
 
-- 이 문서의 수량은 위 8개 RG에 한정한다. 구독의 다른 Foundry 실습, 모든 Blob 파일·데이터베이스 객체·DNS 레코드·역할 할당·에이전트의 전체 목록은 아니다.
+- 이 문서의 현재 수량은 위 6개 RG에 한정합니다. 삭제 이력 표와 구독의 다른 Foundry 실습, 모든 Blob 파일·데이터베이스 객체·DNS 레코드·역할 할당·에이전트의 전체 목록은 포함하지 않습니다.
 
-- 자원 설명은 관리 역할을 설명한다. `Succeeded`만으로 네트워크 접속, 색인·검색, 에이전트·Engine 실행까지 성공했다고 표시하지 않는다.
+- 자원 설명은 관리 역할을 설명합니다. `Succeeded`만으로 네트워크 접속, 색인·검색, 에이전트·Engine 실행까지 성공했다고 표시하지 않습니다.
 
-- 이전 VM·Storage·ACR를 참조하는 과거 재현용 스크립트는 폐기된 Sweden 실행 경로에 사용할 수 없다. 현재 경로는 `config/lab.json`의 Korea runtime 항목을 따른다.
+- 이전 VM·Storage·ACR를 참조하는 과거 재현용 스크립트는 폐기된 Sweden 실행 경로에 사용할 수 없습니다. 현재 경로는 `config/lab.json`의 Korea runtime 항목을 따릅니다.
 
-- 실제 리소스 이름을 확인할 때는 이 Markdown 원문을 사용한다. Pages 공개본은 기존 게시 정책에 따라 환경 이름·식별자가 예시로 치환될 수 있다.
+- 실제 리소스 이름을 확인할 때는 이 Markdown 원문을 사용합니다. Pages 공개본은 기존 게시 정책에 따라 환경 이름·식별자가 예시로 치환될 수 있습니다.
 
-- 상태의 `미표시`는 조회 응답에 provisioning state가 없었다는 뜻이며, 실패나 미생성 판정이 아니다.
+- 상태의 `미표시`는 조회 응답에 provisioning state가 없었다는 뜻이며, 실패나 미생성 판정이 아닙니다.
 
 ## 관련 문서
 
@@ -242,3 +242,4 @@ Target 인프라 RG: `ME_mrg-dwsp-discoveryholjunwookc-bdnxfq_mrg-dwsp-discovery
 - [아키텍처·리전·데이터 위치](04-architecture-regions.ko.md)
 - [실행·재개 절차](06-resume-runbook.ko.md)
 - [공식 교차 리전 배치 기준](https://learn.microsoft.com/azure/microsoft-discovery/how-to-deploy-across-regions)
+- [공식 Discovery 삭제 순서](https://learn.microsoft.com/azure/microsoft-discovery/how-to-delete-discovery-resources)
