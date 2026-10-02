@@ -4,6 +4,27 @@
 
 구독 `51531604-2337-4c05-bc05-3c3d4ff154e5`, 테넌트 `46e9cdaa-fed3-4131-aa28-c1fc8a8a043a`, RG `rg-discovery-hol-20260930`과 **Discovery home Sweden Central**을 유지했다. 초기 단일 리전 실행에서는 기존 네트워크·UAMI를 재사용했고, 저녁 교차 리전 실행에서는 Korea Central 전용 지원 자원을 추가했다. 다른 프로젝트의 자원·정책·모델 배포를 삭제하지 않았다.
 
+**최신 조회와 이슈 목록:** [현재 남은 이슈·재개 조건](../deployment-reference/01-current-state.ko.md#open-issues) · [통합 문제 목록](../deployment-reference/README.ko.md#incident-index). 이 보고서는 과거 실행을 삭제하지 않는 이력이므로 아래 절의 관측 시각을 구분한다.
+
+<a id="incident-supplement"></a>
+## 2026-10-02 문서 보완 — 저녁 재시도와 원인 미확정 관측
+
+기존 로컬 기록에서 빠져 있던 10-01 저녁 재시도와 세부 관측을 보완했다. 원본 전체를 공개 저장소에 추가하는 대신, [최소 증거 요약](../../artifacts/discovery-incident-supplement-20261002.json)에 필요한 상태·오류·시각·원본 파일 SHA-256을 남겼다. 원본의 사용자 계정·원시 응답 전체는 게시하지 않았다.
+
+| 실행 / 관측 시각 KST | 확인한 사실 | 해석과 이후 상태 |
+|---|---|---|
+| 검증 모델 `discovery-validation-model-20261001-2000`, **10-01 20:01:42 Failed** | 실제 operation은 `ParentResourceNotReady`: 기존 Workspace가 Failed라 child 생성을 거절 | 당시 필터링한 Activity Log 오류 목록이 비어 있어도 성공이 아니다. 부모 Succeeded를 기다려야 하며 이후 새 Korea Workspace/검증 모델은 별도 성공 |
+| 컴퓨트 `discovery-compute-evening-20261001-1953`, **10-01 20:32:40 Failed** | 상위 `ResourceDeploymentFailure`/`InternalServerError`와 동일 correlation의 `AKSCapacityHeavyUsage` 3회 관측 | 기존 Sweden 재시도 실패다. 이후 Korea 런타임 생성 성공을 Sweden 용량 회복으로 해석하지 않음 |
+| Workspace `discovery-workspace-evening-20261001-1953` | 당시 **10-01 21:32 Running** 스냅샷을 최종 결과 없이 보관했음 | 이번 읽기 전용 재조회로 **10-01 22:24:17 terminal Failed** 확인. 실제 target `containerAppsEnvironment`, code `Conflict`: 현재 리소스/작업 상태 충돌. 새로운 원인을 추정하거나 반복 PUT하지 않음 |
+| 키 조회, **10-01 20:33:04–20:34:50** | `listkeys/action` 30개가 `BadRequest: Failed to list key. disableLocalAuth is set to be true`로 거절됨 | 30건은 별도 장애 30개가 아니라 반복 관측이다. 부모 배포 correlation과 일치한 항목 **0개**이므로 Workspace 실패 원인으로 확정하지 않음 |
+| cognition 보존, **10-01 20:38** | 원본 outcome은 `maximum_restored_and_settings_preserved`지만 실제 action은 `Already at maximum; no PATCH sent`. GET 4회, 전후 capacity 3000 | **이 관측에서 복원 PATCH는 0회**다. RP가 값을 낮췄다는 인과관계도 이 기록으로 입증하지 않는다. 이후 사용자가 선택한 최종 할당을 덮어쓰는 근거로 쓰지 않음 |
+| Korea AKS 부분 확인, **10-01 21:21:46** | 실제 AKS Succeeded, 당시 관측된 풀은 system뿐 | 이 시점의 결과만으로 부모 Supercomputer/cpulab까지 완료됐다고 주장하지 않음. 뒤의 21:28 최종 컴퓨트 결과와 23시 실제 실행을 구분 |
+
+**안전한 해석:** 키 조회 거절을 없애려고 `disableLocalAuth`를 해제하거나 키 인증·권한을 확대하지 않았다. Resource Group 전체의 오류 목록과 특정 배포의 원인은 다를 수 있다. “복원” 같은 파일명·outcome 문구보다 실제 요청 method와 전후값을 우선한다. 원인 미확정 관측은 해결된 배포 장애로 임의 분류하지 않는다.
+
+**09:10 KST 현재 재조회:** 새 Korea Workspace·Supercomputer·AKS는 Succeeded, 정책 애드온은 활성화/Compliant, Bookshelf는 0개이며 mini/embedding quota는 미반영이다. 이전 Sweden Workspace·Supercomputer는 Failed 상태로 남아 정리·비용 확인이 필요하다. `lodash-es` High/Medium 알림은 `dismissed/fix_started`지만 lockfile은 4.17.23으로 패치 완료가 확인되지 않았다. [현재 증거](../../artifacts/discovery-current-issues-20261002.json)와 [남은 이슈 R01–R05](../deployment-reference/01-current-state.ko.md#open-issues)를 따른다. 이 보완 작업은 문서와 읽기 전용 확인뿐이며 새로운 배포·삭제·색인·검색·패치는 수행하지 않았다.
+
+<a id="bookshelf-create-quota"></a>
 ## 2026-10-02 08:29 KST — Bookshelf 생성만 요청했으나 실제 생성 쿼타로 거절
 
 사용자는 운영·색인과 분리해 **Bookshelf 생성 및 환경 구성만** 요청했다. [생성 전용 Bicep](../../infra/bookshelf.bicep)과 [Korea 매개변수](../../infra/bookshelf.koreacentral.bicepparam)로 `bks-discovery-hol-kc`, `indexSize=small`, Sweden Central home / Korea Central runtime을 지정했다. 기존 전용 `searchSubnet`·`bookshelfPeSubnet`과 UAMI를 재사용하고 public access는 Disabled로 유지했다.
@@ -23,6 +44,7 @@
 
 증거: [문서 기준 사전 점검](../../artifacts/discovery-bookshelf-create-preflight-20261002.json) · [실제 생성 실패와 미생성 확인](../../artifacts/discovery-bookshelf-create-result-20261002.json).
 
+<a id="policy-addon-recovery"></a>
 ## 2026-10-02 04:17 KST — 정책 애드온 활성화 완료, HTML 링크 게시
 
 사용자가 추가 권한을 승인한 뒤 **두 전용 서브넷의 read/join 권한만** 부여했고 Azure Policy 애드온을 활성화했다. 아래 00시대의 승인 대기 기록은 당시 상태다.
@@ -64,6 +86,7 @@ Pages에는 기존의 정리·식별자 치환 빌드만 올린다. **원본 파
 
 증거: [후속 결과](../../artifacts/discovery-followup-20261002.json) · [모델 quota](../../artifacts/discovery-followup-model-quota-20261002.json) · [정책 평가](../../artifacts/discovery-followup-policy-state-20261002.json) · [권한 사전 검증](../../artifacts/discovery-policy-subnet-access-validation-20261002.json) · [변경 미리 보기](../../artifacts/discovery-policy-subnet-access-whatif-20261002.json). 공개 what-if 증거에는 변경 3개와 원본 변경 수를 남기고, 범위 밖 Ignore 리소스 42개의 상세 본문은 제외했다.
 
+<a id="korea-runtime"></a>
 ## 2026-10-01 23:32 KST — Workspace·Project·실제 CPU 실행 완료
 
 **새 코어 리소스 생성과 실제 합성 파일·도구 실행을 완료했다.** Discovery home은 **Sweden Central**, 관리 런타임·Foundry·AKS·Blob·ACR은 **Korea Central**이다. 아래 이전 절의 Workspace quota 차단은 당시 기록이며, 현재 Workspace와 Project는 Succeeded다.
@@ -209,6 +232,7 @@ GitHub 저장소를 **`junwoojeong100/microsoft-discovery-labs`**로 변경하�
 
 근거: [변경 전후·최대치·완료 경계](../../artifacts/discovery-foundry-tpm-update-20261001.json), [배포 실제 상태](../../artifacts/discovery-foundry-tpm-deployment-20261001.json), [공유 quota](../../artifacts/discovery-foundry-tpm-usage-20261001.json), [네트워크](../../artifacts/discovery-foundry-tpm-network-20261001.json).
 
+<a id="central-diagnostics"></a>
 ## 2026-10-01 16:28 KST — 중앙 진단 설정 복구 완료
 
 **중앙 Log Analytics 대상 누락에 따른 진단 설정 오류는 해결했다.** 남은 핵심 블로커는 **Sweden Central의 AKS/Container Apps 용량과 Bookshelf 운영 모델 quota**다. 앞서 진행 중이던 코어 재시도는 **16:14:43 KST에 최종 Failed**로 끝났다. 아래 15:52의 Running/Accepted는 당시 기록이며 현재 상태가 아니다.
@@ -366,6 +390,7 @@ Foundry ARM 조회에서 **`Discovery Default Project`**(`discoverydefaultprojec
 
 정상 Azure CLI 세션을 통해 Discovery API의 `access_as_user` 토큰 발급도 확인했다. 이는 토큰을 브라우저에 주입하거나 Studio의 사용자 인증을 우회했다는 뜻이 아니다. **Bookshelf quota 승인, AKS/Container Apps 지역 용량, 정상 Studio 로그인이 남아 있어 색인·에이전트·Engine은 여전히 미실행**이다.
 
+<a id="initial-deployment-lessons"></a>
 ### 발견한 문제와 반영한 개선
 
 | 실제 관측 | 수정·대응 |

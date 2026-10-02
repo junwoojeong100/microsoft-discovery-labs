@@ -1,0 +1,156 @@
+{
+  "reviewedAt": "2026-10-02T00:10:25.121Z",
+  "scope": "Documentation supplement from recorded observations and read-only terminal-state lookup; no resource changes.",
+  "sourceEvidence": [
+    {
+      "file": "discovery-compute-evening-deployment-20261001.json",
+      "sha256": "3d4fbb14446bbc88904240dff1ac5c57720031b50e23e926771d540679e7205a",
+      "publication": "Original file retained locally; only this minimal projection is published."
+    },
+    {
+      "file": "discovery-compute-evening-failures-20261001.json",
+      "sha256": "97c287df5491b18f2fb36c64174c578b44ed91a102ad45198b04d6d7e05fdefc",
+      "publication": "Original file retained locally; only this minimal projection is published."
+    },
+    {
+      "file": "discovery-compute-evening-operations-20261001.json",
+      "sha256": "79bc78bea3d1236a055c5210272cc3c9da4a38912e2839234d403dd939bbbd4d",
+      "publication": "Original file retained locally; only this minimal projection is published."
+    },
+    {
+      "file": "discovery-validation-model-evening-deployment-20261001.json",
+      "sha256": "8dab2f3cc36e88d1f5e9248db4133fda8d4ab6581b574371c29e356ae90e187e",
+      "publication": "Original file retained locally; only this minimal projection is published."
+    },
+    {
+      "file": "discovery-validation-model-evening-operations-20261001.json",
+      "sha256": "080f27a8daa5308b63e2fc397c53ca9b4b13f3dd1e8f8747af1342970f37cbce",
+      "publication": "Original file retained locally; only this minimal projection is published."
+    },
+    {
+      "file": "discovery-validation-model-evening-failures-20261001.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "publication": "Original file retained locally; only this minimal projection is published."
+    },
+    {
+      "file": "discovery-workspace-evening-deployment-20261001.json",
+      "sha256": "4828296bd1c3274734fb49bf7544bcd656db58fe1bc58edb0c6a8d13f126f938",
+      "publication": "Original file retained locally; only this minimal projection is published."
+    },
+    {
+      "file": "discovery-workspace-evening-failures-20261001.json",
+      "sha256": "ba424b23b51665e1771c9cd5f286050d01ae869b121f6ae0ce8d73d39a510c47",
+      "publication": "Original file retained locally; only this minimal projection is published."
+    },
+    {
+      "file": "discovery-workspace-evening-correlated-failures-20261001.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "publication": "Original file retained locally; only this minimal projection is published."
+    },
+    {
+      "file": "discovery-cognition-evening-restoration-20261001.json",
+      "sha256": "4febe71746827be9a0b6d01b2954f797e32477e9283f615444735ad2044214c1",
+      "publication": "Original file retained locally; only this minimal projection is published."
+    },
+    {
+      "file": "discovery-evening-key-access-observation-20261001.json",
+      "sha256": "dd8308047bc76009fab8e15fa6f0d9c104b6b00246748fc13159e11902741c80",
+      "publication": "Original file retained locally; only this minimal projection is published."
+    },
+    {
+      "file": "discovery-korea-runtime-verification-20261001.json",
+      "sha256": "d970aebea925d4b6a1948dce221d48d55dad459bafa892cd9bc50b960adaab73",
+      "publication": "Original file retained locally; only this minimal projection is published."
+    }
+  ],
+  "computeRetry": {
+    "deploymentName": "discovery-compute-evening-20261001-1953",
+    "state": "Failed",
+    "terminalAt": "2026-10-01T11:32:40.453579+00:00",
+    "observedAt": "2026-10-01T11:33:14.473Z",
+    "wrapperCode": "DeploymentFailed",
+    "underlyingObservations": [
+      {
+        "at": "2026-10-01T11:13:16.8351617Z",
+        "operation": "Microsoft.ContainerService/managedClusters/write",
+        "code": "AKSCapacityHeavyUsage"
+      },
+      {
+        "at": "2026-10-01T11:07:42.9132214Z",
+        "operation": "Microsoft.ContainerService/managedClusters/write",
+        "code": "AKSCapacityHeavyUsage"
+      },
+      {
+        "at": "2026-10-01T11:01:59.4348572Z",
+        "operation": "Microsoft.ContainerService/managedClusters/write",
+        "code": "AKSCapacityHeavyUsage"
+      }
+    ],
+    "conclusion": "The retained Sweden compute retry failed with AKS regional-capacity evidence, separately from the later successful Korea runtime."
+  },
+  "validationModelRetry": {
+    "deploymentName": "discovery-validation-model-20261001-2000",
+    "state": "Failed",
+    "terminalAt": "2026-10-01T11:01:42.835816+00:00",
+    "errorCode": "ParentResourceNotReady",
+    "failedParent": "discoveryholjunwoosc",
+    "requiredParentState": "Succeeded",
+    "filteredActivityFailures": 0,
+    "conclusion": "The child operation was rejected because its parent was Failed. Empty filtered Activity Log results do not establish success."
+  },
+  "workspaceRetry": {
+    "deploymentName": "discovery-workspace-evening-20261001-1953",
+    "historicalSnapshot": {
+      "state": "Running",
+      "observedAt": "2026-10-01T12:32:27.617Z",
+      "filteredCorrelatedFailures": 0
+    },
+    "terminalLookup": {
+      "state": "Failed",
+      "terminalAt": "2026-10-01T13:24:17.484674+00:00",
+      "errorCode": "Conflict",
+      "errorTarget": "containerAppsEnvironment",
+      "errorMessage": "The Container Apps Environment cannot be provisioned in its current state. Resolve the conflicting operation or resource state, then retry."
+    },
+    "conclusion": "The historical Running snapshot is now resolved to terminal Failed. The Container Apps state conflict is not attributed to unrelated key-list failures."
+  },
+  "keyAccessObservation": {
+    "count": 30,
+    "operation": "Microsoft.CognitiveServices/accounts/listkeys/action",
+    "firstAt": "2026-10-01T11:33:04.3544026Z",
+    "lastAt": "2026-10-01T11:34:50.9152438Z",
+    "errorCode": "BadRequest",
+    "errorMessage": "Failed to list key. disableLocalAuth is set to be true",
+    "matchedParentCorrelationCount": 0,
+    "confirmedDeploymentRootCause": false,
+    "remediation": "Do not enable key authentication or broaden permissions based on these observations. Managed identity access and deployment root cause are separate."
+  },
+  "cognitionPreservation": {
+    "startedAt": "2026-10-01T11:37:54.683Z",
+    "completedAt": "2026-10-01T11:38:03.697Z",
+    "sourceOutcomeLabel": "maximum_restored_and_settings_preserved",
+    "recordedAction": "Already at maximum; no PATCH sent",
+    "requestMethods": [
+      "GET",
+      "GET",
+      "GET",
+      "GET"
+    ],
+    "beforeCapacity": 3000,
+    "afterCapacity": 3000,
+    "writeRequestSent": false,
+    "resetCauseEstablished": false,
+    "conclusion": "Despite the restored label, this is GET-only confirmation of an already maximum allocation, not evidence of an RP reset or observer PATCH. Later user-chosen allocations supersede this maximum."
+  },
+  "partialRuntimeObservation": {
+    "verifiedAt": "2026-10-01T12:21:46.134Z",
+    "outcome": "aks_created_in_korea_central",
+    "aksState": "Succeeded",
+    "aksLocation": "koreacentral",
+    "observedPoolNames": [
+      "system"
+    ],
+    "parentAndCpuPoolCompleteClaimed": false,
+    "conclusion": "The 21:21 KST AKS check saw only the system pool. Later parent and CPU-pool final results establish complete core provisioning."
+  }
+}

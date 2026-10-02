@@ -10,7 +10,7 @@ Hands-on guides and Azure architecture documentation for Microsoft Discovery. Th
 |---|---|---|
 | Core capabilities hands-on guide | [Read the guide](docs/labs/MICROSOFT-DISCOVERY-LAB.en.md) | [PDF](docs/labs/MICROSOFT-DISCOVERY-LAB.en.pdf) · [HTML](https://junwoojeong100.github.io/microsoft-discovery-labs/docs/labs/MICROSOFT-DISCOVERY-LAB.en.html) |
 | Azure architecture and version dependencies | [Read the architecture](docs/architecture/MICROSOFT-DISCOVERY-ARCHITECTURE.en.md) | Three SVG diagrams with Mermaid source included |
-| Provisioning reference notes (Korean) | [Topic index](docs/deployment-reference/README.ko.md) | Dated state, quota, capacity, regions, networking, and resumption notes |
+| Provisioning reference notes (Korean) | [Topic index](docs/deployment-reference/README.ko.md) | [Current issues](https://junwoojeong100.github.io/microsoft-discovery-labs/docs/deployment-reference/01-current-state.ko.html#open-issues) · [Incident index](https://junwoojeong100.github.io/microsoft-discovery-labs/docs/deployment-reference/README.ko.html#incident-index) |
 
 The hands-on guide covers **10 core labs and 2 extensions**: workspaces/projects, data and files, Bookshelf, agents and versions, compute tools, the Discovery Engine, human feedback, collaboration/RBAC, traceability, cost, and Hybrid/MCP tools. Each lab follows **Goal → Steps → Pass criteria**.
 

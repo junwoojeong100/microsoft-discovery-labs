@@ -2,19 +2,21 @@
 
 [목차](README.ko.md) · **기준일: 2026-10-01 독립 에이전트 검토와 실제 배포 오류 기록**
 
+**최신 구분, 2026-10-02 09:10 KST:** 새 Korea Supercomputer·AKS는 Succeeded이며 시스템 2대, cpulab 0대/min 0/max 1이다. 이 문서의 Sweden 용량 오류는 과거 실패 원인으로 보존하며 현재 Korea 런타임의 차단 원인으로 표시하지 않는다. 기존 Sweden 자원은 Failed 상태로 남아 있다. [현재 이슈](01-current-state.ko.md#open-issues), [저녁 재시도 보완](../reports/EXECUTION-REPORT.ko.md#incident-supplement)을 참고한다.
+
 ## 결론
 
-**현재 Small·CPU 실습 계획에서 선제적으로 VM vCPU나 AKS 클러스터 수 quota를 올려야 한다는 근거는 없다.** 관측된 배포 실패는 quota 소진이 아니라 `AKSCapacityHeavyUsage` 계열이었다. 필요한 조치는 **지역 서비스 용량·구독별 배포 제한 확인을 위한 지원요청**이며, 숫자 한도 증액과 구분한다.
+**아래 10-01 Small·CPU 계획의 조회값만으로 선제적인 VM vCPU·AKS 클러스터 수 quota 증액 필요성을 단정하지 않는다.** 당시 실패는 quota 소진이 아니라 `AKSCapacityHeavyUsage` 계열이었다. Sweden에서 다시 생성하려면 **지역 서비스 용량·구독별 배포 제한 확인**이 필요하며 숫자 한도 증액과 구분한다. 새 색인 풀은 아직 선택·배포하지 않았으므로 그 실제 수요는 생성 전에 별도 확인한다.
 
 지원 리전, 서비스 사용 승인, quota, SKU/zone 허용, 실제 할당 용량은 서로 다른 조건이다. 현재 가용 용량이 회복됐는지는 과거 오류만으로 알 수 없으므로 재개 시 다시 확인한다.
 
-## 오후 재시도에서 확인한 현재 용량 블로커
+## 2026-10-01 오후 재시도에서 확인한 용량 블로커
 
 `AllowBringYourOwnPublicIpAddress` 등록과 `Microsoft.Network` 전파를 확인한 뒤 기존 코어를 한 번 재시도했다. **15:46:52 KST의 새 하위 AKS 요청도 `AKSCapacityHeavyUsage`로 실패**했다. 이는 오전 오류의 단순 재인용이 아니다. 새 correlation ID는 **`cf91439f-960e-430a-96af-798274d51c89`**다.
 
 15:52에는 상위 `discovery-core-resume-20261001-1530`이 **Running**, Supercomputer가 **Accepted**였고 당시에는 최종 결과가 미확정이었다. 네트워크 feature 미등록은 해결됐으나 지역 용량 문제는 남아 있었으며, 진행 중인 요청에 추가 배포를 중첩하지 않았다.
 
-**최종 갱신:** 같은 요청은 **16:14:43 KST에 Failed**로 종료됐고 [16:21 GET](../../artifacts/discovery-resume-snapshot-20261001-1621.json)에서도 Workspace와 Supercomputer가 모두 Failed였다. [최종 배포·오류](../../artifacts/discovery-resume-deployment-20261001.json)를 보존했다. 이후 중앙 진단 저장소 복구가 성공했어도 AKS 용량은 별개이며, 추가 코어 재시도는 하지 않았다.
+**해당 오후 요청의 최종 결과:** **16:14:43 KST에 Failed**로 종료됐고 [16:21 GET](../../artifacts/discovery-resume-snapshot-20261001-1621.json)에서도 Workspace와 Supercomputer가 모두 Failed였다. [최종 배포·오류](../../artifacts/discovery-resume-deployment-20261001.json)를 보존했다. 이후 별도의 저녁 컴퓨트 재시도도 **20:32:40 Failed**, 동일 correlation에서 `AKSCapacityHeavyUsage`가 확인됐다. 이후 Korea 경로 성공과 이 두 Sweden 실패를 구분한다.
 
 오후 재확인에서도 지역 vCPU 2/100, Dsv6 0/100, Esv6 0/100, Container Apps 환경 수 1/50였다. [새 실제 오류](../../artifacts/discovery-resume-activity-failures-20261001.json), [리소스 상태](../../artifacts/discovery-resume-snapshot-20261001-1552.json), [한도](../../artifacts/discovery-resume-compute-limits-20261001.json), [사용량](../../artifacts/discovery-resume-compute-usage-20261001.json)을 구분해 본다.
 

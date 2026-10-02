@@ -10,7 +10,7 @@ Microsoft Discovery 실습 가이드와 Azure 아키텍처 자료입니다. **20
 |---|---|---|
 | 핵심 기능 실습 가이드 | [가이드 읽기](docs/labs/MICROSOFT-DISCOVERY-LAB.ko.md) | [PDF](docs/labs/MICROSOFT-DISCOVERY-LAB.ko.pdf) · [HTML](https://junwoojeong100.github.io/microsoft-discovery-labs/docs/labs/MICROSOFT-DISCOVERY-LAB.ko.html) |
 | Azure 아키텍처와 버전 의존성 | [아키텍처 읽기](docs/architecture/MICROSOFT-DISCOVERY-ARCHITECTURE.ko.md) | SVG 그림 3개와 Mermaid 원본 포함 |
-| 다음 배포를 위한 주제별 참고 자료 | [참고 자료 목차](docs/deployment-reference/README.ko.md) | 현재 상태·quota·용량·리전·네트워크·재개 절차 |
+| 다음 배포를 위한 주제별 참고 자료 | [참고 자료 목차](docs/deployment-reference/README.ko.md) | [현재 남은 이슈](https://junwoojeong100.github.io/microsoft-discovery-labs/docs/deployment-reference/01-current-state.ko.html#open-issues) · [통합 문제 목록](https://junwoojeong100.github.io/microsoft-discovery-labs/docs/deployment-reference/README.ko.html#incident-index) |
 
 실습 가이드는 **기본 실습 10개와 확장 실습 2개**로 구성됩니다. Workspace/Project, 데이터·파일, Bookshelf, 에이전트·버전, 계산 도구, Discovery Engine, 사람의 피드백, 협업·RBAC, 추적성·비용, Hybrid/MCP 도구를 다룹니다. 각 실습은 **목표 → 실행 → 완료 기준** 순서로 진행합니다.
 

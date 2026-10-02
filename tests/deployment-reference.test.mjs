@@ -29,7 +29,7 @@ test('the topic index covers all dated Korean reference documents', async () => 
     assert.ok(documents['README.ko.md'].includes(`](${name})`), name);
   }
   for (const [name, text] of Object.entries(documents)) {
-    assert.ok(text.includes('2026-10-01'), name);
+    assert.match(text, /\b20\d{2}-\d{2}-\d{2}\b/, `${name}: observation date`);
     assert.equal(/[\p{Script=Hiragana}\p{Script=Katakana}]/u.test(text), false, name);
     assert.equal(/\/Users\/|\/var\/folders\//.test(text), false, name);
     assert.equal(/[A-Z0-9._%+-]+@microsoft\.com/iu.test(text), false, `${name}: submitted contact email`);
@@ -105,6 +105,68 @@ test('the observed Bookshelf creation rejection is not mistaken for a 200k-ready
   assert.equal(result.searchStarted, false);
   assert.ok(documents['02-model-quota.ko.md'].includes('생성 단계부터'));
   assert.ok(documents['06-resume-runbook.ko.md'].includes('RequiredCapacity:2000'));
+});
+
+test('incident supplement distinguishes deployment causes from unrelated observations and labels', async () => {
+  const supplement = JSON.parse(await readFile(resolve(root, 'artifacts/discovery-incident-supplement-20261002.json'), 'utf8'));
+  assert.equal(supplement.validationModelRetry.errorCode, 'ParentResourceNotReady');
+  assert.equal(supplement.validationModelRetry.filteredActivityFailures, 0);
+  assert.equal(supplement.validationModelRetry.state, 'Failed');
+  assert.equal(supplement.workspaceRetry.historicalSnapshot.state, 'Running');
+  assert.equal(supplement.workspaceRetry.terminalLookup.state, 'Failed');
+  assert.equal(supplement.workspaceRetry.terminalLookup.errorCode, 'Conflict');
+  assert.equal(supplement.workspaceRetry.terminalLookup.errorTarget, 'containerAppsEnvironment');
+  assert.equal(supplement.keyAccessObservation.count, 30);
+  assert.equal(supplement.keyAccessObservation.matchedParentCorrelationCount, 0);
+  assert.equal(supplement.keyAccessObservation.confirmedDeploymentRootCause, false);
+  assert.ok(supplement.cognitionPreservation.requestMethods.every(method => method === 'GET'));
+  assert.equal(supplement.cognitionPreservation.writeRequestSent, false);
+  assert.equal(supplement.cognitionPreservation.beforeCapacity, supplement.cognitionPreservation.afterCapacity);
+  assert.equal(supplement.cognitionPreservation.resetCauseEstablished, false);
+  assert.deepEqual(supplement.partialRuntimeObservation.observedPoolNames, ['system']);
+  assert.equal(supplement.partialRuntimeObservation.parentAndCpuPoolCompleteClaimed, false);
+  for (const source of supplement.sourceEvidence) {
+    assert.match(source.file, /^discovery-[a-z0-9-]+\.json$/);
+    assert.match(source.sha256, /^[a-f0-9]{64}$/);
+  }
+  assert.ok(documents['05-network-identity-data.ko.md'].includes('배포 원인으로 미확정'));
+});
+
+test('current issue summary separates active blockers, verified recovery and dismissed alerts', async () => {
+  const current = JSON.parse(await readFile(resolve(root, 'artifacts/discovery-current-issues-20261002.json'), 'utf8'));
+  assert.deepEqual(current.bookshelves, []);
+  assert.equal(current.koreaAks.state, 'Succeeded');
+  assert.equal(current.koreaAks.policyAddonEnabled, true);
+  assert.equal(current.addonPolicy[0].complianceState, 'Compliant');
+  assert.equal(current.oldWorkspaceRetry.state, 'Failed');
+  assert.equal(current.openDependencyAlertCount, 0);
+  const alerts = current.dependencyAlerts.filter(alert => alert.package === 'lodash-es');
+  assert.equal(alerts.length, 2);
+  assert.ok(alerts.every(alert => alert.state === 'dismissed'
+    && alert.dismissedReason === 'fix_started' && alert.fixedAt === null));
+  assert.equal(current.lodashEs.lockedVersion, '4.17.23');
+  assert.equal(current.lodashEs.patchVerified, false);
+  for (const row of current.modelQuota) {
+    assert.equal(row.availableTpm, row.limitTpm - row.allocatedTpm);
+    assert.equal(row.creationDeficitTpm, Math.max(0, row.creationRequiredTpm - row.availableTpm));
+  }
+  for (const id of ['R01', 'R02', 'R03', 'R04', 'R05']) {
+    assert.ok(documents['01-current-state.ko.md'].includes(`| ${id} `), id);
+  }
+  for (let number = 1; number <= 16; number++) {
+    assert.ok(documents['README.ko.md'].includes(`| I${String(number).padStart(2, '0')} |`));
+  }
+  assert.ok(documents['README.ko.md'].includes('01-current-state.ko.md#open-issues'));
+  assert.ok(!documents['README.ko.md'].includes('Workspace·Supercomputer·코어 배포 모두 `Failed`'));
+});
+
+test('new public incident projections exclude credentials, callers and machine-specific paths', async () => {
+  for (const name of ['discovery-incident-supplement-20261002.json', 'discovery-current-issues-20261002.json']) {
+    const text = await readFile(resolve(root, 'artifacts', name), 'utf8');
+    assert.equal(/\/Users\/|\/var\/folders\/|@(?:microsoft\.com|[\w.-]*onmicrosoft\.com)/i.test(text), false, name);
+    assert.equal(/"caller"\s*:|"accessToken"\s*:|"refreshToken"\s*:|"clientSecret"\s*:|"password"\s*:/i.test(text), false, name);
+    assert.equal(/-----BEGIN (?:OPENSSH |RSA |EC )?PRIVATE KEY-----|\beyJ[\w-]+\.[\w-]+\.[\w-]+/.test(text), false, name);
+  }
 });
 
 test('compute examples include system nodes and the retained client quota', () => {

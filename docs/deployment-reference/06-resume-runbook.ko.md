@@ -1,8 +1,8 @@
 # 06 — 리소스 생성·재개 절차
 
-[목차](README.ko.md) · **기준일: 2026-10-01 오후 최종 코어 실패와 중앙 진단 복구. 아래 예시는 실제 실행 결과와 구분한다.**
+[목차](README.ko.md) · **최신 상태: 2026-10-02 09:10 KST. 과거 명령 예제와 현재 재개 조건을 구분한다.**
 
-**현재 상태:** `discovery-core-resume-20261001-1530`은 16:14:43에 최종 Failed로 끝났다. 지역 용량을 해결하기 전 같은 `create`를 반복하지 않는다. Feature 등록과 중앙 진단 복구는 완료됐고, Bookshelf quota 요청은 접수됐지만 실제 한도 미반영 상태다.
+**현재 재개 차단은 Bookshelf 생성 quota다.** 새 Korea 코어와 정책 애드온은 성공했다. 기존 Sweden 실패 자원은 새 환경과 별개로 남아 있으며 같은 `create`를 반복하지 않는다. 현재 미해결 항목과 완료 조건은 [R01–R05](01-current-state.ko.md#open-issues), 원인별 대응은 [통합 문제 목록](README.ko.md#incident-index)을 따른다.
 
 ## 저녁 교차 리전 경로 — 기존 단일 리전 예제와 구분
 
@@ -25,7 +25,7 @@
 
 기존 core를 컴파일한 뒤 symbolic resource 중 `identity`(existing), `supercomputer`, `cpuPool`과 해당 출력만 보존한 payload를 사용했다. 원본 identity map·region tag·min 0/max 1은 유지했다. `location=swedencentral`이며 생성 태그 `discovery.overridemrgregion=koreacentral`이 실제 target을 정한다. 내부 구독용 Key Vault 태그도 포함한다. [검증/미리 보기 증거](../../artifacts/discovery-korea-compute-proof-20261001.json)를 확인하며, 부분 payload를 전체 배포 성공으로 해석하지 않는다.
 
-**모델 별도 차단:** Korea Central quota API에서도 GPT-5.4 GlobalStandard가 3,000/3,000 단위, 미할당 0 TPM으로 관측됐다. 기존 `gpt-5.4`의 3,000,000 TPM를 임의 축소하지 않는다. DataZoneStandard 잔여 300,000 TPM만으로 자동 cognition과 별도 검증 모델의 전체 조건을 충족한다고 가정하지 않는다.
+**10-01 21:32 당시 모델 차단:** GPT-5.4 GlobalStandard가 3,000/3,000 단위로 관측돼 생성을 보류했다. 이후 사용자가 할당을 조정하고 새 cognition/검증 모델이 각각 250,000 TPM로 생성된 결과는 위 최신 완료 상태를 따른다. 현재도 미할당 0이라고 읽거나 과거 최대 할당으로 되돌리지 않는다.
 
 **10-01 당시 별도 정책 작업:** 새 AKS는 성공했지만 기존 Defender의 Azure Policy 애드온 자동 배포는 `LinkedAuthorizationFailed`였다. 정책 관리 ID에 새 `aksSubnet`의 join 권한이 없었으며 Discovery용 UAMI의 역할 누락과는 다른 문제였다. 이후 승인·복구 결과는 다음 절을 따른다. ARM 사전 검증이 성공해도 자동 정책의 후속 배포 전체가 성공한다는 보장은 아니다. [실패 및 보존 범위](../reports/EXECUTION-REPORT.ko.md)를 참고한다.
 
@@ -194,9 +194,12 @@ az deployment operation group list --name discovery-core-resume-20261001-1530 \
 | 증상 | 필요한 대응 |
 |---|---|
 | `AKSCapacityHeavyUsage` / `ManagedEnvironmentCapacityHeavyUsageError` | 지역 용량 지원 확인. 같은 요청 반복·vCPU quota 증액을 자동 해결책으로 삼지 않음 |
+| `ParentResourceNotReady` | 실제 부모 상태를 확인하고 Succeeded 전에는 child 모델·Project를 제출하지 않음. 빈 Activity Log 결과로 부모 성공을 추정하지 않음 |
+| `containerAppsEnvironment`의 `Conflict` | 기존 Workspace 저녁 재시도에서 실제 확인됨. 충돌 원인/리소스 상태를 확인하며 단순 quota 부족이나 별도 키 조회 오류로 원인을 바꾸지 않음 |
 | terminal `Failed`의 `Conflict` 또는 상태 오류 | 반복 PUT 중단. 원인 해결 후 삭제 승인을 받은 실패 Discovery 리소스만 새 이름으로 재생성. 정상 RG·Storage·데이터는 보존 |
 | `IncompatibleDelegations` | 기존 위임 서브넷을 전체 VNet PUT으로 재작성하지 않음 |
 | Storage 403 | 실제 public access, 정책, DNS, 데이터 역할을 구분해 확인 |
+| `disableLocalAuth` 상태의 `listkeys/action` 실패 | 키 조회 거절과 관리 ID 접근·배포 원인을 구분. 키 인증을 켜거나 권한을 넓히는 자동 복구를 하지 않음 |
 | GA Tool 요청의 버전 필드 오류 | `2026-06-01`에서는 `properties.version`; 정의는 `properties.definitionContent` |
 | MRG `PolicyDeployment_*` 실패 | 과거 실패 이력과 현재 설정을 구분. 중앙 진단은 기존 정책 3개로 복구 완료했으므로 실제 workspace/진단 GET과 새 remediation 결과를 확인 |
 | CLI 명령 미지원·MSAL 오류 | 문서화된 다른 읽기 경로 또는 정상 재로그인. 실패 응답을 0/무제한/성공으로 바꾸지 않음 |

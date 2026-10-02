@@ -87,6 +87,15 @@ az storage account show \
 
 [정책 이벤트](../../artifacts/discovery-storage-policy-20261001.json)와 [사설 연결 배포](../../artifacts/discovery-storage-private-deployment-20261001.json)를 참고한다. `AuthorizationFailure`와 `AuthorizationPermissionMismatch`를 같은 원인으로 단정하지 말고 신원·역할·네트워크를 분리해 조사한다.
 
+<a id="key-auth-observation"></a>
+## Cognitive Services 키 조회 거절 — 배포 원인으로 미확정
+
+10-01 **20:33:04–20:34:50 KST**에 `Microsoft.CognitiveServices/accounts/listkeys/action` 30개가 `BadRequest`와 **`Failed to list key. disableLocalAuth is set to be true`**를 반환했다. 이 오류는 Storage의 사설 네트워크 403과 다른 관측이다. 키 기반 인증이 비활성인 계정에 대한 키 조회 거절이며, 관리 ID나 Entra 인증의 데이터 접근 실패를 그대로 뜻하지 않는다.
+
+해당 항목 중 기존 Workspace 저녁 배포 correlation과 일치한 것은 **0개**였다. 따라서 원본 파일명이 `workspace-evening-failures`라고 해서 30건을 모두 Workspace 생성 실패 원인으로 취급하지 않는다. 실제 부모 작업의 terminal 오류는 별도 재조회에서 `containerAppsEnvironment`의 `Conflict`로 확인됐다.
+
+대응은 **원인 구분과 기록 보완**이며, `disableLocalAuth=false`로 변경하거나 키 인증·권한을 확대하지 않았다. 조회한 오류의 리소스·operation·correlation·시각과 실제 실패한 배포 operation을 함께 확인한다. [최소 관측 요약](../../artifacts/discovery-incident-supplement-20261002.json), [저녁 재시도 결과](../reports/EXECUTION-REPORT.ko.md#incident-supplement)를 참고한다.
+
 ## 현재 9개 서브넷
 
 VNet `vnet-discovery-hol`, `10.80.0.0/16`. 새 환경에서는 기존 네트워크와 중복되지 않는 대역을 선택한다.

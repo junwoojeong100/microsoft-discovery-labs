@@ -1,0 +1,142 @@
+{
+  "observedAt": "2026-10-02T00:10:25.133Z",
+  "scope": "Read-only status refresh for documentation; no Azure changes, quota requests, indexing, searches or dependency updates.",
+  "workspaces": [
+    {
+      "location": "swedencentral",
+      "managedResourceGroup": "mrg-dwsp-discoveryholjunwoosc-ym5ffv",
+      "name": "discoveryholjunwoosc",
+      "state": "Failed"
+    },
+    {
+      "location": "swedencentral",
+      "managedResourceGroup": "mrg-dwsp-discoveryholjunwookc-bdnxfq",
+      "name": "discoveryholjunwookc",
+      "state": "Succeeded"
+    }
+  ],
+  "supercomputers": [
+    {
+      "location": "swedencentral",
+      "managedResourceGroup": null,
+      "name": "sc-discovery-hol",
+      "state": "Failed"
+    },
+    {
+      "location": "swedencentral",
+      "managedResourceGroup": null,
+      "name": "sc-discovery-hol-kc",
+      "state": "Succeeded"
+    }
+  ],
+  "bookshelves": [],
+  "koreaAks": {
+    "location": "koreacentral",
+    "name": "aks-dscmp-a13wxu",
+    "policyAddonEnabled": true,
+    "pools": [
+      {
+        "count": 2,
+        "maxCount": 3,
+        "minCount": 2,
+        "name": "system"
+      },
+      {
+        "count": 0,
+        "maxCount": 1,
+        "minCount": 0,
+        "name": "cpulab"
+      }
+    ],
+    "state": "Succeeded"
+  },
+  "addonPolicy": [
+    {
+      "complianceState": "Compliant",
+      "timestamp": "2026-10-01T22:06:33.136920+00:00"
+    }
+  ],
+  "modelQuota": [
+    {
+      "model": "OpenAI.GlobalStandard.text-embedding-3-small",
+      "limitTpm": 1000000,
+      "allocatedTpm": 220000,
+      "availableTpm": 780000,
+      "creationRequiredTpm": 2000000,
+      "requirementSource": "Actual 2026-10-02 creation rejection.",
+      "creationDeficitTpm": 1220000
+    },
+    {
+      "model": "OpenAI.GlobalStandard.gpt-5-mini",
+      "limitTpm": 1000000,
+      "allocatedTpm": 10000,
+      "availableTpm": 990000,
+      "creationRequiredTpm": 2000000,
+      "requirementSource": "Actual 2026-10-02 creation rejection.",
+      "creationDeficitTpm": 1010000
+    },
+    {
+      "model": "OpenAI.GlobalStandard.gpt-5.2",
+      "limitTpm": 3000000,
+      "allocatedTpm": 10000,
+      "availableTpm": 2990000,
+      "creationRequiredTpm": 200000,
+      "requirementSource": "Published how-to minimum; not one of the two rejected requirements.",
+      "creationDeficitTpm": 0
+    }
+  ],
+  "oldWorkspaceRetry": {
+    "name": "discovery-workspace-evening-20261001-1953",
+    "state": "Failed",
+    "terminalAt": "2026-10-01T13:24:17.484674+00:00",
+    "errorCode": "Conflict",
+    "errorTarget": "containerAppsEnvironment"
+  },
+  "dependencyAlerts": [
+    {
+      "dismissedAt": null,
+      "dismissedReason": null,
+      "fixedAt": "2026-10-01T13:38:31Z",
+      "number": 3,
+      "package": "dompurify",
+      "severity": "low",
+      "state": "fixed",
+      "url": "https://github.com/junwoojeong100/microsoft-discovery-labs/security/dependabot/3"
+    },
+    {
+      "dismissedAt": "2026-10-01T20:30:42Z",
+      "dismissedReason": "fix_started",
+      "fixedAt": null,
+      "number": 2,
+      "package": "lodash-es",
+      "severity": "high",
+      "state": "dismissed",
+      "url": "https://github.com/junwoojeong100/microsoft-discovery-labs/security/dependabot/2"
+    },
+    {
+      "dismissedAt": "2026-10-01T20:30:42Z",
+      "dismissedReason": "fix_started",
+      "fixedAt": null,
+      "number": 1,
+      "package": "lodash-es",
+      "severity": "medium",
+      "state": "dismissed",
+      "url": "https://github.com/junwoojeong100/microsoft-discovery-labs/security/dependabot/1"
+    }
+  ],
+  "openDependencyAlertCount": 0,
+  "lodashEs": {
+    "lockedVersion": "4.17.23",
+    "developmentOnly": true,
+    "advisoryPatchedVersion": "4.18.0",
+    "patchVerified": false,
+    "notes": "The prior high/medium alerts are dismissed with fix_started and no fixedAt timestamp. Dismissal is not a verified patch."
+  },
+  "notReverified": [
+    "Discovery Engine/KB indexing/search end-to-end behavior",
+    "Multi-user permission boundaries",
+    "Laptop-to-private-Blob/Studio user connectivity",
+    "Actual central log arrival and historical log recovery",
+    "Billed cost and cleanup safety for retained Sweden resources"
+  ]
+}
