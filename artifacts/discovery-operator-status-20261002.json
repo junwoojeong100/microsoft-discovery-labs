@@ -1,0 +1,127 @@
+{
+  "scope": "Operator installation record, not a customer lab completion report",
+  "checkedAt": "2026-10-02T13:15:06.670Z",
+  "homeRegion": "swedencentral",
+  "targetComputeRegion": "koreacentral",
+  "resourceSnapshot": {
+    "observedAtKst": "2026-10-02 21:21",
+    "resourceGroups": 8,
+    "armResources": 95,
+    "separateModelDeployments": 2
+  },
+  "setupReadiness": {
+    "basis": "Equally weighted administrator handoff checks H01-H06",
+    "complete": [
+      "H01",
+      "H02",
+      "H04",
+      "H05"
+    ],
+    "incomplete": [
+      "H03",
+      "H06"
+    ],
+    "completedChecks": 4,
+    "totalChecks": 6,
+    "roundedPercentage": 67,
+    "representsEndToEndLabCompletion": false
+  },
+  "bookshelves": [],
+  "bookshelfRecoveryReview": {
+    "supportedClientSideQuotaOverrideFound": false,
+    "previewApiTrial": {
+      "apiVersion": "2026-02-01-preview",
+      "approvedLogicalCreationAttempts": 1,
+      "terminalTimestampUtc": "2026-10-02T08:16:17.155320Z",
+      "state": "Failed",
+      "requiredTpmPerBlockingModel": 2000000,
+      "bookshelvesAfterAttempt": 0,
+      "ownedResourceGroupsAfterAttempt": 0,
+      "koreaConfigurationPreserved": true,
+      "indexingOrSearchStarted": false
+    },
+    "productSupport": {
+      "route": "Microsoft Discovery / Bookshelf / Graph RAG",
+      "distinctFromExistingFoundryQuotaRequests": true,
+      "draftPrepared": true,
+      "submissionApproved": false,
+      "submitted": false
+    }
+  },
+  "modelQuota": [
+    {
+      "model": "text-embedding-3-small",
+      "sku": "GlobalStandard",
+      "limitTpm": 1000000,
+      "allocatedTpm": 220000,
+      "availableTpm": 780000,
+      "observedCreationRequirementTpm": 2000000,
+      "deficitTpm": 1220000,
+      "requestedTotalTpm": 3000000
+    },
+    {
+      "model": "gpt-5-mini",
+      "sku": "GlobalStandard",
+      "limitTpm": 1000000,
+      "allocatedTpm": 10000,
+      "availableTpm": 990000,
+      "observedCreationRequirementTpm": 2000000,
+      "deficitTpm": 1010000,
+      "requestedTotalTpm": 3000000
+    }
+  ],
+  "executionBoundary": {
+    "coreInfrastructureCreated": true,
+    "directSyntheticCpuRunsVerified": true,
+    "inputFiles": 5,
+    "calculationOutputs": 2,
+    "agentMediatedToolExecutionVerified": false,
+    "knowledgebaseIndexingVerified": false,
+    "engineResearchFlowVerified": false,
+    "multiUserAccessVerified": false
+  },
+  "cleanup": {
+    "completedAtUtc": "2026-10-02T11:41:28.503Z",
+    "indexedTargetsRemoved": 66,
+    "targetsAndDedicatedChildrenVerifiedAbsent": 80,
+    "remainingApprovedTargets": 0,
+    "homeObjectsRetained": 21,
+    "resourceGroupsDeleted": 0,
+    "oldManagedGroupsRetainedEmpty": [
+      "mrg-dscmp-sc-discovery-hol-b6wiwf",
+      "mrg-dwsp-discoveryholjunwoosc-ym5ffv"
+    ],
+    "koreaConfigurationUnchanged": true,
+    "forcedPurgePerformed": false
+  },
+  "remainingWork": [
+    "Confirm reflected quota or a supported correction to the GA Bookshelf creation gate",
+    "Create Bookshelf, thermal-evidence KB, source bindings and the separately sized indexing pool",
+    "Verify researcher private access and roles, then index and verify citations",
+    "Configure three research agents and verify agent-mediated tool execution",
+    "Run and verify the Engine task and feedback flows",
+    "Verify multi-user access if selected, actual log arrival and final cost/retention state"
+  ],
+  "sourceEvidence": [
+    {
+      "file": "bookshelf-alternatives/findings.json",
+      "sha256": "8b0de22ebcd9981c423a2429f45eeae33e43473b1adbdc4dcbd6ca441d863889",
+      "availability": "private operator snapshot"
+    },
+    {
+      "file": "discovery-sweden-cleanup-result-20261002.json",
+      "sha256": "d0278c1ebdc4df358ee2d3a263506ad11e3ee522b73e200a8997f5c644e82538",
+      "availability": "private operator snapshot"
+    },
+    {
+      "file": "discovery-bookshelf-create-result-20261002.json",
+      "sha256": "3f19b83d4612d20f1f955a70810b1395eea72367575e87dc3343485b4a80e4e8",
+      "availability": "repository"
+    },
+    {
+      "file": "discovery-korea-final-result-20261001.json",
+      "sha256": "d9fabc86fb6c419f5c5a46f809dcb095f2b44636b67d6ae2d56fdb297706e38b",
+      "availability": "repository"
+    }
+  ]
+}

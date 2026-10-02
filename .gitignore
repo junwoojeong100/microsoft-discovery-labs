@@ -10,3 +10,11 @@ __pycache__/
 artifacts/raw/
 artifacts/narration/
 site/
+artifacts/guide-review/
+artifacts/architecture-review/
+artifacts/runs/*/*-evidence.png
+artifacts/summary-frames/0[2-8].png
+artifacts/guide-cover.png
+artifacts/actual-evidence-playback.png
+artifacts/player-preview.png
+artifacts/discovery-readiness.json

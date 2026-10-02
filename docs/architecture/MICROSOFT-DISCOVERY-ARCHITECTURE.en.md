@@ -1,12 +1,14 @@
 # Microsoft Discovery — Azure Architecture and Version Dependencies
 
-**English · Checked 2026-09-25 · Cloud service**
+**English · Technical sources checked 2026-09-25 · Documentation revised 2026-10-02 · Cloud service**
 
 [한국어](MICROSOFT-DISCOVERY-ARCHITECTURE.ko.md) · [English hands-on guide](../labs/MICROSOFT-DISCOVERY-LAB.en.md)
 
 **Bottom line:** Discovery connects Foundry agents/models, the AKS-based Supercomputer, and Bookshelf's knowledge stack. **Within Bookshelf, Azure AI Search handles document enrichment, Azure SQL Database stores the knowledge graph/vectors, and Azure Container Apps serves search.** Workspaces/Projects use Cosmos DB; file inputs/outputs use linked storage such as Blob Storage.[R01][] [R02][] [R04][] [R05][] [R06][]
 
 This is a **documentation-based reference architecture**, not an inventory of an inspected Azure subscription or a fixed internal software BOM. Where public documentation does not specify an exact Kubernetes, database-engine, or service-build dependency, this document does not invent one.
+
+**First reading:** [Overall architecture](#architecture) → [Bookshelf indexing/search](#bookshelf) → [Networking and identity](#security). For version reviews, use the distinctions below and [change impacts](#impact). Shared customer procedures are in [guide S00](../labs/MICROSOFT-DISCOVERY-LAB.en.md#s00); environment-specific attempts and observations belong to the separate [deployment reference, Korean](../deployment-reference/README.ko.md). A component appearing in a diagram does not mean it has been deployed or verified.
 
 <a id="reading"></a>
 ## 1. Separate the meanings of “version”
@@ -155,7 +157,7 @@ This is also a **logical dependency view**. It does not claim that a particular 
 | V04 | Bookshelf models | `gpt-5.2`, `gpt-5-mini`, `text-embedding-3-small` | Documented defaults for decomposition/answers, search, and embeddings. Inspect actual provider revisions.[R04][] [R05][] |
 | V05 | ChatModelDeployment configuration | `modelFormat`, `modelName`, optional `modelVersion`, `skuName`, `capacity` | GA schema supports revision selection, but the public quickstart does not set `modelVersion`. Do not convert capacity units to TPM identically for every model.[R13][] [R14][] |
 | V06 | Model upgrade policy | `versionUpgradeOption` | Varies by model/provider/deployment type. Do not apply documented Standard policies indiscriminately to Provisioned or partner deployments.[R19][] [R20][] |
-| V07 | Actual AKS runtime | `currentKubernetesVersion`, pool `currentOrchestratorVersion`, `nodeImageVersion` | **O:** No deployment has been inspected, so no actual values are supplied here. Requested, latest-supported, and currently running versions differ.[R21][] [R22][] |
+| V07 | Actual AKS runtime | `currentKubernetesVersion`, pool `currentOrchestratorVersion`, `nodeImageVersion` | **O:** This reference does not include a deployed BOM. Inspect and record each deployment; distinguish requested, latest-supported and currently running versions.[R21][] [R22][] |
 | V08 | Internal Bookshelf GraphRAG implementation | GraphRAG/LazyGraphRAG is described | Do not equate it to a particular open-source `graphrag` package version. An internal build/schema pin is not established by these public sources.[R05][] [R06][] |
 | V09 | Tool version | Definition content version + container digest | Customer-controlled contract/artifact. An immutable agent version does not automatically freeze referenced model revisions, tools, or mutable image tags.[R17][] [R25][] [R26][] |
 
@@ -253,7 +255,7 @@ Minimum post-change probes: **basic agent call → KB search with actual citatio
 <a id="observe"></a>
 ## 8. Inspect an actual deployment's versions/BOM
 
-These are **post-deployment examples for authorized read access**. They were not executed for this document. Use actual IDs/MRG names; do not replace `null` or an access denial with “latest/absent.” Inspect the Workspace/Bookshelf/Supercomputer MRGs and any discovered node resource group separately.
+These are **post-deployment examples for authorized read access**. This section does not contain actual lookup results. Use actual IDs/MRG names; do not replace `null` or an access denial with “latest/absent.” Inspect the Workspace/Bookshelf/Supercomputer MRGs and any discovered node resource group separately.
 
 Run the blocks in the same Bash session after setting the first block's variables. Replace every `<...>` placeholder; the examples do not use `az account set` to change the default subscription.
 

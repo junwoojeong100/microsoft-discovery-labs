@@ -1,12 +1,14 @@
 # Microsoft Discovery — Azure 아키텍처와 버전 의존성
 
-**국문 · 2026-09-25 확인 · 클라우드 서비스 기준**
+**국문 · 기술 근거 확인 2026-09-25 · 문서 정리 2026-10-02 · 클라우드 서비스 기준**
 
 [English](MICROSOFT-DISCOVERY-ARCHITECTURE.en.md) · [국문 실습 가이드](../labs/MICROSOFT-DISCOVERY-LAB.ko.md)
 
 **핵심:** Discovery는 Foundry의 에이전트·모델, AKS 기반 Supercomputer, Bookshelf의 검색·지식 저장 계층을 연결한다. **Bookshelf에서 Azure AI Search는 문서 enrichment, Azure SQL Database는 지식 그래프·벡터 저장, Azure Container Apps는 검색 실행**을 담당한다. Workspace/Project는 Cosmos DB를 사용하고, 파일 입출력은 Blob Storage 등 연결 저장소를 사용한다.[R01][] [R02][] [R04][] [R05][] [R06][]
 
 이 문서는 **공식 문서 기반 참조 구조**다. 실제 Azure 구독을 조사한 자원 목록이나 고정된 내부 소프트웨어 BOM이 아니다. 공개 문서가 특정 Kubernetes·DB 엔진·서비스 내부 빌드 버전을 명시하지 않으면 임의로 채우지 않는다.
+
+**처음 읽는 순서:** [전체 구조](#architecture) → [Bookshelf의 색인·검색](#bookshelf) → [네트워크·ID](#security). 버전 검토가 필요하면 아래 구분표와 [변경 영향](#impact)을 확인한다. 고객 공통 구성 절차는 [실습 가이드 S00](../labs/MICROSOFT-DISCOVERY-LAB.ko.md#s00), 특정 환경의 시도·관측값은 [설치·운영 참고 자료](../deployment-reference/README.ko.md)에서 별도로 다룬다. 그림에 포함됐다는 이유로 모든 구성요소가 배포·검증됐다고 해석하지 않는다.
 
 <a id="reading"></a>
 ## 1. “버전”을 먼저 구분하기
@@ -69,7 +71,7 @@ graph TB
 
 **화살표는 논리적 사용·의존 관계**이며 실제 패킷 경로·프로세스 호출 순서·리소스 개수를 확정하지 않는다. 점선은 조건부 경로다. 사용자 ACR이 조건부라는 것은 컨테이너 이미지가 필요 없다는 뜻이 아니다. Foundry 노드는 구독의 서비스/모델 배포를 나타내며 추론 GPU가 고객 VNet 안에 있다는 뜻이 아니다.
 
-Discovery 문서는 Workspace·Bookshelf·Supercomputer의 **관리 리소스 그룹(MRG)**을 설명한다. 실제 환경은 AKS node resource group 등 추가 그룹을 가질 수 있다. 그룹 수·이름·자원 개수를 이 그림으로 단정하지 않는다.[R02][] [R07][]
+Discovery 문서는 Workspace·Bookshelf·Supercomputer의 **관리 리소스 그룹**(MRG)을 설명한다. 실제 환경은 AKS node resource group 등 추가 그룹을 가질 수 있다. 그룹 수·이름·자원 개수를 이 그림으로 단정하지 않는다.[R02][] [R07][]
 
 <a id="bookshelf"></a>
 ## 3. Bookshelf: 색인과 검색은 다른 경로다
@@ -155,7 +157,7 @@ graph LR
 | V04 | Bookshelf 모델 | `gpt-5.2`, `gpt-5-mini`, `text-embedding-3-small` | 질의 분해/응답, 검색, 임베딩의 기본 문서상 모델. 정확한 provider revision은 실제 배포에서 확인.[R04][] [R05][] |
 | V05 | ChatModelDeployment 설정 | `modelFormat`, `modelName`, 선택적 `modelVersion`, `skuName`, `capacity` | GA 스키마는 revision 지정을 지원하지만 공개 quickstart는 `modelVersion`을 지정하지 않음. `capacity`를 모든 모델에서 동일한 TPM으로 환산하지 않음.[R13][] [R14][] |
 | V06 | 모델 upgrade policy | `versionUpgradeOption` | 모델/공급자/배포 유형별 정책. 문서의 Standard 정책을 모든 Provisioned·파트너 배포에 그대로 적용하지 않음.[R19][] [R20][] |
-| V07 | AKS 실제 실행 버전 | `currentKubernetesVersion`, pool의 `currentOrchestratorVersion`, `nodeImageVersion` | **O:** 아직 배포하지 않았으므로 이 문서에는 실제 값을 채우지 않음. 원하는 버전·최신 지원 버전과 현재 실행 버전은 다름.[R21][] [R22][] |
+| V07 | AKS 실제 실행 버전 | `currentKubernetesVersion`, pool의 `currentOrchestratorVersion`, `nodeImageVersion` | **O:** 이 참조 문서는 실제 배포 BOM을 포함하지 않음. 배포별로 조회·기록하며, 원하는 버전·최신 지원 버전과 현재 실행 버전은 구분.[R21][] [R22][] |
 | V08 | Bookshelf 내부 GraphRAG 구현 | GraphRAG/LazyGraphRAG 방식이 문서에 설명됨 | 특정 OSS `graphrag` 패키지 버전과 동일하다고 가정하지 않음. 내부 build/스키마 pin은 공개 자료로 확인 불가.[R05][] [R06][] |
 | V09 | 도구 버전 | Definition content version + 컨테이너 digest | 고객이 관리하는 계약/아티팩트. 에이전트 버전 불변성만으로 모델 revision·도구·가변 image tag까지 고정되지 않음.[R17][] [R25][] [R26][] |
 
@@ -253,7 +255,7 @@ graph TB
 <a id="observe"></a>
 ## 8. 실제 배포의 버전/BOM을 확인하는 방법
 
-아래는 **배포 후, 허용된 읽기 권한으로 사용하는 예시**다. 이번 문서 작업에서 실행하지 않았다. 실제 ID·MRG 이름을 사용하고, `null`이나 접근 거부를 “최신/없음”으로 채우지 않는다. Workspace/Bookshelf/Supercomputer MRG와 발견된 node resource group을 각각 확인한다.
+아래는 **배포 후, 허용된 읽기 권한으로 사용하는 예시**다. 이 절에 실제 조회 결과를 포함하지 않는다. 실제 ID·MRG 이름을 사용하고, `null`이나 접근 거부를 “최신/없음”으로 채우지 않는다. Workspace/Bookshelf/Supercomputer MRG와 발견된 node resource group을 각각 확인한다.
 
 같은 Bash 세션에서 첫 블록의 변수를 설정한 뒤 다음 블록을 실행한다. `<...>`는 모두 실제 값으로 교체하며, 구독 기본값을 변경하는 `az account set`은 사용하지 않는다.
 

@@ -32,7 +32,7 @@
 </head>
 <body>
   <a class="skip" href="#main">본문으로 이동</a>
-  <aside><b>Microsoft Discovery</b><span class="label">핵심 10개 Lab + 확장 2개</span>
+  <aside><b>Microsoft Discovery</b><span class="label">고객·파트너 실습 · 핵심 10개 Lab + 확장 2개</span>
     <nav class="languages" aria-label="언어 선택">
       <a href="MICROSOFT-DISCOVERY-LAB.en.html" data-language="en">English</a>
       <a href="MICROSOFT-DISCOVERY-LAB.ko.html" data-language="ko" aria-current="page">한국어</a>
@@ -57,14 +57,14 @@
 <a href="#a02">A02 — 문제 해결과 완료 판정</a>
 <a href="#a03">A03 — 공식 출처</a></nav></details>
   </aside>
-  <main id="main"><div class="banner">실제 배포 경험 반영 · 국문/영문 동일 실습 기준 · 성공/차단 단계는 실행 보고서에서 확인</div><h1 id="section-1">Microsoft Discovery 핵심 기능 실습 가이드</h1><p><strong>한국어 · 2026-10-01 실행 기반 개정 · Azure 클라우드 서비스</strong></p>
+  <main id="main"><div class="banner">작성 중 · 전체 실습 미검증 · 단계별 시작 조건과 실제 증거를 확인하세요</div><h1 id="section-1">Microsoft Discovery 핵심 기능 실습 가이드</h1><p><strong>한국어 · 2026-10-02 문서 개정 · 작성 중 · Azure 클라우드 서비스</strong></p>
 <div class="edition-links"><p><a href="MICROSOFT-DISCOVERY-LAB.en.html">English</a> · <a href="https://junwoojeong100.github.io/microsoft-discovery-labs/docs/labs/MICROSOFT-DISCOVERY-LAB.ko.html">브라우저용 국문</a></p>
-</div><p><strong>목표는 하나다. 근거를 찾고, 실제 계산으로 검증하고, 사람이 조건을 바꿨을 때 다시 평가하는 연구 흐름을 만든다.</strong></p>
+</div><p><strong>문서의 근거와 실제 계산 결과를 연결해, 조건이 바뀌어도 다시 검증할 수 있는 연구 흐름을 만들어 봅니다.</strong></p>
 <blockquote>
-<p><strong>검증 범위:</strong> 실제 Azure 배포에서 확인한 선행조건·오류·재개 절차를 반영한다. 최신 상태와 미완료 항목은 <a href="../reports/EXECUTION-REPORT.ko.html">실행 보고서</a>, 접근·모델 quota는 <a href="../../artifacts/discovery-readiness.json">읽기 전용 점검 결과</a>를 확인한다. 리소스 생성, 데이터 평면 접근, Bookshelf 색인, 연구 실행은 각각 다른 완료 기준이다. 로컬 정답이나 ARM <code>Succeeded</code>만으로 전체 실습 성공을 주장하지 않는다.</p>
+<p><strong>전체 연구 흐름은 아직 검증 중입니다.</strong> 이 문서는 고객·파트너가 자신의 환경에서 따라갈 실습 절차입니다. <strong>시작 조건이 준비되지 않은 단계는 멈추고</strong>, 실제 결과가 완료 기준을 만족했을 때 다음 단계로 진행하세요. 특정 환경의 설치 이력은 아래 별도 참고 자료에서 다룹니다.</p>
 </blockquote>
 <p><a id="s00"></a></p>
-<h2 id="heading-s00">S00 — 시작하기</h2><p>Microsoft Discovery 클라우드 서비스는 <strong>2026-06-02 GA</strong>되었다. 별도 <strong>Discovery 데스크톱 앱과 unified Workbench는 Preview</strong>이며, 이 가이드의 필수 경로가 아니다. 정적 <code>kind: workflow</code> 에이전트 대신 <strong>Discovery Engine</strong>을 사용한다. 문서의 역할 이름에 <code>(Preview)</code>가 남아 있어도 실제 구독의 표시 이름에서는 빠질 수 있다. 자동화는 검증한 역할 GUID를 사용하며 이름 변경을 권한 변경으로 추정하지 않는다.<sup class="citation">[<a href="https://azure.microsoft.com/en-us/blog/announcing-microsoft-discovery-general-availability-and-microsoft-discovery-app-preview/">S01</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/quickstart-infrastructure">S03</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-discovery-agent-types">S10</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-discovery-and-discovery-app">S28</a>]</sup></p>
+<h2 id="heading-s00">S00 — 시작하기</h2><h3 id="section-2">이 가이드를 사용하는 순서</h3><p>처음 구성한다면 <strong>Azure Portal 중심의 단일 리전 경로</strong>를 사용하세요. 이미 준비된 환경을 받았다면 H01–H06을 확인하고 연구자 경로에서 시작할 수 있습니다. 계정·구독·리소스 이름은 <a href="#l00">L00</a>에서 자신의 값으로 정합니다.</p>
 <div class="table-scroll"><table>
 <thead>
 <tr>
@@ -74,23 +74,65 @@
 </thead>
 <tbody><tr>
 <td>환경을 준비하는 관리자</td>
-<td>L00 → L01 → L02 → L03, 이어서 L05의 1–5단계로 도구 준비</td>
+<td><a href="#l00">L00</a> → <a href="#l01">L01</a> → <a href="#l02">L02</a> → <a href="#l03">L03</a>, 이어서 <a href="#l05">L05</a>의 1–5단계로 도구 준비</td>
 </tr>
 <tr>
 <td>준비된 환경을 사용하는 연구자</td>
-<td>아래 H01–H06 확인 → L04 → L05의 6–8단계 → L06 → L07 → L09</td>
+<td>아래 H01–H06 확인 → <a href="#l04">L04</a> → <a href="#l05">L05</a>의 6–8단계 → <a href="#l06">L06</a> → <a href="#l07">L07</a> → <a href="#l09">L09</a></td>
 </tr>
 <tr>
 <td>협업·권한까지 확인하는 팀</td>
-<td>L08 추가. 실제 검증에는 별도 테스트 사용자가 필요하다</td>
+<td><a href="#l08">L08</a> 추가. 실제 검증에는 별도 테스트 사용자가 필요합니다</td>
 </tr>
 <tr>
 <td>도구 확장까지 실습하는 개발자</td>
-<td>E01과 E02 추가</td>
+<td>기본 경로 이후 <a href="#e01">E01</a>과 <a href="#e02">E02</a> 추가</td>
+</tr>
+<tr>
+<td>Azure 없이 자료를 검토하는 독자</td>
+<td><a href="#s02">S02 — 시나리오</a>의 합성 데이터·정답과 L05의 <strong>1단계 로컬 계산만</strong> 확인</td>
 </tr>
 </tbody></table>
-</div><p><strong>역할 경계:</strong> Bookshelf·노드 풀·Registry·도구 생성과 색인 준비는 관리자 또는 해당 자원의 명시적 권한 보유자가 담당한다. Project Contributor만으로 이 모든 작업이 허용되는 것은 아니다. 필요한 단계에서 관리자와 협업하며, 실습 편의를 위해 모든 연구자에게 구독 Owner를 부여하지 않는다. <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/how-to-configure-project-rbac">S20</a>]</sup></p>
-<p><strong>연구자 시작 체크:</strong> 관리자가 아래 실제 값과 준비 상태를 전달하면 인프라 생성 단계를 반복하지 않고 L04부터 시작한다. 이름 예시나 구두 확인만으로 준비 완료로 보지 않는다.</p>
+</div><p><strong>막히면:</strong> <a href="#a01">A01 — 비용·quota</a>, <a href="#a02">A02 — 문제 해결</a>을 확인합니다. Bookshelf 준비가 막혀도 독립된 기반·데이터·도구 준비는 할 수 있지만, KB가 필요한 연구 실습의 완료로 대신하지 않습니다. 부분 진행 후에도 L09에서 잔여 자원과 비용을 확인합니다.</p>
+<h3 id="section-3">이 실습에서 만드는 것</h3><p>완료한 모습부터 확인하세요. 아래 산출물은 실습에서 직접 만들어 확인할 결과이며, 이미 생성됐다는 뜻은 아닙니다.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>단계</th>
+<th>하는 일</th>
+<th>확인할 결과</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>준비 — L00–L03</td>
+<td>환경·데이터·지식 색인 준비</td>
+<td>접속 가능한 Project, 입력 파일, 색인된 KB</td>
+</tr>
+<tr>
+<td>근거 — L04</td>
+<td>전문 에이전트로 문서 비교</td>
+<td>실제로 열 수 있는 원문 인용과 구조화된 근거</td>
+</tr>
+<tr>
+<td>계산 — L05</td>
+<td>CPU 도구로 후보 평가</td>
+<td>실제 실행 ID·로그와 검증한 <code>ranking.json</code></td>
+</tr>
+<tr>
+<td>연구 흐름 — L06–L07</td>
+<td>작업 연결, 독립 검토, 조건 변경</td>
+<td>연구 보고서와 변경 전후 비교 결과</td>
+</tr>
+<tr>
+<td>마무리 — L09</td>
+<td>결과와 실행 근거 보존</td>
+<td>다시 확인할 수 있는 결과·출처, 잔여 작업·비용 점검</td>
+</tr>
+</tbody></table>
+</div><p><strong>완료 확인 원칙:</strong> 리소스 생성, 실제 작업 실행, 결과 내용 검증을 구분하세요. 직접 API 계산 성공만으로 에이전트·Engine 실습까지 완료했다고 표시하지 않습니다.</p>
+<p><strong>설치 사례를 찾는 독자:</strong> 특정 환경의 시도·성공·실패·진행 현황은 <a href="../deployment-reference/README.ko.md">설치·운영 참고 자료</a>에 모았습니다. 해당 기록은 이 실습의 필수 읽기 순서가 아닙니다.</p>
+<h3 id="section-4">관리자에게 받을 준비 정보</h3><p><strong>역할 경계:</strong> Bookshelf·노드 풀·Registry·도구 생성과 색인 준비는 관리자 또는 해당 자원의 명시적 권한 보유자가 담당합니다. Project Contributor만으로 이 모든 작업이 허용되는 것은 아닙니다. 필요한 단계에서 관리자와 협업하며, 실습 편의를 위해 모든 연구자에게 구독 Owner를 부여하지 않습니다. <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/how-to-configure-project-rbac">S20</a>]</sup></p>
+<p><strong>연구자 시작 체크:</strong> 관리자가 아래 실제 값과 준비 상태를 전달하면 인프라 생성 단계를 반복하지 않고 L04부터 시작합니다. 이름 예시나 구두 확인만으로 준비 완료로 보지 않습니다.</p>
 <div class="table-scroll"><table>
 <thead>
 <tr>
@@ -123,11 +165,13 @@
 <td>연구자의 프로젝트·모델·도구·KB 권한, 입력/출력 파일에 대한 Blob·네트워크 접근</td>
 </tr>
 </tbody></table>
-</div><p>환경 승인·배포·색인 대기는 별도다. 연구자 실습은 <strong>약 2–3시간의 계획 범위</strong>로 잡되 완료 시간을 보장하지 않는다. 실습당 공통 순서는 <strong>목표 → 실행 → 완료 기준</strong>이다. 뒤의 Lab은 앞의 완료 기준을 통과한 뒤 진행한다.</p>
-<p><strong>용어를 먼저 구분한다.</strong> Workspace는 공용 인프라 경계, Project는 연구·접근 경계, Shared session은 관련 작업을 묶는 연구 세션이다. 문서/API의 <em>investigation</em>은 Shared session과 연관된 연구 컨테이너 용어다. Discovery Storage Container는 Azure Blob 컨테이너 자체가 아닌 <strong>저장소 참조 리소스</strong>다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/overview-service-architecture">S02</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-tasks-investigations">S12</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-storage-containers-assets">S16</a>]</sup></p>
+</div><p>H01–H06은 전달 양식이지 이 저장소의 완료 표시가 아닙니다. 실제 이름이 예시와 다르면 이후 프롬프트와 연결 설정도 함께 바꿉니다. 하나라도 미충족이면 그 항목에 의존하는 실습을 보류합니다.</p>
+<p>환경 승인·배포·색인 대기는 별도입니다. 연구자 실습은 <strong>약 2–3시간의 미검증 계획값</strong>이며 전체 실행 소요시간의 실측값이 아닙니다. 각 실습은 <strong>목표 → 시작 조건 → 실행 → 완료 기준</strong> 순서로 진행합니다.</p>
+<h3 id="section-5">용어와 제품 범위</h3><p>Microsoft Discovery 클라우드 서비스는 <strong>2026-06-02 GA</strong>되었습니다. 별도 <strong>Discovery 데스크톱 앱과 unified Workbench는 Preview</strong>이며 이 가이드의 필수 경로가 아닙니다. 정적 <code>kind: workflow</code> 에이전트 대신 <strong>Discovery Engine</strong>을 사용합니다. 역할 이름의 <code>(Preview)</code> 유무와 실제 권한은 구분합니다.<sup class="citation">[<a href="https://azure.microsoft.com/en-us/blog/announcing-microsoft-discovery-general-availability-and-microsoft-discovery-app-preview/">S01</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/quickstart-infrastructure">S03</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-discovery-agent-types">S10</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-discovery-and-discovery-app">S28</a>]</sup></p>
+<p><strong>용어를 먼저 구분합니다.</strong> Workspace는 공용 인프라 경계, Project는 연구·접근 경계, Shared session은 관련 작업을 묶는 연구 세션입니다. 문서/API의 <em>investigation</em>은 Shared session과 연관된 연구 컨테이너 용어입니다. Discovery Storage Container는 Azure Blob 컨테이너 자체가 아닌 <strong>저장소 참조 리소스</strong>입니다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/overview-service-architecture">S02</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-tasks-investigations">S12</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-storage-containers-assets">S16</a>]</sup></p>
 <p><img src="../../assets/discovery-architecture.ko.svg" alt="Microsoft Discovery 실습 구조"></p>
 <p><a id="s01"></a></p>
-<h2 id="heading-s01">S01 — 핵심 기능 커버리지</h2><p>기본 실습은 네 가지 중심 기능인 <strong>에이전트, 지식 그래프, 계산, Discovery Engine</strong>과 이를 운영하는 데이터·보안·협업을 다룬다. E01/E02는 같은 플랫폼의 확장 기능을 다루며 추가 권한·연결 기능의 가용성을 확인해야 한다.</p>
+<h2 id="heading-s01">S01 — 핵심 기능 커버리지</h2><p>기본 실습은 네 가지 중심 기능인 <strong>에이전트, 지식 그래프, 계산, Discovery Engine</strong>과 이를 운영하는 데이터·보안·협업을 다룹니다. E01/E02는 같은 플랫폼의 확장 기능을 다루며 추가 권한·연결 기능의 가용성을 확인해야 합니다.</p>
 <div class="table-scroll"><table>
 <thead>
 <tr>
@@ -210,10 +254,10 @@
 <td>MCP 호출 증거, 통합 방식 선택</td>
 </tr>
 </tbody></table>
-</div><p><strong>범위 밖:</strong> 데스크톱 앱 설치, Preview Workbench 활성화, 모든 파트너 모델의 평가, 실제 물리 실험·로봇 제어, GPU 성능 벤치마크. 이런 항목을 이 실습의 실행 성과로 주장하지 않는다.</p>
+</div><p><strong>범위 밖:</strong> 데스크톱 앱 설치, Preview Workbench 활성화, 모든 파트너 모델의 평가, 실제 물리 실험·로봇 제어, GPU 성능 벤치마크. 이런 항목을 이 실습의 실행 성과로 주장하지 않습니다.</p>
 <p><a id="s02"></a></p>
-<h2 id="heading-s02">S02 — 시나리오와 정답 기준</h2><p><strong>질문:</strong> 가상의 방열판 소재 8개에서 모든 제약조건을 만족하는 상위 2개를 추천하라. 문서 충돌은 최신 정정으로 해결하고, 누락된 근거를 만들어내지 마라.</p>
-<p>데이터는 전부 이 실습을 위해 작성한 <strong>합성 데이터</strong>다. 실제 공급업체 정보·논문·측정·안전 인증이 아니다. 두 언어판은 같은 영문 원본 코퍼스를 사용하며, 가이드와 에이전트 응답 언어를 달리한다.</p>
+<h2 id="heading-s02">S02 — 시나리오와 정답 기준</h2><p><strong>질문:</strong> 가상의 방열판 소재 8개에서 모든 제약조건을 만족하는 상위 2개를 추천하세요. 문서 충돌은 최신 정정으로 해결하고, 누락된 근거를 만들어내지 마세요.</p>
+<p>데이터는 전부 이 실습을 위해 작성한 <strong>합성 데이터</strong>입니다. 실제 공급업체 정보·논문·측정·안전 인증이 아닙니다. 두 언어판은 같은 영문 원본 코퍼스를 사용하며, 가이드와 에이전트 응답 언어를 달리합니다.</p>
 <div class="table-scroll"><table>
 <thead>
 <tr>
@@ -255,7 +299,7 @@
 </tr>
 <tr>
 <td><code>config/lab.json</code></td>
-<td>이번 실습의 계정·구독·리전 설정</td>
+<td>Azure 스크립트가 읽는 환경 설정. 사용 전 자신의 값으로 수정</td>
 </tr>
 </tbody></table>
 </div><div class="table-scroll"><table>
@@ -286,7 +330,7 @@
 <td><code>pass</code>; <code>unknown</code>은 통과가 아님</td>
 </tr>
 </tbody></table>
-</div><p>적격 후보만 점수를 계산한다. <code>recycled_pct</code>는 0–100 값이다. 최종 점수는 소수 첫째 자리로 반올림하고 동점은 candidate ID 오름차순으로 정렬한다.</p>
+</div><p>적격 후보만 점수를 계산합니다. <code>recycled_pct</code>는 0–100 값입니다. 최종 점수는 소수 첫째 자리로 반올림하고 동점은 candidate ID 오름차순으로 정렬합니다.</p>
 <pre><code class="language-text">score = 50 * min(conductivity_w_mk / 250, 1)
       + 30 * max(0, 1 - cost_usd_kg / 5)
       + 20 * min(recycled_pct / 100, 1)
@@ -340,54 +384,138 @@
 <td>60.8</td>
 </tr>
 </tbody></table>
-</div><p><strong>기본 정답:</strong> DELTA → ALPHA → THETA, 추천 상위 2개는 DELTA/ALPHA. <strong>후속 정답:</strong> 원가 상한만 3.00으로 바꾸면 DELTA 1개만 적격, 점수는 68.6이다. 점수식의 원가 분모 <strong>5는 그대로</strong> 둔다.</p>
-<p><strong>판정 순서:</strong> 확실한 제약조건 위반이 하나라도 있으면 <code>excluded</code>, 위반은 없지만 근거가 빠졌으면 <code>needs_review</code>, 나머지는 <code>eligible</code>이다. 따라서 후속 조건의 ZETA는 원가 초과로 <code>excluded</code>이지만 부식 근거는 여전히 미확보다.</p>
+</div><p><strong>기본 정답:</strong> DELTA → ALPHA → THETA, 추천 상위 2개는 DELTA/ALPHA. <strong>후속 정답:</strong> 원가 상한만 3.00으로 바꾸면 DELTA 1개만 적격, 점수는 68.6입니다. 점수식의 원가 분모 <strong>5는 그대로</strong> 둡니다.</p>
+<p><strong>판정 순서:</strong> 확실한 제약조건 위반이 하나라도 있으면 <code>excluded</code>, 위반은 없지만 근거가 빠졌으면 <code>needs_review</code>, 나머지는 <code>eligible</code>입니다. 따라서 후속 조건의 ZETA는 원가 초과로 <code>excluded</code>이지만 부식 근거는 여전히 미확보 상태입니다.</p>
 <p><a id="l00"></a></p>
-<h2 id="heading-l00">L00 — 접근·비용·역할 준비</h2><p><strong>목표:</strong> 사용 승인, Azure 권한, 네트워크, 비용을 서로 다른 선행조건으로 확인한다.</p>
+<h2 id="heading-l00">L00 — 접근·비용·역할 준비</h2><p><strong>목표:</strong> 사용 승인, Azure 권한, 네트워크, 비용을 서로 다른 선행조건으로 확인합니다.</p>
+<p><strong>시작 조건:</strong> 환경을 준비할 관리자와 비용·권한 승인 담당자가 정해져 있습니다. 아직 Azure 리소스를 만들 필요는 없습니다.</p>
+<h3 id="section-6">로컬 준비와 환경값</h3><p>실습 입력과 도구를 사용하려면 저장소를 내려받습니다. 아래는 <strong>처음 내려받을 때의 로컬 준비 명령</strong>입니다. 이후 Bash 명령은 저장소 루트에서 같은 세션으로 실행합니다. Windows에서는 Bash 환경을 사용하며 PowerShell에 그대로 붙여 넣지 않습니다.</p>
+<pre><code class="language-bash">git clone https://github.com/junwoojeong100/microsoft-discovery-labs.git
+cd microsoft-discovery-labs
+npm ci
+</code></pre>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>준비물</th>
+<th>필요한 작업</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Git, Node.js 22 이상·npm, Python 3</td>
+<td>저장소 준비, readiness, 기준 계산·내용 검사</td>
+</tr>
+<tr>
+<td>Azure CLI와 정상 사용자 로그인</td>
+<td>아래 Azure 조회·변경 명령</td>
+</tr>
+<tr>
+<td>브라우저와 승인된 사설 연결</td>
+<td>Portal·Studio, private-only Blob 파일 접근</td>
+</tr>
+<tr>
+<td>Google Chrome</td>
+<td>문서 렌더링/PDF를 다시 생성하는 기여자에게만 필요</td>
+</tr>
+</tbody></table>
+</div><p><strong><code>config/lab.json</code>에는 특정 운영 환경의 값이 들어 있습니다.</strong> 자신의 로컬 사본에서 아래 필드를 먼저 수정하세요. 비밀번호·토큰·키는 입력하지 않으며 환경 식별자가 들어간 설정·증거를 공개 저장소에 무심코 커밋하지 않습니다.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>입력</th>
+<th>정할 값과 규칙</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>account</code>, <code>tenantId</code></td>
+<td>실제 CLI 로그인 사용자의 UPN과 테넌트 ID</td>
+</tr>
+<tr>
+<td><code>subscriptionId</code>, <code>subscriptionName</code></td>
+<td>실습 승인을 받은 구독의 ID와 표시 이름</td>
+</tr>
+<tr>
+<td><code>resourceGroup</code>, <code>labTag</code></td>
+<td>전용 <code>rg-discovery-hol-&lt;unique-suffix&gt;</code>, 태그 값 <code>microsoft-discovery-core-hol</code>. 저장소 스크립트가 이 RG 접두사를 요구</td>
+</tr>
+<tr>
+<td><code>location</code>, <code>targetComputeLocation</code></td>
+<td>기본 경로에서는 <strong>둘 다 <code>swedencentral</code></strong>. 지원·quota를 확인한 다른 단일 리전도 가능</td>
+</tr>
+<tr>
+<td>Workspace·Supercomputer·Storage·ACR·Bookshelf 이름</td>
+<td>자신의 환경에 맞게 정하고 서비스별 이름 규칙·고유성 확인</td>
+</tr>
+<tr>
+<td>VNet·서브넷·UAMI</td>
+<td>L01의 이름은 예시. CIDR 중복·조직 정책 확인</td>
+</tr>
+<tr>
+<td><code>runtime</code> 객체</td>
+<td>운영자용 <code>tool:run</code>의 실제 이름. 일반 Portal 경로에서는 사용하지 않음</td>
+</tr>
+</tbody></table>
+</div><p>다음 <code>&lt;...&gt;</code>를 모두 실제 값으로 바꿉니다. <strong>쉘 변수는 JSON·Bicep·스크립트 내부 값을 자동으로 바꾸지 않습니다.</strong> 위 설정과 별도로 일치 여부를 확인합니다.</p>
+<pre><code class="language-bash">TENANT_ID=&#39;&lt;tenant-id&gt;&#39;
+SUBSCRIPTION_ID=&#39;&lt;subscription-id&gt;&#39;
+RESOURCE_GROUP=&#39;rg-discovery-hol-&lt;unique-suffix&gt;&#39;
+LOCATION=&#39;swedencentral&#39;
+STORAGE_ACCOUNT=&#39;&lt;globally-unique-storage-name&gt;&#39;
+ACR_NAME=&#39;&lt;globally-unique-acr-name&gt;&#39;
+</code></pre>
 <p><strong>실행:</strong></p>
 <ol>
-<li><code>config/lab.json</code>과 로그인 계정을 대조한다. 이번 대상은 <code>junwoojeong@MngEnvMCAP757124.onmicrosoft.com</code>, 구독 <code>51531604-2337-4c05-bc05-3c3d4ff154e5</code>, 테넌트 <code>46e9cdaa-fed3-4131-aa28-c1fc8a8a043a</code>다. 다른 구독의 기본값에 의존하지 않는다.</li>
-<li>Microsoft 담당자를 통해 <strong>Discovery 사용이 활성화된 구독</strong>인지 확인한다. 비용 동의나 Contributor 권한은 서비스 allow-list 승인을 대체하지 않는다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/quickstart-infrastructure">S03</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-resource-provider-registration">S04</a>]</sup></li>
-<li>Azure Portal → Subscriptions → 대상 구독 → Resource providers에서 <code>Microsoft.Discovery</code>와 공식 문서의 의존 Provider를 확인·등록한다. 등록에는 적절한 구독 권한이 필요하다. 아래 명령은 읽기 전용이다.</li>
+<li>정상 MFA·보안 키 절차로 로그인하고 자신의 구독을 선택합니다. 표시된 계정·테넌트·구독을 수정한 <code>config/lab.json</code>과 대조합니다. 이 명령은 로컬 CLI 로그인 문맥을 바꾸며 Azure 자원을 생성하지 않습니다.</li>
+</ol>
+<pre><code class="language-bash">az login --tenant &quot;$TENANT_ID&quot;
+az account set --subscription &quot;$SUBSCRIPTION_ID&quot;
+az account show --query &quot;{subscription:id,tenant:tenantId,user:user.name}&quot;
+</code></pre>
+<ol start="2">
+<li>Microsoft 담당자를 통해 <strong>Discovery 사용이 활성화된 구독</strong>인지 확인합니다. 비용 동의나 Contributor 권한은 서비스 allow-list 승인을 대체하지 않습니다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/quickstart-infrastructure">S03</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-resource-provider-registration">S04</a>]</sup></li>
+<li>Azure Portal → Subscriptions → 대상 구독 → Resource providers에서 <code>Microsoft.Discovery</code>와 공식 문서의 의존 Provider를 확인·등록합니다. 등록에는 적절한 구독 권한이 필요합니다. 아래 명령은 읽기 전용입니다.</li>
 </ol>
 <pre><code class="language-bash">az provider show --namespace Microsoft.Discovery \
-  --subscription 51531604-2337-4c05-bc05-3c3d4ff154e5 \
+  --subscription &quot;$SUBSCRIPTION_ID&quot; \
   --query &quot;{state:registrationState,types:resourceTypes[].resourceType}&quot;
 </code></pre>
 <ol start="4">
-<li><code>Registered</code>뿐 아니라 <code>workspaces</code>/<code>supercomputers</code>/<code>bookshelves</code> 유형과 실제 Workspace 목록 API의 성공을 확인한다. <strong><code>DefaultFeature=Pending</code>만으로 접근 실패를 판정하지 않는다.</strong> 2026-10-01에는 이 값이 Pending인 채 <code>DiscoveryEnabled</code>/<code>DiscoveryPreview</code>/<code>PublicPreview</code>가 Registered이고 목록 API가 정상 응답했다. 반대로 Provider 등록만으로 quota·배포·실행 성공을 판정하지 않는다. 개발용 feature를 임의 등록하지 않는다.</li>
-<li>관리자는 Platform Administrator persona와 관리 ID의 최소 역할을 준비한다. <strong>역할을 부여할 권한</strong>은 별도다. Owner/RBAC Administrator/User Access Administrator 등 실제 할당 권한을 확인한다. 연구자·검토자의 프로젝트 역할은 L08에서 다룬다.</li>
-<li>관리자는 공식 절차에 따라 Discovery control-plane service App(<code>92c174ac-8e41-4815-a1b7-d81b19ab03ce</code>)의 <strong>Discovery NSP Perimeter Joiner + Reader</strong> 구독 역할을 검토·구성한다. 일반 Contributor만으로 역할 할당까지 된다고 가정하지 않는다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/how-to-configure-network-security">S18</a>]</sup></li>
-<li>지원 생산 리전 <strong>East US / Sweden Central / UK South</strong> 중 하나를 선택한다. 이 실습은 <code>swedencentral</code>을 사용한다. A01의 모델·VM quota와 상시 인프라 비용을 확인한다.</li>
-<li>정상 MFA·보안 키 로그인을 완료한다. 사설 접근 경로라면 VPN/ExpressRoute와 Blob 접근 경로를 준비한다. Portal 로그인, Studio 접근, Blob 파일 열기는 각각 확인한다.</li>
+<li><code>Registered</code>뿐 아니라 <code>workspaces</code>/<code>supercomputers</code>/<code>bookshelves</code> 유형과 Workspace 목록 API의 성공을 아래 readiness로 확인합니다. <strong><code>DefaultFeature=Pending</code>만으로 접근 실패를 판정하지 않습니다.</strong> 반대로 Provider 등록만으로 quota·배포·실행 성공을 판정하지 않습니다. 개발용 feature를 임의 등록하지 않습니다.</li>
+<li>관리자는 Platform Administrator persona와 관리 ID의 최소 역할을 준비합니다. <strong>역할을 부여할 권한</strong>은 별도입니다. Owner/RBAC Administrator/User Access Administrator 등 실제 할당 권한을 확인합니다. 연구자·검토자의 프로젝트 역할은 L08에서 다룹니다.</li>
+<li>관리자는 공식 절차에 따라 Discovery control-plane service App(<code>92c174ac-8e41-4815-a1b7-d81b19ab03ce</code>)의 <strong>Discovery NSP Perimeter Joiner + Reader</strong> 구독 역할을 검토·구성합니다. 일반 Contributor만으로 역할 할당까지 된다고 가정하지 않습니다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/how-to-configure-network-security">S18</a>]</sup></li>
+<li>지원 home 리전 <strong>East US / Sweden Central / UK South</strong> 중 하나를 선택합니다. 기본 예시는 <code>swedencentral</code>이며 지원 자원도 같은 리전에 둡니다. 교차 리전이 필요하면 <a href="https://learn.microsoft.com/azure/microsoft-discovery/how-to-deploy-across-regions">공식 절차</a>를 별도로 적용합니다. Microsoft 소유 구독 전용 태그를 일반 고객 구독에 적용하지 않습니다.</li>
+<li><a href="#a01">A01</a>의 모델·VM quota, 실제 지역 용량, 상시 비용과 보존 기간을 승인받습니다. 사설 Blob에 접근할 VPN/ExpressRoute 또는 승인된 VNet 내부 클라이언트를 준비합니다. Portal 로그인, Studio 접근, Blob 파일 열기는 각각 확인하며 자원 생성 후 다시 검사합니다.</li>
 </ol>
-<p><strong>LoadBalancer의 별도 네트워크 선행조건:</strong> <a href="https://learn.microsoft.com/azure/microsoft-discovery/troubleshoot-microsoft-discovery#supercomputer-deployment-stalls-because-a-required-public-ip-feature-isnt-registered">공식 문제 해결 문서</a>에 따라 <code>Microsoft.Network/AllowBringYourOwnPublicIpAddress</code>를 확인한다. Discovery 사용 활성화나 <code>Microsoft.Network=Registered</code>만으로 이 feature 등록을 대신할 수 없다.</p>
+<p><strong>LoadBalancer의 별도 네트워크 선행조건:</strong> <a href="https://learn.microsoft.com/azure/microsoft-discovery/troubleshoot-microsoft-discovery#supercomputer-deployment-stalls-because-a-required-public-ip-feature-isnt-registered">공식 문제 해결 문서</a>에 따라 <code>Microsoft.Network/AllowBringYourOwnPublicIpAddress</code>를 확인합니다. Discovery 사용 활성화나 <code>Microsoft.Network=Registered</code>만으로 이 feature 등록을 대신할 수 없습니다.</p>
 <pre><code class="language-bash">az feature show --namespace Microsoft.Network \
   --name AllowBringYourOwnPublicIpAddress \
-  --subscription 51531604-2337-4c05-bc05-3c3d4ff154e5 \
+  --subscription &quot;$SUBSCRIPTION_ID&quot; \
   --query &quot;{name:name,state:properties.state}&quot;
 </code></pre>
-<p><code>NotRegistered</code>일 때만 구독의 feature 등록 권한을 가진 관리자가 다음 <strong>변경 명령</strong>을 실행한다. Feature가 <code>Registered</code>인 것을 확인한 뒤 Provider를 다시 등록한다. <code>Pending</code>이면 승인 완료로 간주하지 않는다.</p>
+<p><code>NotRegistered</code>일 때만 권한을 가진 관리자가 승인된 범위에서 다음 <strong>변경 명령</strong>을 실행합니다.</p>
 <pre><code class="language-bash">az feature register --namespace Microsoft.Network \
   --name AllowBringYourOwnPublicIpAddress \
-  --subscription 51531604-2337-4c05-bc05-3c3d4ff154e5
-az provider register --namespace Microsoft.Network \
-  --subscription 51531604-2337-4c05-bc05-3c3d4ff154e5 --wait
+  --subscription &quot;$SUBSCRIPTION_ID&quot;
 </code></pre>
-<p>2026-10-01 오후에는 현재 계정의 상속 Owner 권한으로 즉시 <code>Registered</code> 응답을 받았으며 Provider 재등록과 독립 재조회도 완료했다. 이 구독에서는 별도 Microsoft 승인 대기가 없었다. 사용자 동의만으로 RBAC 권한이 생기거나 다른 구독의 승인이 보장되는 것은 아니다. 이 feature 등록은 AKS 지역 용량이나 모델 quota 증액과도 별개다.</p>
-<p>브라우저 없이 다음 읽기 전용 점검을 실행한다. <code>config/lab.json</code>의 계정·테넌트·구독을 검증하며 토큰은 저장하지 않는다. 반환 코드 <code>0</code>은 선택한 접근·모델 quota 검사 통과, <code>2</code>는 선행조건 차단, <code>1</code>은 조회/인증 오류다.</p>
+<p>앞의 <code>az feature show</code>로 <code>Registered</code>를 확인한 <strong>뒤에만</strong> Provider를 다시 등록합니다. <code>Pending</code>이면 기다리거나 담당자에게 확인합니다.</p>
+<pre><code class="language-bash">az provider register --namespace Microsoft.Network \
+  --subscription &quot;$SUBSCRIPTION_ID&quot; --wait
+</code></pre>
+<p>승인 소요시간은 구독마다 다를 수 있습니다. 이 feature 등록은 RBAC 부여, AKS 지역 용량, 모델 quota 증액과 별개입니다.</p>
+<p><strong>읽기 전용 사전 점검:</strong> 자신의 값으로 수정한 <code>config/lab.json</code>의 계정·테넌트·구독을 검증하며 토큰은 저장하지 않습니다. <code>artifacts/discovery-readiness.json</code>은 갱신되므로 이전 증거가 필요하면 먼저 보관합니다. 반환 코드 <code>0</code>은 선택한 접근·모델 quota 검사 통과, <code>2</code>는 선행조건 차단, <code>1</code>은 조회/인증 오류입니다.</p>
 <pre><code class="language-bash">npm run readiness
 npm run readiness -- --require core
 </code></pre>
-<p>기본 명령은 Bookshelf까지 포함한다. <code>--require core</code>는 Workspace용 GPT-5.4만 별도 판정하며 Bookshelf의 부족한 quota를 숨기지 않는다. 신규 할당에 필요한 <strong>미할당 quota</strong>를 보는 보수적 사전 점검이다. 이미 배포한 모델을 재사용할 때는 실제 배포별 할당도 확인하고 같은 모델을 중복 생성하지 않는다. 두 명령 모두 VM·역할·네트워크·Studio 실습 성공을 증명하지 않는다.</p>
-<p>Bookshelf quota만 부족하면 L01 기반/코어를 별도 준비할 수 있지만 L03과 H03을 미완료로 남기고 전체 연구 실습을 통과시키지 않는다.</p>
-<p><strong>완료 기준:</strong> 선택한 단계의 서비스 접근·Provider·권한·quota·클라이언트 연결·비용 확인이 끝났다. 막힌 단계와 그 의존 단계는 배포하지 않는다.</p>
+<p>기본 명령은 Bookshelf까지 포함합니다. <code>--require core</code>는 코어 접근과 Workspace용 GPT-5.4만 판정합니다. 모델 조회 위치는 <code>targetComputeLocation</code>이며 필드가 없을 때만 <code>location</code>을 사용합니다. 신규 할당에 필요한 <strong>미할당 quota</strong>를 보는 보수적 사전 점검이므로, 이미 배포한 모델을 재사용할 때는 실제 할당도 확인하고 중복 생성하지 않습니다. 두 명령 모두 VM quota·물리 용량·역할 전파·네트워크·Studio 실습 성공을 증명하지 않습니다.</p>
+<p>Bookshelf quota만 부족하면 L01 기반/코어를 별도 준비할 수 있지만 L03과 H03을 미완료로 남기고 전체 연구 실습을 통과시키지 않습니다.</p>
+<p><strong>완료 기준:</strong> 선택한 단계의 서비스 접근·Provider·권한·quota·클라이언트 연결·비용 확인을 마쳤습니다. 막힌 단계와 그 의존 단계는 배포하지 않습니다.</p>
 <p><a id="l01"></a></p>
-<h2 id="heading-l01">L01 — Workspace와 Project 만들기</h2><p><strong>목표:</strong> 연구자 실습에서 공통으로 사용할 인프라를 만든다. 이미 준비된 환경이면 마지막 완료 기준만 확인한다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/quickstart-infrastructure">S03</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/how-to-configure-network-security">S18</a>]</sup></p>
+<h2 id="heading-l01">L01 — Workspace와 Project 만들기</h2><p><strong>목표:</strong> 연구자 실습에서 공통으로 사용할 인프라를 만듭니다. 이미 준비된 환경이면 마지막 완료 기준만 확인합니다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/quickstart-infrastructure">S03</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/how-to-configure-network-security">S18</a>]</sup></p>
+<p><strong>시작 조건:</strong> L00의 코어 접근·권한·모델 quota·지역 용량·비용 확인을 마쳤습니다. Bookshelf만 차단된 경우 이 단계는 진행할 수 있습니다.</p>
 <p><strong>실행:</strong></p>
 <ol>
-<li><code>config/lab.json</code>과 같은 전용 RG **<code>rg-discovery-hol-20260930</code>**를 사용한다. 과거 보고서의 <code>20260925</code> RG와 섞지 않는다. Workspace·저장소·Bookshelf 이름은 전역 고유성을 확인한다. Workspace는 소문자 영문, Project <code>thermalhol</code>은 소문자·최대 12자다. 아래 이름의 실제 생성 여부는 실행 보고서와 Azure GET으로 확인한다.</li>
-<li>VNet <code>vnet-discovery-hol</code>을 만든다. <code>10.80.0.0/16</code>은 예시이며 기존 네트워크와 겹치면 승인된 대역으로 바꾼다.</li>
+<li>L00에서 정한 전용 RG와 리소스 이름을 사용합니다. 새 RG는 선택한 리전에 만들고 <code>project=microsoft-discovery-core-hol</code>, <code>environment=lab</code> 태그를 기록합니다. Workspace는 소문자 영문을 사용하고, Project 예시 <code>thermalhol</code>은 소문자·최대 12자 조건을 따릅니다. 실제 이름 규칙과 고유성은 생성 화면에서 확인합니다.</li>
+<li>VNet 예시 <code>vnet-discovery-hol</code>과 아래 서브넷을 준비합니다. <strong>Workspace마다 별도 VNet</strong>을 사용합니다. <code>10.80.0.0/16</code>과 하위 CIDR은 예시이며 조직이 승인한 겹치지 않는 대역으로 바꿀 수 있습니다. 기존 VNet을 사용할 때는 전체 subnet 배열을 재배포하지 말고 필요한 서브넷만 추가합니다.</li>
 </ol>
 <div class="table-scroll"><table>
 <thead>
@@ -435,7 +563,7 @@ npm run readiness -- --require core
 <tr>
 <td><code>storagePeSubnet</code></td>
 <td><code>10.80.8.0/24</code></td>
-<td>조직 정책에 맞춘 고객 Blob Storage Private Endpoint 전용</td>
+<td>고객 Blob Storage Private Endpoint 전용</td>
 </tr>
 <tr>
 <td><code>blobClientSubnet</code></td>
@@ -444,135 +572,136 @@ npm run readiness -- --require core
 </tr>
 </tbody></table>
 </div><ol start="3">
-<li>UAMI <code>id-discovery-hol</code>을 만들거나 재사용한다. RG에 Discovery Platform Contributor, 데이터 계정에 Storage Blob Data Contributor, Registry에 AcrPull을 부여한다. Supercomputer의 cluster/kubelet/workload에 같은 UAMI를 사용하므로 VNet의 Network Contributor와 해당 UAMI의 Managed Identity Operator도 준비한다. 실행 사용자에게도 Blob 데이터 역할이 필요하며 Owner는 이를 대체하지 않는다. 서브넷은 다른 Workspace/Bookshelf와 공유하지 않는다.</li>
-<li>Standard LRS Storage account와 <code>discoveryinputs</code>, <code>discoveryoutputs</code> 컨테이너를 만든다. <strong>이 구독의 조직 정책은 Storage 공개 네트워크를 비활성화한다.</strong> 템플릿도 <code>publicNetworkAccess=Disabled</code>, 공유 키·익명 Blob 비활성으로 맞추고, 아래 Private Endpoint/DNS 단계와 승인된 VNet 내 클라이언트 경로를 사용한다. IP 허용 규칙만으로 이 정책을 통과할 수 없다. CORS는 <code>https://studio.discovery.microsoft.com</code>, <code>https://vscode.dev</code>, <code>https://*.vscode-cdn.net</code>, GET/HEAD/PUT/DELETE/OPTIONS, 헤더 <code>*</code>, Max age 200이다. CORS는 인증이나 사설 연결을 대체하지 않는다.</li>
-<li>Portal → <strong>Microsoft Discovery Supercomputers → Create</strong>에서 VNet, <code>aksSubnet</code>, 시스템 SKU <code>Standard_D4s_v6</code>, Cluster/Kubelet/Workload identity를 설정한다. 템플릿은 <code>outboundType=LoadBalancer</code>로 명시적 egress를 사용한다. 서브넷의 <code>defaultOutboundAccess=false</code>가 모든 아웃바운드를 막는다는 뜻은 아니다. 이후 <strong>Settings → Node pool → Create</strong>에서 <code>cpulab</code>을 만든다. 도구용 사용자 풀은 min 0 / max 1, GPU 0이며 상시 시스템 풀과 다르다.</li>
-<li><strong>Microsoft Discovery Workspaces → Create</strong>에서 서브넷·UAMI·Supercomputer를 연결한다. 이 실습은 **<code>NetworkIsolation=true</code> + <code>publicNetworkAccess=Enabled</code>**다. 관리 리소스의 격리는 유지하면서 Studio/REST의 인증된 서비스 진입점을 사용한다. 이를 <code>NetworkIsolation=false</code> 또는 익명 접근과 혼동하지 않는다. Workspace 자체를 private-only로 만들려면 별도 Discovery private endpoint·DNS·VPN/ExpressRoute를 먼저 준비한다. Preview Workbench 태그는 추가하지 않는다. 기본 MMK를 사용하며 CMK는 별도 Key Vault·권한 구성이 필요하다.</li>
-<li>Workspace의 <strong>Settings → Chat Model Deployments</strong>에서 검증용 배포 **<code>gpt-5-4</code> / 모델 <code>gpt-5.4</code>**가 실제 존재하는지 확인한다. 없으면 만든다. cognition용 자동 배포와 구분한다. 다른 에이전트 모델을 추가하더라도 이 배포를 임의로 대체하지 않는다.
-<strong>이 실습의 확정 할당:</strong> 자동 cognition <code>gpt-5.4</code> <strong>250,000 TPM</strong> + 검증 <code>gpt-5-4</code> <strong>250,000 TPM</strong>, 둘 다 <strong>Global Standard</strong>, 합계 <strong>500,000 TPM</strong>다. kTPM/<code>sku.capacity</code> 입력은 각 <strong>250</strong>이다. 모델은 <code>gpt-5.4</code>, 버전은 <code>2026-03-05</code>로 구분해 확인한다. cognition에 남은 quota 전체를 할당하면 검증 배포가 차단되므로 250,000 TPM를 남겨 둔다. Data Zone은 이번 최종 구성에 사용하지 않는다.</li>
-<li>Studio <a href="https://studio.discovery.microsoft.com">https://studio.discovery.microsoft.com</a> → <strong>Data → Storage Containers (new) → Create Container</strong>에서 <code>thermaldata</code>를 만들고 Storage account를 연결한다. 이것은 Blob 계정의 참조이며 데이터 복사가 아니다.</li>
-<li><strong>Workspaces → 대상 Workspace → Create Project</strong>에서 <code>thermalhol</code>과 Storage Container를 연결한다. 관리자는 Workspace managed resource group(MRG)의 실제 데이터 권한을 확인하고, 없을 때 필요한 사용자에게 Foundry User를 부여한다. 이번 실행에서는 서비스가 사용자에게 MRG 범위 Foundry Owner를 이미 부여했으므로 중복 Foundry User를 추가하지 않았다. 관리 plane Owner만 있는 경우와 구분한다.</li>
-<li>생성된 리소스 ID와 MRG 목록을 기록한다. <code>Accepted</code>가 아닌 **<code>Succeeded</code>**를 기다린다. Discovery 리소스의 태그는 생성 후 변경 불가하다는 문서 제약이 있으므로 생성 전에 확정한다.</li>
+<li>UAMI 예시 <code>id-discovery-hol</code>을 만들거나 승인된 전용 ID를 재사용합니다. 사용자 로그인 신원, 이 UAMI, Discovery control-plane 서비스 주체는 서로 다릅니다.</li>
+<li>L00의 <code>STORAGE_ACCOUNT</code> 이름으로 Standard LRS Storage와 <code>discoveryinputs</code>, <code>discoveryoutputs</code> Blob 컨테이너를 만듭니다. <code>ACR_NAME</code>의 Basic ACR도 준비합니다. 승인된 기존 Registry가 있으면 재사용할 수 있습니다.</li>
+<li>자원이 준비되면 아래 역할을 정확한 범위에 부여합니다. 일반 Owner가 Blob 데이터 권한을 대신하지 않습니다.</li>
 </ol>
-<h3 id="section-2">기존 기반에서 재개하는 CLI 경로</h3><p><strong>2026-10-01 저녁 교차 리전 실행:</strong> 아래 기본 명령은 이전 Sweden Central 단일 리전 환경용이다. 현재 요청은 **home=<code>swedencentral</code>, target compute=<code>koreacentral</code>**이며 <a href="../deployment-reference/06-resume-runbook.ko.md">별도 매개변수와 단계별 재개 절차</a>를 따른다. Discovery의 <code>location</code>을 한국 중부로 바꾸거나 기존 Workspace에 태그만 덧붙여 이동시키지 않는다. 새 지원 자원과 생성 시 <code>discovery.overridemrgregion</code> 태그를 사용하고, 기존 데이터·모델은 보존한다. 아래 기본 명령을 새 <code>-kc</code> 환경에 그대로 실행하지 않는다.</p>
-<p>템플릿은 단계별로 분리했다. <strong>삭제 모드/Complete 모드를 사용하지 않는다.</strong> 신규 환경만 <code>infra/main.bicep</code>과 <code>infra/identity.bicep</code>으로 초기 기반을 만든다. 이 저장소의 현재 RG/VNet/UAMI는 이미 있으므로 재생성하지 않는다. 기존 3개 서브넷에 대한 전체 VNet PUT은 실제 검증에서 <code>IncompatibleDelegations</code>로 실패했으며, 추가 4개만 child resource로 생성하도록 수정했다. 확장 후 예전 3개짜리 VNet 템플릿을 다시 배포하지 않는다.</p>
 <div class="table-scroll"><table>
 <thead>
 <tr>
-<th>순서</th>
-<th>템플릿</th>
-<th>확인할 결과</th>
+<th>대상</th>
+<th>범위</th>
+<th>역할·용도</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>1</td>
-<td><code>infra/access.bicep</code></td>
-<td>공식 control-plane SP의 NSP Joiner + Reader. 해당 역할이 이미 다른 GUID로 존재하면 중복 생성하지 말고 관리자와 재사용</td>
+<td>Discovery UAMI</td>
+<td>실습 RG</td>
+<td>Microsoft Discovery Platform Contributor</td>
 </tr>
 <tr>
-<td>2</td>
-<td><code>infra/expand-network.bicep</code></td>
-<td>새 서브넷 4개만 추가, 기존 3개 유지</td>
+<td>같은 UAMI</td>
+<td>VNet / 해당 UAMI</td>
+<td>Network Contributor / Managed Identity Operator. 이 예시는 cluster·kubelet·workload에 같은 UAMI 사용</td>
 </tr>
 <tr>
-<td>3</td>
-<td><code>infra/lab-foundation.bicep</code></td>
-<td>LRS Storage·Blob 컨테이너 2개·Basic ACR·범위를 제한한 역할</td>
+<td>같은 UAMI</td>
+<td>Storage / ACR</td>
+<td>Storage Blob Data Contributor / AcrPull. ACR이 ABAC 모드이면 대응 pull 역할 별도 확인</td>
 </tr>
 <tr>
-<td>4</td>
-<td><code>infra/discovery-core.bicep</code></td>
-<td>Supercomputer·cpulab·Workspace·모델·Storage Container/Asset·Project</td>
+<td>데이터 업로드·파일 열기 사용자</td>
+<td>실습 Storage</td>
+<td>작업에 맞는 Blob 데이터 역할</td>
 </tr>
 <tr>
-<td>5</td>
-<td><code>infra/storage-private-access.bicep</code></td>
-<td>전용 8번째 서브넷·Blob Private Endpoint·Private DNS. 기존 동일 DNS zone/VNet link가 있으면 재사용</td>
+<td>도구 이미지 빌드 담당자</td>
+<td>ACR</td>
+<td>ACR Tasks 빌드·push에 필요한 역할. pull 역할과 다름</td>
 </tr>
 </tbody></table>
-</div><p>아래 값을 확인한다. 구독·리전이 다른 이름을 섞지 말고, 다른 환경에서는 Bicep의 이름 매개변수도 함께 변경한다.</p>
-<pre><code class="language-bash">SUBSCRIPTION_ID=&#39;51531604-2337-4c05-bc05-3c3d4ff154e5&#39;
-RESOURCE_GROUP=&#39;rg-discovery-hol-20260930&#39;
-LOCATION=&#39;swedencentral&#39;
-az account set --subscription &quot;$SUBSCRIPTION_ID&quot;
-az account show --query &quot;{subscription:id,tenant:tenantId,user:user.name}&quot;
-CONTROL_PLANE_OBJECT_ID=$(az ad sp show \
-  --id 92c174ac-8e41-4815-a1b7-d81b19ab03ce \
-  --query id -o tsv)
-ADMIN_OBJECT_ID=$(az ad signed-in-user show --query id -o tsv)
-</code></pre>
-<p><code>az ad</code>는 Microsoft Graph 명령이라 <code>--subscription</code>을 받지 않는다. 위에서 CLI 구독 문맥을 명시적으로 선택한 후 표시된 테넌트·계정을 L00과 대조한다. ARM 명령에는 계속 <code>--subscription</code>을 명시한다.</p>
-<p>먼저 각 단계의 <code>what-if</code>를 실행해 예상 범위만 변경되는지 확인한 뒤 <strong>같은 명령의 <code>what-if</code>를 <code>create</code>로 바꿔</strong> 실행한다. 단계가 끝나면 다음 단계로 진행한다. RG 배포는 기본 Incremental 모드를 유지한다.</p>
-<pre><code class="language-bash">az deployment sub what-if --name discovery-access-20261001 \
-  --subscription &quot;$SUBSCRIPTION_ID&quot; --location &quot;$LOCATION&quot; \
-  --template-file infra/access.bicep \
-  --parameters discoveryControlPlaneObjectId=&quot;$CONTROL_PLANE_OBJECT_ID&quot;
-
-az deployment group what-if --name discovery-network-expansion-20261001 \
-  --subscription &quot;$SUBSCRIPTION_ID&quot; --resource-group &quot;$RESOURCE_GROUP&quot; \
-  --template-file infra/expand-network.bicep
-
-az deployment group what-if --name discovery-foundation-20261001 \
-  --subscription &quot;$SUBSCRIPTION_ID&quot; --resource-group &quot;$RESOURCE_GROUP&quot; \
-  --template-file infra/lab-foundation.bicep \
-  --parameters administratorObjectId=&quot;$ADMIN_OBJECT_ID&quot;
-
-az deployment group what-if --name discovery-core-20261001 \
-  --subscription &quot;$SUBSCRIPTION_ID&quot; --resource-group &quot;$RESOURCE_GROUP&quot; \
-  --template-file infra/discovery-core.bicep
-</code></pre>
-<p><strong>정책 교훈:</strong> 최초 Storage 배포의 what-if는 공개 진입점과 선택 IP를 표시했지만, 실제 생성 중 관리 그룹 정책 <code>StorageAccount_PublicNetwork_Modify</code>가 이를 Disabled로 바꿨다. RG 수준 정책 목록이 비어 있어도 상위 관리 그룹 정책이 없다는 뜻이 아니다. Activity Log의 <code>Microsoft.Authorization/policies/modify/action</code>과 실제 GET을 확인한다. 템플릿을 정책에 맞춰 고쳤으며 정책·방화벽을 해제하지 않는다.</p>
-<p><code>privatelink.blob.core.windows.net</code> zone과 대상 VNet link를 확인한다. 없으면 다음 템플릿으로 생성한다. 이미 있으면 그 zone이 이 VNet에 연결된 것을 확인하고 <code>existingBlobPrivateDnsZoneId</code> 매개변수로 실제 ID를 넘긴다. 동일 namespace의 DNS zone을 중복 연결하지 않는다. 이 단계는 Storage/VNet에만 의존하므로 코어의 지역 용량을 기다리는 동안 별도로 준비할 수 있다.</p>
-<pre><code class="language-bash">az deployment group what-if --name discovery-storage-private-20261001 \
-  --subscription &quot;$SUBSCRIPTION_ID&quot; --resource-group &quot;$RESOURCE_GROUP&quot; \
-  --template-file infra/storage-private-access.bicep
-</code></pre>
-<p>확인 후 <code>create</code>로 실행하고, <strong>VNet 내부 또는 승인된 VPN/ExpressRoute 클라이언트에서</strong> Blob FQDN의 사설 IP 해석과 Entra 기반 파일 접근을 검사한다. Private Endpoint를 만든 것만으로 로컬 노트북에 VPN이 생기지는 않는다. 모델·서브넷·역할이 준비되어도 하위 서비스 배포는 실패할 수 있으므로 실제 오류를 보존한다.</p>
-<pre><code class="language-bash">az deployment group show --name discovery-core-20261001 \
-  --subscription &quot;$SUBSCRIPTION_ID&quot; --resource-group &quot;$RESOURCE_GROUP&quot; \
-  --query &quot;{state:properties.provisioningState,error:properties.error}&quot;
-az deployment operation group list --name discovery-core-20261001 \
-  --subscription &quot;$SUBSCRIPTION_ID&quot; --resource-group &quot;$RESOURCE_GROUP&quot; \
-  --query &quot;[?properties.provisioningState==&#39;Failed&#39;].properties&quot;
-</code></pre>
-<p><strong>Workspace-only 분리 준비의 한계:</strong> GA Workspace 스키마의 <code>supercomputerIds</code>는 선택 항목이라 다음 경로로 컴퓨트와 별도 준비를 검증할 수 있다. <strong>지역 용량 문제의 우회책은 아니다.</strong> 이번 실제 실행에서는 Supercomputer를 제외해도 Workspace의 내부 Container Apps가 <code>ManagedEnvironmentCapacityHeavyUsageError</code> → <code>AKSCapacityHeavyUsage</code>로 실패했다. 먼저 지역 용량을 해결한다. 진행 중인 배포와 겹치는 쓰기는 피하고, 취소가 필요하면 상태/오류를 보존한 뒤 해당 배포만 정상 취소한다. 취소는 이미 만든 리소스를 삭제하거나 RP 하위 작업을 즉시 중단한다고 보장하지 않는다.</p>
-<pre><code class="language-bash">az deployment group what-if --name discovery-workspace-20261001 \
-  --subscription &quot;$SUBSCRIPTION_ID&quot; --resource-group &quot;$RESOURCE_GROUP&quot; \
-  --template-file infra/discovery-core.bicep --parameters deployCompute=false
-</code></pre>
-<p>이 경로의 출력은 <code>computeIncluded=false</code>, 컴퓨트 ID는 <code>null</code>이다. <strong>새 Workspace 또는 연결된 Supercomputer가 없는 경우에만</strong> 사용한다. 이미 연결된 환경에 적용하면 연결 목록을 비울 수 있다. 이 모드는 L01 전체, L03 색인, L05 실제 계산을 통과시키지 않는다. 용량 문제 해결 후 실제 Supercomputer/노드 풀의 성공을 확인하고 기본 경로로 연결한다. 다른 리전을 선택할 때는 VNet·Storage·Workspace를 함께 계획하며 기존 환경과 무작정 혼합하지 않는다.</p>
-<p><strong>종료된 실패 상태의 재개 제한:</strong> <code>validate</code>/<code>what-if</code>가 성공해도 실제 생성·갱신 API가 terminal <code>Failed</code> 상태를 거부할 수 있다. <code>Conflict</code> 또는 같은 의미의 상태 오류가 나오면 반복 PUT을 중단한다. <a href="https://learn.microsoft.com/azure/microsoft-discovery/troubleshoot-microsoft-discovery#a-discovery-resource-is-stuck-in-a-terminal-failed-state">공식 복구 절차</a>는 원인을 해결한 뒤 <strong>삭제 승인을 받은 실패 Discovery 리소스만</strong> 삭제하고 새 이름으로 다시 만드는 것이다. 정상 RG·Storage·데이터를 함께 삭제하거나 관리 AKS/Container Apps를 직접 고치지 않는다.</p>
-<p><strong>완료 기준:</strong> Workspace·Supercomputer·CPU 풀·Storage Container·Project가 준비되고 필수 모델이 존재한다. Studio에서 프로젝트를 열고, 사용자와 관리 ID가 각각 필요한 Blob 경로에 접근할 수 있다.</p>
+</div><p><strong>Storage 연결 설정:</strong> 기본 경로는 <code>publicNetworkAccess=Disabled</code>, 공유 키·익명 Blob 비활성입니다. <code>storagePeSubnet</code>에 <strong>Blob</strong> Private Endpoint를 만들고 연결 승인, <code>privatelink.blob.core.windows.net</code>의 레코드·VNet link를 확인합니다. 기존 DNS zone은 재사용하고 같은 namespace의 중복 link를 만들지 않습니다. 승인된 VNet/VPN 클라이언트에서 Blob FQDN의 사설 IP 해석과 Entra 기반 컨테이너 접근을 확인합니다. Private Endpoint 생성만으로 노트북이 연결되지는 않습니다.</p>
+<p>브라우저 파일 접근을 위한 CORS 예시는 origin <code>https://studio.discovery.microsoft.com</code>, <code>https://vscode.dev</code>, <code>https://*.vscode-cdn.net</code>, method GET/HEAD/PUT/DELETE/OPTIONS, allowed/exposed headers <code>*</code>, Max age 200입니다. 조직 정책과 실제 UI 요구를 함께 확인합니다. <strong>CORS는 인증·RBAC·사설 연결을 대체하지 않습니다.</strong> 정책이 Storage 설정을 변경할 수 있으므로 요청값뿐 아니라 생성 후 실제 값도 확인합니다.</p>
+<ol start="6">
+<li>Portal → <strong>Microsoft Discovery Supercomputers → Create</strong>에서 정한 이름·리전, VNet, <code>aksSubnet</code>, 시스템 SKU <code>Standard_D4s_v6</code>, Cluster/Kubelet/Workload identity를 설정합니다. 이 예시의 <code>outboundType=LoadBalancer</code>는 명시적 egress입니다. 조직이 허용하는지 확인하고 <code>defaultOutboundAccess=false</code>를 모든 outbound 차단으로 해석하지 않습니다. 부모가 <strong>Succeeded</strong>가 된 뒤 <strong>Settings → Node pool → Create</strong>에서 <code>cpulab</code>을 만듭니다. 사용자 풀은 <code>supercomputerNodepoolSubnet</code>, <code>Standard_D4s_v6</code>, min 0 / max 1, GPU 0이며 상시 시스템 풀과 다릅니다.</li>
+<li><strong>Microsoft Discovery Workspaces → Create</strong>에서 정한 Workspace 이름, <code>workspaceSubnet</code>·<code>privateEndpointSubnet</code>·<code>agentSubnet</code>, UAMI, 성공한 Supercomputer를 연결합니다. 기본 예시는 <code>NetworkIsolation=true</code> + <code>publicNetworkAccess=Enabled</code>이며 조직 정책이 허용할 때만 사용합니다. 관리 자원의 격리와 인증된 Studio/REST 진입점의 공개 네트워크 허용을 구분합니다. Workspace 자체를 private-only로 만들면 별도 Discovery Private Endpoint·DNS·클라이언트 경로도 필요합니다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/how-to-configure-network-security">S18</a>]</sup></li>
+<li>Workspace <strong>Succeeded</strong> 후 MRG의 실제 사용자 데이터 권한을 확인합니다. 필요한 사용자에게 공식 절차의 Foundry User를 부여하되 동등한 권한이 이미 있으면 중복 추가하지 않습니다. <strong>Settings → Chat Model Deployments</strong>에서 검증용 <code>gpt-5-4</code> / 모델 <code>gpt-5.4</code>를 확인하고 없을 때만 생성합니다. 자동 cognition 배포와는 별도입니다.</li>
+</ol>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>모델 용도</th>
+<th>이 실습의 계획 할당</th>
+<th>확인할 것</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>자동 cognition</td>
+<td>Global Standard 250,000 TPM</td>
+<td>자동 배포의 실제 이름·상태·할당</td>
+</tr>
+<tr>
+<td>검증 <code>gpt-5-4</code></td>
+<td>Global Standard 250,000 TPM</td>
+<td>정확한 배포 이름과 모델 <code>gpt-5.4</code></td>
+</tr>
+<tr>
+<td>합계</td>
+<td>500,000 TPM</td>
+<td>기존 배포를 제외하고 추가 할당 가능한 quota</td>
+</tr>
+</tbody></table>
+</div><p>해당 GPT-5.4 입력 단위가 kTPM/<code>sku.capacity</code>이면 각각 <code>250</code>입니다. 생성 화면에서 지원되는 모델 revision과 실제 저장값을 확인합니다. cognition에 잔여 quota 전체를 할당해 검증 배포를 막지 않습니다. 다른 모델·배포 유형은 별도 지원·quota 검토 대상입니다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-quota-reservation">S05</a>]</sup></p>
+<ol start="9">
+<li>Studio <a href="https://studio.discovery.microsoft.com">https://studio.discovery.microsoft.com</a> → <strong>Data → Storage Containers (new) → Create Container</strong>에서 <code>thermaldata</code>를 만들고 자신의 Storage account를 연결합니다. 이는 Blob 계정의 <strong>참조</strong>이며 파일 업로드가 아닙니다.</li>
+<li><strong>Workspaces → 대상 Workspace → Create Project</strong>에서 <code>thermalhol</code>을 만들고 <code>thermaldata</code>를 연결합니다. 각 자원의 <strong>Succeeded</strong>, 실제 리소스 ID와 MRG, 프로젝트가 열리는지 확인해 H01–H02에 기록합니다. Preview Workbench 태그는 추가하지 않으며 MMK를 기본으로 합니다. CMK는 별도 설계가 필요합니다. 생성 후 변경할 수 없는 태그·신원 설정은 생성 전에 확정합니다.</li>
+</ol>
+<h3 id="section-7">Bicep을 사용할 때</h3><p><strong>Portal 경로와 Bicep 경로를 같은 자원에 중복 적용하지 않습니다.</strong> 저장소 템플릿은 실제 실행에서 사용한 단계별 입력이며, 모두 고객 환경에 맞춰 자동 설정되는 완성형 설치 도구는 아닙니다.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>목적</th>
+<th>참고 입력</th>
+<th>적용 전 확인</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>신규 단일 리전 기반</td>
+<td><code>infra/main.bicep</code>, <code>infra/identity.bicep</code>, <code>infra/expand-network.bicep</code>, <code>infra/lab-foundation.bicep</code></td>
+<td>이름·CIDR·리전 허용값·관리자 object ID·정책. <code>main.bicep</code>의 허용 리전은 현재 Sweden Central</td>
+</tr>
+<tr>
+<td>서비스 권한·Blob 사설 연결</td>
+<td><code>infra/access.bicep</code>, <code>infra/storage-private-access.bicep</code></td>
+<td>control-plane의 테넌트 object ID, 기존 역할·DNS 재사용</td>
+</tr>
+<tr>
+<td>Discovery 코어</td>
+<td><code>infra/discovery-core.bicep</code></td>
+<td>실제 지원 자원 연결·모델 할당. Bookshelf·색인 풀은 포함하지 않음</td>
+</tr>
+<tr>
+<td>교차 리전 배치가 필요한 경우</td>
+<td><a href="https://learn.microsoft.com/azure/microsoft-discovery/how-to-deploy-across-regions">공식 교차 리전 절차</a></td>
+<td>Home/Target 위치, 네트워크·권한·quota를 별도 설계</td>
+</tr>
+</tbody></table>
+</div><p><strong>공통 적용 기준:</strong> 자신의 값으로 매개변수를 검토하고 <code>validate</code>/<code>what-if</code>의 변경 대상을 확인한 후 승인된 단계만 적용합니다. RG 배포는 Incremental을 유지합니다. 확장된 VNet에 예전 전체 subnet 템플릿을 재적용하면 <code>IncompatibleDelegations</code> 또는 기존 구성 변경이 발생할 수 있습니다.</p>
+<p><strong>부분 실패 시:</strong> 원인·상태·correlation ID를 먼저 보존합니다. <code>deployCompute=false</code>는 연결 목록을 비울 수 있는 별도 준비 모드이며 지역 용량 우회책이 아닙니다. terminal <code>Failed</code>에서 <code>Conflict</code>가 나면 반복 PUT을 중단하고 <a href="https://learn.microsoft.com/azure/microsoft-discovery/troubleshoot-microsoft-discovery#a-discovery-resource-is-stuck-in-a-terminal-failed-state">공식 복구 절차</a>를 검토합니다. 승인 없이 실패 자원·MRG·RG를 삭제하거나 관리 AKS/Container Apps를 직접 변경하지 않습니다.</p>
+<p><strong>완료 기준:</strong> Workspace·Supercomputer·CPU 풀·Storage Container·Project와 필수 모델이 Succeeded이고 Studio에서 프로젝트를 엽니다. 실제 연결 ID, 관리 ID 역할, 사설 DNS와 사용자의 Blob 컨테이너 접근을 확인했습니다. 역할 할당만으로 런타임 파일 읽기·쓰기까지 검증한 것은 아닙니다.</p>
 <p><a id="l02"></a></p>
-<h2 id="heading-l02">L02 — 데이터 등록과 파일 전달</h2><p><strong>목표:</strong> Blob 파일과 Discovery 참조를 등록하고 이후 에이전트에 전달할 입력을 준비한다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-files-storage-assets">S15</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-storage-containers-assets">S16</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/how-to-manage-storage-containers">S17</a>]</sup></p>
+<h2 id="heading-l02">L02 — 데이터 등록과 파일 전달</h2><p><strong>목표:</strong> Blob 파일과 Discovery 참조를 등록하고 이후 에이전트에 전달할 입력을 준비합니다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-files-storage-assets">S15</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-storage-containers-assets">S16</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/how-to-manage-storage-containers">S17</a>]</sup></p>
+<p><strong>시작 조건:</strong> L01의 Storage·Blob 컨테이너·<code>thermaldata</code>가 준비되고, 업로드 사용자의 Blob 데이터 역할과 사설 연결을 확인했습니다. Bookshelf·에이전트는 아직 필요하지 않습니다.</p>
 <p><strong>실행:</strong></p>
 <ol>
-<li>Azure Portal의 Storage account → Containers 또는 승인된 Storage 도구로 TXT 4개를 <code>discoveryinputs/bookshelf/</code>, CSV를 <code>discoveryinputs/compute/</code>에 업로드한다. <strong>현재 문서상 Studio에서 로컬 파일을 직접 업로드하는 흐름은 지원되지 않는다.</strong></li>
-<li>Discovery Storage Container <code>thermaldata</code> 아래에 Storage Asset <code>evidencepack</code>과 <code>candidatecsv</code>를 등록한다. Data path는 각각 <code>discoveryinputs/bookshelf/</code>, <code>discoveryinputs/compute/materials.csv</code>다. 같은 RG/리전과 backing account를 확인한다.</li>
-<li>등록 화면의 Storage Asset 탭 또는 <a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/how-to-manage-storage-containers">공식 Storage Asset 등록 절차</a>를 사용한다. 리소스 그룹 수준의 Storage Container/Asset이 프로젝트에 <strong>참조</strong>되는 구조다. 연결한 backing account와 두 Asset의 경로·상태를 확인한다.</li>
-<li>실제 원본 CSV를 내려받아 후보 8개와 GAMMA=175를 확인하고, 이후 연결할 Asset ID를 기록한다. <code>discovery://</code> URI와 Asset ID는 실제 반환값을 복사하며 추측해 만들지 않는다.</li>
-<li>에이전트의 읽기·쓰기·공유는 L04, Task에 대한 입력 연결은 L06에서 수행한다. 문자열 경로를 프롬프트에 쓰는 것만으로 데이터가 연결되는 것은 아니다.</li>
+<li>Azure Portal의 Storage account → Containers 또는 승인된 Storage 도구로 TXT 4개를 <code>discoveryinputs/bookshelf/</code>, CSV를 <code>discoveryinputs/compute/</code>에 업로드합니다. <strong>현재 문서상 Studio에서 로컬 파일을 직접 업로드하는 흐름은 지원되지 않습니다.</strong></li>
+<li>Discovery Storage Container <code>thermaldata</code> 아래에 Storage Asset <code>evidencepack</code>과 <code>candidatecsv</code>를 등록합니다. Data path는 각각 <code>discoveryinputs/bookshelf/</code>, <code>discoveryinputs/compute/materials.csv</code>입니다. 같은 RG/리전과 backing account를 확인합니다.</li>
+<li>등록 화면의 Storage Asset 탭 또는 <a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/how-to-manage-storage-containers">공식 Storage Asset 등록 절차</a>를 사용합니다. 리소스 그룹 수준의 Storage Container/Asset이 프로젝트에 <strong>참조</strong>되는 구조입니다. 연결한 backing account와 두 Asset의 경로·상태를 확인합니다.</li>
+<li>실제 원본 CSV를 내려받아 후보 8개와 GAMMA=175를 확인하고, 이후 연결할 Asset ID를 기록합니다. <code>discovery://</code> URI와 Asset ID는 실제 반환값을 복사하며 추측해 만들지 않습니다.</li>
+<li>에이전트의 읽기·쓰기·공유는 L04, Task에 대한 입력 연결은 L06에서 수행합니다. 문자열 경로를 프롬프트에 쓰는 것만으로 데이터가 연결되는 것은 아닙니다.</li>
 </ol>
-<p>CLI로 업로드할 때도 <strong>L01에서 검증한 사설 접근 경로</strong>와 공유 키 대신 Entra 로그인을 사용한다. 재실행 시 파일이 이미 있으면 원본·해시를 대조한 뒤 덮어쓰기 여부를 결정한다. 자산 템플릿은 경로 참조만 만들며 실제 파일을 업로드하지 않는다.</p>
-<pre><code class="language-bash">az storage blob upload-batch --account-name stdiscoveryholjunwoosc \
+<p>다음은 <strong>Blob 파일을 쓰는 변경 명령</strong>입니다. L00의 <code>STORAGE_ACCOUNT</code>와 구독을 확인하고 <strong>L01에서 검증한 사설 접근 경로</strong>에서 Entra 로그인으로 실행합니다. 재실행 시 기존 파일의 원본·해시를 먼저 대조하며 아래 명령은 자동 덮어쓰기를 허용하지 않습니다. 자산 템플릿은 경로 참조만 만들며 실제 파일을 업로드하지 않습니다.</p>
+<pre><code class="language-bash">az storage blob upload-batch --account-name &quot;$STORAGE_ACCOUNT&quot; \
   --destination discoveryinputs --destination-path bookshelf \
-  --source data/bookshelf --auth-mode login \
+  --source data/bookshelf --auth-mode login --overwrite false \
   --subscription &quot;$SUBSCRIPTION_ID&quot;
-az storage blob upload --account-name stdiscoveryholjunwoosc \
+az storage blob upload --account-name &quot;$STORAGE_ACCOUNT&quot; \
   --container-name discoveryinputs --name compute/materials.csv \
-  --file data/materials.csv --auth-mode login \
+  --file data/materials.csv --auth-mode login --overwrite false \
   --subscription &quot;$SUBSCRIPTION_ID&quot;
 </code></pre>
-<h3 id="section-3">로컬 VPN 없이 입력을 준비하는 관리자 경로</h3><p>이 환경에는 <code>infra/blob-client.bicep</code>으로 배포한 **<code>vm-discovery-blob-client</code>**가 있다. 공개 IP와 SSH 인바운드가 없고, 자체 관리 ID에 실습 Storage 계정의 Blob Data Contributor만 부여했다. 별도 Discovery 플랫폼 역할은 없다. <code>blobClientSubnet</code>의 Storage 서비스 엔드포인트와 기존 Blob Private Endpoint/DNS를 이용한다.</p>
-<p>다음은 <strong>실제 Azure 작업</strong>이며 VM 관리 권한이 있는 관리자가 수행한다. Project Contributor만으로 VM Run Command를 실행할 수 있다고 가정하지 않는다. VM을 시작하고 5개 원본 파일을 전송한 뒤 할당 해제한다.</p>
-<pre><code class="language-bash">az vm start --name vm-discovery-blob-client \
-  --resource-group &quot;$RESOURCE_GROUP&quot; --subscription &quot;$SUBSCRIPTION_ID&quot;
-npm run blob:sync
-az vm deallocate --name vm-discovery-blob-client \
-  --resource-group &quot;$RESOURCE_GROUP&quot; --subscription &quot;$SUBSCRIPTION_ID&quot;
-</code></pre>
-<p><code>blob:sync</code>는 Azure Run Command로 합성 TXT 4개와 CSV 1개만 전달한다. VM 내부 Python 표준 라이브러리와 IMDS 토큰을 사용해 Blob DNS가 <code>10.80.8.0/24</code>의 사설 IP인지 확인하고, 업로드 후 다시 읽어 원본 SHA-256을 비교한다. 키/SAS/토큰은 저장하지 않는다. 기존 파일은 해시가 같으면 재사용하고, 다르면 덮어쓰지 않고 오류를 반환한다. <code>artifacts/discovery-private-blob-sync.json</code>의 <code>outcome=verified</code>와 파일 5개의 읽기 request ID·해시를 확인한다.</p>
-<p>2026-10-01 실제 업로드와 재실행을 모두 확인했다. <strong>이는 원격 VM의 사설 데이터 접근 성공이며 노트북의 브라우저가 VNet에 연결됐다는 뜻은 아니다.</strong> Storage 공개 접근과 조직 정책은 그대로 유지한다. 검증 후 VM은 할당 해제했으며 OS 디스크 비용은 남는다. 새 환경에서 클라이언트를 만들 때는 SKU/image/quota와 <code>what-if</code>를 먼저 검증하고, SSH 부트스트랩 개인 키를 저장소에 넣지 않는다.</p>
+<p><strong>사설 클라이언트가 없다면 여기서 중단합니다.</strong> 관리자가 승인된 VNet 내부 클라이언트 또는 VPN/ExpressRoute를 준비합니다. 권한만 추가하거나 Storage를 공개로 바꾸어 해결하지 않습니다.</p>
+<p><strong>접속 확인은 사용자별로 합니다.</strong> 관리자가 원격 클라이언트에서 업로드했더라도, 연구자의 브라우저에서 같은 파일을 열 수 있다는 뜻은 아닙니다. 이후 단계에서 파일을 읽을 사용자에게 실제 Blob 권한과 네트워크 경로가 있는지 확인하세요.</p>
 <div class="table-scroll"><table>
 <thead>
 <tr>
@@ -597,33 +726,35 @@ az vm deallocate --name vm-discovery-blob-client \
 <td>관리 ID가 파일을 만들 수 있어도 사용자는 별도 Blob 데이터 역할·방화벽·CORS가 필요</td>
 </tr>
 </tbody></table>
-</div><p><strong>완료 기준:</strong> 원본 Blob 파일과 내용, Storage Container의 backing account, 입력 Asset 2개의 실제 ID·경로·성공 상태가 확인된다. 이 Lab은 에이전트나 계산 도구가 없어도 완료할 수 있다.</p>
+</div><p><strong>완료 기준:</strong> 원본 Blob 파일과 내용, Storage Container의 backing account, 입력 Asset 2개의 실제 ID·경로·성공 상태가 확인됩니다. 이 Lab은 에이전트나 계산 도구가 없어도 완료할 수 있습니다.</p>
 <p><a id="l03"></a></p>
-<h2 id="heading-l03">L03 — Bookshelf 지식 색인</h2><p><strong>목표:</strong> 여러 문서를 종합하는 근거 검색에 사용할 지식 색인을 만든다. 실제 검색·인용 확인은 색인이 준비된 다음 L04에서 수행한다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/how-to-index-bookshelf-knowledgebase">S06</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-bookshelf-knowledge-bases">S07</a>]</sup></p>
+<h2 id="heading-l03">L03 — Bookshelf 지식 색인</h2><p><strong>목표:</strong> 여러 문서를 종합하는 근거 검색에 사용할 지식 색인을 만듭니다. 실제 검색·인용 확인은 색인이 준비된 다음 L04에서 수행합니다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/how-to-index-bookshelf-knowledgebase">S06</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-bookshelf-knowledge-bases">S07</a>]</sup></p>
+<p><strong>시작 조건:</strong> L01–L02 완료, Bookshelf 모델 quota와 상시 비용 승인, 별도 색인 풀의 지원 SKU·메모리·vCPU·지역 용량 확인이 필요합니다. 충족하지 못하면 L03과 KB 의존 실습을 보류합니다.</p>
 <blockquote>
-<p><strong>실제 생성 조건, 2026-10-02:</strong> small Bookshelf 생성만 요청해 ARM validate/what-if는 통과했으나, 서비스가 <code>gpt-5-mini</code>·<code>text-embedding-3-small</code> 각각 <strong>생성 시 2,000,000 TPM</strong>을 요구하며 거절했다. how-to의 200,000 TPM 생성 안내만으로는 이 환경에서 부족했다. <a href="../../artifacts/discovery-bookshelf-create-result-20261002.json">실제 결과</a>를 따른다. 생성 승인은 색인 시작 승인이 아니다.</p>
+<p><strong>관리자 확인:</strong> <code>gpt-5-mini</code>와 <code>text-embedding-3-small</code>은 각각 <strong>2,000,000 TPM</strong>을 계획 기준으로 잡고, 현재 서비스의 생성·색인 요구량과 실제 가용량을 확인하세요. 문서별 수치 차이는 <a href="#a01">A01</a>에 정리했습니다. <code>validate</code>/<code>what-if</code> 성공만으로 생성이 보장되는 것은 아닙니다.</p>
 </blockquote>
 <p><strong>실행:</strong></p>
 <ol>
-<li>Portal → <strong>Microsoft Discovery Bookshelves → Create</strong>에서 동일 구독·RG·리전, 전용 <code>searchSubnet</code>/<code>bookshelfPeSubnet</code>, UAMI를 지정한다. 생성 시 <code>indexSize=small</code>을 설정한다. <strong>Bookshelf당 Knowledgebase 1개</strong>가 현재 문서의 제한이다.</li>
-<li>Studio → <strong>Resources → Knowledge → Bookshelf 선택 → Create new</strong>에서 <code>thermal-evidence</code>, version <code>1</code>을 만든다. Description/Copilot instruction에는 “합성 방열판 후보의 제약조건·카탈로그·결측·최신 정정을 근거로 종합 판단하는 자료”라고 적는다.</li>
-<li><code>thermaldata</code>와 <code>evidencepack</code>, 동일 UAMI를 연결한다.</li>
-<li>A01에서 확인한 메모리 집약적 **색인 전용 풀 <code>indexlab</code>**을 준비한다. 작은 계산용 D4 풀을 그대로 색인에 사용하지 않는다.</li>
-<li>Knowledgebase Details에서 Provisioning State=<code>Succeeded</code>, Status=<code>NotStarted</code>를 확인한다. <strong>Index → Project <code>thermalhol</code> → <code>indexlab</code> → Start Indexing</strong>을 실행한다.</li>
-<li>실제 색인 Status=<code>Succeeded</code>를 확인한다. 이 상태와 Azure 리소스의 Provisioning State는 별개다.</li>
-<li>KB 이름·버전, 연결된 원본 Asset, 색인 작업과 성공 상태를 기록한다. 검색용 에이전트는 다음 Lab에서 연결한다.</li>
+<li>Portal → <strong>Microsoft Discovery Bookshelves → Create</strong>에서 자신의 Bookshelf 이름, 동일 구독·RG·리전, 전용 <code>searchSubnet</code>/<code>bookshelfPeSubnet</code>, UAMI를 지정합니다. 생성 시 <strong>Tags</strong>에 <code>indexSize=small</code>을 설정합니다. 데이터 평면의 공개 접근 허용 여부는 조직 정책에 맞춰 선택하고, 비활성화하면 Bookshelf API의 Private Endpoint·DNS·클라이언트 연결도 확인합니다. <strong>Bookshelf Succeeded 이후에만</strong> 다음 단계로 진행합니다. <strong>Bookshelf당 Knowledgebase 1개</strong>가 현재 문서의 제한입니다. 관리 Search·SQL·Container Apps를 수동으로 중복 생성하지 않습니다.</li>
+<li>Studio → <strong>Resources → Knowledge → Bookshelf 선택 → Create new</strong>에서 <code>thermal-evidence</code>, version <code>1</code>을 만듭니다. Description/Copilot instruction에는 “합성 방열판 후보의 제약조건·카탈로그·결측·최신 정정을 근거로 종합 판단하는 자료”라고 입력합니다.</li>
+<li><code>thermaldata</code>와 <code>evidencepack</code>, 동일 UAMI를 연결합니다.</li>
+<li>Supercomputer의 <strong>Settings → Node pool → Create</strong>에서 메모리 집약적 <strong>색인 전용 풀</strong> <code>indexlab</code>을 준비합니다. A01의 서로 다른 SKU 안내를 관리자·제품 지원 경로로 확인하고 승인된 SKU·한도를 기록합니다. 작은 계산용 D4 풀을 색인 요구사항의 대체품으로 사용하지 않습니다.</li>
+<li>Knowledgebase Details에서 Provisioning State=<code>Succeeded</code>, Status=<code>NotStarted</code>를 확인합니다. <strong>생성까지만 승인받았다면 여기서 멈춥니다.</strong> 색인 실행·비용까지 승인된 경우에만 <strong>Index → Project <code>thermalhol</code> → <code>indexlab</code> → Start Indexing</strong>을 실행합니다.</li>
+<li>실제 색인 Status=<code>Succeeded</code>를 확인합니다. 이 상태와 Azure 리소스의 Provisioning State는 별개입니다.</li>
+<li>KB 이름·버전, 연결된 원본 Asset, 색인 작업과 성공 상태를 기록합니다. 검색용 에이전트는 다음 Lab에서 연결합니다.</li>
 </ol>
-<p><strong>완료 기준:</strong> TXT 4개를 가리키는 실제 원본 연결과 KB의 색인 <code>Succeeded</code>를 확인했다. 색인 성공만으로 검색 품질이나 인용까지 검증했다고 표시하지 않는다.</p>
-<p><strong>갱신 주의:</strong> 이 실습은 첫 전체 색인만 필수로 한다. 증분/재색인에 관한 공식 문서가 상충하므로 A01을 따른다. Blob 삭제가 KB에서 해당 문서를 제거한다고 가정하지 않는다.</p>
+<p><strong>완료 기준:</strong> TXT 4개를 가리키는 실제 원본 연결과 KB의 색인 <code>Succeeded</code>를 확인했습니다. 색인 성공만으로 검색 품질이나 인용까지 검증했다고 표시하지 않습니다.</p>
+<p><strong>갱신 주의:</strong> 이 실습은 첫 전체 색인만 필수로 합니다. 증분/재색인에 관한 공식 문서가 상충하므로 A01을 따릅니다. Blob 삭제가 KB에서 해당 문서를 제거한다고 가정하지 않습니다.</p>
 <p><a id="l04"></a></p>
-<h2 id="heading-l04">L04 — 전문 에이전트와 모델·버전</h2><p><strong>목표:</strong> 역할·모델·도구·KB를 명시한 Prompt Agent를 만들고 직접 대화한다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/quickstart-agents-studio">S08</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/how-to-agent-creation">S09</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-discovery-agent-types">S10</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/how-to-select-models-for-agents">S25</a>]</sup></p>
+<h2 id="heading-l04">L04 — 전문 에이전트와 모델·버전</h2><p><strong>목표:</strong> 역할·모델·도구·KB를 명시한 Prompt Agent를 만들고 직접 대화합니다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/quickstart-agents-studio">S08</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/how-to-agent-creation">S09</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-discovery-agent-types">S10</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/how-to-select-models-for-agents">S25</a>]</sup></p>
+<p><strong>시작 조건:</strong> H01–H04·H06을 확인했고 L03의 색인이 Succeeded입니다. KB가 없으면 근거 에이전트·인용 검증을 통과시킬 수 없습니다.</p>
 <p><strong>실행:</strong></p>
 <ol>
-<li>프로젝트 → <strong>Resources → Agents 옆 + → Create new agent</strong>에서 아래 3개 에이전트를 만든다. Type은 Agent/Prompt Agent, Chat model은 배포 이름 **<code>gpt-5-4</code>**다.</li>
-<li>Instructions에 아래 역할 지시문을 넣는다. 기본 Discovery 에이전트는 제품 안내용이므로 연구 에이전트를 대신하지 않는다.</li>
-<li><strong>Knowledge Bases</strong>에서 <code>thermal-evidence</code>를 EvidenceAnalyst와 ResearchReviewer에 연결한다. ComputeAnalyst는 이 단계에서 모델·지시문까지만 준비한다. 실제 도구 연결·호출은 L05에서 처음 수행한다.</li>
-<li><strong>New shared session</strong>을 만들고 L02의 입력 Asset을 실제 데이터 연결 UI로 연결한다. <code>@AgentName</code> 또는 agent selector로 EvidenceAnalyst/ResearchReviewer를 호출한다.</li>
-<li>연결한 CSV를 <code>GetResourceContext</code>로 찾고 <code>PreviewResource</code>로 읽게 한다. <code>WriteResource</code>로 후보 8개와 GAMMA=175를 확인한 <code>data-check.md</code>를 만들고, 필요하면 <code>ShareResource</code>로 공유하도록 요청한다. 실제 출력 Asset을 열어 내용을 확인한다.</li>
+<li>프로젝트 → <strong>Resources → Agents 옆 + → Create new agent</strong>에서 아래 3개 에이전트를 만듭니다. Type은 Agent/Prompt Agent, Chat model은 배포 이름 <code>gpt-5-4</code>입니다.</li>
+<li>Instructions에 아래 역할 지시문을 넣습니다. 기본 Discovery 에이전트는 제품 안내용이므로 연구 에이전트를 대신하지 않습니다.</li>
+<li><strong>Knowledge Bases</strong>에서 <code>thermal-evidence</code>를 EvidenceAnalyst와 ResearchReviewer에 연결합니다. ComputeAnalyst는 이 단계에서 모델·지시문까지만 준비합니다. 실제 도구 연결·호출은 L05에서 처음 수행합니다.</li>
+<li><strong>New shared session</strong>을 만들고 L02의 입력 Asset을 실제 데이터 연결 UI로 연결합니다. <code>@AgentName</code> 또는 agent selector로 EvidenceAnalyst/ResearchReviewer를 호출합니다.</li>
+<li>연결한 CSV를 <code>GetResourceContext</code>로 찾고 <code>PreviewResource</code>로 읽게 합니다. <code>WriteResource</code>로 후보 8개와 GAMMA=175를 확인한 <code>data-check.md</code>를 만들고, 필요하면 <code>ShareResource</code>로 공유하도록 요청합니다. 실제 출력 Asset을 열어 내용을 확인합니다.</li>
 </ol>
 <p><strong>EvidenceAnalyst 지시문</strong></p>
 <pre><code class="language-text">당신은 합성 방열판 후보의 근거 분석가다.
@@ -648,7 +779,7 @@ ZETA의 부식 unknown을 통과로 바꾸거나 빠진 측정을 만들어내�
 실제 실험·안전 인증을 수행했다고 주장하지 않는다. 한국어로 답한다.
 </code></pre>
 <ol start="6">
-<li>EvidenceAnalyst에게 다음 질문을 보낸다. Bookshelf의 장점을 보기 위해 단순 숫자 조회보다 <strong>문서 전체의 관계와 함의</strong>를 묻는다.</li>
+<li>EvidenceAnalyst에게 다음 질문을 보냅니다. Bookshelf의 장점을 보기 위해 단순 숫자 조회보다 <strong>문서 전체의 관계와 함의</strong>를 묻습니다.</li>
 </ol>
 <pre><code class="language-text">@EvidenceAnalyst
 thermal-evidence의 문서 전체를 종합해 후보 선정에 영향을 주는
@@ -659,7 +790,7 @@ GAMMA의 충돌하는 값은 REV-001로 해결하고 ZETA의 unknown을 유지�
 최종 순위의 산술 검증은 별도 계산 도구 결과가 오기 전까지 보류해줘.
 </code></pre>
 <ol start="7">
-<li>ResearchReviewer에게 같은 근거 확인 결과를 JSON으로 반환하게 한다. 다음은 <strong>에이전트 근거 요약의 기대 형태</strong>이며 계산 도구의 <code>ranking.json</code>이 아니다. 실제 응답과 원문을 대조하며, 예시를 복사해 성공 증거로 사용하지 않는다.</li>
+<li>ResearchReviewer에게 같은 근거 확인 결과를 JSON으로 반환하게 합니다. 다음은 <strong>에이전트 근거 요약의 기대 형태</strong>이며 계산 도구의 <code>ranking.json</code>이 아닙니다. 실제 응답과 원문을 대조하며, 예시를 복사해 성공 증거로 사용하지 않습니다.</li>
 </ol>
 <pre><code class="language-json">{
   &quot;candidate_count&quot;: 8,
@@ -675,17 +806,18 @@ GAMMA의 충돌하는 값은 REV-001로 해결하고 ZETA의 unknown을 유지�
   &quot;arithmetic_verified&quot;: false
 }
 </code></pre>
-<p><strong>JSON 요청과 JSON Schema 강제는 다르다.</strong> 지원 모델/UI에서 schema-constrained 출력이 제공되면 명시적으로 구성하고 사용한 방식을 기록한다. 이 단계에서는 계산을 실행하지 않았으므로 <code>arithmetic_verified</code>를 <code>true</code>로 바꾸지 않는다.</p>
+<p><strong>JSON 요청과 JSON Schema 강제는 다릅니다.</strong> 지원 모델/UI에서 schema-constrained 출력이 제공되면 명시적으로 구성하고 사용한 방식을 기록합니다. 이 단계에서는 계산을 실행하지 않았으므로 <code>arithmetic_verified</code>를 <code>true</code>로 바꾸지 않습니다.</p>
 <ol start="8">
-<li>지시문을 한 번 개선해 저장하고 새 버전을 기록한다. 버전은 immutable이며 과거 기록과 실제 사용 버전을 구분한다. 접근 가능한 다른 프로젝트로 재사용할 때는 <strong>Copy from project</strong>를 사용한다. 이는 독립된 복사본이며 실시간 동기화가 아니다.</li>
+<li>지시문을 한 번 개선해 저장하고 새 버전을 기록합니다. 버전은 immutable이며 과거 기록과 실제 사용 버전을 구분합니다. 접근 가능한 다른 프로젝트로 재사용할 때는 <strong>Copy from project</strong>를 사용합니다. 이는 독립된 복사본이며 실시간 동기화가 아닙니다.</li>
 </ol>
-<p><strong>완료 기준:</strong> 에이전트 3개의 모델·지시문, 두 근거 에이전트의 KB 연결, 실제 파일 읽기·쓰기, 최소 3개 원문 인용, 구조화 근거 응답, 새 버전을 확인했다. ComputeAnalyst의 도구 실행은 다음 Lab의 기준이다. reasoning 모델에 지원되지 않는 <code>temperature</code>/<code>top_p</code>를 설정하지 않는다. Chat과 Task는 문맥이 분리되므로 중요한 조건·입력은 Task에도 명시한다.</p>
+<p><strong>완료 기준:</strong> 에이전트 3개의 모델·지시문, 두 근거 에이전트의 KB 연결, 실제 파일 읽기·쓰기, 최소 3개 원문 인용, 구조화 근거 응답, 새 버전을 확인했습니다. ComputeAnalyst의 도구 실행은 다음 Lab의 기준입니다. reasoning 모델에 지원되지 않는 <code>temperature</code>/<code>top_p</code>를 설정하지 않습니다. Chat과 Task는 문맥이 분리되므로 중요한 조건·입력은 Task에도 명시합니다.</p>
 <p><a id="l05"></a></p>
-<h2 id="heading-l05">L05 — 실제 CPU 도구 실행</h2><p><strong>목표:</strong> LLM의 설명이 아닌 Supercomputer의 실제 계산·로그·파일로 결과를 확인한다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/how-to-create-tool-definition">S21</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-tools-model-integration">S22</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/how-to-publish-tool-to-acr">S23</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/how-to-run-jobs-supercomputer-rest-api">S32</a>]</sup></p>
+<h2 id="heading-l05">L05 — 실제 CPU 도구 실행</h2><p><strong>목표:</strong> LLM의 설명이 아닌 Supercomputer의 실제 계산·로그·파일로 결과를 확인합니다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/how-to-create-tool-definition">S21</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-tools-model-integration">S22</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/how-to-publish-tool-to-acr">S23</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/how-to-run-jobs-supercomputer-rest-api">S32</a>]</sup></p>
+<p><strong>시작 조건:</strong> 관리자 준비는 L01의 CPU 풀·ACR·권한이 필요합니다. 연구자 실행은 L04의 ComputeAnalyst와 H05의 실제 도구·풀 ID가 추가로 필요합니다. 1단계 로컬 계산에는 Azure가 필요하지 않습니다.</p>
 <p><strong>실행:</strong></p>
-<p><strong>관리자 준비는 1–5단계, 연구자 실행은 6–8단계다.</strong></p>
+<p><strong>관리자 준비는 1–5단계, 연구자 실행은 6–8단계입니다.</strong></p>
 <ol>
-<li>다음은 <strong>로컬 정답 기준</strong>을 만드는 명령이다. Azure 실행 증거가 아니다.</li>
+<li>다음은 <strong>로컬 정답 기준</strong>을 만드는 명령입니다. Azure 실행 증거가 아닙니다.</li>
 </ol>
 <pre><code class="language-bash">python3 scripts/score_materials.py --input data/materials.csv \
   --output artifacts/reference-ranking.json
@@ -693,40 +825,48 @@ python3 scripts/score_materials.py --input data/materials.csv --max-cost 3 \
   --output artifacts/reference-ranking-cost3.json
 </code></pre>
 <ol start="2">
-<li>기존 승인된 ACR을 사용하거나 관리자가 실습용 ACR을 만든다. 빌드·push 수행자 권한과 Supercomputer 관리 ID의 pull 권한은 다르다. Registry의 RBAC/ABAC 모드에 맞는 역할을 확인한다.</li>
-<li>저장소 루트에서 <code>&lt;acr-name&gt;</code>을 실제 이름으로 바꾸고 다음을 실행한다. <strong><code>az acr build</code>는 로컬 빌드가 아니라, 컨텍스트를 업로드해 Azure ACR Tasks에서 실행하는 유료 클라우드 빌드 경로</strong>다. 로컬 Docker daemon은 필요하지 않다.</li>
+<li>기존 승인된 ACR을 사용하거나 관리자가 실습용 ACR을 만듭니다. 빌드·push 수행자 권한과 Supercomputer 관리 ID의 pull 권한은 다릅니다. Registry의 RBAC/ABAC 모드에 맞는 역할을 확인합니다.</li>
+<li>저장소 루트에서 L00의 <code>ACR_NAME</code>·구독을 확인합니다. <strong>업로드 전에</strong> <code>.dockerignore</code>가 계산기·합성 CSV·Dockerfile만 허용하는지 확인하고 다음을 실행합니다. <strong><code>az acr build</code>는 컨텍스트를 업로드하는 유료 ACR Tasks 빌드</strong>이며 로컬 빌드가 아닙니다. 로컬 Docker daemon은 필요하지 않습니다.</li>
 </ol>
-<pre><code class="language-bash">az acr build --registry &#39;&lt;acr-name&gt;&#39; \
-  --subscription 51531604-2337-4c05-bc05-3c3d4ff154e5 \
+<pre><code class="language-bash">az acr build --registry &quot;$ACR_NAME&quot; \
+  --subscription &quot;$SUBSCRIPTION_ID&quot; \
   --file tools/thermal-ranking/Dockerfile \
   --image thermal-ranking:1.0.0 .
 </code></pre>
 <ol start="4">
-<li><code>.dockerignore</code>가 계산기·합성 CSV·Dockerfile만 허용하는지 확인한다. 빌드 성공, Registry의 실제 이미지와 digest를 기록한다. 버전 태그도 덮어쓸 수 있으므로 이름만으로 불변성을 보장하지 않는다.</li>
-<li><code>tools/thermal-ranking/tool-definition.template.json</code>의 복사본을 만들고 <code>&lt;acr-login-server&gt;</code>를 실제 값으로 교체한다. Portal → <strong>Microsoft Discovery Tools → Create → Basics</strong>에서 Name=<code>thermal-ranking</code>, Region=<code>swedencentral</code>, <strong>Definition content file</strong>=수정한 JSON, <strong>Definition content version</strong>=<code>1.0.0</code>을 지정한다. Environment variables는 비운다. <code>worker</code>, 두 액션, <code>/outputs</code>를 유지하고 <code>Succeeded</code>와 Tool ID를 확인한다. <strong>GA API <code>2026-06-01</code>은 정의 객체를 <code>properties.definitionContent</code>, 리소스 버전을 <code>properties.version</code>으로 받는다.</strong> 내부 JSON의 <code>version</code>과 리소스 버전은 별도다. S33의 Preview 예제에 있는 <code>properties.definitionContentVersion</code>을 GA 요청에 그대로 넣으면 실제 ARM 사전 검증이 실패한다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/how-to-deploy-tool-to-discovery">S33</a>]</sup></li>
-<li>ComputeAnalyst의 <strong>Tools</strong>에서 등록한 도구를 연결한다. 첫 수동 대화에는 <strong>Confirm before running tool</strong>로 승인 대기를 확인할 수 있다. Engine 실습 전에는 검토한 두 합성 액션의 승인 정책을 명시적으로 정해 자율 실행의 승인 대기를 방지한다. 비밀리에 승인 요구를 해제하지 않는다. 이후 <code>cpulab</code>에서 <code>rank_baseline</code>을 한 번 실제 실행하도록 요청한다. <strong>이 도구는 이미지 안의 합성 CSV를 사용한다.</strong> L02의 Blob CSV를 자동 마운트하지 않으므로 입력 변경 시 이미지 재빌드 또는 명시적 도구 변경이 필요하다.</li>
-<li>operation ID와 <code>Succeeded</code>, 실제 <code>nodepoolId</code>, 로그, <code>ranking.json</code> Asset을 확인한다. <code>nodepoolId</code>는 H05에서 받은 <code>cpulab</code>의 ID와 같아야 한다. 프롬프트에 풀 이름을 적었다는 사실만으로 선택을 확인한 것은 아니다. <code>auto_promote: true</code>가 출력 공유를 설정한다. Foundry Code Interpreter 실행을 Supercomputer 실행으로 간주하지 않는다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/how-to-run-jobs-supercomputer-rest-api">S32</a>]</sup></li>
-<li><strong>도구가 만든 원본 파일</strong>을 로컬에 내려받아 다음 검사를 실행한다. <code>&lt;downloaded-ranking.json&gt;</code>은 실제 파일 경로로 바꾼다. 에이전트의 요약 JSON이나 로컬 reference 파일을 대신 넣지 않는다.</li>
+<li>빌드 성공을 확인한 뒤 다음 <strong>조회 명령</strong>으로 실제 login server와 digest를 확인합니다. 빈 값이나 조회 오류이면 중단합니다. 버전 태그도 덮어쓸 수 있으므로 태그 이름만으로 불변성을 보장하지 않습니다.</li>
+</ol>
+<pre><code class="language-bash">ACR_LOGIN_SERVER=$(az acr show --name &quot;$ACR_NAME&quot; \
+  --subscription &quot;$SUBSCRIPTION_ID&quot; --query loginServer -o tsv)
+IMAGE_DIGEST=$(az acr repository show --name &quot;$ACR_NAME&quot; \
+  --image thermal-ranking:1.0.0 --subscription &quot;$SUBSCRIPTION_ID&quot; \
+  --query digest -o tsv)
+</code></pre>
+<ol start="5">
+<li><code>tools/thermal-ranking/tool-definition.template.json</code>의 복사본에서 <code>infra[0].image.acr</code>를 <strong>실제 login server + <code>/thermal-ranking@</code> + 실제 <code>sha256:...</code> digest</strong>로 바꿉니다. Portal → <strong>Microsoft Discovery Tools → Create → Basics</strong>에서 Name=<code>thermal-ranking</code>, Region=L00의 home 리전, <strong>Definition content file</strong>=수정한 JSON, <strong>Definition content version</strong>=<code>1.0.0</code>을 지정합니다. Environment variables는 비워 둡니다. <code>worker</code>, 두 액션, <code>/outputs</code>를 유지하고 <code>Succeeded</code>와 Tool ID를 확인합니다. <strong>GA API <code>2026-06-01</code>은 정의 객체를 <code>properties.definitionContent</code>, 리소스 버전을 <code>properties.version</code>으로 받습니다.</strong> 내부 JSON의 <code>version</code>과 리소스 버전은 별도입니다. S33의 Preview 필드 <code>properties.definitionContentVersion</code>을 GA 요청에 그대로 적용하지 않습니다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/how-to-deploy-tool-to-discovery">S33</a>]</sup></li>
+<li>ComputeAnalyst의 <strong>Tools</strong>에서 등록한 도구를 연결합니다. 첫 수동 대화에는 <strong>Confirm before running tool</strong>로 승인 대기를 확인할 수 있습니다. Engine 실습 전에는 검토한 두 합성 액션의 승인 정책을 명시적으로 정해 자율 실행의 승인 대기를 방지합니다. 비밀리에 승인 요구를 해제하지 않습니다. 이후 <code>cpulab</code>에서 <code>rank_baseline</code>을 한 번 실제 실행하도록 요청합니다. <strong>이 도구는 이미지 안의 합성 CSV를 사용합니다.</strong> L02의 Blob CSV를 자동 마운트하지 않으므로 입력 변경 시 이미지 재빌드 또는 명시적 도구 변경이 필요합니다.</li>
+<li>operation ID와 <code>Succeeded</code>, 실제 <code>nodepoolId</code>, 로그, <code>ranking.json</code> Asset을 확인합니다. <code>nodepoolId</code>는 H05에서 받은 <code>cpulab</code>의 ID와 같아야 합니다. 프롬프트에 풀 이름을 적었다는 사실만으로 선택을 확인한 것은 아닙니다. <code>auto_promote: true</code>가 출력 공유를 설정합니다. Foundry Code Interpreter 실행을 Supercomputer 실행으로 간주하지 않습니다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/how-to-run-jobs-supercomputer-rest-api">S32</a>]</sup></li>
+<li><strong>도구가 만든 원본 파일</strong>을 로컬에 내려받아 다음 검사를 실행합니다. <code>&lt;downloaded-ranking.json&gt;</code>은 실제 파일 경로로 바꿉니다. 에이전트의 요약 JSON이나 로컬 reference 파일을 대신 넣지 않습니다.</li>
 </ol>
 <pre><code class="language-bash">python3 scripts/verify_ranking.py \
   --input &#39;&lt;downloaded-ranking.json&gt;&#39; --case baseline
 </code></pre>
-<p>검사기는 후보 8개, 모든 판정·사유·결측·출처, 순위·점수, 제약조건과 JSON 구조를 대조한다. 누락·추가 필드, 잘못된 순서, 중복 키, 유효하지 않은 숫자는 실패다. 통과 시 <code>content_verified: true</code>, **<code>execution_verified: false</code>**가 출력된다. 파일 내용 검사는 실행 위치를 증명할 수 없으므로 Azure 실행 ID·풀·로그·Asset을 별도로 확인해야 한다.</p>
-<p>관리자는 UI 대신 다음 Bicep으로 <strong>실제 이미지 digest에 고정한</strong> 같은 도구를 등록할 수 있다. <code>what-if</code> 확인 후 <code>create</code>로 실행한다. ACR build 성공·도구 등록·Supercomputer 실행 성공은 서로 다른 상태다.</p>
-<pre><code class="language-bash">IMAGE_DIGEST=$(az acr repository show --name acrdiscoveryholjunwoosc \
-  --image thermal-ranking:1.0.0 --subscription &quot;$SUBSCRIPTION_ID&quot; \
-  --query digest -o tsv)
-az deployment group what-if --name discovery-tool-20261001 \
+<p>검사기는 후보 8개, 모든 판정·사유·결측·출처, 순위·점수, 제약조건과 JSON 구조를 대조합니다. 누락·추가 필드, 잘못된 순서, 중복 키, 유효하지 않은 숫자가 있으면 실패합니다. 통과 시 <code>content_verified: true</code>, <code>execution_verified: false</code>가 출력됩니다. <strong>파일 내용 검사는 실행 위치를 증명하지 못합니다.</strong> Azure 실행 ID·풀·로그·Asset을 별도로 확인해야 합니다.</p>
+<p><strong>선택 — Bicep으로 도구 등록:</strong> Portal에서 아직 등록하지 않았다면 다음 미리 보기를 사용합니다. L00의 값과 4단계에서 조회한 digest를 명시적으로 전달해 저장소의 Registry 기본값에 의존하지 않습니다. 예상한 Tool 하나만 변경되는지 확인하고 승인된 경우 <code>what-if</code>를 <code>create</code>로 바꿔 실행합니다. ACR build·Tool 등록·실제 실행은 서로 다른 완료 상태입니다.</p>
+<pre><code class="language-bash">az deployment group what-if --name discovery-tool-review \
   --subscription &quot;$SUBSCRIPTION_ID&quot; --resource-group &quot;$RESOURCE_GROUP&quot; \
-  --template-file infra/tool.bicep --parameters imageDigest=&quot;$IMAGE_DIGEST&quot;
+  --template-file infra/tool.bicep \
+  --parameters location=&quot;$LOCATION&quot; registryName=&quot;$ACR_NAME&quot; \
+    toolName=thermal-ranking imageDigest=&quot;$IMAGE_DIGEST&quot;
 </code></pre>
-<p><strong>완료 기준:</strong> 실제 클라우드 실행 ID·<code>cpulab</code>·로그·Asset, 원본 JSON 검사 통과가 모두 필요하다. <code>candidate_count=8</code>, <code>eligible_count=3</code>, 순위 DELTA 68.6 → ALPHA 67.8 → THETA 60.8이어야 한다. <code>Accepted</code>, <code>NotStarted</code>, 실패, 취소는 성공이 아니다. 첫 도구 실행은 cold start로 추가 시간이 걸릴 수 있다.</p>
+<p><strong>완료 기준:</strong> 실제 클라우드 실행 ID·<code>cpulab</code>·로그·Asset, 원본 JSON 검사 통과가 모두 필요합니다. <code>candidate_count=8</code>, <code>eligible_count=3</code>, 순위 DELTA 68.6 → ALPHA 67.8 → THETA 60.8이어야 합니다. <code>Accepted</code>, <code>NotStarted</code>, 실패, 취소는 성공이 아닙니다. 첫 도구 실행은 cold start로 추가 시간이 걸릴 수 있습니다.</p>
 <p><a id="l06"></a></p>
-<h2 id="heading-l06">L06 — Discovery Engine과 검증 루프</h2><p><strong>목표:</strong> 작업 의존관계, 독립 검증, 파일 상속을 가진 연구 흐름을 실행한다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-discovery-engine">S11</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-tasks-investigations">S12</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-cognition-overview">S13</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/how-to-build-investigations-cognition">S14</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-files-storage-assets">S15</a>]</sup></p>
+<h2 id="heading-l06">L06 — Discovery Engine과 검증 루프</h2><p><strong>목표:</strong> 작업 의존관계, 독립 검증, 파일 상속을 가진 연구 흐름을 실행합니다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-discovery-engine">S11</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-tasks-investigations">S12</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-cognition-overview">S13</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/how-to-build-investigations-cognition">S14</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-files-storage-assets">S15</a>]</sup></p>
+<p><strong>시작 조건:</strong> L04–L05 완료, H01–H06 확인, <code>gpt-5-4</code> 사용 가능, 실제 도구 실행과 비용·승인 정책 확인이 필요합니다. 직접 API 계산 성공만으로 이 단계를 통과시키지 않습니다.</p>
 <p><strong>실행:</strong></p>
 <ol>
-<li>같은 프로젝트에 새 Shared session을 만든다. <strong>Engine은 아직 시작하지 않는다.</strong></li>
-<li>아래 Task를 모두 만든다. 각 Description에 합성 데이터라는 점, 입력 Asset/KB/도구, 출력 파일, 검증 요건을 명시한다. 채팅 내용을 알고 있다고 가정하지 않는다.</li>
+<li>같은 프로젝트에 새 Shared session을 만듭니다. <strong>Engine은 아직 시작하지 않습니다.</strong></li>
+<li>아래 Task를 모두 만듭니다. 각 Description에 합성 데이터라는 점, 입력 Asset/KB/도구, 출력 파일, 검증 요건을 명시합니다. 채팅 내용을 알고 있다고 가정하지 않습니다.</li>
 </ol>
 <div class="table-scroll"><table>
 <thead>
@@ -763,20 +903,21 @@ az deployment group what-if --name discovery-tool-20261001 \
 </tr>
 </tbody></table>
 </div><ol start="3">
-<li><strong>Parent는 분해 관계, Depends on은 선행 조건</strong>이다. R0를 T1의 dependency로 넣어 순환을 만들지 않는다. UI가 agent 선택을 제공하면 지정하고, 아니면 Task 의견에 적합한 에이전트와 이유를 적는다. 실제 선택 결과는 이력으로 확인한다.</li>
-<li>입력 Asset을 Task 또는 부모에 연결한다. 부모 입력은 하위 Task로, dependency의 출력은 후속 Task로 상속된다. 형제 관계만으로 출력이 공유되지 않으며, 다른 Shared session으로 자동 전달되지 않는다.</li>
-<li>Discovery Engine을 시작한다. <code>New → Executing → Validating → Complete</code>와 validation comments를 확인한다. 검증 실패는 <code>Incomplete</code>와 재시도 또는 <code>Needs User Attention</code>으로 이어질 수 있다.</li>
-<li>T3가 <code>GetResourceContext</code>/<code>PreviewResource</code>로 상속 파일을 실제 읽는지 확인한다. 파일 내용이 프롬프트에 자동 주입되는 것은 아니다. 루트의 출력 모음과 후속 에이전트의 입력 상속도 서로 다른 메커니즘이다.</li>
-<li><code>Complete</code> 표시만 보지 말고 파일 <strong>내용</strong>을 검증한다. 필수 Task가 실패·보류·사람 검토 필요 상태이면 실습을 통과시키지 않는다. Engine이 세션을 종료한 것이 전체 연구 성공을 보장하지 않는다.</li>
+<li><strong>Parent는 분해 관계, Depends on은 선행 조건</strong>입니다. R0를 T1의 dependency로 넣어 순환을 만들지 않습니다. UI가 agent 선택을 제공하면 지정하고, 아니면 Task 의견에 적합한 에이전트와 이유를 적습니다. 실제 선택 결과는 이력으로 확인합니다.</li>
+<li>입력 Asset을 Task 또는 부모에 연결합니다. 부모 입력은 하위 Task로, dependency의 출력은 후속 Task로 상속됩니다. 형제 관계만으로 출력이 공유되지 않으며, 다른 Shared session으로 자동 전달되지 않습니다.</li>
+<li>Discovery Engine을 시작합니다. <code>New → Executing → Validating → Complete</code>와 validation comments를 확인합니다. 검증 실패는 <code>Incomplete</code>와 재시도 또는 <code>Needs User Attention</code>으로 이어질 수 있습니다.</li>
+<li>T3가 <code>GetResourceContext</code>/<code>PreviewResource</code>로 상속 파일을 실제 읽는지 확인합니다. 파일 내용이 프롬프트에 자동 주입되는 것은 아닙니다. 루트의 출력 모음과 후속 에이전트의 입력 상속도 서로 다른 메커니즘입니다.</li>
+<li><code>Complete</code> 표시만 보지 말고 파일 <strong>내용</strong>을 검증합니다. 필수 Task가 실패·보류·사람 검토 필요 상태이면 실습을 통과시키지 않습니다. Engine이 세션을 종료한 것이 전체 연구 성공을 보장하지 않습니다.</li>
 </ol>
-<p><strong>완료 기준:</strong> R0/T1/T2/T3의 관계, 실제 실행, 검증 의견, 입력·출력 Asset 연결을 확인했다. 필수 결과가 S02와 일치하고, T3와 R0의 보고서를 열 수 있다.</p>
-<p><strong>자율성 확장:</strong> 기본 경로가 끝난 뒤 원하면 별도 세션에 범위가 제한된 목표 1개를 주어 cognition의 하위 작업 생성을 관찰한다. 8개 합성 후보만 허용하고 추가 클라우드 배포·물리 실험을 금지한다. 이는 고정 절차, guided exploration, autonomous research의 차이를 보는 선택 실습이며 결과·시간·비용이 같다고 보장하지 않는다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-advanced-investigation-patterns">S29</a>]</sup></p>
+<p><strong>완료 기준:</strong> R0/T1/T2/T3의 관계, 실제 실행, 검증 의견, 입력·출력 Asset 연결을 확인했습니다. 필수 결과가 S02와 일치하고, T3와 R0의 보고서를 열 수 있습니다.</p>
+<p><strong>자율성 확장:</strong> 기본 경로가 끝난 뒤 원하면 별도 세션에 범위가 제한된 목표 1개를 주어 cognition의 하위 작업 생성을 관찰합니다. 8개 합성 후보만 허용하고 추가 클라우드 배포·물리 실험을 금지합니다. 이는 고정 절차, guided exploration, autonomous research의 차이를 보는 선택 실습이며 결과·시간·비용이 같다고 보장하지 않습니다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-advanced-investigation-patterns">S29</a>]</sup></p>
 <p><a id="l07"></a></p>
-<h2 id="heading-l07">L07 — 조건 수정과 사람의 피드백</h2><p><strong>목표:</strong> 근거·실행 이력을 보존한 채 새 가설을 검증하고 재평가한다.</p>
+<h2 id="heading-l07">L07 — 조건 수정과 사람의 피드백</h2><p><strong>목표:</strong> 근거·실행 이력을 보존한 채 새 가설을 검증하고 재평가합니다.</p>
+<p><strong>시작 조건:</strong> L06의 기본 Task와 산출물이 검증됐고, 기존 실행의 상태를 확인할 수 있습니다.</p>
 <p><strong>실행:</strong></p>
 <ol>
-<li><strong>기본 Task가 모두 완료된 뒤 Engine을 Stop</strong>한다. 남아 있는 실행을 확인해 완료를 기다리거나, 필요한 경우 정확한 operation을 정상 취소한다. 실행 중 작업이 없는 상태에서 기존 결과를 보존한다.</li>
-<li>검증할 가설은 “원가 상한을 3.00으로 낮추면 DELTA만 남는다”다. 같은 Shared session에서 <strong>Engine이 꺼진 상태로</strong> 아래 후속 Task와 의존관계·검증 요건을 모두 구성한다. 완료된 기본 결과를 덮어쓰지 않는다. 이는 실제 물성 실험이 아닌 합성 데이터 조건 검증이다.</li>
+<li><strong>기본 Task가 모두 완료된 뒤 Engine을 Stop</strong>합니다. 남아 있는 실행을 확인해 완료를 기다리거나, 필요한 경우 정확한 operation을 정상 취소합니다. 실행 중 작업이 없는 상태에서 기존 결과를 보존합니다.</li>
+<li>검증할 가설은 “원가 상한을 3.00으로 낮추면 DELTA만 남는다”입니다. 같은 Shared session에서 <strong>Engine이 꺼진 상태로</strong> 아래 후속 Task와 의존관계·검증 요건을 모두 구성합니다. 완료된 기본 결과를 덮어쓰지 않습니다. 이는 실제 물성 실험이 아닌 합성 데이터 조건 검증입니다.</li>
 </ol>
 <div class="table-scroll"><table>
 <thead>
@@ -798,7 +939,7 @@ az deployment group what-if --name discovery-tool-20261001 \
 </tr>
 </tbody></table>
 </div><ol start="3">
-<li>Task Description과 의견에 다음을 넣는다.</li>
+<li>Task Description과 의견에 다음을 넣습니다.</li>
 </ol>
 <pre><code class="language-text">원가 상한만 5.00에서 3.00 USD/kg으로 바꾼다.
 다른 제약조건과 점수식의 분모 5는 유지한다.
@@ -807,22 +948,23 @@ thermal-ranking의 rank_cost_revision을 실제 실행하고 별도 결과를 �
 비교 보고서에는 가설의 검증 결과와 실제로 추가 확보해야 할 근거를 구분한다.
 </code></pre>
 <ol start="4">
-<li>구성과 실행 대기 상태를 확인한 뒤 <strong>Engine을 Start</strong>한다. 기존 파일·이력이 보존되고 새 작업이 실행되는지 확인한다. 재시작 시 working memory는 재구성된다. <strong>Stop은 이미 실행 중인 에이전트/도구를 모두 취소하지 않는다.</strong> 실행 중인 Task의 상태를 임의로 바꾸거나 같은 작업을 다시 제출하지 않는다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-cognition-overview">S13</a>]</sup></li>
-<li>T4/T5 완료 후 Engine을 Stop하고 잔여 작업을 확인한다. <code>ranking-cost3.json</code> 원본을 내려받아 다음을 실행한다.</li>
+<li>구성과 실행 대기 상태를 확인한 뒤 <strong>Engine을 Start</strong>합니다. 기존 파일·이력이 보존되고 새 작업이 실행되는지 확인합니다. 재시작 시 working memory는 재구성됩니다. <strong>Stop은 이미 실행 중인 에이전트/도구를 모두 취소하지 않습니다.</strong> 실행 중인 Task의 상태를 임의로 바꾸거나 같은 작업을 다시 제출하지 않습니다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-cognition-overview">S13</a>]</sup></li>
+<li>T4/T5 완료 후 Engine을 Stop하고 잔여 작업을 확인합니다. <code>ranking-cost3.json</code> 원본을 내려받아 다음을 실행합니다.</li>
 </ol>
 <pre><code class="language-bash">python3 scripts/verify_ranking.py \
   --input &#39;&lt;downloaded-ranking-cost3.json&gt;&#39; --case cost3
 </code></pre>
 <ol start="6">
-<li>검사나 Task 검증이 실패하면 원인을 수정한다. 수정·재시도도 <strong>Stop → 잔여 실행 확인 → 수정 → Start</strong> 순서를 따른다. GAMMA 정정이나 ZETA 결측 같은 올바른 기준을 없애 단순히 통과시키지 않는다.</li>
+<li>검사나 Task 검증이 실패하면 원인을 수정합니다. 수정·재시도도 <strong>Stop → 잔여 실행 확인 → 수정 → Start</strong> 순서를 따릅니다. GAMMA 정정이나 ZETA 결측 같은 올바른 기준을 없애 단순히 통과시키지 않습니다.</li>
 </ol>
-<p><strong>완료 기준:</strong> 별도 실행 ID·<code>cpulab</code>·원본 파일과 <code>cost3</code> 검사 통과로 DELTA 1개·68.6을 확인했다. ZETA는 원가 초과로 <code>excluded</code>이되 결측 기록이 남는다. 기본 결과·이력을 보존하고 반사실적 가정을 실제 관측으로 바꾸지 않는다.</p>
+<p><strong>완료 기준:</strong> 별도 실행 ID·<code>cpulab</code>·원본 파일과 <code>cost3</code> 검사 통과로 DELTA 1개·68.6을 확인했습니다. ZETA는 원가 초과로 <code>excluded</code>이되 결측 기록이 남습니다. 기본 결과·이력을 보존하고 반사실적 가정을 실제 관측으로 바꾸지 않습니다.</p>
 <p><a id="l08"></a></p>
-<h2 id="heading-l08">L08 — 협업과 프로젝트 접근 제어</h2><p><strong>목표:</strong> 같은 프로젝트의 협업과 다른 프로젝트·연결 자원의 접근 경계를 확인한다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-project-rbac">S19</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/how-to-configure-project-rbac">S20</a>]</sup></p>
+<h2 id="heading-l08">L08 — 협업과 프로젝트 접근 제어</h2><p><strong>목표:</strong> 같은 프로젝트의 협업과 다른 프로젝트·연결 자원의 접근 경계를 확인합니다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-project-rbac">S19</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/how-to-configure-project-rbac">S20</a>]</sup></p>
+<p><strong>시작 조건:</strong> L04의 공유 세션·산출물, 별도 테스트 사용자, 미할당 비교 프로젝트와 역할 할당 권한이 있는 관리자가 필요합니다. 이 실습은 협업 검증을 선택한 경우 수행합니다.</p>
 <p><strong>실행:</strong></p>
 <ol>
-<li>관리자가 실제 테스트 사용자/그룹과 접근 거부를 확인할 미할당 비교 프로젝트를 준비한다. <strong>별도 사용자나 비교 프로젝트가 없으면 해당 검증은 보류</strong>다. 같은 계정의 두 브라우저 창은 다중 사용자 권한 검증이 아니다. 비교 프로젝트를 새로 만들려면 추가 비용·범위를 먼저 승인받는다.</li>
-<li>기존 프로젝트 <code>thermalhol</code>의 정확한 ARM scope에 역할을 부여한다. 부모 Workspace/RG/구독의 상속 권한도 확인한다.</li>
+<li>관리자가 실제 테스트 사용자/그룹과 접근 거부를 확인할 미할당 비교 프로젝트를 준비합니다. <strong>별도 사용자나 비교 프로젝트가 없으면 해당 검증은 보류</strong>합니다. 같은 계정의 두 브라우저 창은 다중 사용자 권한 검증이 아닙니다. 비교 프로젝트를 새로 만들려면 추가 비용·범위를 먼저 승인받습니다.</li>
+<li>기존 프로젝트 <code>thermalhol</code>의 정확한 ARM scope에 역할을 부여합니다. 부모 Workspace/RG/구독의 상속 권한도 확인합니다.</li>
 </ol>
 <div class="table-scroll"><table>
 <thead>
@@ -844,19 +986,20 @@ thermal-ranking의 rank_cost_revision을 실제 실행하고 별도 결과를 �
 </tr>
 </tbody></table>
 </div><ol start="3">
-<li>역할은 각각 승인된 자원에만 부여한다. <strong>Project Contributor는 새 Project 생성이나 역할 할당 권한이 아니다.</strong> Storage Container 메타데이터 권한은 Blob 내용 읽기 권한을 대신하지 않는다.</li>
-<li>연구자가 같은 프로젝트의 Shared session·Task·산출물을 확인하고 허용된 변경을 하는지 검증한다. 검토자는 읽기만 가능하고 작업 생성·수정·실행은 거부되어야 한다.</li>
-<li>다른 프로젝트 접근 거부를 확인한다. 테스트 사용자에게 광범위한 상속 권한이 있으면 “격리 성공”을 주장하지 말고 테스트 범위를 다시 설정한다.</li>
-<li>기존 agent 실행과 agent 작성 권한을 구분한다. 관리자가 만든 에이전트의 실행만을 위해 Tools Reader/Chat Model Reader가 항상 필요한 것은 아니다. 기본 <code>gpt-5-4</code>를 쓰는 Engine에도 별도 Chat Model Reader가 반드시 필요한 것은 아니다.</li>
-<li>도구/모델 연결 권한 회수는 에이전트의 생성·수정 시 확인되는 접근과 관련된다. 역할만 회수하면 기존 에이전트의 실행까지 즉시 막힌다고 가정하지 말고 영향받는 에이전트를 검토·수정한다.</li>
+<li>역할은 각각 승인된 자원에만 부여합니다. <strong>Project Contributor는 새 Project 생성이나 역할 할당 권한이 아닙니다.</strong> Storage Container 메타데이터 권한은 Blob 내용 읽기 권한을 대신하지 않습니다.</li>
+<li>연구자가 같은 프로젝트의 Shared session·Task·산출물을 확인하고 허용된 변경을 하는지 검증합니다. 검토자는 읽기만 가능하고 작업 생성·수정·실행은 거부되어야 합니다.</li>
+<li>다른 프로젝트 접근 거부를 확인합니다. 테스트 사용자에게 광범위한 상속 권한이 있으면 “격리 성공”을 주장하지 말고 테스트 범위를 다시 설정합니다.</li>
+<li>기존 agent 실행과 agent 작성 권한을 구분합니다. 관리자가 만든 에이전트의 실행만을 위해 Tools Reader/Chat Model Reader가 항상 필요한 것은 아닙니다. 기본 <code>gpt-5-4</code>를 쓰는 Engine에도 별도 Chat Model Reader가 반드시 필요한 것은 아닙니다.</li>
+<li>도구/모델 연결 권한 회수는 에이전트의 생성·수정 시 확인되는 접근과 관련됩니다. 역할만 회수하면 기존 에이전트의 실행까지 즉시 막힌다고 가정하지 말고 영향받는 에이전트를 검토·수정합니다.</li>
 </ol>
-<p><strong>완료 기준:</strong> 다른 사용자의 허용·거부 결과와 역할 scope가 기록된다. Project-only 사용자의 일부 Workbench 상태 조회는 Workspace 권한을 요구할 수 있으므로, 모든 오류를 광범위한 Platform 역할 부여로 해결하지 않는다.</p>
+<p><strong>완료 기준:</strong> 다른 사용자의 허용·거부 결과와 역할 scope가 기록됩니다. Project-only 사용자의 일부 Workbench 상태 조회는 Workspace 권한을 요구할 수 있으므로, 모든 오류를 광범위한 Platform 역할 부여로 해결하지 않습니다.</p>
 <p><a id="l09"></a></p>
-<h2 id="heading-l09">L09 — 결과 보존·비용 확인·종료</h2><p><strong>목표:</strong> 다른 사람이 결과를 추적할 수 있게 남기고, 실행 중인 작업과 상시 비용을 구분해 종료한다.</p>
+<h2 id="heading-l09">L09 — 결과 보존·비용 확인·종료</h2><p><strong>목표:</strong> 다른 사람이 결과를 추적할 수 있게 남기고, 실행 중인 작업과 상시 비용을 구분해 종료합니다.</p>
+<p><strong>시작 조건:</strong> 전체 완료 여부와 관계없이 Azure 자원 또는 작업을 만들었다면 수행합니다. 부분 실패·중단도 대상입니다.</p>
 <p><strong>실행:</strong></p>
 <ol>
-<li><code>research-report.md</code>, <code>baseline-summary.md</code>, <code>comparison.md</code>, 두 실제 계산 JSON과 내용 검사 결과를 보관한다. 제공된 로컬 reference JSON과 별도 폴더에 두며, 내용 검사 통과와 Azure 실행 증거를 구분한다.</li>
-<li>아래 재현 기록을 채운다.</li>
+<li>생성된 <code>research-report.md</code>, <code>baseline-summary.md</code>, <code>comparison.md</code>, 실제 계산 JSON과 내용 검사 결과를 보관합니다. 부분 실행에서 없는 산출물은 <strong>미생성</strong>으로 기록합니다. 로컬 reference JSON과 별도 폴더에 두며 내용 검사 통과와 Azure 실행 증거를 구분합니다.</li>
+<li>아래 재현 기록을 채웁니다.</li>
 </ol>
 <div class="table-scroll"><table>
 <thead>
@@ -891,22 +1034,23 @@ thermal-ranking의 rank_cost_revision을 실제 실행하고 별도 결과를 �
 </tr>
 </tbody></table>
 </div><ol start="3">
-<li>Engine을 Stop하고 실행 중인 agent/tool을 별도로 확인한다. 취소가 필요하면 정확한 operation을 선택한다. <strong>작업 취소 자체도 runtime 과금 대상일 수 있다.</strong></li>
-<li>Cost Management에서 실습 RG와 각 MRG, <strong>Microsoft Discovery - User Messages</strong>, 모델, 계산·스토리지 비용을 확인한다. 사용자 프롬프트 수만으로 청구액을 계산하지 않는다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-discovery-billing">S24</a>]</sup></li>
-<li>필요 기간이 끝나면 관리자와 삭제 범위를 확정한다. 공유 리소스는 제외한다. 현재 실행 중인 작업과 백업할 파일을 먼저 확인한다.</li>
-<li>Storage Asset → Storage Container 순의 <strong>참조 삭제</strong>와 실제 Blob 삭제를 구분한다. 참조를 삭제해도 Blob 데이터·계정이 사라지는 것은 아니다. Bookshelf·Workspace·Supercomputer와 MRG의 정리는 공식 수명주기와 실제 의존관계를 확인하며 수행한다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-storage-containers-assets">S16</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/how-to-manage-storage-containers">S17</a>]</sup></li>
-<li>Engine 정지, 작업 종료, 노드 상태, 상시 인프라 잔존, 보존·삭제 결과를 각각 기록한다. 브라우저를 닫거나 min=0을 설정했다고 모든 비용이 0이 되지 않는다.</li>
-<li>검토된 지식을 다른 세션에서 재사용하려면 Asset을 명시적으로 연결하거나 지원되는 KB 생성·갱신 절차를 따른다. Task 성공이 곧 기존 Bookshelf의 자동 재색인을 의미한다고 가정하지 않는다.</li>
+<li>Engine을 Stop하고 실행 중인 agent/tool을 별도로 확인합니다. 취소가 필요하면 정확한 operation을 선택합니다. <strong>작업 취소 자체도 runtime 과금 대상일 수 있습니다.</strong></li>
+<li>Cost Management에서 실습 RG와 각 MRG, <strong>Microsoft Discovery - User Messages</strong>, 모델, 계산·스토리지 비용을 확인합니다. 사용자 프롬프트 수만으로 청구액을 계산하지 않습니다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-discovery-billing">S24</a>]</sup></li>
+<li>필요 기간이 끝나면 관리자와 삭제 범위를 확정합니다. 공유 리소스는 제외합니다. 현재 실행 중인 작업과 백업할 파일을 먼저 확인합니다.</li>
+<li>Storage Asset → Storage Container 순의 <strong>참조 삭제</strong>와 실제 Blob 삭제를 구분합니다. 참조를 삭제해도 Blob 데이터·계정이 사라지는 것은 아닙니다. Bookshelf·Workspace·Supercomputer와 MRG의 정리는 공식 수명주기와 실제 의존관계를 확인하며 수행합니다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-storage-containers-assets">S16</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/how-to-manage-storage-containers">S17</a>]</sup></li>
+<li>Engine 정지, 작업 종료, 노드 상태, 상시 인프라 잔존, 보존·삭제 결과를 각각 기록합니다. 브라우저를 닫거나 min=0을 설정했다고 모든 비용이 0이 되지 않습니다.</li>
+<li>검토된 지식을 다른 세션에서 재사용하려면 Asset을 명시적으로 연결하거나 지원되는 KB 생성·갱신 절차를 따릅니다. Task 성공이 곧 기존 Bookshelf의 자동 재색인을 의미한다고 가정하지 않습니다.</li>
 </ol>
-<p><strong>부분 실패 후에도 확인할 항목:</strong> 배포가 실패해도 이미 성공한 Storage·ACR·Private Endpoint·관리 RG의 Log Analytics/NSP는 남을 수 있다. RG를 지웠다는 이유로 구독 scope의 NSP Joiner/Reader 역할과 커스텀 역할까지 삭제됐다고 가정하지 않는다. 다른 Discovery 환경이 이 서비스 역할을 공유할 수 있으므로 구독 역할은 관리자 확인 없이 제거하지 않는다. 이 가이드는 자동 삭제 명령을 실행하지 않는다.</p>
-<p><strong>이 구독의 중앙 진단 저장소:</strong> 후속 복구에서 기존 조직 정책대로 <code>McapsGovernance/mcaps4c05bc053c3d4ff154e5-la</code>를 West US 2에 생성하고 Discovery 진단을 연결했다. 종량제·보존 30일의 공유 자원이며 <code>Do Not Delete</code> 태그를 유지한다. 실습 RG 삭제 범위에서 제외하고 로그 수집·보관 비용을 별도로 확인한다. Blob 작업 데이터를 옮긴 것은 아니지만 진단 로그까지 Sweden Central에만 머문다고 보장하지 않는다.</p>
-<p><strong>완료 기준:</strong> 근거→실행→출력 연결이 보존되고, 실행 중인 작업과 잔여 자원·비용의 상태가 명확하다. L08을 수행하지 않았다면 협업 검증까지 완료했다고 표시하지 않는다.</p>
+<p><strong>부분 실패 후에도 확인할 항목:</strong> 배포가 실패해도 이미 성공한 Storage·ACR·Private Endpoint·관리 RG의 Log Analytics/NSP는 남을 수 있습니다. RG를 지웠다는 이유로 구독 scope의 NSP Joiner/Reader 역할과 커스텀 역할까지 삭제됐다고 가정하지 않습니다. 다른 Discovery 환경이 이 서비스 역할을 공유할 수 있으므로 구독 역할은 관리자 확인 없이 제거하지 않습니다. 이 가이드는 자동 삭제 명령을 실행하지 않습니다.</p>
+<p><strong>공유 진단 저장소:</strong> 조직의 중앙 Log Analytics와 다른 환경이 공유하는 자원은 실습 정리 범위에서 제외합니다. 위치·보존 기간·비용·삭제 금지 태그를 별도로 확인합니다. 진단 설정의 존재나 정책 <code>Compliant</code>만으로 실제 로그 유입을 검증한 것은 아닙니다. 작업 리전과 로그 저장 리전도 같다고 가정하지 않습니다.</p>
+<p><strong>완료 기준:</strong> 근거→실행→출력 연결이 보존되고, 실행 중인 작업과 잔여 자원·비용의 상태가 명확합니다. L08을 수행하지 않았다면 협업 검증까지 완료했다고 표시하지 않습니다.</p>
 <p><a id="e01"></a></p>
-<h2 id="heading-e01">E01 — Code-environment와 Hybrid Tool</h2><p><strong>목표:</strong> 고정 Action과 에이전트 생성 코드가 같은 계산 환경에서 어떻게 다른지 확인한다. 기본 경로 이후 선택하는 개발자 확장이다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/how-to-create-tool-definition">S21</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-tools-model-integration">S22</a>]</sup></p>
+<h2 id="heading-e01">E01 — Code-environment와 Hybrid Tool</h2><p><strong>목표:</strong> 고정 Action과 에이전트 생성 코드가 같은 계산 환경에서 어떻게 다른지 확인합니다. 기본 경로 이후 선택하는 개발자 확장입니다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/how-to-create-tool-definition">S21</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-tools-model-integration">S22</a>]</sup></p>
+<p><strong>시작 조건:</strong> L05의 실제 Action 실행을 확인했고, 별도 도구·에이전트 생성 권한과 생성 코드 실행 정책이 준비됐습니다.</p>
 <p><strong>실행:</strong></p>
 <ol>
-<li>기존 Action-only 도구를 덮어쓰지 않고 정의를 복사한다. 이름을 <code>thermal-hybrid</code>, 버전을 <code>1.1.0</code>으로 바꾸고 같은 검증된 이미지·CPU 한도를 사용한다.</li>
-<li>JSON 정의 최상위에 다음 <code>code_environments</code> 배열을 추가한다. YAML을 사용하는 경우 등록 시 대응 JSON으로 변환한다.</li>
+<li>기존 Action-only 도구를 덮어쓰지 않고 정의를 복사합니다. 이름을 <code>thermal-hybrid</code>, 버전을 <code>1.1.0</code>으로 바꾸고 같은 검증된 이미지·CPU 한도를 사용합니다.</li>
+<li>JSON 정의 최상위에 다음 <code>code_environments</code> 배열을 추가합니다. YAML을 사용하는 경우 등록 시 대응 JSON으로 변환합니다.</li>
 </ol>
 <pre><code class="language-json">{
   &quot;code_environments&quot;: [
@@ -920,20 +1064,21 @@ thermal-ranking의 rank_cost_revision을 실제 실행하고 별도 결과를 �
 }
 </code></pre>
 <ol start="3">
-<li>이 블록은 <strong>전체 도구 정의가 아닌 추가 조각</strong>이다. 기존 <code>infra</code>와 <code>actions</code>를 유지한다. 고정 Action과 Code-environment가 공존하면 Hybrid Tool이다.</li>
-<li>별도 테스트 에이전트에 연결하고 <code>/app/materials.csv</code>에서 “GAMMA의 열전도율 기준 대비 차이”와 “ZETA의 <code>corrosion_status</code> 값”을 확인하는 코드를 작성·실행하게 한다. 외부 네트워크·패키지 설치는 요청하지 않는다. 지시문은 네트워크 차단 장치가 아니므로 실제 제한은 운영 정책으로 적용한다.</li>
-<li>생성 코드, 실제 실행 ID·로그, <code>175 - 180 = -5</code>와 <code>corrosion_status = &quot;unknown&quot;</code>을 확인한다. <strong>CSV 컬럼이 누락된 것이 아니라 값이 unknown인 것이다.</strong> 계산 JSON의 <code>missing_evidence</code>에 나오는 <code>corrosion_result</code>는 파생된 결측 라벨이며 CSV 컬럼 이름이 아니다.</li>
+<li>이 블록은 <strong>전체 도구 정의가 아닌 추가 조각</strong>입니다. 기존 <code>infra</code>와 <code>actions</code>를 유지합니다. 고정 Action과 Code-environment가 공존하면 Hybrid Tool입니다.</li>
+<li>별도 테스트 에이전트에 연결하고 <code>/app/materials.csv</code>에서 “GAMMA의 열전도율 기준 대비 차이”와 “ZETA의 <code>corrosion_status</code> 값”을 확인하는 코드를 작성·실행하게 합니다. 외부 네트워크·패키지 설치는 요청하지 않습니다. 지시문은 네트워크 차단 장치가 아니므로 실제 제한은 운영 정책으로 적용합니다.</li>
+<li>생성 코드, 실제 실행 ID·로그, <code>175 - 180 = -5</code>와 <code>corrosion_status = &quot;unknown&quot;</code>을 확인합니다. <strong>CSV 컬럼이 누락된 것이 아니라 값이 unknown인 것입니다.</strong> 계산 JSON의 <code>missing_evidence</code>에 나오는 <code>corrosion_result</code>는 파생된 결측 라벨이며 CSV 컬럼 이름이 아닙니다.</li>
 </ol>
-<p><strong>완료 기준:</strong> 새로운 Hybrid 정의와 실제 코드 실행 증거가 있다. Code-environment, Foundry Code Interpreter, 외부 MCP 실행을 같은 런타임으로 혼동하지 않는다.</p>
+<p><strong>완료 기준:</strong> 새로운 Hybrid 정의와 실제 코드 실행 증거가 있습니다. Code-environment, Foundry Code Interpreter, 외부 MCP 실행을 같은 런타임으로 혼동하지 않습니다.</p>
 <p><a id="e02"></a></p>
-<h2 id="heading-e02">E02 — 외부 도구와 과학 모델 연결</h2><p><strong>목표:</strong> 공개 문서용 MCP를 예로 확장 연결을 확인하고, 과학 모델에 맞는 통합 방식을 선택한다. 연결 서비스의 기능 상태·모델 지원·조직 정책을 별도로 확인한다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-discovery-agent-types">S10</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-tools-model-integration">S22</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/training/support/mcp-get-started-foundry">S26</a>]</sup></p>
+<h2 id="heading-e02">E02 — 외부 도구와 과학 모델 연결</h2><p><strong>목표:</strong> 공개 문서용 MCP를 예로 확장 연결을 확인하고, 과학 모델에 맞는 통합 방식을 선택합니다. 연결 서비스의 기능 상태·모델 지원·조직 정책을 별도로 확인합니다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-discovery-agent-types">S10</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-tools-model-integration">S22</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/training/support/mcp-get-started-foundry">S26</a>]</sup></p>
+<p><strong>시작 조건:</strong> L04의 에이전트 생성 경로와 연결된 Foundry 프로젝트를 확인했고, 외부 MCP 연결·호출 정책이 승인됐습니다. 연결 UI나 지원 기능이 없으면 이 확장만 보류합니다.</p>
 <p><strong>실행:</strong></p>
 <ol>
-<li>별도 에이전트 <code>DocsConnector</code>를 같은 Discovery 프로젝트에 만든다. 연구 데이터용 에이전트와 분리한다.</li>
-<li><strong>그 Discovery 에이전트가 연결된 Foundry 프로젝트/에이전트</strong>의 고급 설정을 연다. 관련 없는 새 Foundry 프로젝트를 만들지 않는다.</li>
-<li>Foundry의 Tools → Add a new tool → Custom → MCP에서 이름 <code>MicrosoftLearnPublic</code>, endpoint <code>https://learn.microsoft.com/api/mcp</code>, Authentication <code>Unauthenticated</code>를 구성한다. 이는 공개 Learn 서버의 설정이며 사내 MCP에 그대로 적용할 인증 방식이 아니다.</li>
-<li>공개 질문 “Microsoft Discovery의 Storage Container와 Storage Asset은 어떻게 다른가?”만 보낸다. 문서·테넌트·구독 정보 같은 실습 데이터는 보내지 않는다. 사용자 도구 승인이 나오면 정상 승인 절차를 따른다.</li>
-<li><strong>실제 MCP 호출 로그와 공식 URL 응답</strong>을 확인한다. 같은 에이전트의 연결 설정이 Discovery에도 반영되는지 확인한다. UI·권한·연결 기능이 없으면 이 확장만 보류한다.</li>
+<li>별도 에이전트 <code>DocsConnector</code>를 같은 Discovery 프로젝트에 만듭니다. 연구 데이터용 에이전트와 분리합니다.</li>
+<li><strong>그 Discovery 에이전트가 연결된 Foundry 프로젝트/에이전트</strong>의 고급 설정을 엽니다. 관련 없는 새 Foundry 프로젝트를 만들지 않습니다.</li>
+<li>Foundry의 Tools → Add a new tool → Custom → MCP에서 이름 <code>MicrosoftLearnPublic</code>, endpoint <code>https://learn.microsoft.com/api/mcp</code>, Authentication <code>Unauthenticated</code>를 구성합니다. 이는 공개 Learn 서버의 설정이며 사내 MCP에 그대로 적용할 인증 방식이 아닙니다.</li>
+<li>공개 질문 “Microsoft Discovery의 Storage Container와 Storage Asset은 어떻게 다른가?”만 보냅니다. 문서·테넌트·구독 정보 같은 실습 데이터는 보내지 않습니다. 사용자 도구 승인이 나오면 정상 승인 절차를 따릅니다.</li>
+<li><strong>실제 MCP 호출 로그와 공식 URL 응답</strong>을 확인합니다. 같은 에이전트의 연결 설정이 Discovery에도 반영되는지 확인합니다. UI·권한·연결 기능이 없으면 이 확장만 보류합니다.</li>
 </ol>
 <div class="table-scroll"><table>
 <thead>
@@ -963,10 +1108,10 @@ thermal-ranking의 rank_cost_revision을 실제 실행하고 별도 결과를 �
 <td>Workspace Chat Model Deployment 선택; Engine 검증 모델과 구분</td>
 </tr>
 </tbody></table>
-</div><p>과학·정량 모델(LQM)의 물성 예측과 LLM의 언어 추론은 다르다. 과학 모델은 위 Container/OpenAPI/MCP 경로 등으로 통합한다. 이 실습의 Python 점수 계산기는 물리 시뮬레이터나 학습된 과학 모델이 아니다. 공개 문헌 검색을 추가할 때는 승인된 검색/과학 DB 연결을 사용하고 출처·발행 시점·사용권을 확인한다.</p>
-<p><strong>완료 기준:</strong> MCP 도구 사용을 말로 주장하는 것이 아니라 실제 호출과 출처가 남는다. 위 통합 방식 표를 읽은 것이 모든 OpenAPI·파트너 모델을 배포·검증한 것은 아니다.</p>
+</div><p>과학·정량 모델(LQM)의 물성 예측과 LLM의 언어 추론은 다릅니다. 과학 모델은 위 Container/OpenAPI/MCP 경로 등으로 통합합니다. 이 실습의 Python 점수 계산기는 물리 시뮬레이터나 학습된 과학 모델이 아닙니다. 공개 문헌 검색을 추가할 때는 승인된 검색/과학 DB 연결을 사용하고 출처·발행 시점·사용권을 확인합니다.</p>
+<p><strong>완료 기준:</strong> MCP 도구 사용을 말로 주장하는 것이 아니라 실제 호출과 출처가 남습니다. 위 통합 방식 표를 읽은 것이 모든 OpenAPI·파트너 모델을 배포·검증한 것은 아닙니다.</p>
 <p><a id="a01"></a></p>
-<h2 id="heading-a01">A01 — 비용·quota와 문서 상충 처리</h2><p><strong>비용은 두 층이다:</strong> Discovery의 <strong>runtime User Messages</strong>와 별도 Azure 자원·모델 사용료다. GET/list/status/log 조회는 Discovery runtime 과금 대상이 아니지만, 조회하는 동안 상시 인프라 비용은 계속 발생할 수 있다. Azure Budget은 보통 알림이며 하드 지출 한도가 아니다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-discovery-billing">S24</a>]</sup></p>
+<h2 id="heading-a01">A01 — 비용·quota와 문서 상충 처리</h2><p><strong>비용은 두 부분으로 나뉩니다:</strong> Discovery의 <strong>runtime User Messages</strong>와 별도 Azure 자원·모델 사용료입니다. GET/list/status/log 조회는 Discovery runtime 과금 대상이 아니지만, 조회하는 동안 상시 인프라 비용은 계속 발생할 수 있습니다. Azure Budget은 보통 알림이며 하드 지출 한도가 아닙니다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-discovery-billing">S24</a>]</sup></p>
 <div class="table-scroll"><table>
 <thead>
 <tr>
@@ -980,7 +1125,7 @@ thermal-ranking의 rank_cost_revision을 실제 실행하고 별도 결과를 �
 </tr>
 <tr>
 <td>Bookshelf 모델</td>
-<td>GPT-5.2 <strong>200,000 TPM</strong>, GPT-5 Mini <strong>2,000,000 TPM</strong>, text-embedding-3-small <strong>2,000,000 TPM</strong>을 준비 기준으로 삼고 실제 생성·검색 요구량 확인</td>
+<td>준비 기준: GPT-5.2 <strong>200,000 TPM</strong>, GPT-5 Mini <strong>2,000,000 TPM</strong>, text-embedding-3-small <strong>2,000,000 TPM</strong>. 검색 권장값은 GPT-5.2 2,000,000 / Mini 10,000,000 TPM로 더 큼. 생성·검색 요구량 별도 확인</td>
 </tr>
 <tr>
 <td>Bookshelf 상시 인프라</td>
@@ -999,58 +1144,43 @@ thermal-ranking의 rank_cost_revision을 실제 실행하고 별도 결과를 �
 <td>Workspace/Project Cosmos DB, Storage, Registry·ACR Tasks, 네트워크, 관리 인프라 비용 포함</td>
 </tr>
 </tbody></table>
-</div><p>모델 quota는 구독·리전·모델·배포 유형을 함께 확인한다. 공식 기본 경로는 Global Standard이며, 데이터 상주 요구로 Data Zone Standard 등을 선택하면 지원 여부와 별도 quota를 다시 확인한다. <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-quota-reservation">S05</a>]</sup></p>
-<p><strong>실제 사전 점검 예시 (2026-10-01, Sweden Central / Global Standard):</strong></p>
+</div><p><strong>quota 범위:</strong> 구독·모델·버전·배포 유형과 Foundry Quota 화면의 <strong>Scope</strong>를 함께 확인합니다. <a href="https://learn.microsoft.com/azure/foundry/foundry-models/quotas-limits">구독 공유 quota로 전환된 모델</a>은 Global Standard에서 같은 모델·버전의 모든 리전이 한 pool을 공유합니다. Scope가 리전명인 모델은 지역별입니다. <strong>리전을 바꾸면 새 quota가 생긴다고 가정하지 않습니다.</strong> 기본 경로는 Global Standard이며 Data Zone Standard 등의 지원·quota·데이터 처리 위치는 별도 확인합니다.<sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-quota-reservation">S05</a>]</sup></p>
+<h3 id="section-8">신규 할당량 계산</h3><pre><code class="language-text">available_tpm = total_limit_tpm - allocated_tpm
+minimum_total_tpm = allocated_tpm + new_allocation_tpm
+increase_tpm = max(0, minimum_total_tpm - total_limit_tpm)
+</code></pre>
+<p><code>allocated_tpm</code>은 기존 배포에 할당한 quota이지 실제 토큰 소비량이 아닙니다. 이미 사용할 모델 배포가 있으면 그 할당을 재사용할 수 있는지 확인하고 신규 필요량에 중복 계산하지 않습니다.</p>
 <div class="table-scroll"><table>
 <thead>
 <tr>
-<th>모델</th>
-<th>전체 한도 TPM</th>
-<th>기존 할당 TPM</th>
-<th>남은 TPM</th>
-<th>이번 단계의 필요 TPM</th>
-<th>판정</th>
+<th>계산 예시</th>
+<th align="right">기존 할당 TPM</th>
+<th align="right">새로 필요한 TPM</th>
+<th align="right">최소 총한도 TPM</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>gpt-5.4</td>
-<td>3,000,000</td>
-<td>0</td>
-<td>3,000,000</td>
-<td>500,000</td>
-<td>코어 사전 점검 통과</td>
+<td>Mini</td>
+<td align="right">50,000</td>
+<td align="right">2,000,000</td>
+<td align="right">2,050,000</td>
 </tr>
 <tr>
-<td>gpt-5.2</td>
-<td>3,000,000</td>
-<td>10,000</td>
-<td>2,990,000</td>
-<td>200,000</td>
-<td>Bookshelf 모델 중 이 항목만 통과</td>
-</tr>
-<tr>
-<td>gpt-5-mini</td>
-<td>1,000,000</td>
-<td>10,000</td>
-<td>990,000</td>
-<td>2,000,000</td>
-<td>부족</td>
-</tr>
-<tr>
-<td>text-embedding-3-small</td>
-<td>1,000,000</td>
-<td>220,000</td>
-<td>780,000</td>
-<td>2,000,000</td>
-<td>부족</td>
+<td>Embedding</td>
+<td align="right">100,000</td>
+<td align="right">2,000,000</td>
+<td align="right">2,100,000</td>
 </tr>
 </tbody></table>
-</div><p>이 표는 <strong>배포 전 스냅샷</strong>이지 보장된 현재 잔여량이 아니다. <code>npm run readiness</code>로 다시 조회한다. Azure usage 응답의 설명이 <code>One Thousand Tokens Per Minute</code> 또는 <code>Tokens Per Minute (thousands)</code>이면 값에 <strong>1,000을 곱하고 기존 할당을 뺀다</strong>. <code>Count</code>라는 unit 필드만 보고 1,000 TPM으로 해석하거나 Global Standard와 Data Zone Standard를 합산하지 않는다.</p>
-<p>이 예시는 미니 모델 최소 총한도 <strong>2,010,000 TPM</strong>, 임베딩 최소 총한도 <strong>2,220,000 TPM</strong>가 있어야 기존 사용량을 유지하며 2,000,000 TPM씩 추가할 수 있다. 다른 배포가 없는 것으로 가정해 한도를 정확히 2,000,000으로만 요청하면 부족할 수 있다. 여유분을 포함한 요청값은 관리자와 정한다. Cognitive Services scope의 <code>az quota list</code>가 <code>BadRequest</code>이면 무제한/미사용으로 판정하지 말고 Foundry의 공식 quota 증가 절차를 사용한다. 이 실습을 위해 다른 프로젝트의 배포를 삭제하지 않는다.</p>
-<h3 id="section-4">무엇을 증액하고 어느 프로젝트를 선택하는가</h3><p><strong>AKS quota와 실제 지역 용량은 다르다.</strong> 실제 오류는 <code>QuotaExceeded</code>가 아니라 <code>AKSCapacityHeavyUsage</code>였다. 당시 지역/Dsv6 quota는 각각 0/100 vCPU, Container Apps 환경은 1/50이었으므로 이 한도들을 올려 해결된다고 주장하지 않는다. Azure 지원에 해당 구독의 Sweden Central AKS/Container Apps 생성 용량을 확인한다.</p>
-<p>Bookshelf는 <strong><code>gpt-5-mini</code>와 <code>text-embedding-3-small</code>의 Global Standard TPM</strong>을 증액한다. 이 실습의 권장 요청 총한도는 <strong>각 3,000,000 TPM</strong>이며 추가량이 아니다. 입력 단위가 천 TPM이면 <code>3000</code>이다. <code>gpt-5.4-mini</code>, PTU 또는 다른 배포 유형과 혼동하지 않는다. 신청·승인·실제 한도 반영은 별도로 확인한다.</p>
-<p>Foundry 프로젝트가 안 보인다고 곧바로 새 프로젝트를 만들지 않는다. 이번 환경의 ARM 조회에서는 <code>aif-dwsp-foundry-ym5ffvaa</code> 아래 <strong><code>Discovery Default Project</code></strong>(<code>discoverydefaultprojectym5ffvaa</code>)가 <code>Succeeded</code>였다. 이것은 아직 생성되지 못한 <strong>Discovery 실습 Project <code>thermalhol</code>과 별개</strong>다. 실습 계정의 디렉터리와 구독을 선택한 다음, <a href="https://learn.microsoft.com/azure/foundry/how-to/quota">공식 Foundry 안내</a>에 따라 <strong>New Foundry → 해당 프로젝트 → Manage → Quota → Token per minute → Request quota</strong>를 사용한다. 모델 quota는 프로젝트마다 별도로 새로 생기는 용량이 아니라 구독·모델·배포 유형의 quota다.</p>
-<p>다음은 <strong>확인된 문서 차이</strong>와 이 가이드의 처리 방식이다. 공식 문구를 그대로 옮겨 서로 모순되는 설치 지시를 만들지 않는다.</p>
+</div><p>이는 계산 예시이며 고객의 현재 잔여량이 아닙니다. 총한도를 정확히 2,000,000 TPM로만 요청하면 기존 할당 때문에 부족할 수 있습니다. 여유분과 운영 목표를 포함한 <strong>새 총한도</strong>를 관리자와 정합니다. 입력란이 추가량을 묻는지 총량을 묻는지도 구분합니다. 예를 들어 총 3,000,000 TPM는 kTPM 단위로 <code>3000</code>입니다.</p>
+<p>Azure usage 응답의 설명이 <code>One Thousand Tokens Per Minute</code> 또는 <code>Tokens Per Minute (thousands)</code>이면 값에 <strong>1,000을 곱한 뒤</strong> 계산합니다. <code>Count</code> 필드만으로 단위를 추정하거나 배포 유형별 quota를 합산하지 않습니다.</p>
+<h3 id="section-9">부족할 때 확인할 순서</h3><ol>
+<li>모델명·버전·Global/Data Zone/지역 Scope와 실제 할당을 다시 확인합니다. <code>gpt-5-mini</code>와 <code>gpt-5.4-mini</code>, TPM과 PTU를 혼동하지 않습니다.</li>
+<li>올바른 디렉터리·구독과 Workspace에 연결된 Foundry 프로젝트를 선택합니다. <strong>Discovery Default Project 같은 Foundry 프로젝트와 Discovery Project <code>thermalhol</code>은 다른 리소스</strong>입니다. quota 화면을 찾기 위해 새 프로젝트를 만들지 않습니다.</li>
+<li><a href="https://learn.microsoft.com/azure/foundry/how-to/quota">공식 Foundry 안내</a>의 <strong>New Foundry → 해당 프로젝트 → Manage → Quota → Token per minute → Request quota</strong>를 사용합니다. 기존 신청이 있으면 먼저 추적하며, 접수·승인·실제 한도 반영을 별도로 확인합니다.</li>
+<li><code>AKSCapacityHeavyUsage</code> 등 <strong>지역 용량 오류</strong>이면 모델 TPM나 일반 vCPU quota 증액과 구분해 지원 경로로 확인합니다. Cognitive Services quota 조회 오류도 무제한·미사용으로 해석하지 않습니다. 다른 프로젝트의 모델을 임의로 축소·삭제하지 않습니다.</li>
+</ol>
+<p>다음은 <strong>확인된 문서 차이</strong>와 이 가이드의 처리 방식입니다. 공식 문구를 그대로 옮겨 서로 모순되는 설치 지시를 만들지 않습니다.</p>
 <div class="table-scroll"><table>
 <thead>
 <tr>
@@ -1063,6 +1193,11 @@ thermal-ranking의 rank_cost_revision을 실제 실행하고 별도 결과를 �
 <td>GPT-5.4 quota</td>
 <td>요약 450,000 vs 중요 안내 500,000 <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-quota-reservation">S05</a>]</sup></td>
 <td>500,000을 보수적 준비 기준으로 사용; 실제 배포 quota 확인</td>
+</tr>
+<tr>
+<td>Bookshelf 생성 quota</td>
+<td>생성 how-to의 200,000 TPM 안내와 quota 문서의 mini·embedding 최소 2,000,000 TPM 안내가 다름 <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/concept-quota-reservation">S05</a>]</sup> <sup class="citation">[<a href="https://learn.microsoft.com/en-us/azure/microsoft-discovery/how-to-index-bookshelf-knowledgebase">S06</a>]</sup></td>
+<td>실제 생성 검증 조건을 확인. <code>validate</code>/<code>what-if</code> 통과만으로 생성 가능을 단정하지 않음</td>
 </tr>
 <tr>
 <td>색인 SKU</td>
@@ -1105,7 +1240,7 @@ thermal-ranking의 rank_cost_revision을 실제 실행하고 별도 결과를 �
 <td>공통 지원 리전인 Sweden Central 사용. Tool 한 종류의 가용성으로 전체 스택 가용성을 추정하지 않음</td>
 </tr>
 </tbody></table>
-</div><p>배포 전 실제 리전·SKU·수량·보유 시간으로 <a href="https://azure.microsoft.com/pricing/calculator/">Azure Pricing Calculator</a>와 구독 조건을 확인한다. 모델·제품 GA가 모든 모델/SDK/API/연결 기능의 GA를 의미하지 않는다. 예제 API에 <code>preview</code>가 붙으면 그 상태를 그대로 취급한다.</p>
+</div><p>배포 전 실제 리전·SKU·수량·보유 시간으로 <a href="https://azure.microsoft.com/pricing/calculator/">Azure Pricing Calculator</a>와 구독 조건을 확인합니다. 모델·제품 GA가 모든 모델/SDK/API/연결 기능의 GA를 의미하지 않습니다. 예제 API에 <code>preview</code>가 붙으면 그 상태를 그대로 취급합니다.</p>
 <p><a id="a02"></a></p>
 <h2 id="heading-a02">A02 — 문제 해결과 완료 판정</h2><div class="table-scroll"><table>
 <thead>
@@ -1187,15 +1322,16 @@ thermal-ranking의 rank_cost_revision을 실제 실행하고 별도 결과를 �
 <td>실행 중 작업, 시스템 풀, Bookshelf·Workspace의 상시 인프라</td>
 </tr>
 </tbody></table>
-</div><p><strong>전체 기본 실습 통과:</strong> L00–L07과 L09의 증거가 있고 수치·출처가 일치해야 한다. L08은 별도 사용자 검증이 있어야 통과한다. E01/E02는 수행 여부를 별도로 표시한다. <strong>실행하지 않은 기능은 “설명/준비만 완료”라고 기록한다.</strong></p>
-<p>제공 파일의 로컬 확인은 Azure를 변경하지 않는다.</p>
+</div><p><strong>전체 기본 실습 통과:</strong> L00–L07과 L09의 실제 증거가 있고 수치·출처가 일치해야 합니다. 이는 앞으로 적용할 판정 기준이며 현재 저장소의 완료 선언이 아닙니다. L08은 별도 사용자 검증이 있어야 통과합니다. E01/E02는 수행 여부를 별도로 표시합니다. <strong>실행하지 않은 기능은 “미실행/미검증”, 준비만 한 기능은 “준비만 완료”라고 기록합니다.</strong></p>
+<p>제공 파일의 로컬 확인은 Azure를 변경하지 않습니다.</p>
 <pre><code class="language-bash">npm ci
 npm run build:guide
 npm test
 </code></pre>
-<p>브라우저 렌더링 확인은 <code>npm run check:guides</code>를 사용한다. 제공 스크립트는 <strong>설치된 Google Chrome의 headless 모드</strong>를 사용한다. Chrome이 없는 경우 승인된 설치 절차를 먼저 따르며, Chromium 설치만으로 <code>channel: chrome</code> 문제가 해결된다고 가정하지 않는다.</p>
+<p>브라우저 렌더링 확인은 <code>npm run check:guides</code>를 사용합니다. 제공 스크립트는 <strong>설치된 Google Chrome의 headless 모드</strong>를 사용합니다. Chrome이 없는 경우 승인된 설치 절차를 먼저 따르며, Chromium 설치만으로 <code>channel: chrome</code> 문제가 해결된다고 가정하지 않습니다.</p>
 <p><a id="a03"></a></p>
-<h2 id="heading-a03">A03 — 공식 출처</h2><p>원본 출처는 2026-09-25 확인, 배포·네트워크·quota·저장소 문서는 2026-10-01 재확인했다. 두 언어는 같은 Source ID·URL·Lab ID·데이터·정답 기준을 사용한다. UI 명칭은 제품 표시를 찾기 쉽게 영어를 유지했다.</p>
+<h2 id="heading-a03">A03 — 공식 출처</h2><p>원본 출처는 2026-09-25, 배포·네트워크·quota·저장소 문서는 2026-10-01 확인 기록을 바탕으로 합니다. 이번 2026-10-02 개정에서는 <strong>인프라 Quickstart(S03), quota(S05), Bookshelf 생성·색인(S06), 교차 리전 배포와 Foundry quota Scope</strong>를 다시 대조했습니다. 문서 조회는 실제 배포·실습 검증을 대신하지 않습니다. UI와 지원 범위는 바뀔 수 있으므로 실행 시 공식 문서도 확인합니다.</p>
+<p>두 언어는 같은 Source ID·URL·Lab ID·명령·데이터·정답 기준을 사용합니다. UI 명칭은 찾기 쉽게 영어를 유지합니다. 환경별 기록은 한국어 참고 자료에 분리했습니다.</p>
 <div class="table-scroll"><table>
 <thead>
 <tr>

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile, access } from 'node:fs/promises';
+import { readFile, access, readdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { marked } from 'marked';
@@ -52,6 +52,17 @@ test('entry-page links and local build instructions stay valid', async () => {
   }
 });
 
+test('entry pages separate customer procedures from environment-specific deployment records', () => {
+  for (const text of [english, korean]) {
+    assert.ok(links(text).some(link => link.href === 'docs/deployment-reference/README.ko.md'));
+    assert.ok(links(text).some(link => link.href === 'docs/reports/EXECUTION-REPORT.ko.md'));
+    assert.ok(links(text).some(link => link.href === 'docs/deployment-reference/07-resource-inventory.ko.md'));
+    assert.ok(!text.includes('2026-10-02 09:10 KST'));
+    assert.ok(!text.includes('990,000'));
+    assert.ok(!text.includes('Korea Central runtime'));
+  }
+});
+
 test('both entry pages link to the live Pages site without claiming repository privacy', () => {
   const url = 'https://junwoojeong100.github.io/microsoft-discovery-labs/';
   for (const text of [english, korean]) {
@@ -94,5 +105,22 @@ test('English guides contain no Korean body text beyond translation links', asyn
     const source = await readFile(resolve(root, name), 'utf8');
     const body = source.replace(/\[한국어\]\([^)]+\)/g, '');
     assert.equal(/\p{Script=Hangul}/u.test(body), false, `${name}: mixed-language body`);
+  }
+});
+
+test('emphasis markup renders rather than leaking asterisks into customer-visible text', async () => {
+  const documents = ['README.md', 'README.ko.md'];
+  for (const directory of ['docs/labs', 'docs/architecture', 'docs/deployment-reference', 'docs/reports']) {
+    for (const name of await readdir(resolve(root, directory))) {
+      if (name.endsWith('.md')) documents.push(`${directory}/${name}`);
+    }
+  }
+  for (const name of documents) {
+    const text = await readFile(resolve(root, name), 'utf8');
+    marked.walkTokens(marked.lexer(text), token => {
+      if (token.type === 'text' && !token.tokens) {
+        assert.ok(!token.text.includes('**'), `${name}: unrendered emphasis ${token.text}`);
+      }
+    });
   }
 });

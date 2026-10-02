@@ -2,6 +2,8 @@
 
 [목차](README.ko.md) · **기준일: 2026-10-01 독립 에이전트 검토와 실제 배포 오류 기록**
 
+> **작성자 환경의 용량 조사 기록이다.** 아래 지원요청·명령·quota 수치를 새 고객 환경에 그대로 적용하지 않는다. 수요 계산의 가정과 실제 관측을 구분한다.
+
 **최신 구분, 2026-10-02 09:10 KST:** 새 Korea Supercomputer·AKS는 Succeeded이며 시스템 2대, cpulab 0대/min 0/max 1이다. 이 문서의 Sweden 용량 오류는 과거 실패 원인으로 보존하며 현재 Korea 런타임의 차단 원인으로 표시하지 않는다. 기존 Sweden 자원은 Failed 상태로 남아 있다. [현재 이슈](01-current-state.ko.md#open-issues), [저녁 재시도 보완](../reports/EXECUTION-REPORT.ko.md#incident-supplement)을 참고한다.
 
 ## 결론
@@ -12,7 +14,7 @@
 
 ## 2026-10-01 오후 재시도에서 확인한 용량 블로커
 
-`AllowBringYourOwnPublicIpAddress` 등록과 `Microsoft.Network` 전파를 확인한 뒤 기존 코어를 한 번 재시도했다. **15:46:52 KST의 새 하위 AKS 요청도 `AKSCapacityHeavyUsage`로 실패**했다. 이는 오전 오류의 단순 재인용이 아니다. 새 correlation ID는 **`cf91439f-960e-430a-96af-798274d51c89`**다.
+`AllowBringYourOwnPublicIpAddress` 등록과 `Microsoft.Network` 전파를 확인한 뒤 기존 코어를 한 번 재시도했다. **15:46:52 KST의 새 하위 AKS 요청도 `AKSCapacityHeavyUsage`로 실패**했다. 이는 오전 오류의 단순 재인용이 아니다. 새 correlation ID는 `cf91439f-960e-430a-96af-798274d51c89`다.
 
 15:52에는 상위 `discovery-core-resume-20261001-1530`이 **Running**, Supercomputer가 **Accepted**였고 당시에는 최종 결과가 미확정이었다. 네트워크 feature 미등록은 해결됐으나 지역 용량 문제는 남아 있었으며, 진행 중인 요청에 추가 배포를 중첩하지 않았다.
 
@@ -37,9 +39,9 @@
 
 East US와 UK South도 독립 검토에서 quota 여유가 확인됐지만 실제 생성은 하지 않았다. 다른 리전의 성공을 보장하는 결과가 아니다. Container Apps 환경 수가 충분하다는 사실만으로 모든 전용 프로파일/GPU quota까지 검증됐다고 주장하지 않는다.
 
-## 실습 수요 계산
+## 실습 수요 계산 — 이전 Sweden 환경의 가정
 
-[코어 템플릿](../../infra/discovery-core.bicep)의 시스템 SKU는 D4s_v6, `cpulab`은 D4s_v6 min 0/max 1이다. **시스템 풀의 실제 노드 수는 미확인**이다. AKS가 생성되지 않았으므로 관례적인 노드 수를 실측값이나 최대값으로 쓰지 않는다.
+[코어 템플릿](../../infra/discovery-core.bicep)의 시스템 SKU는 D4s_v6, `cpulab`은 D4s_v6 min 0/max 1이다. **당시 Sweden 환경의 시스템 풀의 실제 노드 수는 미확인**이었다. 아래는 AKS 생성 전 계획값이며, 이후 확인한 Korea 시스템 노드 2대의 실측과 다르다. 관례적인 노드 수를 실측값이나 최대값으로 쓰지 않는다.
 
 ```text
 regional 필요량 = 기존 클라이언트 2
@@ -50,7 +52,7 @@ regional 필요량 = 기존 클라이언트 2
 
 아래는 **S=3, C=1, I=1이라는 가정**이다. 클라이언트 2 vCPU를 포함하며, SQL/Container Apps/모델 서비스의 CPU와 같은 quota 집계라고 가정하지 않는다.
 
-| 색인 SKU | 색인 vCPU | regional 합계 | Dsv6 합계 | Esv6 합계 | 현재 100 한도 대비 최소 증액 |
+| 색인 SKU | 색인 vCPU | regional 합계 | Dsv6 합계 | Esv6 합계 | 당시 100 한도 대비 최소 증액 |
 |---|---:|---:|---:|---:|---|
 | `Standard_E20s_v6` | 20 | 38 | 16 | 20 | 없음 |
 | `Standard_D48s_v6` | 48 | 66 | 64 | 0 | 없음 |

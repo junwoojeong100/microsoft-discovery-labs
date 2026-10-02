@@ -163,7 +163,7 @@ for (let index = 0; index < scenes.length; index++) {
 
 const files = new Map([
   ['/', { type: 'text/html; charset=utf-8', data: await readFile(resolve(root, 'video/summary.html')) }],
-  ['/architecture.svg', { type: 'image/svg+xml', data: await readFile(resolve(root, 'assets/discovery-architecture.svg')) }],
+  ['/architecture.svg', { type: 'image/svg+xml', data: await readFile(resolve(root, 'assets/discovery-architecture.en.svg')) }],
   ['/live.webm', { type: 'video/webm', data: await readFile(livePath) }],
 ]);
 const server = createServer((request, response) => {

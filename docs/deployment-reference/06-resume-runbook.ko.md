@@ -1,8 +1,10 @@
 # 06 — 리소스 생성·재개 절차
 
-[목차](README.ko.md) · **최신 상태: 2026-10-02 09:10 KST. 과거 명령 예제와 현재 재개 조건을 구분한다.**
+[목차](README.ko.md) · **실행 재개 기록: 2026-10-02 09:10 KST. 이후 정리된 자원 현황은 [21:21 목록](07-resource-inventory.ko.md)을 따른다.**
 
-**현재 재개 차단은 Bookshelf 생성 quota다.** 새 Korea 코어와 정책 애드온은 성공했다. 기존 Sweden 실패 자원은 새 환경과 별개로 남아 있으며 같은 `create`를 반복하지 않는다. 현재 미해결 항목과 완료 조건은 [R01–R05](01-current-state.ko.md#open-issues), 원인별 대응은 [통합 문제 목록](README.ko.md#incident-index)을 따른다.
+> **기존 작성자 환경 전용 재개 절차다.** 신규 고객의 설치는 [가이드 L00](../labs/MICROSOFT-DISCOVERY-LAB.ko.md#l00)에서 시작한다. 아래 실제 ID·매개변수·부분 payload·과거 승인 범위는 새 환경에 대한 실행 승인이 아니다.
+
+**마지막 quota 검증에서 확인한 재개 차단은 Bookshelf 생성 quota다.** 새 Korea 코어와 정책 애드온은 성공했다. 기존 Sweden의 실패한 Home 기록은 별도로 보존하지만 이전 실행 자원은 정리됐으므로, 같은 `create`를 반복하지 않는다. 현재 미해결 항목과 완료 조건은 [R01–R05](01-current-state.ko.md#open-issues), 원인별 대응은 [통합 문제 목록](README.ko.md#incident-index)을 따른다.
 
 ## 저녁 교차 리전 경로 — 기존 단일 리전 예제와 구분
 
@@ -17,7 +19,7 @@
 | Workspace·검증 모델·Project | 전체 core와 별도 단계. 신규 GPT-5.4 quota 조건을 충족하기 전 제출하지 않음 |
 | Bookshelf | [생성 전용 Bicep](../../infra/bookshelf.koreacentral.bicepparam). 10-02 08:29 실제 요청은 mini·embedding 생성 quota 각 2M TPM 부족으로 Failed. 200k 안내만으로 재제출하지 않음 |
 
-**Bookshelf 생성 재개:** 운영을 시작하지 않는 small 생성 요청도 실제 provider는 `gpt-5-mini`와 `text-embedding-3-small`에 각각 `RequiredCapacity:2000`을 요구했다. [실패 증거](../../artifacts/discovery-bookshelf-create-result-20261002.json)를 보존했다. 실제 한도가 반영된 뒤 현재 가용량과 동일 입력의 validate/what-if를 다시 확인하고 새 배포 이름으로 생성한다. 부모 성공 전에는 KB나 색인 풀을 만들지 않으며, 생성 성공 후에도 사용자가 별도로 시작하기 전 색인·검색은 보류한다.
+**Bookshelf 생성 재개:** 운영을 시작하지 않는 small 생성 요청도 실제 provider는 `gpt-5-mini`와 `text-embedding-3-small`에 각각 `RequiredCapacity:2000`을 요구했다. [실패 증거](../../artifacts/discovery-bookshelf-create-result-20261002.json)를 보존했다. 실제 한도가 반영된 뒤 가용량과 동일 입력의 validate/what-if를 다시 확인하고 승인된 생성만 수행한다. KB는 부모 Bookshelf 성공 후 구성한다. 색인 풀은 Supercomputer의 별도 자원이며 이 재개 범위에서는 SKU·비용 승인 후 준비한다. 생성 성공 후에도 별도 시작 승인 전에는 색인·검색을 보류한다.
 
 기반 배포는 **21:05:23 KST Succeeded**이며 새 지원 자원은 Korea Central에서 확인됐다. 기반 템플릿은 초기 생성용이다. 확장된 VNet에 내부 3-subnet 모듈을 재적용하지 말고 필요한 자원만 별도 검증해 변경한다. 기존 `blob:sync`의 클라이언트/스토리지 이름도 이전 Sweden 환경용이므로 새 저장소 동기화에 그대로 사용하지 않는다.
 
@@ -70,7 +72,7 @@ npm run tool:run -- --phase verify-files --run-id "$RUN_ID"
 
 첫 명령은 기존 사설 mount와 관리 ID로 입력 저장·계산을 수행하고, 두 번째는 별도 작업의 read-only mount에서 영속 파일을 읽는다. GPU 0, replica 1, CPU 1/max 2, 메모리 2Gi/max 4Gi, 30분 제한이다. 로컬 로그에 토큰을 저장하지 않는다. API의 gzip inline 파일은 컨테이너에서 명시적으로 해제한다. 초기 gzip 실패와 수정된 성공을 구분한 [실제 실행 기록](../reports/EXECUTION-REPORT.ko.md)을 참고한다.
 
-**수동 정리:** 사용자가 직접 삭제하기로 했다. 이전 Supercomputer `sc-discovery-hol`과 그 전용 `mrg-dscmp-sc-discovery-hol-b6wiwf`만 후보이며 부모 Discovery 리소스를 먼저 삭제하는 경로를 사용한다. **새 `-kc` Supercomputer/MRG, 기존 랩 RG 전체, Workspace MRG, Foundry 모델, 데이터, 공통 `McapsGovernance`는 삭제하지 않는다.** 새 컴퓨트 MRG가 Sweden Central에 표시되는 것은 정상이다.
+**실행 자원 정리 완료, 2026-10-02:** 별도 사용자 승인으로 이전 Sweden 실행 자원만 정리했다. **이전·현재의 Home 객체, 모든 관리 RG·MOBO Broker, Korea 자원, 공유 DNS와 `McapsGovernance`는 보존**했다. 두 이전 관리 RG는 내부 자원이 0개인 상태로 남겼으며, 부모 Home이나 빈 RG를 추가 삭제하지 않는다. 실제 남아 있는 이름·역할은 [현재 리소스 목록](07-resource-inventory.ko.md)을 따른다. 이전 VM·Storage·ACR를 사용하는 과거 재현 명령은 그대로 재실행하지 않는다.
 
 이하 기본 명령은 이전 단일 리전 경로의 참고 예제다. 새 배포에는 위 매개변수·검증된 단계 payload와 실제 배포 이름을 사용한다.
 

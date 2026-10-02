@@ -58,10 +58,12 @@ test('both editions have identical stable section anchors and lab structure', ()
     const titles = [...text.matchAll(/^## ([SLEA]\d{2}) /gm)].map((match) => match[1].toLowerCase());
     assert.deepEqual(titles, anchors);
     const labels = language === 'ko'
-      ? ['**목표:**', '**실행:**', '**완료 기준:**']
-      : ['**Goal:**', '**Steps:**', '**Pass criteria:**'];
+      ? ['**목표:**', '**시작 조건:**', '**실행:**', '**완료 기준:**']
+      : ['**Goal:**', '**Before you start:**', '**Steps:**', '**Pass criteria:**'];
     for (const id of anchors.filter((item) => /^[le]/.test(item))) {
-      for (const label of labels) assert.ok(section(text, id).includes(label), `${language} ${id}: ${label}`);
+      const positions = labels.map(label => section(text, id).indexOf(label));
+      assert.ok(positions.every(position => position >= 0), `${language} ${id}: missing lab label`);
+      assert.deepEqual(positions, [...positions].sort((a, b) => a - b), `${language} ${id}: lab label order`);
     }
   }
 });
@@ -213,15 +215,25 @@ test('early lab pass criteria do not require later labs to be complete', () => {
   }
 });
 
-test('resource scope, tool actions, and referenced source files remain aligned', async () => {
+test('customer guides use replaceable scope rather than targeting the author environment', async () => {
   const config = JSON.parse(await readFile(resolve(root, 'config/lab.json'), 'utf8'));
   const tool = JSON.parse(await readFile(resolve(root, 'tools/thermal-ranking/tool-definition.template.json'), 'utf8'));
   for (const text of Object.values(guides)) {
-    for (const value of [config.account, config.subscriptionId, config.tenantId, config.resourceGroup, config.location]) {
-      assert.ok(text.includes(value), `Missing configured scope value: ${value}`);
+    for (const value of [config.account, config.subscriptionId, config.tenantId, config.resourceGroup]) {
+      assert.ok(!text.includes(value), `Author-specific execution target in customer guide: ${value}`);
     }
+    const setup = section(text, 'l00');
+    for (const field of ['account', 'tenantId', 'subscriptionId', 'subscriptionName',
+      'resourceGroup', 'labTag', 'location', 'targetComputeLocation', 'runtime']) {
+      assert.ok(setup.includes(`\`${field}\``), `Missing configuration field: ${field}`);
+    }
+    for (const variable of ['TENANT_ID', 'SUBSCRIPTION_ID', 'RESOURCE_GROUP', 'LOCATION', 'STORAGE_ACCOUNT', 'ACR_NAME']) {
+      assert.ok(blocks(setup, 'bash').some(block => block.includes(`${variable}=`)), `Undefined input: ${variable}`);
+    }
+    assert.ok(setup.includes("SUBSCRIPTION_ID='<subscription-id>'"));
+    assert.ok(setup.includes("TENANT_ID='<tenant-id>'"));
     for (const action of tool.actions) assert.ok(text.includes(action.name));
-    for (const match of text.matchAll(/`((?:data|scripts|tools|config)\/[^`]+)`/g)) {
+    for (const match of text.matchAll(/`((?:data|scripts|tools|config|infra)\/[^`]+)`/g)) {
       await access(resolve(root, match[1]));
     }
   }
@@ -242,27 +254,73 @@ test('sensitive conceptual boundaries are explicit in both editions', () => {
   }
 });
 
-test('both editions preserve the observed deployment lessons and resumption commands', () => {
+test('customer guides retain reusable checks without embedding operator-specific recovery paths', () => {
   for (const [language, text] of Object.entries(guides)) {
     for (const term of [
       'npm run readiness', '--require core', 'DefaultFeature=Pending',
-      'IncompatibleDelegations', 'StorageAccount_PublicNetwork_Modify',
+      'IncompatibleDelegations', 'publicNetworkAccess=Disabled',
       'AKSCapacityHeavyUsage', 'properties.version', 'infra/tool.bicep',
-      '990,000', '780,000', '2,010,000', '2,220,000',
       'infra/expand-network.bicep', 'infra/storage-private-access.bicep',
-      'npm run blob:sync', 'vm-discovery-blob-client', 'Discovery Default Project',
-      'discoverydefaultprojectym5ffvaa', '3,000,000',
-    ]) assert.ok(text.includes(term), `${language}: missing observed lesson ${term}`);
+      'Discovery Default Project', '../deployment-reference/README.ko.md',
+    ]) assert.ok(text.includes(term), `${language}: missing reusable check ${term}`);
+    for (const term of ['npm run blob:sync', '2,010,000', '2,220,000',
+      '2026-10-02 09:10 KST', 'rg-discovery-hol-20260930', 'discoveryholjunwookc']) {
+      assert.ok(!text.includes(term), `${language}: operator-specific detail in customer guide: ${term}`);
+    }
+    const commands = blocks(text, 'bash').join('\n');
+    assert.ok(!commands.includes('npm run blob:sync'), 'Historical fixed-target script must not be an onboarding command');
+    assert.ok(!commands.includes('npm run tool:run'), 'Direct API run is not the default agent lab');
+    assert.ok(!commands.includes('deployCompute=false'), 'Recovery mode must not be a default setup command');
   }
 });
 
-test('Graph identity commands use the selected tenant context rather than unsupported subscription flags', () => {
+test('shell examples parse without Azure execution and explicitly scope Azure operations', () => {
+  for (const [language, text] of Object.entries(guides)) {
+    for (const source of blocks(text, 'bash')) {
+      execFileSync('bash', ['-n'], { input: source, encoding: 'utf8' });
+      for (const command of source.replaceAll('\\\n', ' ').split('\n').filter(line => /(?:^|=\$\()az /.test(line))) {
+        if (command.startsWith('az login ')) {
+          assert.ok(command.includes('--tenant "$TENANT_ID"'));
+        } else if (!command.startsWith('az account show ')) {
+          assert.ok(command.includes('--subscription "$SUBSCRIPTION_ID"'), `${language}: unscoped ${command}`);
+        }
+      }
+    }
+    const setup = blocks(section(text, 'l00'), 'bash').find(block => block.includes('az login '));
+    assert.ok(setup.indexOf('az account set ') < setup.indexOf('az account show '));
+    const upload = blocks(section(text, 'l02'), 'bash').find(block => block.includes('upload-batch'));
+    assert.equal((upload.match(/--overwrite false/g) ?? []).length, 2);
+    const tool = blocks(section(text, 'l05'), 'bash').find(block => block.includes('infra/tool.bicep'));
+    for (const value of ['location="$LOCATION"', 'registryName="$ACR_NAME"', 'imageDigest="$IMAGE_DIGEST"']) {
+      assert.ok(tool.includes(value), `Tool preview relies on recorded defaults: ${value}`);
+    }
+  }
+});
+
+test('draft status and learner outcomes stay explicit without reporting the author installation in the guide', () => {
+  for (const [language, text] of Object.entries(guides)) {
+    const introduction = text.slice(0, text.indexOf('<a id="s01">'));
+    for (const term of language === 'ko'
+      ? ['작성 중', '전체 연구 흐름은 아직 검증 중', '이 실습에서 만드는 것', '완료 확인 원칙']
+      : ['Work in progress', 'complete research workflow is still under validation', 'What you will build', 'Completion rule']) {
+      assert.ok(introduction.includes(term), `${language}: ${term}`);
+    }
+    assert.ok(!introduction.includes('2026-10-02 09:10 KST'));
+    assert.ok(introduction.includes('../deployment-reference/README.ko.md'));
+    assert.ok(section(text, 'l03').includes('2,000,000 TPM'));
+    assert.ok(section(text, 'a01').includes('Scope'));
+    assert.ok(section(text, 'a01').includes('https://learn.microsoft.com/azure/foundry/foundry-models/quotas-limits'));
+  }
+});
+
+test('quota examples preserve existing allocations and match across editions', () => {
   for (const text of Object.values(guides)) {
-    const setup = blocks(section(text, 'l01'), 'bash')
-      .find((block) => block.includes('CONTROL_PLANE_OBJECT_ID='));
-    assert.ok(setup.includes('az account set --subscription "$SUBSCRIPTION_ID"'));
-    for (const command of setup.matchAll(/\$\(az ad ([\s\S]*?)\)/g)) {
-      assert.ok(!command[1].includes('--subscription'));
+    const rows = [...section(text, 'a01').matchAll(/^\| (Mini|Embedding) \| ([\d,]+) \| ([\d,]+) \| ([\d,]+) \|$/gm)];
+    assert.equal(rows.length, 2);
+    for (const [, model, ...values] of rows) {
+      const [allocated, additional, total] = values.map(value => Number(value.replaceAll(',', '')));
+      assert.equal(total, allocated + additional, model);
+      assert.equal(additional, 2000000, model);
     }
   }
 });

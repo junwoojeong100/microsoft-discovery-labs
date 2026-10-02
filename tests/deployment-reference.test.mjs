@@ -16,6 +16,7 @@ const names = [
   '04-architecture-regions.ko.md',
   '05-network-identity-data.ko.md',
   '06-resume-runbook.ko.md',
+  '07-resource-inventory.ko.md',
 ];
 const documents = Object.fromEntries(await Promise.all(names.map(async (name) => [
   name, await readFile(resolve(directory, name), 'utf8'),
@@ -63,6 +64,32 @@ test('reference links and images resolve without machine-specific paths', async 
       }
     }
   }
+});
+
+test('the current inventory accounts for resources and distinguishes Home from target execution', () => {
+  const inventory = documents['07-resource-inventory.ko.md'];
+  const tables = [];
+  marked.walkTokens(marked.lexer(inventory), token => {
+    if (token.type === 'table') tables.push(token);
+  });
+  const resourceTables = tables.filter(table => table.header[0].text === '이름');
+  assert.equal(resourceTables.reduce((count, table) => count + table.rows.length, 0), 95);
+  const groupTable = tables.find(table => table.header[0].text === '리소스 그룹');
+  assert.equal(groupTable.rows.length, 8);
+  assert.equal(groupTable.rows.reduce((count, row) => count + Number(row[2].text), 0), 95);
+  const modelTable = tables.find(table => table.header[0].text === '배포 이름');
+  assert.equal(modelTable.rows.length, 2);
+  assert.ok(modelTable.rows.every(row => row[3].text === '250,000'));
+  assert.ok(inventory.includes('현재 Korea 실행 경로를 관리하는 Home — 13개'));
+  assert.ok(inventory.includes('과거 Home 메타데이터 — 8개'));
+  assert.ok(inventory.includes('내부 자원 0개'));
+  assert.ok(inventory.includes('과거 연결로 작업을 다시 실행하지 않는다'));
+  assert.ok(inventory.includes('현재 Korea 구성에 필요하다'));
+  assert.ok(inventory.includes('할당량은 실제 소비 토큰 수가 아니다'));
+  assert.ok(inventory.includes('자동 갱신되지 않는 시각 고정 스냅샷'));
+  assert.ok(documents['01-current-state.ko.md'].includes('07-resource-inventory.ko.md'));
+  assert.ok(documents['06-resume-runbook.ko.md'].includes('07-resource-inventory.ko.md'));
+  assert.ok(!documents['06-resume-runbook.ko.md'].includes('이전 Supercomputer `sc-discovery-hol`과 그 전용'));
 });
 
 test('quota arithmetic preserves existing allocations and the two submitted totals', () => {
@@ -153,7 +180,7 @@ test('current issue summary separates active blockers, verified recovery and dis
   for (const id of ['R01', 'R02', 'R03', 'R04', 'R05']) {
     assert.ok(documents['01-current-state.ko.md'].includes(`| ${id} `), id);
   }
-  for (let number = 1; number <= 16; number++) {
+  for (let number = 1; number <= 17; number++) {
     assert.ok(documents['README.ko.md'].includes(`| I${String(number).padStart(2, '0')} |`));
   }
   assert.ok(documents['README.ko.md'].includes('01-current-state.ko.md#open-issues'));
@@ -161,12 +188,46 @@ test('current issue summary separates active blockers, verified recovery and dis
 });
 
 test('new public incident projections exclude credentials, callers and machine-specific paths', async () => {
-  for (const name of ['discovery-incident-supplement-20261002.json', 'discovery-current-issues-20261002.json']) {
+  for (const name of ['discovery-incident-supplement-20261002.json', 'discovery-current-issues-20261002.json',
+    'discovery-operator-status-20261002.json']) {
     const text = await readFile(resolve(root, 'artifacts', name), 'utf8');
     assert.equal(/\/Users\/|\/var\/folders\/|@(?:microsoft\.com|[\w.-]*onmicrosoft\.com)/i.test(text), false, name);
     assert.equal(/"caller"\s*:|"accessToken"\s*:|"refreshToken"\s*:|"clientSecret"\s*:|"password"\s*:/i.test(text), false, name);
     assert.equal(/-----BEGIN (?:OPENSSH |RSA |EC )?PRIVATE KEY-----|\beyJ[\w-]+\.[\w-]+\.[\w-]+/.test(text), false, name);
   }
+});
+
+test('operator progress is evidence-bounded and links attempts, remaining work and cleanup', async () => {
+  const status = JSON.parse(await readFile(resolve(root, 'artifacts/discovery-operator-status-20261002.json'), 'utf8'));
+  assert.equal(status.setupReadiness.completedChecks, 4);
+  assert.equal(status.setupReadiness.totalChecks, 6);
+  assert.equal(status.setupReadiness.roundedPercentage, 67);
+  assert.equal(status.setupReadiness.representsEndToEndLabCompletion, false);
+  assert.equal(status.executionBoundary.directSyntheticCpuRunsVerified, true);
+  assert.equal(status.executionBoundary.agentMediatedToolExecutionVerified, false);
+  assert.equal(status.executionBoundary.engineResearchFlowVerified, false);
+  assert.equal(status.cleanup.indexedTargetsRemoved, 66);
+  assert.equal(status.cleanup.targetsAndDedicatedChildrenVerifiedAbsent, 80);
+  assert.equal(status.cleanup.remainingApprovedTargets, 0);
+  assert.equal(status.cleanup.resourceGroupsDeleted, 0);
+  assert.equal(status.cleanup.koreaConfigurationUnchanged, true);
+  assert.deepEqual(status.bookshelves, []);
+  assert.equal(status.bookshelfRecoveryReview.supportedClientSideQuotaOverrideFound, false);
+  assert.equal(status.bookshelfRecoveryReview.previewApiTrial.approvedLogicalCreationAttempts, 1);
+  assert.equal(status.bookshelfRecoveryReview.previewApiTrial.state, 'Failed');
+  assert.equal(status.bookshelfRecoveryReview.previewApiTrial.requiredTpmPerBlockingModel, 2000000);
+  assert.equal(status.bookshelfRecoveryReview.productSupport.submitted, false);
+  for (const row of status.modelQuota) {
+    assert.equal(row.availableTpm, row.limitTpm - row.allocatedTpm);
+    assert.equal(row.deficitTpm, row.observedCreationRequirementTpm - row.availableTpm);
+  }
+  assert.ok(documents['01-current-state.ko.md'].includes('id="remaining-work"'));
+  assert.ok(documents['README.ko.md'].includes('id="operator-commands"'));
+  const report = await readFile(resolve(root, 'docs/reports/EXECUTION-REPORT.ko.md'), 'utf8');
+  assert.ok(report.includes('id="installation-timeline"'));
+  assert.ok(report.includes('id="sweden-target-retirement"'));
+  assert.ok(report.includes('과거 실행을 삭제하지 않는 이력'));
+  assert.ok(!report.includes('](' + '../../artifacts/guide-review/validation.json)'));
 });
 
 test('compute examples include system nodes and the retained client quota', () => {
@@ -198,4 +259,13 @@ test('all reference shell examples parse without performing Azure operations', (
     }
   }
   assert.ok(count >= 7);
+});
+
+test('runbook Graph lookups use tenant context without unsupported subscription flags', () => {
+  const setup = [...documents['06-resume-runbook.ko.md'].matchAll(/```bash\n([\s\S]*?)\n```/g)]
+    .map(match => match[1]).find(block => block.includes('CONTROL_PLANE_OBJECT_ID='));
+  assert.ok(setup.includes('az account set --subscription "$SUBSCRIPTION_ID"'));
+  const commands = [...setup.matchAll(/\$\(az ad ([\s\S]*?)\)/g)];
+  assert.equal(commands.length, 2);
+  for (const [, command] of commands) assert.ok(!command.includes('--subscription'));
 });

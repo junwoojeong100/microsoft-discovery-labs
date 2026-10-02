@@ -2,112 +2,72 @@
 
 [English](README.md) · **한국어**
 
-Microsoft Discovery 실습 가이드와 Azure 아키텍처 자료입니다. **2026-10-01 실제 Azure 배포 결과**를 반영해 국문·영문의 절차와 완료 기준을 함께 개정했습니다.
+고객·파트너가 자신의 Azure 환경에서 Microsoft Discovery를 구성하고, **근거 검색 → 실제 계산 → 결과 검토 → 조건 변경**을 실습하기 위한 자료입니다.
 
-## 시작하기
+> **검증 중인 학습 자료입니다.** 전체 연구 흐름의 검증이 끝난 배포 패키지는 아닙니다. 각 Lab의 시작 조건을 확인하고, 실제 결과가 완료 기준을 만족했을 때 다음 단계로 진행하세요. 특정 환경의 성공·실패 기록은 아래 설치·운영 참고 자료에서 따로 다룹니다.
 
-| 문서 | GitHub에서 읽기 | 다른 형식 |
+## 1. 고객·파트너: 실습 시작하기
+
+| 목적 | 먼저 읽을 문서 | 다음 단계 |
 |---|---|---|
-| 핵심 기능 실습 가이드 | [가이드 읽기](docs/labs/MICROSOFT-DISCOVERY-LAB.ko.md) | [PDF](docs/labs/MICROSOFT-DISCOVERY-LAB.ko.pdf) · [HTML](https://junwoojeong100.github.io/microsoft-discovery-labs/docs/labs/MICROSOFT-DISCOVERY-LAB.ko.html) |
-| Azure 아키텍처와 버전 의존성 | [아키텍처 읽기](docs/architecture/MICROSOFT-DISCOVERY-ARCHITECTURE.ko.md) | SVG 그림 3개와 Mermaid 원본 포함 |
-| 다음 배포를 위한 주제별 참고 자료 | [참고 자료 목차](docs/deployment-reference/README.ko.md) | [현재 남은 이슈](https://junwoojeong100.github.io/microsoft-discovery-labs/docs/deployment-reference/01-current-state.ko.html#open-issues) · [통합 문제 목록](https://junwoojeong100.github.io/microsoft-discovery-labs/docs/deployment-reference/README.ko.html#incident-index) |
+| 처음부터 환경 구성 | [실습 가이드](docs/labs/MICROSOFT-DISCOVERY-LAB.ko.md) | S00에서 범위 확인 → L00의 환경값·권한·비용 준비 → L01–L03 |
+| 준비된 환경에서 연구 실습 | [연구자 시작 체크](docs/labs/MICROSOFT-DISCOVERY-LAB.ko.md#s00) | 관리자에게 H01–H06을 받아 확인 → L04–L07 → L09 |
+| Azure 구성요소와 의존성 이해 | [아키텍처](docs/architecture/MICROSOFT-DISCOVERY-ARCHITECTURE.ko.md) | 전체 구조·Bookshelf 그림부터 확인 |
 
-실습 가이드는 **기본 실습 10개와 확장 실습 2개**로 구성됩니다. Workspace/Project, 데이터·파일, Bookshelf, 에이전트·버전, 계산 도구, Discovery Engine, 사람의 피드백, 협업·RBAC, 추적성·비용, Hybrid/MCP 도구를 다룹니다. 각 실습은 **목표 → 실행 → 완료 기준** 순서로 진행합니다.
+**읽기 형식:** [게시된 HTML](https://junwoojeong100.github.io/microsoft-discovery-labs/docs/labs/MICROSOFT-DISCOVERY-LAB.ko.html) · [PDF](docs/labs/MICROSOFT-DISCOVERY-LAB.ko.pdf) · [GitHub Pages 시작 페이지](https://junwoojeong100.github.io/microsoft-discovery-labs/).
 
-아키텍처 문서는 API 버전, 모델 revision, SKU, 런타임 버전을 구분합니다. 공개되지 않은 내부 버전을 추정하지 않고, 서비스 간 의존성과 변경 시 영향을 설명합니다.
+가이드는 L00–L09의 기본 실습 10개와 E01–E02의 확장 실습 2개로 구성됩니다. L08 협업 검증에는 별도 사용자가 필요합니다. 각 실습은 **목표 → 시작 조건 → 실행 → 완료 기준**을 따릅니다. Azure 없이 자료와 계산 기준만 보려면 S02와 L05의 로컬 계산 단계만 사용하세요.
 
-GitHub에서는 Markdown 또는 PDF를 선택하세요. HTML 가이드는 `docs/labs/`, 아키텍처는 `docs/architecture/`, 실행 보고서는 `docs/reports/`에 정리했습니다.
+## 2. 설치·운영 담당자: 실제 사례 참고하기
 
-## GitHub Pages 게시
+**공통 실습 절차와 특정 환경의 설치 기록을 구분합니다.** 아래 문서는 실제로 시도한 일, 성공·실패한 범위, 남은 작업을 조사하는 참고 자료입니다. 다른 환경에서는 원인과 확인 방법을 참고하되, 리소스 이름·ID·승인 내역을 그대로 사용하지 마세요.
 
-저장소 [junwoojeong100/microsoft-discovery-labs](https://github.com/junwoojeong100/microsoft-discovery-labs)는 **Public**입니다. **[GitHub Pages에서 게시된 문서 읽기](https://junwoojeong100.github.io/microsoft-discovery-labs/)**. 사용자 요청으로 공개 전환한 뒤 2026-10-02 KST에 첫 게시를 완료했으며 유료 요금제로 변경하지 않았습니다.
-
-`npm run check:site`는 HTML 링크를 갖춘 공개용 `site/`를 생성·확인합니다. 계정 식별자는 예시로 치환하고 원본 Azure 증거·설정·인프라 소스·PDF는 **Pages 사이트에서만 제외**합니다. 저장소와 커밋 이력은 공개 상태입니다. Pages source는 **GitHub Actions**, 저장소 변수는 **`PAGES_ENABLED=true`**이며 **Publish lab documentation**이 `main`의 관련 변경을 자동 게시합니다. 수동 실행도 가능합니다.
-
-## 실행 상태
-
-**Bookshelf 생성만 시도한 결과, 2026-10-02 08:29 KST:** 실제 provider는 small 생성에도 `gpt-5-mini`·`text-embedding-3-small` 각각 **생성 시 2,000,000 TPM**을 요구하며 거절했습니다. 생성 how-to의 200,000 TPM 안내와 ARM 사전 검증 통과만으로는 부족했습니다. Bookshelf와 해당 managed RG는 생성되지 않았고 색인·검색도 시작하지 않았습니다. [실제 실패 응답](artifacts/discovery-bookshelf-create-result-20261002.json)을 참고하세요.
-
-**최신: Workspace·검증 모델·Project와 실제 합성 CPU 작업을 완료했습니다.** 새 GPT-5.4 배포 두 개는 **각 Global Standard 250,000 TPM**, 합계 **500,000 TPM**입니다. 입력 5개와 계산 결과 2개를 Korea 사설 런타임에서 저장하고 별도 성공한 Discovery 작업으로 다시 읽었습니다. [최종 실행 보고서](docs/reports/EXECUTION-REPORT.ko.md)를 확인하세요. Bookshelf quota는 여전히 대기 중입니다. 승인된 서브넷 권한 부여와 Azure Policy 애드온 활성화는 완료했으며, 해당 AKS의 애드온 설치 정책도 **Compliant**로 확인했습니다. 자율 연구 전체를 완료했다고 주장하지 않습니다.
-
-**이전 컴퓨트 단계 기록, 21:32 KST:** Discovery home은 Sweden Central로 유지하고 target compute만 Korea Central로 변경했습니다. 새 Supercomputer·cpulab과 실제 Korea AKS·VMSS는 **21:28:45 KST Succeeded**였습니다. 당시 Workspace는 quota 때문에 보류했으며, 위 최신 생성 성공이 그 차단 상태를 대체합니다.
-
-아래 오후 결과와 기존 환경 표는 이전 Sweden Central 단일 리전 실행 기록입니다. 현재 교차 리전 입력은 [기반 매개변수](infra/cross-region-foundation.bicepparam), [Discovery 매개변수](infra/discovery-core.koreacentral.bicepparam), [재개 절차](docs/deployment-reference/06-resume-runbook.ko.md)를 사용합니다. **기존 RG 전체를 삭제하면 새 Korea 리소스도 삭제됩니다.**
-
-**2026-10-01 오후, 중앙 진단 설정 오류는 해결했지만 전체 실습은 미완료입니다.** 서비스 활성화와 네트워크 feature 등록 후 진행한 코어 재시도는 **16:14:43에 최종 Failed**로 끝났습니다. 16:21 조회에서도 Workspace·Supercomputer가 모두 Failed였으며, 새 하위 AKS의 `AKSCapacityHeavyUsage`가 확인됐습니다.
-
-**남은 핵심 블로커는 지역 서비스 용량과 Bookshelf 운영 quota입니다.** 중앙 로그 복구 후에도 gpt-5-mini·임베딩 잔여량은 **990,000 / 780,000 TPM**이며, 각 총 3,000,000 TPM 신청은 아직 한도에 반영되지 않았습니다. 기존 조직 정책을 범위 제한해 실행한 중앙 RG·Log Analytics·Discovery 진단 설정 복구 3건은 모두 성공했습니다. 실제 로그 유입, 노트북의 직접 Blob 경로, **종단간 연구 실행은 미검증**입니다. [코어 최종 상태](artifacts/discovery-resume-snapshot-20261001-1621.json), [중앙 진단 복구 증거](artifacts/discovery-governance-recovery-20261001.json), [실행 보고서](docs/reports/EXECUTION-REPORT.ko.md)를 확인하세요.
-
-## 현재 실습 환경 (2026-10-01)
-
-[실습 리소스 그룹](https://portal.azure.com/#@46e9cdaa-fed3-4131-aa28-c1fc8a8a043a/resource/subscriptions/51531604-2337-4c05-bc05-3c3d4ff154e5/resourceGroups/rg-discovery-hol-20260930/overview)은 **`rg-discovery-hol-20260930` / Sweden Central**을 유지합니다. `config/lab.json`의 `location`은 home, `targetComputeLocation=koreacentral`은 신규 런타임 영역입니다. 아래 표는 보존한 기존 환경이며 과거 `20260925` 예시는 현재 배포 대상이 아닙니다.
-
-| 구성요소 | 현재 구성 |
+| 알고 싶은 것 | 읽을 문서 |
 |---|---|
-| VNet/UAMI | `vnet-discovery-hol`(`10.80.0.0/16`), `id-discovery-hol` 재사용 |
-| 서브넷 | 전용 9개: 기존 3개 보존, 실습 4개, `storagePeSubnet`, `blobClientSubnet` |
-| Storage | `stdiscoveryholjunwoosc`, LRS, 공유 키·익명 Blob 비활성, 정책에 따른 공개 네트워크 비활성 |
-| 사설 접근 | `pe-discovery-blob` 승인, Private DNS `10.80.8.4`, VNet link 완료 |
-| Registry/Tool | Basic `acrdiscoveryholjunwoosc`, ACR task `dt1` 및 Tool `thermal-ranking` v1.0.0 성공 |
-| 데이터 참조·파일 | `thermaldata`, `evidencepack`, `candidatecsv`; 후속 작업에서 TXT 4개·CSV 1개 업로드와 SHA-256 읽기 검증 완료 |
-| 사설 데이터 클라이언트 | `vm-discovery-blob-client`, 공개 IP/SSH 인바운드 없음, 검증 후 할당 해제 |
-| 네트워크 feature | `AllowBringYourOwnPublicIpAddress` 및 `Microsoft.Network` 모두 Registered |
-| Supercomputer / 배포 | `sc-discovery-hol` Failed / 오후 코어 배포 최종 Failed; 하위 AKS 용량 실패 |
-| Workspace | `discoveryholjunwoosc`는 `Failed`; 관리 리소스 격리 유지, 연결 컴퓨트·사용 가능한 Project 없음 |
-| 중앙 진단 | `McapsGovernance/mcaps4c05bc053c3d4ff154e5-la` 연결 완료, 해당 계정의 진단 정책 Compliant. 정책 기본 West US 2, 종량제, 보존 30일 |
+| 어디까지 진행됐고 무엇이 남았는가 | [현재 상태·남은 작업](docs/deployment-reference/01-current-state.ko.md) |
+| 어떤 리소스가 현재 남아 있는가 | [리소스 그룹·자원 목록](docs/deployment-reference/07-resource-inventory.ko.md) |
+| 어떤 순서로 시도했고 무엇을 배웠는가 | [실제 실행 이력](docs/reports/EXECUTION-REPORT.ko.md) |
+| 원인을 조사하거나 작업을 재개하려면 | [설치·운영 참고 자료 목차](docs/deployment-reference/README.ko.md) |
 
-사용자에게 필요한 데이터 역할, UAMI에는 실습 RG·Storage·Registry·VNet·자기 ID 범위의 역할을 부여했습니다. 공식 first-party control-plane의 Reader/NSP Joiner만 문서에 따라 구독 scope입니다. 조직 정책을 해제하지 않았습니다. 실패한 배포에도 유료 리소스가 남을 수 있으므로 정리 전에 L09를 확인하세요.
+고객 실습을 진행할 때 이 기록을 읽어야 할 필요는 없습니다. 문제가 생겼을 때 해당 원인과 근거를 찾아보는 별도 경로입니다.
 
-## 사전 점검과 재개
+## 실행 전 주의사항
 
-새 점검은 브라우저 없이 **읽기 전용 Azure 요청**을 수행하고 토큰 없는 증거를 저장합니다. 기본 전체 점검은 Bookshelf quota 부족 시 종료 코드 `2`를 반환합니다. `--require core`는 코어의 접근·모델 quota 검사이며 배포·실습 성공 검사가 아닙니다.
+**환경별 설정을 그대로 실행하지 마세요.** 신규 환경은 가이드 L00에서 계정·테넌트·구독·이름·리전·네트워크를 먼저 정합니다. 쉘 변수를 설정해도 `config/lab.json`, Bicep 기본값, `.bicepparam`, 스크립트 내부 값이 자동 변경되지는 않습니다.
 
-모델 quota는 `targetComputeLocation`에서 확인하며, 이 필드가 없는 기존 단일 리전 설정만 `location`을 사용합니다. 현재 core 검사도 신규 GPT-5.4 할당 부족으로 차단될 수 있습니다. 모델을 생성하지 않는 Supercomputer 단계와 구분합니다.
+문서·데이터의 로컬 검사는 Azure를 변경하지 않습니다. 반면 Azure 실행 스크립트는 권한·리소스·과금에 영향을 줄 수 있으므로 [운영 명령의 경계](docs/deployment-reference/README.ko.md#operator-commands)를 먼저 확인하세요.
 
-```bash
-npm run readiness
-npm run readiness -- --require core
-```
+서비스 사용 승인, RBAC, 모델 quota, 지역 용량, 사설 연결은 별도 조건입니다. 모델 quota 부족을 다른 프로젝트의 배포 삭제로 해결하거나, 네트워크 오류를 조직 정책 해제로 우회하지 않습니다. 실패한 배포도 비용을 남길 수 있으므로 부분 진행 후에도 L09를 확인하세요.
 
-[L01](docs/labs/MICROSOFT-DISCOVERY-LAB.ko.md#l01)에 단계별 Bicep 미리 보기/배포, 사설 Storage, 미완료 상태를 명시한 Workspace-only 재개 경로를 추가했습니다. [L05](docs/labs/MICROSOFT-DISCOVERY-LAB.ko.md#l05)는 **실제 GA Tool 계약 `properties.version`**과 image digest를 사용합니다. 과거 [Workspace 요청 본문](infra/workspace-create.json)과 [3개 서브넷 템플릿](infra/main.bicep)은 과거/초기 생성용이며 확장된 환경에 무작정 재배포하지 않습니다.
+## 로컬 문서 빌드
 
-[L02](docs/labs/MICROSOFT-DISCOVERY-LAB.ko.md#l02)는 준비된 사설 VM을 시작해 `npm run blob:sync`로 입력을 검증하고 할당 해제하는 관리자 경로를 포함합니다. [A01](docs/labs/MICROSOFT-DISCOVERY-LAB.ko.md#a01)은 AKS 지역 용량과 모델 TPM 증액을 구분하고, 실제 존재하는 Foundry **Discovery Default Project**에서 quota 화면으로 들어가는 방법을 설명합니다.
-
-## 로컬 빌드
+문서 기여자용 절차입니다. Node.js 22 이상과 Python 3이 필요하며, 브라우저·PDF·아키텍처 그림 확인에는 설치된 Google Chrome이 필요합니다.
 
 ```bash
 npm ci
-npm run build:guide
-npm test
 npm run check:guides
 npm run build:architecture
+npm test
 npm run check:site
 ```
 
-Node.js 22 이상, Python 3을 사용합니다. 브라우저 확인에는 설치된 Google Chrome이 필요합니다.
+`check:guides`는 국문·영문 HTML을 빌드하고 링크·레이아웃·언어 전환을 검사한 뒤 PDF를 생성합니다. 문서는 Markdown, 그림은 Mermaid와 영문 SVG가 편집 원본입니다. HTML·PDF와 파생 그림은 빌드로 갱신하며 검사 화면·로그는 재생성 가능한 로컬 출력입니다. 이 절차는 Azure 환경을 구성하거나 실습 성공을 검증하지 않습니다.
 
-- `build:guide`: 분리된 영문·국문 HTML과 언어별 그림을 생성합니다.
-- `check:guides`: headless Chrome으로 링크·레이아웃·언어 전환·PDF를 확인합니다.
-- `build:architecture`: 아키텍처 그림을 로컬에서 해석하고 렌더링합니다.
+## 문서와 파일의 역할
 
-이 명령들은 Azure를 호출하거나 변경하지 않습니다. Mermaid는 문서 작성 도구의 의존성이며, Microsoft Discovery 제품의 의존성이 아닙니다.
+| 위치 | 용도 |
+|---|---|
+| `docs/labs/` | 고객·파트너용 공통 실습 절차와 완료 기준, 국문·영문 |
+| `docs/architecture/`, `assets/` | 공식 문서 기반 참조 구조와 그림. 실제 배포 목록과 구분 |
+| `docs/deployment-reference/`, `docs/reports/` | 특정 환경의 설치 시도·진행 현황·문제 해결·남은 작업, 한국어 |
+| `artifacts/` | 날짜가 있는 실행 근거와 역사적 매체. 고객 실습 절차나 현재 상태의 자동 판정값이 아님 |
+| `data/`, `scripts/score_materials.py`, `scripts/verify_ranking.py` | 합성 입력, 로컬 기준 계산, 실제 출력의 내용 검사. 내용 검사는 실행 위치를 증명하지 않음 |
+| `tools/thermal-ranking/` | CPU Action 도구 예제 |
+| `config/`, `infra/`, Azure 실행 스크립트 | 환경별 검토·수정이 필요한 운영 입력. 완성된 범용 설치 도구가 아님 |
+| `tests/` | 데이터·문서 일치·명령·링크·패키징 검사 |
 
-## 파일 구성
+## GitHub Pages 게시
 
-- `data/`: 직접 작성한 합성 TXT/CSV 입력 데이터입니다. 실제 연구 데이터는 없습니다.
-- `scripts/score_materials.py`: 로컬 기준 계산기입니다. 클라우드 실행을 증명하지 않습니다.
-- `scripts/verify_ranking.py`: `--case baseline` 또는 `--case cost3`으로 내려받은 원본 계산 파일의 모든 필드를 검사합니다. 실행 위치는 확인할 수 없어 `execution_verified: false`를 출력합니다.
-- `tools/thermal-ranking/`: 기본 CPU Action 도구 템플릿입니다. E01은 기본 도구를 바꾸지 않고 별도의 Hybrid 도구를 만드는 절차입니다.
-- `config/lab.json`: 현재 계정·구독·리전·RG의 명시적 범위입니다.
-- `scripts/azure-readiness.mjs`: 서비스 접근과 모델 quota를 분리하고 천 단위 TPM을 정확히 처리합니다.
-- `infra/`: 단계별 네트워크·역할·기반·Discovery 코어·사설 Blob·digest 고정 Tool Bicep입니다.
-- `docs/labs/`, `docs/architecture/`, `docs/reports/`: 정리한 가이드·아키텍처·실행 보고서입니다.
-- `scripts/run-discovery-tool.mjs`: 실제 Discovery 도구 실행과 별도 사설 파일 재조회. `npm run tool:run`은 Azure 변경 작업입니다.
-- `scripts/build-site.mjs`: 원본 `artifacts/`와 인증 정보를 제외한 공개용 사이트 빌드입니다.
-- `tests/`: 데이터·정답·문서 일치·범위·패키징 확인 코드입니다.
+**저장소와 커밋 이력은 공개 상태입니다.** Pages에는 정리된 문서만 게시하며 계정 식별자는 예시로 치환합니다. 원본 Azure 증거·설정·인프라 소스·PDF는 **Pages 사이트에서만 제외**되므로 필요한 소스는 이 저장소에서 확인하세요. 식별자 치환은 명령을 자신의 환경에 맞게 설정하는 과정을 대신하지 않습니다.
 
-## 이전 접근 점검
-
-[실행 보고서](https://junwoojeong100.github.io/microsoft-discovery-labs/docs/reports/EXECUTION-REPORT.ko.html)는 최신 배포와 2026-09-25의 과거 접근 시도를 구분합니다. `artifacts/azure-preflight.json`, [2026-09-30 등록 기록](artifacts/discovery-registration-followup-20260930.json), [이전 요약 영상(MP4)](artifacts/microsoft-discovery-summary.ko.mp4)은 과거 자료입니다. 영상은 **Discovery 핵심 기능의 성공 시연이 아닙니다.**
-
-`npm run preflight`는 Azure에 실제 읽기 요청을 합니다. 등록·접근 신청·리소스 그룹 생성 플래그는 변경 작업을 수행하므로 **로컬 문서 빌드 절차에는 포함하지 않습니다**.
+`npm run check:site`로 공개용 `site/`를 생성·확인합니다. Pages source는 GitHub Actions이며, 저장소 변수 `PAGES_ENABLED=true`일 때 **Publish lab documentation**이 `main`의 관련 변경을 게시합니다. 로컬 문서 수정·빌드만으로 게시 내용이 바뀌지는 않습니다.

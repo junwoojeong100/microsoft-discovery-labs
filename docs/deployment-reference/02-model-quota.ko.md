@@ -1,8 +1,31 @@
 # 02 — 모델 quota와 제출한 신청
 
-[목차](README.ko.md) · **기준일: 2026-10-01. 조회값과 신청 상태는 배포 직전에 재확인한다.**
+[목차](README.ko.md) · **최신 quota 확인: 2026-10-02 22:15 KST. 이전 할당·신청·생성 시도는 각 절의 관측 시각 기준이다.**
 
-## 08:29 KST 실제 생성 검증 — 200,000 TPM 안내만으로는 생성 불가
+> **작성자 환경의 quota 기록이다.** 아래 잔여량·요청 총한도는 고객 공통값이 아니다. 새 환경의 계산 원칙은 [가이드 A01](../labs/MICROSOFT-DISCOVERY-LAB.ko.md#a01)을 따른다.
+
+**후속 확인, 2026-10-02 22:15 KST:** 두 모델의 총한도는 여전히 각 1,000,000 TPM이며 가용량은 mini 990,000 / embedding 780,000 TPM이다. GA 생성 요구를 충족하지 못했고 Bookshelf는 0개다. [운영 현황 요약](../../artifacts/discovery-operator-status-20261002.json)을 따른다. 아래의 요청·슬라이더 변경 기록은 각 절의 과거 시각을 보존한다.
+
+**정리 이후 구분:** 사용자 승인으로 이전 Sweden 실행 자원과 그 Foundry 배포를 정리했다. 현재 Korea의 두 GPT-5.4 배포는 각 250,000 TPM이다. 아래의 이전 Sweden 1,000 TPM 보존·구독 합계 501,000 TPM 설명은 정리 전 기록이며 현재 배포 목록이 아니다.
+
+<a id="bookshelf-recovery-review"></a>
+## 우리 쪽 설정으로 해결할 수 있었는가
+
+**확인한 범위에서는 낮은 quota로 native Bookshelf를 생성하는 지원 경로를 찾지 못했다.** 아래는 작성자 환경의 조사·실험 결과이며, 고객 공통 가이드에 추가할 설치 단계가 아니다.
+
+| 검토·시도 | 확인한 결과 | 재사용할 판단 |
+|---|---|---|
+| 작은 Bookshelf를 생성만 하고 색인 보류 | GA 실제 생성에서 두 모델 각 2M TPM 요구 | 문서의 200k 안내나 사전검증 성공으로 생성 가능성을 확정하지 않음 |
+| 모델·TPM·SKU 변경, 기존 Foundry 연결 | 확인한 공개 GA/Preview 생성 계약에 해당 override가 없음. `managedResourceGroup`, `managedOnBehalfOfConfiguration`, `bookshelfUri`는 읽기 전용 | 임의 매개변수·태그나 로컬 readiness 기준 변경으로 provider 검증을 해제하지 않음 |
+| 공식 문서의 `2026-02-01-preview` 경로 | 사용자 승인으로 **1회만** 생성 요청. **10-02 17:16:17 KST Failed**, GA와 동일하게 두 모델 각각 `RequiredCapacity:2000` | Preview 전환은 이 환경의 해결책이 아니었음. 동일 요청 반복 금지 |
+| 기존 할당 모두 반환 | 총한도 자체가 각 1M TPM이므로 모두 반환해도 2M에 미달 | 다른 프로젝트의 정상 배포를 줄이거나 삭제하지 않음 |
+| 기능 등록·서비스 측 경로 | 공개된 낮은-quota 기능은 확인하지 못함. 개발용 feature는 변경하지 않음 | 공개 계약에 없는 옵션은 지원팀의 확인 없이는 사용하지 않음 |
+
+Preview 시도 후에도 Bookshelf와 해당 소유 관리 RG는 각각 0개였고, Korea Workspace·두 GPT-5.4 배포는 그대로였다. 색인·검색은 시작하지 않았다. [공식 네트워크 강화 배포 예제](https://learn.microsoft.com/azure/microsoft-discovery/how-to-deploy-network-hardened-stack#bookshelf)와 [공개 생성 계약](https://github.com/Azure/azure-rest-api-specs/blob/main/specification/discovery/Discovery.Management.Shared/control-plane.tsp)을 확인했지만, 계약이나 예제 자체를 낮은 quota의 실행 성공 근거로 사용하지 않는다. 실험 결과와 원본 해시는 [운영 현황 요약](../../artifacts/discovery-operator-status-20261002.json)에 보존했다.
+
+**지원 문의는 별도 경로다.** 기존 Foundry quota 증액 신청과 구분해 **Microsoft Discovery → Bookshelf / Graph RAG**에 생성 문서 200k와 provider 2M의 차이를 문의하는 초안을 준비했다. 이 제품 지원 문의는 **미제출**이며 제출 승인을 받지 않았다. 서비스 측 지원 설정·검증 조건 정정이나 실제 quota 반영을 확인해야 다음 생성 시도를 결정할 수 있다.
+
+## 2026-10-02 08:29 KST 실제 생성 검증 — 200,000 TPM 안내만으로는 생성 불가
 
 사용자 요청에 따라 `indexSize=small`인 Bookshelf의 **생성만** 제출했다. ARM validate·what-if는 통과했지만 실제 provider는 **생성 단계부터** `gpt-5-mini`와 `text-embedding-3-small`에 각각 `RequiredCapacity:2000`, 즉 **2,000,000 TPM**를 요구하며 거절했다. 가용량은 각각 capacity 990 / 780이며 부족분은 아래 표와 같다.
 
@@ -12,7 +35,7 @@
 
 ## 2026-10-02 후속 재확인
 
-**04:20 KST 재조회:** 사용자가 TPM 증설 신청 완료를 확인했지만 실제 한도는 아직 바뀌지 않았다. Korea Central의 GlobalStandard 기준이다. 아래 목표는 생성 최소치가 아니라 **새 Bookshelf에 추가 할당할 실습 운영 계획값**이며, 다른 배포의 기존 할당을 보존한 계산이다.
+**04:20 KST 재조회:** TPM 증설 신청은 접수됐지만 실제 한도는 아직 바뀌지 않았다. Korea Central의 GlobalStandard 조회다. 당시 아래 수치는 **새 Bookshelf의 운영 계획값**으로 사용했다. 이후 08:29 생성 요청에서도 mini·embedding의 같은 2M 조건이 요구됐다. 다른 배포의 기존 할당을 보존한 계산이다.
 
 | 모델 | 현재 미할당 TPM | 실습 운영 목표 TPM | 부족분 TPM |
 |---|---:|---:|---:|
@@ -22,7 +45,7 @@
 
 부족한 두 모델의 현재 총한도는 각각 **1,000,000 TPM**, 기존 할당은 각각 **10,000 / 220,000 TPM**다. 따라서 필요한 최소 새 총한도는 **gpt-5-mini 2,010,000 TPM**, **text-embedding-3-small 2,220,000 TPM**다. 여유를 포함해 이미 요청한 **각 총 3,000,000 TPM**는 아직 반영되지 않았다.
 
-[최신 조회와 계산](../../artifacts/discovery-policy-addon-result-20261002.json)의 `bookshelf.quotas`에 API thousand-TPM 단위를 환산해 기록했다. 신청 완료와 Microsoft 승인·실제 한도 반영은 구분한다. 기존 신청을 중복 제출하거나 다른 배포를 축소·삭제하지 않았으며 Bookshelf 생성은 계속 보류한다. 저장소 Public 전환이나 정책 애드온 복구는 Azure 모델 quota를 변경하지 않는다.
+[04:20 조회와 계산](../../artifacts/discovery-policy-addon-result-20261002.json)의 `bookshelf.quotas`에 API thousand-TPM 단위를 환산해 기록했다. 신청 완료와 Microsoft 승인·실제 한도 반영은 구분한다. 이 시각에는 생성이 보류됐으며 이후 시도 결과는 문서 상단을 따른다. 기존 신청을 중복 제출하거나 다른 배포를 축소·삭제하지 않았다. 저장소 Public 전환이나 정책 애드온 복구는 Azure 모델 quota를 변경하지 않는다.
 
 ## 최종 실습 할당 — 사용자 지정
 
@@ -113,7 +136,7 @@ Workspace의 `gpt-5.4`도 별도다. 공식 중요 안내의 총 500,000 TPM 준
 
 [접수 기록](../../artifacts/discovery-model-quota-requests-20261001.json)에 두 건의 확인 결과가 있다. **접수 완료이며, Microsoft 승인·실제 한도 반영은 미확인**이다. 화면에 별도 접수번호는 표시되지 않았다.
 
-15:53의 실제 조회에서는 두 모델의 총한도가 여전히 각 **1,000,000 TPM**였다. 따라서 **조회값에는 증액이 아직 반영되지 않았다**. 승인 회신을 받았다고 주장하지 않으며 중복 제출하지 않는다. GPT-5.4의 미할당 2,750,000 TPM와 GPT-5.2의 2,990,000 TPM는 각각 현재 사전 점검을 통과한다.
+15:53의 실제 조회에서는 두 모델의 총한도가 여전히 각 **1,000,000 TPM**였다. 따라서 **해당 조회값에는 증액이 반영되지 않았다**. 승인 회신의 증거는 없으며 중복 제출하지 않는다. 당시 GPT-5.4의 미할당 2,750,000 TPM와 GPT-5.2의 2,990,000 TPM는 해당 사전 점검을 통과했다. 이후 GPT-5.4 할당 변경과 혼동하지 않는다.
 
 16시대 중앙 진단 복구 이후의 [재조회](../../artifacts/discovery-governance-readiness-20261001.json)도 같은 수치였다. 진단 저장소 생성이 모델 quota를 늘리거나 Bookshelf 운영 준비를 완료시키지는 않는다.
 
@@ -136,15 +159,16 @@ Workspace의 `gpt-5.4`도 별도다. 공식 중요 안내의 총 500,000 TPM 준
 
 ## 읽기 전용 재확인
 
-저장소 루트에서 실행한다. 아래 명령은 Azure를 변경하지 않는다. `readiness`는 로컬의 최신 증거 JSON을 갱신하므로 이전 결과를 보존해야 한다면 먼저 별도 보관한다.
+저장소 루트에서 실행한다. 아래는 작성자 환경의 **Korea Central target**을 다시 조회하는 예시다. 조회 위치만으로 quota pool의 독립성을 판단하지 말고 Foundry의 Scope도 확인한다. Azure는 변경하지 않지만 `readiness`는 로컬 증거 JSON을 갱신하므로 이전 결과는 필요 시 먼저 보관한다.
 
 ```bash
 npm run readiness
 npm run readiness -- --require core
 
+TARGET_COMPUTE_LOCATION='koreacentral'
 az cognitiveservices usage list \
   --subscription 51531604-2337-4c05-bc05-3c3d4ff154e5 \
-  --location swedencentral \
+  --location "$TARGET_COMPUTE_LOCATION" \
   --query "[?name.value=='OpenAI.GlobalStandard.gpt-5-mini' || name.value=='OpenAI.GlobalStandard.text-embedding-3-small'].{metric:name.value,limit:limit,allocated:currentValue,description:name.localizedValue}" \
   --output json
 ```

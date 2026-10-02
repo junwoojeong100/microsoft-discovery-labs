@@ -1,24 +1,47 @@
 # Microsoft Discovery Core Capabilities Hands-on Guide
 
-**English · Execution-informed revision 2026-10-01 · Azure cloud service**
+**English · Documentation revised 2026-10-02 · Work in progress · Azure cloud service**
 
 [한국어](MICROSOFT-DISCOVERY-LAB.ko.md) · [English browser edition](https://junwoojeong100.github.io/microsoft-discovery-labs/docs/labs/MICROSOFT-DISCOVERY-LAB.en.html)
 
 **One goal: build a research workflow that finds evidence, verifies it with real computation, and evaluates the results again when a human changes the constraints.**
 
-> **Validation boundary:** This revision incorporates prerequisites, failures, and recovery steps observed during real Azure deployment. See the [execution report](../reports/EXECUTION-REPORT.ko.md) for current status and incomplete steps, and the [read-only readiness evidence](../../artifacts/discovery-readiness.json) for service access/model quota. Resource creation, data-plane access, Bookshelf indexing, and research execution have separate pass criteria. Neither local reference results nor ARM `Succeeded` prove an end-to-end lab run.
+> **The complete research workflow is still under validation.** This guide provides procedures for customers and partners to follow in their own environment. **Pause any stage whose prerequisites are not ready**, and proceed only when actual results meet its pass criteria. Environment-specific installation history is kept in the separate reference below.
 
 <a id="s00"></a>
 ## S00 — Start here
 
-Microsoft Discovery cloud became **generally available on 2026-06-02**. The separate **Discovery desktop app and unified Workbench are in Preview** and are not required for this guide. Use the **Discovery Engine**, not deprecated static `kind: workflow` agents. Documentation may retain `(Preview)` after it disappears from the subscription's role display names. Automation uses verified role GUIDs; a display-name change does not prove a permission change.[S01][] [S03][] [S10][] [S28][]
+### Choose your route
+
+For a new environment, use the **Azure Portal-led, single-region route**. If an administrator has already prepared your environment, confirm H01–H06 and start on the researcher route. Select your own account, subscription and resource names in [L00](#l00).
 
 | Audience | Route |
 |---|---|
-| Administrator preparing an environment | L00 → L01 → L02 → L03, then L05 steps 1–5 to prepare the tool |
-| Researcher using a prepared environment | Confirm H01–H06 below → L04 → L05 steps 6–8 → L06 → L07 → L09 |
-| Team verifying collaboration and access | Add L08. Actual verification requires another test user |
-| Developer extending tools | Add E01 and E02 |
+| Administrator preparing an environment | [L00](#l00) → [L01](#l01) → [L02](#l02) → [L03](#l03), then [L05](#l05) steps 1–5 to prepare the tool |
+| Researcher using a prepared environment | Confirm H01–H06 below → [L04](#l04) → [L05](#l05) steps 6–8 → [L06](#l06) → [L07](#l07) → [L09](#l09) |
+| Team verifying collaboration and access | Add [L08](#l08). Actual verification requires another test user |
+| Developer extending tools | Add [E01](#e01) and [E02](#e02) after the core route |
+| Reader reviewing without Azure | Review synthetic data/answers in [S02 — Scenario](#s02) and **only local calculation step 1** in L05 |
+
+**If blocked:** See [A01 — Cost and quota](#a01) and [A02 — Troubleshooting](#a02). Independent foundation, data and tool preparation can proceed while Bookshelf is blocked, but cannot substitute for KB-dependent research completion. Use L09 to review remaining resources and costs even after a partial run.
+
+### What you will build
+
+Start with the intended outcome. These are results to create and verify during your lab, not a claim that they already exist.
+
+| Stage | Activity | Result to inspect |
+|---|---|---|
+| Prepare — L00–L03 | Set up the environment, data and knowledge index | Accessible Project, input files and indexed KB |
+| Evidence — L04 | Compare documents with specialist agents | Openable source citations and structured evidence |
+| Compute — L05 | Evaluate candidates with a CPU tool | Actual run ID/logs and verified `ranking.json` |
+| Research workflow — L06–L07 | Connect tasks, review independently and change constraints | Research report and before/after comparison |
+| Finish — L09 | Preserve results and execution evidence | Reviewable outputs/provenance and remaining work/costs |
+
+**Completion rule:** Distinguish resource creation, actual execution and content validation. A direct API calculation does not prove that the agent or Engine labs have passed.
+
+**For readers investigating an installation:** Environment-specific attempts, outcomes and progress are collected in the [deployment reference, Korean](../deployment-reference/README.ko.md). Those records are not required reading for this lab.
+
+### Obtain the administrator handoff
 
 **Role boundary:** Bookshelf, node-pool, Registry, tool creation, and indexing preparation belong to administrators or explicitly authorized resource operators. Project Contributor alone does not authorize all these actions. Coordinate with an administrator rather than granting every researcher subscription Owner for convenience. [S20][]
 
@@ -33,7 +56,13 @@ Microsoft Discovery cloud became **generally available on 2026-06-02**. The sepa
 | H05 | `thermal-ranking` Tool ID, definition version/image digest, full `cpulab` Node pool ID |
 | H06 | Researcher's project/model/tool/KB permissions and Blob/network access to inputs and outputs |
 
-Allow separate time for access approval, deployment, and indexing. Plan **approximately 2–3 hours** for the researcher exercises, not a guaranteed completion time. Every lab follows **Goal → Steps → Pass criteria**. Advance only after the relevant prerequisites pass.
+H01–H06 are a handoff checklist, not this repository's completion status. If actual names differ from the examples, update subsequent prompts and connections too. Defer exercises that depend on any unmet item.
+
+Access approval, deployment and indexing require separate time. **Approximately 2–3 hours** is an unverified planning estimate for researcher exercises, not a measured full-run duration. Every lab follows **Goal → Before you start → Steps → Pass criteria**.
+
+### Terms and product scope
+
+Microsoft Discovery cloud became **generally available on 2026-06-02**. The separate **Discovery desktop app and unified Workbench are in Preview** and are not required. Use the **Discovery Engine**, not deprecated static `kind: workflow` agents. Distinguish a role's `(Preview)` display suffix from its actual permissions.[S01][] [S03][] [S10][] [S28][]
 
 **Keep the concepts separate.** A Workspace is the shared infrastructure boundary, a Project is the research and access boundary, and a Shared session groups related research tasks. Documentation and APIs also use *investigation* for the associated research container. A Discovery Storage Container is a **storage-reference resource**, not the Azure Blob container itself.[S02][] [S12][] [S16][]
 
@@ -78,7 +107,7 @@ All data was authored specifically for this exercise and is **synthetic**. It is
 | `scripts/score_materials.py` | Reference calculator using only the standard library |
 | `scripts/verify_ranking.py` | Validates the complete downloaded raw ranking-file contract, not its execution location |
 | `tools/thermal-ranking/` | CPU-tool Dockerfile and definition template |
-| `config/lab.json` | Account, subscription, and region for this lab |
+| `config/lab.json` | Environment configuration read by Azure scripts; replace with your own values before use |
 
 | Property | Hard requirement |
 |---|---|
@@ -116,53 +145,107 @@ score = 50 * min(conductivity_w_mk / 250, 1)
 
 **Goal:** Treat service approval, Azure permissions, networking, and spending approval as separate prerequisites.
 
+**Before you start:** Identify the environment administrator and the people approving cost and access. No Azure resources need to be created yet.
+
+### Local preparation and environment values
+
+Download the repository to use the inputs and tool. These are **local setup commands for a first checkout**. Run subsequent Bash examples from the repository root in the same session. On Windows, use a Bash environment rather than pasting them into PowerShell.
+
+```bash
+git clone https://github.com/junwoojeong100/microsoft-discovery-labs.git
+cd microsoft-discovery-labs
+npm ci
+```
+
+| Prerequisite | Used for |
+|---|---|
+| Git, Node.js 22+/npm, Python 3 | Repository setup, readiness, reference calculation/content checks |
+| Azure CLI and normal user sign-in | Azure read/write commands below |
+| Browser and approved private connectivity | Portal/Studio and private-only Blob files |
+| Google Chrome | Only contributors regenerating browser/PDF documentation outputs |
+
+**`config/lab.json` contains environment-specific values.** Edit the following fields in your own local checkout first. Do not add passwords, tokens or keys, and do not inadvertently commit environment identifiers or evidence to a public repository.
+
+| Input | Value and constraint |
+|---|---|
+| `account`, `tenantId` | Actual CLI user's UPN and tenant ID |
+| `subscriptionId`, `subscriptionName` | ID and display name of the approved lab subscription |
+| `resourceGroup`, `labTag` | Dedicated `rg-discovery-hol-<unique-suffix>`, tag value `microsoft-discovery-core-hol`; repository scripts require this RG prefix |
+| `location`, `targetComputeLocation` | **Both `swedencentral`** for the baseline. Another supported single region is possible after support/quota checks |
+| Workspace, Supercomputer, Storage, ACR and Bookshelf names | Select your own; check service-specific naming rules and uniqueness |
+| VNet, subnets and UAMI | L01 names are examples; check CIDR overlap and organizational policy |
+| `runtime` object | Actual names for the operator's `tool:run`; unused by the normal Portal route |
+
+Replace every `<...>` below. **Shell variables do not automatically update JSON, Bicep or values embedded in scripts.** Check agreement with the configuration separately.
+
+```bash
+TENANT_ID='<tenant-id>'
+SUBSCRIPTION_ID='<subscription-id>'
+RESOURCE_GROUP='rg-discovery-hol-<unique-suffix>'
+LOCATION='swedencentral'
+STORAGE_ACCOUNT='<globally-unique-storage-name>'
+ACR_NAME='<globally-unique-acr-name>'
+```
+
 **Steps:**
 
-1. Match the signed-in account to `config/lab.json`. This lab targets `junwoojeong@MngEnvMCAP757124.onmicrosoft.com`, subscription `51531604-2337-4c05-bc05-3c3d4ff154e5`, and tenant `46e9cdaa-fed3-4131-aa28-c1fc8a8a043a`. Do not rely on a different default subscription.
+1. Complete normal MFA/security-key sign-in and select your subscription. Compare the displayed account, tenant and subscription with your edited `config/lab.json`. These commands change local CLI sign-in context, not Azure resources.
+
+```bash
+az login --tenant "$TENANT_ID"
+az account set --subscription "$SUBSCRIPTION_ID"
+az account show --query "{subscription:id,tenant:tenantId,user:user.name}"
+```
+
 2. Confirm with your Microsoft representative that the subscription is **enabled for Discovery**. Spending approval and Contributor permissions do not replace the service allow-list.[S03][] [S04][]
 3. In Azure Portal → Subscriptions → your subscription → Resource providers, check/register `Microsoft.Discovery` and the dependencies listed in the official guide. Registration requires appropriate subscription permissions. The following command is read-only.
 
 ```bash
 az provider show --namespace Microsoft.Discovery \
-  --subscription 51531604-2337-4c05-bc05-3c3d4ff154e5 \
+  --subscription "$SUBSCRIPTION_ID" \
   --query "{state:registrationState,types:resourceTypes[].resourceType}"
 ```
 
-4. Check the actual `workspaces`/`supercomputers`/`bookshelves` types and a successful Workspace listing API, not just `Registered`. **Do not fail access solely because `DefaultFeature=Pending`.** On 2026-10-01 it remained Pending while `DiscoveryEnabled`/`DiscoveryPreview`/`PublicPreview` were Registered and the listing API succeeded. Conversely, provider registration does not prove quota, deployment, or execution readiness. Do not register arbitrary development features.
+4. Check actual `workspaces`/`supercomputers`/`bookshelves` types and a successful Workspace listing with readiness below, not just `Registered`. **Do not fail access solely because `DefaultFeature=Pending`.** Conversely, provider registration does not prove quota, deployment or execution readiness. Do not register arbitrary development features.
 5. Have an administrator prepare the Platform Administrator persona and the managed identity's least-privilege roles. **Permission to assign roles is separate.** Verify the actual Owner/RBAC Administrator/User Access Administrator or equivalent authority. Researcher and reviewer project roles are covered in L08.
 6. The administrator reviews/configures the subscription-level **Discovery NSP Perimeter Joiner + Reader** assignments for the Discovery control-plane service App (`92c174ac-8e41-4815-a1b7-d81b19ab03ce`) using the official procedure. Do not assume ordinary Contributor includes role-assignment authority.[S18]
-7. Choose a supported production region: **East US / Sweden Central / UK South**. This guide uses `swedencentral`. Check model/VM quota and always-on costs in A01.
-8. Complete normal MFA/security-key sign-in. For private access, prepare VPN/ExpressRoute and Blob connectivity. Verify Portal sign-in, Studio access, and opening Blob outputs separately.
+7. Choose a supported home region: **East US / Sweden Central / UK South**. The baseline uses `swedencentral`, with support resources in the same region. If cross-region placement is required, separately apply the [official procedure](https://learn.microsoft.com/azure/microsoft-discovery/how-to-deploy-across-regions). Do not apply Microsoft-owned-subscription-only tags to an ordinary customer subscription.
+8. Obtain approval for [A01](#a01)'s model/VM quota, actual regional capacity, always-on costs and retention period. Prepare VPN/ExpressRoute or an approved VNet client for private Blob access. Check Portal sign-in, Studio access and Blob file opening separately, repeating the checks after resource creation.
 
 **Separate LoadBalancer network prerequisite:** Check `Microsoft.Network/AllowBringYourOwnPublicIpAddress` using the [official troubleshooting guidance](https://learn.microsoft.com/azure/microsoft-discovery/troubleshoot-microsoft-discovery#supercomputer-deployment-stalls-because-a-required-public-ip-feature-isnt-registered). Discovery enablement and `Microsoft.Network=Registered` do not substitute for this feature registration.
 
 ```bash
 az feature show --namespace Microsoft.Network \
   --name AllowBringYourOwnPublicIpAddress \
-  --subscription 51531604-2337-4c05-bc05-3c3d4ff154e5 \
+  --subscription "$SUBSCRIPTION_ID" \
   --query "{name:name,state:properties.state}"
 ```
 
-Only when it is `NotRegistered`, an administrator with subscription feature-registration permissions runs these **mutation commands**. Verify the feature is `Registered` before re-registering the provider. Do not treat `Pending` as approval.
+Only when it is `NotRegistered`, an authorized administrator runs this **mutation command** within the approved scope.
 
 ```bash
 az feature register --namespace Microsoft.Network \
   --name AllowBringYourOwnPublicIpAddress \
-  --subscription 51531604-2337-4c05-bc05-3c3d4ff154e5
-az provider register --namespace Microsoft.Network \
-  --subscription 51531604-2337-4c05-bc05-3c3d4ff154e5 --wait
+  --subscription "$SUBSCRIPTION_ID"
 ```
 
-During the afternoon follow-up on 2026-10-01, the current account's inherited Owner role allowed immediate registration. Provider re-registration and independent read-back also completed; this subscription required no separate Microsoft approval wait. User consent alone does not grant RBAC permissions or guarantee approval in another subscription. This feature is separate from AKS regional capacity and model quota increases.
+Use the preceding `az feature show` to confirm `Registered` **before** re-registering the provider. If `Pending`, wait or consult the responsible administrator.
 
-Run the following read-only checks without a browser. They verify the account, tenant, and subscription in `config/lab.json` without saving tokens. Exit `0` means the selected access/model-quota checks passed, `2` means a prerequisite is blocked, and `1` means a lookup/authentication error.
+```bash
+az provider register --namespace Microsoft.Network \
+  --subscription "$SUBSCRIPTION_ID" --wait
+```
+
+Approval timing can differ by subscription. This feature registration is separate from RBAC grants, AKS regional capacity and model quota increases.
+
+**Read-only precheck:** This verifies the account, tenant and subscription in your edited `config/lab.json` without saving tokens. It updates `artifacts/discovery-readiness.json`; preserve prior evidence first if needed. Exit `0` means the selected access/model-quota checks passed, `2` means a prerequisite is blocked, and `1` means a lookup/authentication error.
 
 ```bash
 npm run readiness
 npm run readiness -- --require core
 ```
 
-The default includes Bookshelf. `--require core` separately checks the Workspace's GPT-5.4 requirement without hiding Bookshelf shortfalls. This conservative precheck measures **unallocated quota for new allocations**. When reusing deployed models, inspect their existing allocations instead of creating duplicates. Neither command proves VM, role, network, or Studio readiness.
+The default includes Bookshelf. `--require core` checks core access and the Workspace's GPT-5.4 requirement only. Model lookup uses `targetComputeLocation`, falling back to `location` only when that field is absent. This conservative precheck measures **unallocated quota for new allocations**; when reusing deployed models, inspect existing allocations rather than creating duplicates. Neither command proves VM quota, physical capacity, role propagation, network or Studio readiness.
 
 If only Bookshelf quota is insufficient, prepare the L01 foundation/core separately, leave L03 and H03 incomplete, and do not claim the full research lab passed.
 
@@ -173,10 +256,12 @@ If only Bookshelf quota is insufficient, prepare the L01 foundation/core separat
 
 **Goal:** Prepare shared infrastructure for the researcher labs. For an existing environment, verify the pass criteria instead of redeploying.[S03][] [S18][]
 
+**Before you start:** L00's core access, permissions, model quota, regional capacity and spending checks have passed. This stage may proceed if only Bookshelf is blocked.
+
 **Steps:**
 
-1. Use the dedicated RG **`rg-discovery-hol-20260930`**, matching `config/lab.json`. Do not mix it with the historical report's `20260925` RG. Check global uniqueness of Workspace, storage-account, and Bookshelf names. The Workspace uses lowercase letters; Project `thermalhol` is lowercase and at most 12 characters. Confirm actual creation of the names below using the execution report and live Azure GETs.
-2. Create VNet `vnet-discovery-hol`. `10.80.0.0/16` is illustrative; replace it with an approved range if it overlaps existing networks.
+1. Use your dedicated RG and names selected in L00. Create a new RG in the chosen region and record tags `project=microsoft-discovery-core-hol`, `environment=lab`. Workspace names use lowercase letters; example Project `thermalhol` is lowercase and at most 12 characters. Check actual naming and uniqueness rules in the creation form.
+2. Prepare an example VNet `vnet-discovery-hol` and the subnets below. Use a **separate VNet per Workspace**. `10.80.0.0/16` and its subnet ranges are examples; replace them with approved, nonoverlapping ranges. For an existing VNet, add only the required subnets rather than redeploying its entire subnet array.
 
 | Subnet | Example CIDR | Configuration |
 |---|---|---|
@@ -187,110 +272,63 @@ If only Bookshelf quota is insufficient, prepare the L01 foundation/core separat
 | `agentSubnet` | `10.80.5.0/24` | Microsoft.App/environments delegation + Storage endpoint |
 | `searchSubnet` | `10.80.6.0/24` | Dedicated to Bookshelf; Microsoft.App/environments delegation + Storage endpoint |
 | `bookshelfPeSubnet` | `10.80.7.0/24` | Dedicated to Bookshelf |
-| `storagePeSubnet` | `10.80.8.0/24` | Dedicated customer Blob Storage Private Endpoint for the enforced organizational policy |
+| `storagePeSubnet` | `10.80.8.0/24` | Dedicated customer Blob Storage Private Endpoint |
 | `blobClientSubnet` | `10.80.9.0/24` | Optional administrator-only private Blob client VM; inbound traffic denied |
 
-3. Create or reuse UAMI `id-discovery-hol`. Grant Discovery Platform Contributor on the RG, Storage Blob Data Contributor on the data account, and AcrPull on the Registry. Because this lab uses one UAMI for the Supercomputer cluster/kubelet/workload identities, also prepare Network Contributor on the VNet and Managed Identity Operator on that UAMI. The operator needs a separate Blob data role; Owner does not replace it. Do not share subnets with other Workspaces/Bookshelves.
-4. Create a Standard LRS storage account and Blob containers `discoveryinputs` and `discoveryoutputs`. **This subscription's organizational policy disables public Storage access.** The template now explicitly sets `publicNetworkAccess=Disabled` with shared keys/anonymous blobs disabled. Use the Private Endpoint/DNS stage below and an approved client path inside the VNet; an allowed public IP cannot override this policy. CORS uses `https://studio.discovery.microsoft.com`, `https://vscode.dev`, `https://*.vscode-cdn.net`; GET/HEAD/PUT/DELETE/OPTIONS; headers `*`; Max age 200. CORS replaces neither authentication nor private connectivity.
-5. In **Microsoft Discovery Supercomputers → Create**, configure the VNet, `aksSubnet`, system SKU `Standard_D4s_v6`, and Cluster/Kubelet/Workload identity. The template explicitly uses `outboundType=LoadBalancer` for egress. Subnet `defaultOutboundAccess=false` does not block every outbound path. Then use **Settings → Node pool → Create** to create `cpulab`: min 0 / max 1 and GPU 0 for the user tool pool, separate from the always-on system pool.
-6. In **Microsoft Discovery Workspaces → Create**, connect the subnets, UAMI, and Supercomputer. This lab uses **`NetworkIsolation=true` + `publicNetworkAccess=Enabled`**: managed resources remain isolated while Studio/REST uses the authenticated service endpoint. This is neither `NetworkIsolation=false` nor anonymous access. A private-only Workspace instead requires its own Discovery private endpoint, DNS, and VPN/ExpressRoute first. Do not add Preview Workbench tags. Use MMK by default; CMK requires separate Key Vault and permission configuration.
-7. In Workspace **Settings → Chat Model Deployments**, verify that the validation deployment **`gpt-5-4` / model `gpt-5.4`** actually exists. Create it if missing. Distinguish it from the automatically provisioned cognition deployment. Do not replace it arbitrarily when adding other agent models.
-   **Final allocation for this lab:** automatic cognition `gpt-5.4` **250,000 TPM** plus validation `gpt-5-4` **250,000 TPM**, both **Global Standard**, totaling **500,000 TPM**. Enter **250** each when the field uses kTPM or `sku.capacity`. Verify model `gpt-5.4` and version `2026-03-05` separately from the deployment name. Reserve 250,000 TPM for validation rather than assigning all remaining quota to cognition. Data Zone is not used in this final configuration.
-8. In Studio <https://studio.discovery.microsoft.com> → **Data → Storage Containers (new) → Create Container**, create `thermaldata` and link the storage account. This registers a reference; it does not copy data.
-9. In **Workspaces → your Workspace → Create Project**, create `thermalhol` and link the Storage Container. An administrator checks actual data-plane access on the Workspace managed resource group (MRG), granting Foundry User only where needed. In this run the service had already granted the operator Foundry Owner on that MRG, so no redundant Foundry User assignment was added. This differs from having only management-plane Owner.
-10. Record resource IDs and MRGs. Wait for **`Succeeded`**, not merely `Accepted`. Finalize Discovery-resource tags before creation because the documentation states they cannot be changed afterward.
+3. Create example UAMI `id-discovery-hol` or reuse an approved dedicated identity. The signed-in user, this UAMI and the Discovery control-plane service principal are distinct.
+4. Create Standard LRS Storage using L00's `STORAGE_ACCOUNT`, with Blob containers `discoveryinputs` and `discoveryoutputs`. Also prepare Basic ACR named `ACR_NAME`, or reuse an approved Registry.
+5. With those resources available, assign the following roles at the exact scopes. Management-plane Owner does not replace Blob data access.
 
-### Executable CLI path from the existing foundation
-
-**Evening cross-region run on 2026-10-01:** The default commands below target the previous single-region Sweden Central environment. The current request uses **home=`swedencentral`, target compute=`koreacentral`** with [separate parameters and staged resumption notes](../deployment-reference/06-resume-runbook.ko.md). Do not change Discovery's `location` to Korea Central or try to migrate an existing Workspace by adding a tag. Create separate support resources and apply `discovery.overridemrgregion` at creation, preserving existing data and models. Do not run the default commands unchanged against the new `-kc` environment.
-
-Templates are separated by stage. **Do not use deletion/Complete mode.** Only a new environment needs initial provisioning through `infra/main.bicep` and `infra/identity.bicep`; the current RG/VNet/UAMI already exist. A full VNet PUT involving the three existing subnets failed actual validation with `IncompatibleDelegations`, so the expansion now creates only four child subnet resources. Do not redeploy the old three-subnet VNet template after expansion.
-
-| Order | Template | Expected result |
+| Principal | Scope | Role/purpose |
 |---|---|---|
-| 1 | `infra/access.bicep` | Official control-plane SP gets NSP Joiner + Reader. If the role exists under another GUID, reuse it with the administrator rather than creating a duplicate |
-| 2 | `infra/expand-network.bicep` | Add only four subnets; preserve the original three |
-| 3 | `infra/lab-foundation.bicep` | LRS Storage, two Blob containers, Basic ACR, and scoped roles |
-| 4 | `infra/discovery-core.bicep` | Supercomputer, cpulab, Workspace, model, Storage Container/Assets, and Project |
-| 5 | `infra/storage-private-access.bicep` | Dedicated eighth subnet, Blob Private Endpoint, and private DNS; reuse an existing matching DNS zone/VNet link |
+| Discovery UAMI | Lab RG | Microsoft Discovery Platform Contributor |
+| Same UAMI | VNet / that UAMI | Network Contributor / Managed Identity Operator; this example shares one UAMI across cluster, kubelet and workload |
+| Same UAMI | Storage / ACR | Storage Blob Data Contributor / AcrPull; check the corresponding pull role separately for ABAC-enabled ACR |
+| User uploading/opening files | Lab Storage | Blob data role appropriate to the operation |
+| Tool-image builder | ACR | Roles required for ACR Tasks build/push, separate from pull permissions |
 
-Verify the values below. Keep subscription and region consistent; for another environment, change the Bicep resource-name parameters as well.
+**Storage connectivity:** The baseline uses `publicNetworkAccess=Disabled`, with shared keys and anonymous blobs disabled. Create a **Blob** Private Endpoint in `storagePeSubnet`; verify connection approval and the record/VNet link for `privatelink.blob.core.windows.net`. Reuse an existing DNS zone rather than linking duplicate namespaces. From an approved VNet/VPN client, verify private-IP resolution of the Blob FQDN and Entra-authenticated container access. Creating the endpoint alone does not connect a laptop.
 
-```bash
-SUBSCRIPTION_ID='51531604-2337-4c05-bc05-3c3d4ff154e5'
-RESOURCE_GROUP='rg-discovery-hol-20260930'
-LOCATION='swedencentral'
-az account set --subscription "$SUBSCRIPTION_ID"
-az account show --query "{subscription:id,tenant:tenantId,user:user.name}"
-CONTROL_PLANE_OBJECT_ID=$(az ad sp show \
-  --id 92c174ac-8e41-4815-a1b7-d81b19ab03ce \
-  --query id -o tsv)
-ADMIN_OBJECT_ID=$(az ad signed-in-user show --query id -o tsv)
-```
+Example browser CORS: origins `https://studio.discovery.microsoft.com`, `https://vscode.dev`, `https://*.vscode-cdn.net`; methods GET/HEAD/PUT/DELETE/OPTIONS; allowed/exposed headers `*`; Max age 200. Check organizational policy and actual UI requirements. **CORS replaces neither authentication, RBAC nor private connectivity.** Policy may alter Storage settings, so inspect created values, not only the request.
 
-`az ad` uses Microsoft Graph and does not accept `--subscription`. Explicitly select the CLI subscription context above, then compare the displayed tenant/account with L00. Continue passing `--subscription` to ARM commands.
+6. In Portal → **Microsoft Discovery Supercomputers → Create**, set your name/region, VNet, `aksSubnet`, system SKU `Standard_D4s_v6`, and Cluster/Kubelet/Workload identity. This example's `outboundType=LoadBalancer` provides explicit egress: confirm policy permits it, and do not interpret `defaultOutboundAccess=false` as blocking every outbound path. After the parent is **Succeeded**, use **Settings → Node pool → Create** for `cpulab`: `supercomputerNodepoolSubnet`, `Standard_D4s_v6`, min 0 / max 1, GPU 0. This user pool is separate from the always-on system pool.
+7. In **Microsoft Discovery Workspaces → Create**, connect your Workspace name, `workspaceSubnet`, `privateEndpointSubnet`, `agentSubnet`, UAMI and successful Supercomputer. The baseline is **`NetworkIsolation=true` + `publicNetworkAccess=Enabled`**, only where organizational policy permits. Distinguish isolated managed resources from public network access to authenticated Studio/REST endpoints. A private-only Workspace additionally requires Discovery Private Endpoint, DNS and client connectivity.[S18]
+8. After the Workspace is **Succeeded**, check actual user data-plane access on its MRG. Assign the documented Foundry User role where needed, without duplicating equivalent existing access. In **Settings → Chat Model Deployments**, check validation deployment **`gpt-5-4` / model `gpt-5.4`**, creating it only if absent. It is separate from automatic cognition.
 
-Run each stage's `what-if` first and inspect its scope. Then **replace `what-if` with `create` in that same command** to apply it. Finish each stage before the next; retain the default Incremental mode for RG deployments.
+| Model purpose | Lab planning allocation | Verify |
+|---|---|---|
+| Automatic cognition | Global Standard 250,000 TPM | Actual automatic deployment name, state and allocation |
+| Validation `gpt-5-4` | Global Standard 250,000 TPM | Exact deployment name and model `gpt-5.4` |
+| Total | 500,000 TPM | Additional allocatable quota after existing deployments |
 
-```bash
-az deployment sub what-if --name discovery-access-20261001 \
-  --subscription "$SUBSCRIPTION_ID" --location "$LOCATION" \
-  --template-file infra/access.bicep \
-  --parameters discoveryControlPlaneObjectId="$CONTROL_PLANE_OBJECT_ID"
+If this GPT-5.4 field uses kTPM/`sku.capacity`, enter `250` each. Check supported model revisions in the creation screen and verify the stored values. Do not consume all remaining quota with cognition and block validation. Other models/deployment types require separate support and quota checks.[S05]
 
-az deployment group what-if --name discovery-network-expansion-20261001 \
-  --subscription "$SUBSCRIPTION_ID" --resource-group "$RESOURCE_GROUP" \
-  --template-file infra/expand-network.bicep
+9. In Studio <https://studio.discovery.microsoft.com> → **Data → Storage Containers (new) → Create Container**, create `thermaldata` and link your Storage account. This is an account **reference**, not a file upload.
+10. In **Workspaces → your Workspace → Create Project**, create `thermalhol` and link `thermaldata`. Verify each resource's **Succeeded** state, actual IDs/MRGs and ability to open the project; record H01–H02. Do not add Preview Workbench tags. Use MMK by default; CMK needs separate design. Finalize creation-only tags and identity settings before creation.
 
-az deployment group what-if --name discovery-foundation-20261001 \
-  --subscription "$SUBSCRIPTION_ID" --resource-group "$RESOURCE_GROUP" \
-  --template-file infra/lab-foundation.bicep \
-  --parameters administratorObjectId="$ADMIN_OBJECT_ID"
+### If using Bicep
 
-az deployment group what-if --name discovery-core-20261001 \
-  --subscription "$SUBSCRIPTION_ID" --resource-group "$RESOURCE_GROUP" \
-  --template-file infra/discovery-core.bicep
-```
+**Do not apply both Portal and Bicep routes to the same resources.** Repository templates are staged inputs from actual runs, not a finished installer that automatically adapts every value to a customer environment.
 
-**Policy lesson:** The first Storage what-if showed a public endpoint with a selected IP, but management-group policy `StorageAccount_PublicNetwork_Modify` changed it to Disabled during creation. An empty RG-level policy listing does not mean there are no inherited management-group policies. Inspect Activity Log's `Microsoft.Authorization/policies/modify/action` and the actual GET response. The template now matches policy; do not disable policy or firewall controls.
+| Purpose | Reference inputs | Review before use |
+|---|---|---|
+| New single-region foundation | `infra/main.bicep`, `infra/identity.bicep`, `infra/expand-network.bicep`, `infra/lab-foundation.bicep` | Names, CIDRs, allowed regions, administrator object ID and policy; `main.bicep` currently allows Sweden Central only |
+| Service permissions/private Blob access | `infra/access.bicep`, `infra/storage-private-access.bicep` | Control-plane tenant object ID; reuse existing roles/DNS |
+| Discovery core | `infra/discovery-core.bicep` | Actual support-resource bindings and model allocations; excludes Bookshelf/indexing pool |
+| Cross-region placement when needed | [Official cross-region procedure](https://learn.microsoft.com/azure/microsoft-discovery/how-to-deploy-across-regions) | Separately design Home/Target placement, network, permissions and quota |
 
-Inspect the `privatelink.blob.core.windows.net` zone and target VNet link. If absent, create them with the following template. If present, verify that the zone is linked to this VNet and pass its real ID as `existingBlobPrivateDnsZoneId`. Do not link competing zones for the same namespace. This stage depends only on Storage/VNet and can be prepared independently while core regional capacity is unavailable.
+**Apply only after review:** Adapt parameters, inspect `validate`/`what-if` targets, then apply approved stages. Retain Incremental mode for RG deployments. Reapplying an old complete subnet template to an expanded VNet can cause `IncompatibleDelegations` or change existing configuration.
 
-```bash
-az deployment group what-if --name discovery-storage-private-20261001 \
-  --subscription "$SUBSCRIPTION_ID" --resource-group "$RESOURCE_GROUP" \
-  --template-file infra/storage-private-access.bicep
-```
+**Partial failure:** Preserve causes, states and correlation IDs first. `deployCompute=false` is a separate preparation mode that can clear compute links, not a regional-capacity workaround. On `Conflict` in terminal `Failed` state, stop repeated PUTs and review the [official recovery procedure](https://learn.microsoft.com/azure/microsoft-discovery/troubleshoot-microsoft-discovery#a-discovery-resource-is-stuck-in-a-terminal-failed-state). Do not delete failed resources/MRGs/RGs without approval or directly change managed AKS/Container Apps.
 
-After review, run with `create`, then verify private-IP resolution and Entra-authenticated Blob access **from inside the VNet or an approved VPN/ExpressRoute client**. Creating a Private Endpoint does not connect a local laptop to a VPN. Downstream provisioning can still fail after model, subnet, and role checks; preserve actual errors.
-
-```bash
-az deployment group show --name discovery-core-20261001 \
-  --subscription "$SUBSCRIPTION_ID" --resource-group "$RESOURCE_GROUP" \
-  --query "{state:properties.provisioningState,error:properties.error}"
-az deployment operation group list --name discovery-core-20261001 \
-  --subscription "$SUBSCRIPTION_ID" --resource-group "$RESOURCE_GROUP" \
-  --query "[?properties.provisioningState=='Failed'].properties"
-```
-
-**Limits of Workspace-only preparation:** The GA Workspace schema makes `supercomputerIds` optional, so this path can separate preparation from compute. **It does not bypass regional capacity limits.** In the actual run, even without a Supercomputer, the Workspace's managed Container Apps environment failed with `ManagedEnvironmentCapacityHeavyUsageError` caused by `AKSCapacityHeavyUsage`. Resolve regional capacity first. Avoid overlapping writes; if cancellation is necessary, retain state/errors and cancel only the specific deployment. Cancellation neither deletes created resources nor guarantees immediate cancellation of provider child operations.
-
-```bash
-az deployment group what-if --name discovery-workspace-20261001 \
-  --subscription "$SUBSCRIPTION_ID" --resource-group "$RESOURCE_GROUP" \
-  --template-file infra/discovery-core.bicep --parameters deployCompute=false
-```
-
-Outputs explicitly say `computeIncluded=false` and compute IDs are `null`. Use this **only for a new Workspace or one without linked Supercomputers**; applying it to a linked environment could clear its links. It does not pass all of L01, L03 indexing, or L05 computation. Once capacity is resolved, confirm actual Supercomputer/node-pool success and attach them through the default path. An alternate region requires planning VNet, Storage, and Workspace together, not indiscriminately mixing the existing stack across regions.
-
-**Terminal-failure recovery limit:** Successful `validate`/`what-if` results do not prove that the create/update API accepts a resource in terminal `Failed` state. Stop repeated PUTs on `Conflict` or an equivalent state error. The [official recovery procedure](https://learn.microsoft.com/azure/microsoft-discovery/troubleshoot-microsoft-discovery#a-discovery-resource-is-stuck-in-a-terminal-failed-state) is to resolve the cause, obtain deletion approval, and delete **only the failed Discovery resource** before recreating it with a new name. Preserve the healthy RG, Storage, and data; do not directly repair the managed AKS/Container Apps resources.
-
-**Pass criteria:** Workspace, Supercomputer, CPU pool, Storage Container, and Project are ready; the required model exists. You can open the project in Studio, and both the user and managed identity have their respective required Blob access.
+**Pass criteria:** Workspace, Supercomputer, CPU pool, Storage Container, Project and required model are Succeeded, and the project opens in Studio. Verify actual bindings, managed-identity roles, private DNS and user Blob-container access. Role assignment alone does not prove runtime file reading/writing.
 
 <a id="l02"></a>
 ## L02 — Register data and move files through the workflow
 
 **Goal:** Register Blob files and Discovery references, preparing the inputs that agents will use later.[S15][] [S16][] [S17][]
+
+**Before you start:** L01 Storage, Blob containers and `thermaldata` are ready; verify the uploading user's Blob data role and private connectivity. Bookshelf and agents are not yet required.
 
 **Steps:**
 
@@ -300,36 +338,22 @@ Outputs explicitly say `computeIncluded=false` and compute IDs are `null`. Use t
 4. Download the actual source CSV to verify eight candidates and GAMMA=175; record the Asset IDs for later attachment. Copy returned `discovery://` URIs and Asset IDs; do not invent them.
 5. Agent reading/writing/sharing occurs in L04, and Task-input attachment in L06. Typing a path in a prompt alone does not establish a data connection.
 
-CLI uploads also use **the private access path verified in L01** and Entra sign-in rather than shared keys. On a rerun, compare existing files and hashes before deciding to overwrite. The asset template creates path references, not the underlying uploaded files.
+These **mutation commands write Blob files**. Check L00's `STORAGE_ACCOUNT` and subscription, and run with Entra sign-in over **the private access path verified in L01**. Compare existing files/hashes before a rerun; the commands below do not allow automatic overwrite. Asset templates create path references, not underlying uploaded files.
 
 ```bash
-az storage blob upload-batch --account-name stdiscoveryholjunwoosc \
+az storage blob upload-batch --account-name "$STORAGE_ACCOUNT" \
   --destination discoveryinputs --destination-path bookshelf \
-  --source data/bookshelf --auth-mode login \
+  --source data/bookshelf --auth-mode login --overwrite false \
   --subscription "$SUBSCRIPTION_ID"
-az storage blob upload --account-name stdiscoveryholjunwoosc \
+az storage blob upload --account-name "$STORAGE_ACCOUNT" \
   --container-name discoveryinputs --name compute/materials.csv \
-  --file data/materials.csv --auth-mode login \
+  --file data/materials.csv --auth-mode login --overwrite false \
   --subscription "$SUBSCRIPTION_ID"
 ```
 
-### Administrator input preparation without a local VPN
+**Stop here if no private client is available.** Have an administrator prepare approved VNet connectivity or VPN/ExpressRoute. Additional permissions or public Storage access are not substitutes.
 
-This environment has **`vm-discovery-blob-client`**, deployed from `infra/blob-client.bicep`. It has no public IP or inbound SSH, and its own managed identity has only Blob Data Contributor on the lab Storage account, not Discovery platform roles. It uses the Storage service endpoint on `blobClientSubnet` and the existing Blob Private Endpoint/DNS.
-
-The following performs **real Azure operations** and requires an administrator with VM management permissions. Project Contributor alone does not authorize VM Run Command. Start the client, transfer the five original files, then deallocate it.
-
-```bash
-az vm start --name vm-discovery-blob-client \
-  --resource-group "$RESOURCE_GROUP" --subscription "$SUBSCRIPTION_ID"
-npm run blob:sync
-az vm deallocate --name vm-discovery-blob-client \
-  --resource-group "$RESOURCE_GROUP" --subscription "$SUBSCRIPTION_ID"
-```
-
-`blob:sync` sends only the four synthetic TXT files and one CSV through Azure Run Command. Python's standard library and an IMDS token on the VM check that Blob DNS resolves inside `10.80.8.0/24`, upload the files, read them back, and compare source SHA-256 hashes. No keys, SAS, or tokens are saved. Existing matching files are reused; different contents cause an error instead of an overwrite. Verify `outcome=verified`, all five read request IDs, and hashes in `artifacts/discovery-private-blob-sync.json`.
-
-Both the actual upload and a rerun were verified on 2026-10-01. **This proves private access from the remote VM, not that a laptop browser is connected to the VNet.** Storage public access and organizational policy remain unchanged. The VM was deallocated after verification; its OS disk remains billable. For a new environment, verify SKU/image/quota and `what-if` first, and never put the bootstrap SSH private key in the repository.
+**Verify access for each user.** An administrator uploading from a remote client does not prove that a researcher can open the same file in a browser. Confirm the actual Blob permissions and network path for the user who will read the files.
 
 | Data path | Support and constraints |
 |---|---|
@@ -345,15 +369,17 @@ Both the actual upload and a rerun were verified on 2026-10-01. **This proves pr
 
 **Goal:** Build the knowledge index for cross-document reasoning. Actual retrieval and citation verification follow in L04, after the index is ready.[S06][] [S07][]
 
-> **Observed creation gate, 2026-10-02:** A small, creation-only Bookshelf request passed ARM validation/what-if but was rejected by the service because `gpt-5-mini` and `text-embedding-3-small` each require **2,000,000 TPM at creation**. The how-to's 200,000 TPM creation value was insufficient in this environment. See the [actual result](../../artifacts/discovery-bookshelf-create-result-20261002.json). Creation approval is not approval to start indexing.
+**Before you start:** Complete L01–L02; obtain Bookshelf model quota and always-on spending approval; confirm supported SKU, memory, vCPU quota and regional capacity for a separate indexing pool. Otherwise defer L03 and KB-dependent exercises.
+
+> **Administrator check:** Plan for **2,000,000 TPM each** for `gpt-5-mini` and `text-embedding-3-small`, then confirm the current service's creation/indexing requirements and actual available quota. [A01](#a01) explains the documentation differences. Successful `validate`/`what-if` does not guarantee creation.
 
 **Steps:**
 
-1. In **Microsoft Discovery Bookshelves → Create**, choose the same subscription/RG/region, dedicated `searchSubnet`/`bookshelfPeSubnet`, and UAMI. Set `indexSize=small` at creation. The current documented limit is **one Knowledgebase per Bookshelf**.
+1. In **Microsoft Discovery Bookshelves → Create**, set your Bookshelf name, the same subscription/RG/region, dedicated `searchSubnet`/`bookshelfPeSubnet`, and UAMI. Set **`indexSize=small` in Tags** at creation. Choose data-plane public access according to organizational policy; if disabled, also verify Bookshelf API Private Endpoint, DNS and client connectivity. Continue **only after Bookshelf is Succeeded**. The current documented limit is **one Knowledgebase per Bookshelf**. Do not manually duplicate its managed Search, SQL or Container Apps resources.
 2. In Studio → **Resources → Knowledge → select Bookshelf → Create new**, create `thermal-evidence`, version `1`. Describe it in Description/Copilot instruction as evidence for synthesizing fictional heat-sink requirements, candidate claims, gaps, and authoritative corrections.
 3. Connect `thermaldata`, `evidencepack`, and the same UAMI.
-4. Prepare the memory-intensive **indexing pool `indexlab`** using the requirements confirmed in A01. Do not reuse the small D4 computation pool as if it met indexing requirements.
-5. In Knowledgebase Details, verify Provisioning State=`Succeeded` and Status=`NotStarted`. Select **Index → Project `thermalhol` → `indexlab` → Start Indexing**.
+4. Use Supercomputer **Settings → Node pool → Create** to prepare memory-intensive **indexing pool `indexlab`**. Resolve A01's differing SKU guidance with the administrator/product support path and record the approved SKU/limits. Do not substitute the small D4 computation pool for indexing requirements.
+5. In Knowledgebase Details, verify Provisioning State=`Succeeded` and Status=`NotStarted`. **Stop here if only creation was approved.** With indexing execution and cost approved, select **Index → Project `thermalhol` → `indexlab` → Start Indexing**.
 6. Wait for the actual indexing Status=`Succeeded`. This is separate from the Azure resource's Provisioning State.
 7. Record KB name/version, the linked source Asset, indexing operation, and successful state. Attach the querying agent in the next lab.
 
@@ -365,6 +391,8 @@ Both the actual upload and a rerun were verified on 2026-10-01. **This proves pr
 ## L04 — Specialist agents, models and versions
 
 **Goal:** Create Prompt Agents with explicit roles, models, tools, and KBs, then interact with them directly.[S08][] [S09][] [S10][] [S25][]
+
+**Before you start:** Verify H01–H04 and H06, with L03 indexing Succeeded. Without the KB, evidence-agent and citation checks cannot pass.
 
 **Steps:**
 
@@ -448,6 +476,8 @@ Defer final arithmetic ranking verification until the separate computation tool 
 
 **Goal:** Verify results using a real Supercomputer execution, logs, and files—not an LLM's statement that it calculated them.[S21][] [S22][] [S23][] [S32][]
 
+**Before you start:** Administrator preparation needs L01's CPU pool, ACR and permissions. Researcher execution additionally needs L04's ComputeAnalyst and H05's actual tool/pool IDs. Local calculation step 1 needs no Azure.
+
 **Steps:**
 
 **Steps 1–5 are administrator preparation; steps 6–8 are the researcher run.**
@@ -462,17 +492,26 @@ python3 scripts/score_materials.py --input data/materials.csv --max-cost 3 \
 ```
 
 2. Use an approved existing ACR or have an administrator create one for the lab. Builder/push permissions differ from the Supercomputer identity's pull permissions. Use roles appropriate to the Registry's RBAC/ABAC mode.
-3. From the repository root, replace `<acr-name>` and run the following. **`az acr build` uploads the context and performs a billable cloud build in Azure ACR Tasks; it is not a local build.** It does not require a local Docker daemon.
+3. From the repository root, check L00's `ACR_NAME` and subscription. **Before uploading**, verify that `.dockerignore` permits only the calculator, synthetic CSV and Dockerfile. **`az acr build` uploads the context for a billable ACR Tasks build**, not a local build. No local Docker daemon is required.
 
 ```bash
-az acr build --registry '<acr-name>' \
-  --subscription 51531604-2337-4c05-bc05-3c3d4ff154e5 \
+az acr build --registry "$ACR_NAME" \
+  --subscription "$SUBSCRIPTION_ID" \
   --file tools/thermal-ranking/Dockerfile \
   --image thermal-ranking:1.0.0 .
 ```
 
-4. Verify that `.dockerignore` allows only the calculator, synthetic CSV, and Dockerfile. Record successful build status and the Registry image/digest. A version tag can still be overwritten; its name alone does not guarantee immutability.
-5. Copy `tools/thermal-ranking/tool-definition.template.json` and replace `<acr-login-server>` with its real value. In Portal → **Microsoft Discovery Tools → Create → Basics**, set Name=`thermal-ranking`, Region=`swedencentral`, **Definition content file**=the edited JSON, and **Definition content version**=`1.0.0`. Leave Environment variables empty. Retain `worker`, both actions, and `/outputs`; verify `Succeeded` and the Tool ID. **GA API `2026-06-01` takes the definition object in `properties.definitionContent` and the resource version in `properties.version`.** The definition's internal `version` is separate. Copying `properties.definitionContentVersion` from S33's Preview example into the GA request fails actual ARM preflight validation.[S33]
+4. Confirm build success, then obtain the actual login server and digest with these **read commands**. Stop on an empty value or lookup error. A version tag can be overwritten; its name alone does not ensure immutability.
+
+```bash
+ACR_LOGIN_SERVER=$(az acr show --name "$ACR_NAME" \
+  --subscription "$SUBSCRIPTION_ID" --query loginServer -o tsv)
+IMAGE_DIGEST=$(az acr repository show --name "$ACR_NAME" \
+  --image thermal-ranking:1.0.0 --subscription "$SUBSCRIPTION_ID" \
+  --query digest -o tsv)
+```
+
+5. Copy `tools/thermal-ranking/tool-definition.template.json` and set `infra[0].image.acr` to **the actual login server + `/thermal-ranking@` + the actual `sha256:...` digest**. In Portal → **Microsoft Discovery Tools → Create → Basics**, set Name=`thermal-ranking`, Region=L00's home region, **Definition content file**=the edited JSON, and **Definition content version**=`1.0.0`. Leave Environment variables empty. Retain `worker`, both actions and `/outputs`; verify `Succeeded` and the Tool ID. **GA API `2026-06-01` takes the definition object in `properties.definitionContent` and the resource version in `properties.version`.** The definition's internal `version` is separate. Do not copy S33's Preview field `properties.definitionContentVersion` into a GA request.[S33]
 6. Attach the registered tool under ComputeAnalyst's **Tools**. For the first manual conversation, **Confirm before running tool** can demonstrate the approval pause. Before Engine exercises, explicitly choose the approval policy for the two reviewed synthetic actions so unattended approval does not stall execution. Do not silently disable an approval requirement. Then request one actual `rank_baseline` run on `cpulab`. **This tool uses the synthetic CSV baked into its image.** It does not automatically mount the L02 Blob CSV; input changes require a rebuilt image or an explicit tool change.
 7. Inspect the operation ID, `Succeeded`, actual `nodepoolId`, logs, and `ranking.json` Asset. `nodepoolId` must match the full `cpulab` ID from H05; putting a pool name in a prompt is not verification. `auto_promote: true` configures output sharing. Do not count a Foundry Code Interpreter run as a Supercomputer run.[S32]
 8. Download the **original tool-produced file** and run the following check. Replace `<downloaded-ranking.json>` with its actual path. Do not substitute an agent's summary JSON or the local reference file.
@@ -484,15 +523,14 @@ python3 scripts/verify_ranking.py \
 
 The checker compares all eight candidates, decisions/reasons/gaps/sources, ranking/scores, constraints, and JSON structure. Missing/extra fields, incorrect order, duplicate keys, and invalid numbers fail. Success reports `content_verified: true` and **`execution_verified: false`**. File content cannot establish where execution occurred; separately verify the Azure operation, pool, logs, and Asset.
 
-Instead of the UI, administrators can register the same tool with this Bicep, **pinned to the actual image digest**. Review `what-if`, then run with `create`. ACR build success, tool registration, and Supercomputer execution success are separate states.
+**Optional — Bicep tool registration:** Use this preview only if the tool was not registered through Portal. Explicitly pass L00's values and step 4's digest rather than relying on the repository's Registry default. Confirm that only the intended Tool changes; after approval, replace `what-if` with `create`. ACR build, Tool registration and actual execution are separate completion states.
 
 ```bash
-IMAGE_DIGEST=$(az acr repository show --name acrdiscoveryholjunwoosc \
-  --image thermal-ranking:1.0.0 --subscription "$SUBSCRIPTION_ID" \
-  --query digest -o tsv)
-az deployment group what-if --name discovery-tool-20261001 \
+az deployment group what-if --name discovery-tool-review \
   --subscription "$SUBSCRIPTION_ID" --resource-group "$RESOURCE_GROUP" \
-  --template-file infra/tool.bicep --parameters imageDigest="$IMAGE_DIGEST"
+  --template-file infra/tool.bicep \
+  --parameters location="$LOCATION" registryName="$ACR_NAME" \
+    toolName=thermal-ranking imageDigest="$IMAGE_DIGEST"
 ```
 
 **Pass criteria:** Require the actual cloud operation ID, `cpulab`, logs/Asset, and a passing raw-JSON content check. Values must be `candidate_count=8`, `eligible_count=3`, and DELTA 68.6 → ALPHA 67.8 → THETA 60.8. `Accepted`, `NotStarted`, failure, and cancellation are not success. The first tool call may incur additional cold-start time.
@@ -501,6 +539,8 @@ az deployment group what-if --name discovery-tool-20261001 \
 ## L06 — Discovery Engine and the validation loop
 
 **Goal:** Execute a research workflow with dependencies, independent validation, and file inheritance.[S11][] [S12][] [S13][] [S14][] [S15][]
+
+**Before you start:** Complete L04–L05, verify H01–H06 and usable `gpt-5-4`, and confirm actual tool execution, cost and approval policy. Successful direct API computation alone does not pass this stage.
 
 **Steps:**
 
@@ -528,6 +568,8 @@ az deployment group what-if --name discovery-tool-20261001 \
 ## L07 — Change constraints and provide human feedback
 
 **Goal:** Preserve evidence and history while testing a new hypothesis and re-evaluating the result.
+
+**Before you start:** L06's baseline Tasks/outputs are verified and you can inspect existing execution states.
 
 **Steps:**
 
@@ -566,6 +608,8 @@ python3 scripts/verify_ranking.py \
 
 **Goal:** Verify collaboration within a project and boundaries around other projects and linked resources.[S19][] [S20][]
 
+**Before you start:** Prepare L04's shared session/outputs, another test user, an unassigned comparison project and an administrator authorized to assign roles. Perform this lab when selecting collaboration verification.
+
 **Steps:**
 
 1. An administrator prepares actual test users/groups and an unassigned comparison project for denial checks. **Without another user or comparison project, defer the corresponding verification.** Two browser windows using the same identity do not verify multi-user authorization. Obtain approval for the scope/cost before creating an additional comparison project.
@@ -589,9 +633,11 @@ python3 scripts/verify_ranking.py \
 
 **Goal:** Leave an auditable result and distinguish running work from always-on costs when ending the lab.
 
+**Before you start:** Perform this whenever Azure resources or operations were created, including partial failures and stopped runs.
+
 **Steps:**
 
-1. Retain `research-report.md`, `baseline-summary.md`, `comparison.md`, both actual computation JSON files, and content-check results. Keep them separate from local reference JSON, and distinguish content validation from Azure execution evidence.
+1. Retain the `research-report.md`, `baseline-summary.md`, `comparison.md`, actual computation JSON and content-check results that were produced. Record absent outputs from a partial run as **not created**. Keep local reference JSON separate and distinguish content validation from Azure execution evidence.
 2. Complete the reproducibility record.
 
 | Category | Record |
@@ -612,7 +658,7 @@ python3 scripts/verify_ranking.py \
 
 **After partial failure:** Successfully created Storage, ACR, Private Endpoints, and MRG Log Analytics/NSP resources can remain even when deployment fails. Deleting an RG does not remove subscription-scoped NSP Joiner/Reader assignments or the custom role. Other Discovery environments may share those service roles; do not remove them without administrator review. This guide does not execute automatic deletion commands.
 
-**This subscription's central diagnostics:** A follow-up applied the existing organizational policy to create `McapsGovernance/mcaps4c05bc053c3d4ff154e5-la` in West US 2 and connect Discovery diagnostics. It is a shared pay-as-you-go resource with 30-day retention and a `Do Not Delete` tag. Exclude it from lab-RG cleanup and review log ingestion/retention costs separately. This did not move the working Blob data, but diagnostics are not guaranteed to remain exclusively in Sweden Central.
+**Shared diagnostics:** Exclude organizational central Log Analytics and resources shared with other environments from lab cleanup. Check their locations, retention, costs and deletion-protection tags separately. Diagnostic settings or policy `Compliant` alone do not prove actual log arrival. Do not assume the workload and logging regions are identical.
 
 **Pass criteria:** The evidence→execution→output chain is retained and remaining work, resources, and cost exposure are clear. Do not claim collaboration verification if L08 was not performed.
 
@@ -620,6 +666,8 @@ python3 scripts/verify_ranking.py \
 ## E01 — Code-environment and Hybrid Tools
 
 **Goal:** Compare a fixed Action with agent-generated code in the same compute environment. This is an optional developer extension after the core route.[S21][] [S22][]
+
+**Before you start:** Verify L05's actual Action execution and obtain permission for a separate tool/agent and an approved generated-code execution policy.
 
 **Steps:**
 
@@ -650,6 +698,8 @@ python3 scripts/verify_ranking.py \
 
 **Goal:** Verify an extension through a public-documentation MCP example, then choose the appropriate integration pattern for scientific models. Separately verify connected-service feature status, model support, and organizational policy.[S10][] [S22][] [S26][]
 
+**Before you start:** Verify L04's agent-creation path and backing Foundry project, with external MCP connection/call policy approved. If the connection UI or feature is unavailable, defer only this extension.
+
 **Steps:**
 
 1. Create a separate `DocsConnector` agent in the same Discovery project, isolated from research-data agents.
@@ -678,40 +728,46 @@ Property prediction by scientific/large quantitative models (LQMs) is different 
 | Preparation item | Planning baseline |
 |---|---|
 | GPT-5.4 | Check at least **500,000 TPM total**, following the documentation's Important note; verify allocations per deployment |
-| Bookshelf models | Use GPT-5.2 **200,000 TPM**, GPT-5 Mini **2,000,000 TPM**, and text-embedding-3-small **2,000,000 TPM** as preparation baselines, then confirm actual creation/search requirements |
+| Bookshelf models | Preparation: GPT-5.2 **200,000 TPM**, GPT-5 Mini **2,000,000 TPM**, text-embedding-3-small **2,000,000 TPM**. Search recommendations are higher: GPT-5.2 2,000,000 / Mini 10,000,000 TPM. Check creation/search requirements separately |
 | Always-on Bookshelf infrastructure | The indexing how-to specifies Search S1 with 2 replicas, SQL Hyperscale Gen5 with 20 vCores, and ACA Small E4. Four documents still incur fixed cost |
 | Indexing memory | Resolve the difference between Small E20s_v6 (160 GB) in the how-to and D48s_v6 (192 GB) in the quota page before deployment |
 | Computation pool | D4s_v6-family CPU tool; no GPU needed. Separate from the indexing pool |
 | Other costs | Workspace/Project Cosmos DB, Storage, Registry/ACR Tasks, networking, and managed infrastructure |
 
-Check model quota for the subscription, region, model, and deployment type together. The documented default is Global Standard. If residency requirements lead to Data Zone Standard or another type, recheck support and the corresponding quota. [S05][]
+**Quota scope:** Check subscription, model, version, deployment type and the **Scope** column in Foundry Quota. For [models onboarded to subscription-level quota](https://learn.microsoft.com/azure/foundry/foundry-models/quotas-limits), Global Standard deployments of the same model/version share a pool across regions. A regional Scope indicates regional quota. **Do not assume a region change creates new quota.** The baseline uses Global Standard; check support, quota and processing location separately for Data Zone Standard or other types.[S05]
 
-**Observed pre-deployment example (2026-10-01, Sweden Central / Global Standard):**
+### Calculate new allocations
 
-| Model | Total limit TPM | Already allocated TPM | Remaining TPM | Required for this phase TPM | Result |
-|---|---|---|---|---|---|
-| gpt-5.4 | 3,000,000 | 0 | 3,000,000 | 500,000 | Core precheck passed |
-| gpt-5.2 | 3,000,000 | 10,000 | 2,990,000 | 200,000 | This Bookshelf model alone passed |
-| gpt-5-mini | 1,000,000 | 10,000 | 990,000 | 2,000,000 | Insufficient |
-| text-embedding-3-small | 1,000,000 | 220,000 | 780,000 | 2,000,000 | Insufficient |
+```text
+available_tpm = total_limit_tpm - allocated_tpm
+minimum_total_tpm = allocated_tpm + new_allocation_tpm
+increase_tpm = max(0, minimum_total_tpm - total_limit_tpm)
+```
 
-This is a **pre-deployment snapshot**, not a promise of current remaining capacity. Rerun `npm run readiness`. When the Azure usage description says `One Thousand Tokens Per Minute` or `Tokens Per Minute (thousands)`, **multiply by 1,000 and subtract existing allocations**. Do not interpret the `Count` unit alone as 1,000 TPM or combine Global Standard with Data Zone Standard.
+`allocated_tpm` means quota assigned to existing deployments, not actual token consumption. If an existing model deployment can be reused, do not count its allocation again as a new requirement.
 
-In this example, preserving existing usage requires a total limit of at least **2,010,000 TPM** for the mini model and **2,220,000 TPM** for embeddings to allocate another 2,000,000 TPM each. Requesting exactly 2,000,000 total may still leave a shortfall. Agree on additional headroom with the administrator. If `az quota list` on the Cognitive Services scope returns `BadRequest`, use the documented Foundry quota-increase process rather than interpreting it as unlimited or unused quota. Do not delete another project's deployments to free capacity for this lab.
+| Calculation example | Already allocated TPM | New allocation TPM | Minimum total limit TPM |
+|---|---:|---:|---:|
+| Mini | 50,000 | 2,000,000 | 2,050,000 |
+| Embedding | 100,000 | 2,000,000 | 2,100,000 |
 
-### Which quota and which project
+These are arithmetic examples, not a customer's current headroom. A total limit of exactly 2,000,000 TPM can be insufficient after existing allocations. Agree the **new total limit**, including headroom and operational targets, with the administrator. Distinguish forms requesting an increase from those requesting a total: for example, 3,000,000 TPM total is `3000` in kTPM.
 
-**AKS quota is not actual regional capacity.** The observed error was `AKSCapacityHeavyUsage`, not `QuotaExceeded`. Regional/Dsv6 quotas were each 0/100 vCPUs and Container Apps environments were 1/50, so increasing those limits is not an established fix. Ask Azure support to check this subscription's Sweden Central AKS/Container Apps creation capacity.
+If Azure usage says `One Thousand Tokens Per Minute` or `Tokens Per Minute (thousands)`, **multiply by 1,000 before** calculating. Do not infer units from `Count` alone or combine deployment-type quotas.
 
-Bookshelf needs **Global Standard TPM for `gpt-5-mini` and `text-embedding-3-small`**. The recommended requested total for this lab is **3,000,000 TPM each**, not an additional amount. Enter `3000` if the field is measured in thousands of TPM. Do not confuse `gpt-5.4-mini`, PTU, or another deployment type with these quotas. Verify submission, approval, and actual reflected limits separately.
+### If capacity is insufficient
 
-Do not immediately create another project just because the portal list appears empty. ARM confirmed **`Discovery Default Project`** (`discoverydefaultprojectym5ffvaa`) under `aif-dwsp-foundry-ym5ffvaa` in `Succeeded` state. It is **separate from the uncreated Discovery lab Project `thermalhol`**. Select the lab account's directory/subscription, then follow the [official Foundry steps](https://learn.microsoft.com/azure/foundry/how-to/quota): **New Foundry → the project → Manage → Quota → Token per minute → Request quota**. Creating a project does not create an independent quota pool; quota belongs to the subscription/model/deployment-type scope.
+1. Recheck model/version, Global/Data Zone/regional Scope and actual allocation. Do not confuse `gpt-5-mini` with `gpt-5.4-mini`, or TPM with PTU.
+2. Select the correct directory/subscription and the Foundry project backing the Workspace. **A Foundry project such as Discovery Default Project and Discovery Project `thermalhol` are different resources.** Do not create another project merely to find the quota screen.
+3. Follow the [official Foundry guidance](https://learn.microsoft.com/azure/foundry/how-to/quota): **New Foundry → the project → Manage → Quota → Token per minute → Request quota**. Track existing requests before submitting duplicates; verify submission, approval and reflected limits separately.
+4. For **regional-capacity errors** such as `AKSCapacityHeavyUsage`, use the support path rather than assuming model TPM or ordinary vCPU quota increases fix them. Do not interpret Cognitive Services quota lookup errors as unlimited/unused capacity, or shrink/delete another project's models without approval.
 
 The following are **observed documentation differences** and this guide's treatment. Do not copy contradictory statements into a single supposedly deterministic setup.
 
 | Topic | Documentation difference | Guide decision |
 |---|---|---|
 | GPT-5.4 quota | Summary 450,000 vs Important note 500,000 [S05] | Use 500,000 as a conservative preparation baseline; verify actual deployment quotas |
+| Bookshelf creation quota | The creation how-to says 200,000 TPM; the quota document gives a minimum of 2,000,000 TPM each for mini/embedding [S05][] [S06][] | Confirm actual creation gates; successful `validate`/`what-if` does not prove the resource can be created |
 | Indexing SKU | E20s_v6 vs D48s_v6 [S05][] [S06][] | Confirm supported SKU/memory with the administrator/product team; do not substitute the small computation pool |
 | Reindexing | Concept page says delete/reindex; how-to describes incremental enrichment plus a full graph rebuild [S06][] [S07][] | Require the first full index only. Confirm the deployed version before update/deletion decisions |
 | Model response controls | Temperature recommendations in model selection vs unsupported reasoning-model controls [S09][] [S10][] [S25][] | Leave temperature/top_p unset for this reasoning-model route |
@@ -747,7 +803,7 @@ Before deployment, review actual region, SKUs, quantities, retention time, and s
 | Restart triggers another warmup | Working memory rebuild; verify retained results/history |
 | Costs continue after computation | Running jobs, system pool, always-on Bookshelf/Workspace infrastructure |
 
-**Core completion:** Evidence exists for L00–L07 and L09, with matching values and citations. L08 passes only with another user's authorization checks. Record E01/E02 separately. **Label an unexecuted capability “explained/prepared only.”**
+**Core completion:** Require actual evidence for L00–L07 and L09, with matching values and citations. This is a criterion for future runs, not a declaration that this repository has passed. L08 requires another user's authorization checks; record E01/E02 separately. **Label unexecuted capabilities “not run/unverified” and preparation-only work “prepared only.”**
 
 Local checks of the supplied package do not change Azure.
 
@@ -762,7 +818,9 @@ Use `npm run check:guides` for browser rendering checks. The supplied script use
 <a id="a03"></a>
 ## A03 — Official sources
 
-Original sources checked on 2026-09-25; deployment, networking, quota, and storage references rechecked on 2026-10-01. Both editions use identical Source IDs/URLs, Lab IDs, data, and expected results. Product UI labels remain in English for discoverability.
+Original references were checked on 2026-09-25, with deployment, networking, quota and storage checks recorded on 2026-10-01. This 2026-10-02 revision rechecked **the infrastructure quickstart (S03), quota (S05), Bookshelf creation/indexing (S06), cross-region deployment and Foundry quota Scope**. Reading documentation does not validate a deployment or lab run. Recheck official guidance when executing because UI and support can change.
+
+Both editions share Source IDs/URLs, Lab IDs, commands, data and expected results. Product UI labels remain in English. Environment-specific history is separated into Korean reference documents.
 
 | ID | Official documentation |
 |---|---|

@@ -102,7 +102,7 @@ try {
       outline: true,
       displayHeaderFooter: true,
       margin: { top: '17mm', right: '15mm', bottom: '18mm', left: '15mm' },
-      headerTemplate: '<div style="font-family:Arial,sans-serif;font-size:8px;width:100%;text-align:center;color:#526a80">Microsoft Discovery | 2026-10-01</div>',
+      headerTemplate: '<div style="font-family:Arial,sans-serif;font-size:8px;width:100%;text-align:center;color:#526a80">Microsoft Discovery | Draft | 2026-10-02</div>',
       footerTemplate: '<div style="font-family:Arial,sans-serif;font-size:8px;width:100%;text-align:center;color:#526a80"><span class="pageNumber"></span> / <span class="totalPages"></span></div>',
     });
     assert.ok(pdf.subarray(0, 5).equals(Buffer.from('%PDF-')));
@@ -132,6 +132,10 @@ try {
   await page.locator('[data-language="en"]').click();
   await page.waitForURL('**/MICROSOFT-DISCOVERY-LAB.en.html#l04');
   assert.equal(await page.locator('html').getAttribute('lang'), 'en');
+  await page.goto(pathToFileURL(resolve(root, 'docs/reports/EXECUTION-REPORT.ko.html')).href);
+  assert.equal(await page.locator('[data-language]').count(), 0, 'Operator report must not pretend to be another lab-language edition');
+  assert.equal(await page.locator('#installation-timeline').count(), 1);
+  assert.ok((await page.locator('aside .label').textContent()).includes('설치·운영 사례'));
   assert.deepEqual(errors, []);
   assert.deepEqual(networkRequests, []);
 } finally {

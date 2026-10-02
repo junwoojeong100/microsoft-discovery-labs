@@ -24,6 +24,11 @@ for (const directory of ['artifacts', 'config', 'infra', 'node_modules', '.azure
 const evidence = await readFile(resolve(site, 'evidence.html'), 'utf8');
 assert.ok(evidence.includes('This GitHub repository is public.'));
 assert.ok(evidence.includes('Excluding files from this site does not make the repository or its committed history private.'));
+for (const language of ['en', 'ko']) {
+  const guide = await readFile(resolve(site, `docs/labs/MICROSOFT-DISCOVERY-LAB.${language}.html`), 'utf8');
+  assert.ok(guide.includes('92c174ac-8e41-4815-a1b7-d81b19ab03ce'), 'The public first-party app ID must remain usable');
+  assert.ok(guide.includes('&lt;subscription-id&gt;'), 'Customer subscription input must remain a placeholder');
+}
 const errors = [];
 const server = createServer(async (request, response) => {
   const pathname = decodeURIComponent(new URL(request.url, 'http://localhost').pathname);

@@ -20,11 +20,14 @@ const replacements = [
   [config.tenantId, '11111111-1111-1111-1111-111111111111'],
   [config.subscriptionName, 'Example lab subscription'],
 ];
+// This documented first-party app ID is a product constant, not a tenant object ID.
+const publicControlPlaneAppId = '92c174ac-8e41-4815-a1b7-d81b19ab03ce';
 function sanitize(text) {
   for (const [value, placeholder] of replacements) text = text.replaceAll(value, placeholder);
   return text
     .replace(/\b[a-z0-9._%+-]+@[a-z0-9.-]*onmicrosoft\.com\b/gi, 'lab-user@example.invalid')
-    .replace(/\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\b/gi, '00000000-0000-0000-0000-000000000000')
+    .replace(/\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\b/gi,
+      id => id.toLowerCase() === publicControlPlaneAppId ? id : '00000000-0000-0000-0000-000000000000')
     .replace(/\b[a-f0-9]{29,38}\b/gi, '[operation-id]')
     .replace(/\brg-discovery-hol-\d{8}\b/g, 'rg-discovery-lab')
     .replace(/\b(?:aif|srch|cosmos|mi|law|nsp|mrg|mobr|cae|app)-d[a-z0-9-]+(?:junwoosc|junwookc|bdnxfqaa|ym5ffvaa|bdnxfq|ym5ffv)[a-z0-9-]*\b/gi, 'example-managed-resource')
@@ -53,7 +56,7 @@ function targetFor(href, source, destination) {
 }
 const css = `:root{font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",sans-serif;line-height:1.75;color:#18344e;background:#edf3fa}*{box-sizing:border-box}body{margin:0}header{background:#102c47;color:white;padding:18px max(5vw,20px)}header a{color:#e5f0ff;margin-right:24px}main{max-width:1120px;margin:auto;padding:32px;background:white;min-height:90vh}h1,h2,h3{line-height:1.4;text-wrap:balance}h2{margin-top:2em;border-top:1px solid #dbe5ef;padding-top:1em}p,li,td{overflow-wrap:anywhere}img{max-width:100%;height:auto}.notice{background:#fff5dc;border-left:4px solid #bd841d;padding:14px 18px}.tables{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:.9rem}th,td{border:1px solid #dbe5ef;padding:10px;text-align:left;vertical-align:top}th{background:#edf4fc}pre{background:#102c47;color:#eef5ff;padding:18px;white-space:pre-wrap;overflow-wrap:anywhere;border-radius:7px}code{font-size:.88em}a{color:#146bb0}a[id]{scroll-margin-top:18px}@media(max-width:640px){main{padding:20px}h1{font-size:1.8rem}}@media print{header,.notice{display:none}main{padding:0}a{color:inherit}}`;
 function page(language, title, content, prefix) {
-  return `<!doctype html><html lang="${language}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer"><title>${title}</title><style>${css}</style></head><body><header><a href="${prefix}index.html">Microsoft Discovery Labs</a><a href="${prefix}index.html">English</a><a href="${prefix}index.ko.html">한국어</a></header><main><p class="notice">${language === 'ko' ? '공개용 문서입니다. 계정·구독·환경 이름은 예시로 대체했습니다. 원본 실행 증거, 구성 파일 및 PDF는 이 사이트에 게시하지 않습니다.' : 'Public documentation edition. Account, subscription, and environment names are replaced with examples. Raw execution evidence, configuration files, and PDFs are not published here.'}</p>${content}</main></body></html>\n`;
+  return `<!doctype html><html lang="${language}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer"><title>${title}</title><style>${css}</style></head><body><header><a href="${prefix}index.html">Microsoft Discovery Labs</a><a href="${prefix}docs/labs/MICROSOFT-DISCOVERY-LAB.${language}.html">${language === 'ko' ? '고객·파트너 실습' : 'Customer lab'}</a><a href="${prefix}docs/deployment-reference/README.ko.html">${language === 'ko' ? '설치·운영 사례' : 'Deployment records (KO)'}</a><a href="${prefix}index.html">English</a><a href="${prefix}index.ko.html">한국어</a></header><main><p class="notice">${language === 'ko' ? '공개용 문서입니다. 계정·구독·환경 이름은 예시로 대체했습니다. 원본 실행 증거, 구성 파일 및 PDF는 이 사이트에 게시하지 않습니다.' : 'Public documentation edition. Account, subscription, and environment names are replaced with examples. Raw execution evidence, configuration files, and PDFs are not published here.'}</p>${content}</main></body></html>\n`;
 }
 await mkdir(output, { recursive: true });
 await writeFile(resolve(output, '.nojekyll'), '');

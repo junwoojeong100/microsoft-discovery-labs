@@ -8,26 +8,29 @@ const documents = [
   {
     filename: 'docs/labs/MICROSOFT-DISCOVERY-LAB.en.md',
     language: 'en',
+    audience: 'customer',
     title: 'Microsoft Discovery Core Capabilities Hands-on Guide',
-    label: '10 core labs + 2 extensions',
-    banner: 'Execution-informed guide · Matching Korean/English criteria · See the execution report for blocked and completed stages',
+    label: 'Customer/partner guide · 10 core labs + 2 extensions',
+    banner: 'Work in progress · Not validated end to end · Verify entry conditions and evidence at each stage',
     tocLabel: 'Contents',
     printLabel: 'Print / PDF',
   },
   {
     filename: 'docs/labs/MICROSOFT-DISCOVERY-LAB.ko.md',
     language: 'ko',
+    audience: 'customer',
     title: 'Microsoft Discovery 핵심 기능 실습 가이드',
-    label: '핵심 10개 Lab + 확장 2개',
-    banner: '실제 배포 경험 반영 · 국문/영문 동일 실습 기준 · 성공/차단 단계는 실행 보고서에서 확인',
+    label: '고객·파트너 실습 · 핵심 10개 Lab + 확장 2개',
+    banner: '작성 중 · 전체 실습 미검증 · 단계별 시작 조건과 실제 증거를 확인하세요',
     tocLabel: '목차',
     printLabel: '인쇄 / PDF',
   },
   {
     filename: 'docs/reports/EXECUTION-REPORT.ko.md',
     language: 'ko',
+    audience: 'operator',
     title: 'Microsoft Discovery 실제 실행 보고서',
-    label: '실제 Azure 배포와 차단 원인',
+    label: '설치·운영 사례 · 고객 실습 절차와 별도',
     banner: '리소스 생성·실행 성공·차단 상태를 분리해 기록합니다. 과거 기록은 날짜를 구분해 읽으세요.',
     tocLabel: '목차',
     printLabel: '인쇄 / PDF',
@@ -35,7 +38,7 @@ const documents = [
 ];
 
 async function buildDiagrams() {
-  const english = await readFile(resolve(root, 'assets/discovery-architecture.svg'), 'utf8');
+  const english = await readFile(resolve(root, 'assets/discovery-architecture.en.svg'), 'utf8');
   const labels = new Map([
     ['Microsoft Discovery hands-on architecture', 'Microsoft Discovery 실습 아키텍처'],
     ['A researcher uses Discovery Studio. A workspace contains a project with specialized agents and the Discovery Engine. Agents use Bookshelf and a supercomputer. Evidence and results are persisted to Azure Storage.', '연구자는 Discovery Studio에서 전문 에이전트와 Discovery Engine을 사용합니다. 에이전트는 Bookshelf와 Supercomputer에 연결되며 근거와 결과는 Azure Storage에 보존됩니다.'],
@@ -67,14 +70,11 @@ async function buildDiagrams() {
     if (!korean.includes(source)) throw new Error(`Diagram source label is missing: ${source}`);
     korean = korean.replaceAll(source, target);
   }
-  await Promise.all([
-    writeFile(resolve(root, 'assets/discovery-architecture.en.svg'), english),
-    writeFile(resolve(root, 'assets/discovery-architecture.ko.svg'), korean),
-  ]);
+  await writeFile(resolve(root, 'assets/discovery-architecture.ko.svg'), korean);
 }
 
 async function buildDocument(document) {
-  const { filename, language, title, label, banner, tocLabel, printLabel } = document;
+  const { filename, language, audience, title, label, banner, tocLabel, printLabel } = document;
   const markdown = await readFile(resolve(root, filename), 'utf8');
   let index = 0;
   const headings = [];
@@ -93,7 +93,7 @@ async function buildDocument(document) {
     const [path] = token.href.split('#');
     const target = documents.find((item) =>
       resolve(root, item.filename) === resolve(root, dirname(filename), path));
-    const html = renderLink.call(this, target ? { ...token, href: token.href.replace(/\.md$/, '.html') } : token);
+    const html = renderLink.call(this, target ? { ...token, href: token.href.replace(/\.md(?=#|$)/, '.html') } : token);
     return /^S\d{2}$/.test(token.text) ? `<sup class="citation">[${html}]</sup>` : html;
   };
   renderer.table = function (token) {
@@ -110,6 +110,15 @@ async function buildDocument(document) {
   const content = marked.parse(markdown, { renderer, gfm: true });
   const toc = headings.map(({ id, text }) => `<a href="#${id}">${text}</a>`).join('\n');
   const editionPath = (edition) => relative(dirname(filename), `docs/labs/MICROSOFT-DISCOVERY-LAB.${edition}.html`);
+  const navigation = audience === 'customer'
+    ? `<nav class="languages" aria-label="${language === 'ko' ? '언어 선택' : 'Language'}">
+      <a href="${editionPath('en')}" data-language="en"${language === 'en' ? ' aria-current="page"' : ''}>English</a>
+      <a href="${editionPath('ko')}" data-language="ko"${language === 'ko' ? ' aria-current="page"' : ''}>한국어</a>
+    </nav>`
+    : `<nav class="languages" aria-label="문서 구분">
+      <a href="../deployment-reference/README.ko.md">설치·운영 목차</a>
+      <a href="${editionPath('ko')}">고객 실습 가이드</a>
+    </nav>`;
   const html = `<!doctype html>
 <html lang="${language}">
 <head>
@@ -145,10 +154,7 @@ async function buildDocument(document) {
 <body>
   <a class="skip" href="#main">${language === 'ko' ? '본문으로 이동' : 'Skip to content'}</a>
   <aside><b>Microsoft Discovery</b><span class="label">${label}</span>
-    <nav class="languages" aria-label="${language === 'ko' ? '언어 선택' : 'Language'}">
-      <a href="${editionPath('en')}" data-language="en"${filename.includes('LAB.en') ? ' aria-current="page"' : ''}>English</a>
-      <a href="${editionPath('ko')}" data-language="ko"${filename.includes('LAB.ko') ? ' aria-current="page"' : ''}>한국어</a>
-    </nav>
+    ${navigation}
     <button id="print" type="button">${printLabel}</button>
     <details id="toc" open><summary>${tocLabel}</summary><nav aria-label="${tocLabel}">${toc}</nav></details>
   </aside>

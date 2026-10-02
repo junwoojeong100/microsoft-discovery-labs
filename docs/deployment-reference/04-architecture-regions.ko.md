@@ -2,6 +2,8 @@
 
 [목차](README.ko.md) · **기준일: 2026-10-01 문서·구독 메타데이터 확인. 실제 배포 성공과는 별개다.**
 
+> **공식 배치 원칙과 작성자 환경의 선택을 함께 기록한 참고 자료다.** 새 환경은 지원 home/target·조직의 데이터 위치 요건을 별도로 확인한다. Korea 설정과 Microsoft 소유 구독 전용 태그를 고객 기본값으로 복사하지 않는다.
+
 ## 논리 구조
 
 ```text
@@ -83,7 +85,7 @@ Azure의 **한국 중부(Korea Central, `koreacentral`)는 서울**, **한국 �
 | 지원 home + Korea Central target의 고객 저장소·런타임 | 공식 교차 리전 절차 사용. 실제 연결·quota·동작 검증은 별도 |
 | 원본은 한국에 두고 허용된 부분만 해외 작업 저장소로 복사 | 설계 검토 가능하나 국외 데이터 복사·처리가 발생 |
 
-**기존 파일은 Sweden Central 저장소에 보존했다.** 새 `stdiscoveryholjunwookc`는 Korea Central에 생성했지만, 저장소 생성이 기존 Blob·Tool 이미지의 복사를 뜻하지는 않는다.
+**기존 파일은 Sweden Central 저장소에 보존했다.** Korea Storage 생성 자체가 데이터·이미지 복사를 뜻하지는 않는다. 이후 별도 실행에서 Korea ACR에 이미지를 import하고 합성 입력 5개와 계산 결과 2개를 Korea Blob에 저장·재조회했다. [23:32 실행 기록](../reports/EXECUTION-REPORT.ko.md#korea-runtime)의 범위이며 임의 고객 데이터의 이전을 수행한 것은 아니다.
 
 **중앙 진단의 별도 위치:** 16시대 복구에서 기존 조직 정책이 지정한 **West US 2**에 `McapsGovernance/mcaps4c05bc053c3d4ff154e5-la`를 생성하고 Discovery 관리 Foundry 계정의 진단 로그·메트릭을 보내도록 구성했다. 이는 Discovery 작업 스택의 리전 변경이나 West US 2의 Discovery 제품 지원을 뜻하지 않는다. 하지만 진단 데이터까지 모두 Sweden Central에만 머문다는 보장도 할 수 없다. 실제 로그 유입 확인과 과거 누락분 복구는 별도이며, [검증한 구성](../../artifacts/discovery-governance-recovery-20261001.json)을 참고한다.
 
