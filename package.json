@@ -25,6 +25,6 @@
     "playwright": "1.63.0"
   },
   "devDependencies": {
-    "mermaid": "12.0.0"
+    "mermaid": "12.2.0"
   }
 }
